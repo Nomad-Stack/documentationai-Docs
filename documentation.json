@@ -2,121 +2,241 @@
   "name": "Nomadbill",
   "colors": {
     "light": {
-      "brand": "#6CAC7A"
+      "brand": "#B3D4BA"
     },
     "dark": {
-      "brand": "#94D1A1"
+      "brand": "#252D2B"
     }
   },
   "navigation": {
-    "tabs": [
+    "languages": [
       {
-        "tab": "Documentation",
-        "icon": "book",
-        "groups": [
+        "language": "English",
+        "tabs": [
           {
-            "group": "Getting Started",
-            "icon": "rocket",
+            "tab": "Documentation",
+            "icon": "book",
+            "groups": [
+              {
+                "group": "Getting Started",
+                "icon": "rocket",
+                "pages": [
+                  {
+                    "title": "Introduction",
+                    "path": "en/introduction",
+                    "icon": "home"
+                  },
+                  {
+                    "title": "Quick Start",
+                    "path": "en/quickstart",
+                    "icon": "zap"
+                  }
+                ]
+              },
+              {
+                "group": "Core Concepts",
+                "icon": "layers",
+                "pages": [
+                  {
+                    "title": "Features",
+                    "path": "en/features",
+                    "icon": "star"
+                  }
+                ]
+              },
+              {
+                "group": "Advanced",
+                "icon": "settings",
+                "pages": [
+                  {
+                    "title": "Integrations",
+                    "path": "en/integrations",
+                    "icon": "plug"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "API Reference",
+            "icon": "code",
+            "groups": [
+              {
+                "group": "Endpoints",
+                "openapi": "en/api-reference/openapi.yaml",
+                "pages": []
+              }
+            ]
+          },
+          {
+            "tab": "Help Center",
+            "icon": "help-circle",
             "pages": [
               {
-                "title": "Introduction",
-                "path": "introduction",
+                "title": "Help Center",
+                "path": "en/help-center",
                 "icon": "home"
               },
               {
-                "title": "Quick Start",
-                "path": "quickstart",
-                "icon": "zap"
+                "group": "FAQs",
+                "icon": "help-circle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "How to Create Invoice",
+                    "path": "en/help-center/faq/how-to-create-invoice"
+                  }
+                ]
+              },
+              {
+                "group": "Troubleshooting",
+                "icon": "alert-triangle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "Invoice Email Not Sent",
+                    "path": "en/help-center/troubleshooting/invoice-email-not-sent"
+                  }
+                ]
+              },
+              {
+                "group": "Guides",
+                "icon": "book-open",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "Add Client",
+                    "path": "en/help-center/guides/add-client"
+                  }
+                ]
               }
             ]
           },
           {
-            "group": "Core Concepts",
-            "icon": "layers",
+            "tab": "Changelog",
+            "icon": "clock",
             "pages": [
               {
-                "title": "Features",
-                "path": "features",
-                "icon": "star"
-              }
-            ]
-          },
-          {
-            "group": "Advanced",
-            "icon": "settings",
-            "pages": [
-              {
-                "title": "Integrations",
-                "path": "integrations",
-                "icon": "plug"
+                "title": "Release History",
+                "path": "en/changelog",
+                "icon": "history"
               }
             ]
           }
         ]
       },
       {
-        "tab": "API Reference",
-        "icon": "code",
-        "groups": [
+        "language": "German",
+        "tabs": [
           {
-            "group": "Endpoints",
-            "openapi": "api-reference/openapi.yaml",
-            "pages": []
-          }
-        ]
-      },
-      {
-        "tab": "Help Center",
-        "icon": "help-circle",
-        "pages": [
-          {
-            "title": "Help Center",
-            "path": "help-center",
-            "icon": "home"
+            "tab": "Dokumentation",
+            "icon": "book",
+            "groups": [
+              {
+                "group": "Erste Schritte",
+                "icon": "rocket",
+                "pages": [
+                  {
+                    "title": "Einführung",
+                    "path": "de/introduction",
+                    "icon": "home"
+                  },
+                  {
+                    "title": "Schnellstart",
+                    "path": "de/quickstart",
+                    "icon": "zap"
+                  }
+                ]
+              },
+              {
+                "group": "Grundkonzepte",
+                "icon": "layers",
+                "pages": [
+                  {
+                    "title": "Funktionen",
+                    "path": "de/features",
+                    "icon": "star"
+                  }
+                ]
+              },
+              {
+                "group": "Erweitert",
+                "icon": "settings",
+                "pages": [
+                  {
+                    "title": "Integrationen",
+                    "path": "de/integrations",
+                    "icon": "plug"
+                  }
+                ]
+              }
+            ]
           },
           {
-            "group": "FAQs",
+            "tab": "API-Referenz",
+            "icon": "code",
+            "groups": [
+              {
+                "group": "Endpunkte",
+                "openapi": "de/api-reference/openapi.yaml",
+                "pages": []
+              }
+            ]
+          },
+          {
+            "tab": "Hilfe-Center",
             "icon": "help-circle",
-            "expandable": false,
             "pages": [
               {
-                "title": "How to Create Invoice",
-                "path": "help-center/faq/how-to-create-invoice"
+                "title": "Hilfe-Center",
+                "path": "de/help-center",
+                "icon": "home"
+              },
+              {
+                "group": "Häufige Fragen",
+                "icon": "help-circle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "Rechnung erstellen",
+                    "path": "de/help-center/faq/how-to-create-invoice"
+                  }
+                ]
+              },
+              {
+                "group": "Fehlerbehebung",
+                "icon": "alert-triangle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "Rechnungs-E-Mail nicht gesendet",
+                    "path": "de/help-center/troubleshooting/invoice-email-not-sent"
+                  }
+                ]
+              },
+              {
+                "group": "Anleitungen",
+                "icon": "book-open",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "Kunden hinzufügen",
+                    "path": "de/help-center/guides/add-client"
+                  }
+                ]
               }
             ]
           },
           {
-            "group": "Troubleshooting",
-            "icon": "alert-triangle",
-            "expandable": false,
+            "tab": "Änderungsprotokoll",
+            "icon": "clock",
             "pages": [
               {
-                "title": "Invoice Email Not Sent",
-                "path": "help-center/troubleshooting/invoice-email-not-sent"
+                "title": "Versionshistorie",
+                "path": "de/changelog",
+                "icon": "history"
               }
             ]
-          },
-          {
-            "group": "Guides",
-            "icon": "book-open",
-            "expandable": false,
-            "pages": [
-              {
-                "title": "Add Client",
-                "path": "help-center/guides/add-client"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "Changelog",
-        "icon": "clock",
-        "pages": [
-          {
-            "title": "Release History",
-            "path": "changelog",
-            "icon": "history"
           }
         ]
       }
