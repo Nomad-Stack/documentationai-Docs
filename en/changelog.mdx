@@ -1,113 +1,26 @@
 ---
 title: Changelog
-description: Version history with the 2-3 most recent updates, new features, and changes in Nomadbill.
+description: Track platform updates and new capabilities as NomadBill evolves.
 ---
 
-## Recent Updates
+## Recent updates
 
-Stay informed about the latest improvements to Nomadbill. We release updates regularly to enhance invoicing, multi-currency support, and bookkeeping automation. Check the app version in your settings to ensure you have the newest features.
+Track notable platform updates, documented capabilities, and changes to how NomadBill works. This page starts with the current documented state of the product and will expand as new features ship.
+
+<Update label="2025-01" description="Initial Documentation Release" tags={["documentation"]}>
+
+## Current platform coverage
+
+- Documented invoicing, quotes, incoming invoices, bank sync, email intelligence, PDF templates, custom fields, team management, dashboard, and multi-company support.
+- Documented supported currencies: `EUR`, `USD`, `GBP`, `CHF`, and `AED`.
+- Documented supported invoice languages: `DE`, `EN`, `FR`, and `ES`.
+- Documented subscription plans: Starter at `$17/month` and Professional at `$27/month`, both with a 7-day trial.
+- Documented integrations: Stripe, Plaid, Nylas, Resend, pdfme, and Supabase.
+
+</Update>
 
 <Callout kind="info">
-  Enable auto-updates in your Nomadbill app settings to receive new versions seamlessly.
-</Callout>
 
-<Update label="2024-12-15" description="v2.4.0" tags={["feature", "improvement"]}>
+NomadBill is a continuously updated SaaS platform. This changelog will be updated as new features, integrations, and product changes are released.
 
-## New Features
-
-- Added support for 5 new currencies: TRY, UAH, ZAR, AED, and NGN—now totaling 49 currencies with live ECB rates.
-- Introduced recurring invoice templates with customizable schedules (weekly, bi-weekly, quarterly).
-- New dashboard widget for profit/loss overview across multiple currencies.
-
-## Improvements
-
-- Faster reconciliation of bank inflows with a 40% speed boost.
-- Enhanced mobile app support for invoice approvals on the go.
-
-## Bug Fixes
-
-- Fixed FX rate locking issue for invoices over `{100,000}` EUR equivalent.
-- Resolved notification delays for payment reminders.
-
-</Update>
-
-<Update label="2024-12-01" description="v2.3.1" tags={["bugfix", "security"]}>
-
-## Bug Fixes
-
-- Patched security vulnerability in webhook endpoints—always use HTTPS for integrations.
-- Corrected auto-reconciliation for mixed-currency expenses (e.g., EUR flights booked in USD).
-- Fixed export to CSV where dates shifted for non-GMT timezones.
-
-## Improvements
-
-- Better error messages for invalid IBAN validation during client setup.
-
-</Update>
-
-<Update label="2024-11-20" description="v2.3.0" tags={["feature", "breaking"]}>
-
-## New Features
-
-- One-click US tax form generation (1099-NEC) for US clients.
-- Integrated Stripe and Wise payouts directly from the dashboard.
-- Bulk invoice actions: send, void, or archive up to 50 at once.
-
-## Breaking Changes
-
-- Updated API webhook format—verify your endpoint handles `event_type` as string instead of number.
-
-## Improvements
-
-- Optimized database queries for users with `{>500}` monthly invoices.
-
-</Update>
-
-## Upcoming Roadmap
-
-Track our planned features and priorities.
-
-<Board title="Nomadbill Q1 2025 Roadmap">
-  <BoardColumn title="Planned" color="0" icon="calendar">
-    <BoardCard title="Crypto invoicing" description="Accept BTC, ETH payments with auto-conversion" icon="dollar-sign" dueDate="2025-02-15" />
-    <BoardCard title="EU VAT automation" description="MOSS filing integration" icon="file-text" />
-  </BoardColumn>
-  <BoardColumn title="In Progress" color="1" icon="loader-2">
-    <BoardCard title="AI expense categorization" description="Smart matching for receipts" icon="zap" author="Engineering" />
-  </BoardColumn>
-  <BoardColumn title="Completed" color="2" icon="check-circle">
-    <BoardCard title="Mobile PWA support" description="Installable app for iOS/Android" createdAt="2024-12-15" />
-    <BoardCard title="Team multi-user" description="Shared workspaces" createdAt="2024-12-01" />
-  </BoardColumn>
-</Board>
-
-## How to Update
-
-Follow these steps to get the latest version.
-
-<Steps>
-  <Step title="Check Version" icon="info">
-    Open Nomadbill app → Settings → About. Note your current version (e.g., `v2.4.0`).
-  </Step>
-  <Step title="Enable Updates" icon="toggle-right">
-    Go to Settings → Updates → Toggle "Auto-update" on.
-  </Step>
-  <Step title="Restart App" icon="refresh-cw">
-    Fully close and reopen the app to apply changes.
-  </Step>
-</Steps>
-
-## Stay Updated
-
-<Columns cols={2}>
-  <Card title="Release Notes" icon="book-open" href="https://app.nomadbill.co/changelog">
-    Full details on every release.
-  </Card>
-  <Card title="API Changes" icon="code" href="https://app.nomadbill.co/api-docs">
-    Track breaking changes for integrations.
-  </Card>
-</Columns>
-
-<Callout kind="tip">
-  Join our beta program via Settings → Beta to test features early.
 </Callout>
