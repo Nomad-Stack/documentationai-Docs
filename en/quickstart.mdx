@@ -1,6 +1,8 @@
 ---
 title: Quickstart
-description: Set up your NomadBill account, create your first company, and send your first invoice in minutes.
+description: >-
+  Set up your NomadBill account, create your first company, and send your first
+  invoice in minutes.
 ---
 ## Prerequisites
 
@@ -12,9 +14,7 @@ Before you begin, make sure you have:
 - Bank account details if you plan to add payout or payment information later
 
 <Callout kind="info" collapsed="false">
-
-Start with a 7-day free trial. No credit card is required when you sign up.
-
+  Start with a 7-day free trial. No credit card is required when you sign up.
 </Callout>
 
 ## Sign up and set up your company
@@ -23,27 +23,21 @@ Create your account, then configure the company you will invoice from.
 
 <Steps>
   <Step title="Create your account" icon="users" title-type="p">
+    Visit [app.nomadbill.co](https://app.nomadbill.co/) and sign up with your email and password, or continue with Google.
 
-Visit [app.nomadbill.co](https://app.nomadbill.co/) and sign up with your email and password, or continue with Google.
-
-After you confirm your account, NomadBill signs you in and takes you to company setup.
-
+    After you confirm your account, NomadBill signs you in and takes you to company setup.
   </Step>
 
   <Step title="Create your first company" icon="plus" title-type="p">
+    Enter your company name and choose a company slug. NomadBill uses the slug to identify your company workspace.
 
-Enter your company name and choose a company slug. NomadBill uses the slug to identify your company workspace.
-
-Select a default language from `DE`, `EN`, `FR`, or `ES`, then choose your default currency: `EUR`, `USD`, `GBP`, `CHF`, or `AED`.
-
+    Select a default language from `DE`, `EN`, `FR`, or `ES`, then choose your default currency: `EUR`, `USD`, `GBP`, `CHF`, or `AED`.
   </Step>
 
   <Step title="Add company details in Settings" icon="settings" title-type="p">
+    Open [Settings](/settings) and complete your company profile with your legal company name, address, VAT number, and bank details.
 
-Open [Settings](/settings) and complete your company profile with your legal company name, address, VAT number, and bank details.
-
-You can also configure branding, invoice defaults, PDF templates, and custom fields from the same area.
-
+    You can also configure branding, invoice defaults, PDF templates, and custom fields from the same area.
   </Step>
 </Steps>
 
@@ -53,16 +47,16 @@ Your dashboard gives you a working view of the business right away. It shows rev
 
 Below the main KPIs, you can review revenue, cost, and profit trends over the last six months, accounts receivable ageing, revenue by client, recent activity, and your currency mix.
 
-<Columns cols={3}>
-  <Card title="Dashboard" href="/user-guide/dashboard" icon="bar-chart">
+<Columns cols="3">
+  <Card title="Dashboard" href="/user-guide/dashboard" icon="bar-chart" horizontal="false">
     Review KPIs, trends, ageing data, and recent account activity.
   </Card>
 
-  <Card title="Invoicing" href="/user-guide/invoicing" icon="file-text">
+  <Card title="Invoicing" href="/user-guide/invoicing" icon="file-text" horizontal="false">
     Create invoices, manage customers, and send PDFs by email.
   </Card>
 
-  <Card title="Incoming invoices" href="/user-guide/incoming-invoices" icon="upload">
+  <Card title="Incoming invoices" href="/user-guide/incoming-invoices" icon="upload" horizontal="false">
     Upload supplier invoices and receipts for expense tracking.
   </Card>
 </Columns>
@@ -73,42 +67,32 @@ Create your first invoice from the invoice editor, then send it as a PDF by emai
 
 <Steps>
   <Step title="Open a new invoice" icon="plus" title-type="p">
+    Go to `Invoices` and click `New`, or open `/invoices/new` directly.
 
-Go to `Invoices` and click `New`, or open `/invoices/new` directly.
-
-NomadBill creates a draft invoice for the company you are currently working in.
-
+    NomadBill creates a draft invoice for the company you are currently working in.
   </Step>
 
   <Step title="Set the customer, currency, and language" icon="users" title-type="p">
+    Choose the invoice currency and document language, then enter the customer name and address.
 
-Choose the invoice currency and document language, then enter the customer name and address.
-
-Use one of the supported invoice currencies: `EUR`, `USD`, `GBP`, `CHF`, or `AED`. Use one of the supported invoice languages: `DE`, `EN`, `FR`, or `ES`.
-
+    Use one of the supported invoice currencies: `EUR`, `USD`, `GBP`, `CHF`, or `AED`. Use one of the supported invoice languages: `DE`, `EN`, `FR`, or `ES`.
   </Step>
 
   <Step title="Add line items and VAT" icon="edit" title-type="p">
+    Add each line item with a name, quantity, and unit price. Then set the VAT percentage for the invoice or line items based on your billing needs.
 
-Add each line item with a name, quantity, and unit price. Then set the VAT percentage for the invoice or line items based on your billing needs.
-
-A common default is `19%` VAT. Check the totals before moving on.
-
+    A common default is `19%` VAT. Check the totals before moving on.
   </Step>
 
   <Step title="Preview and send the PDF" icon="send" title-type="p">
+    Preview the generated PDF to confirm layout, customer details, totals, and VAT.
 
-Preview the generated PDF to confirm layout, customer details, totals, and VAT.
-
-When everything looks correct, send the invoice by email or download the PDF and deliver it yourself. If you send it from NomadBill, the email is delivered through Resend.
-
+    When everything looks correct, send the invoice by email or download the PDF and deliver it yourself. If you send it from NomadBill, the email is delivered through Resend.
   </Step>
 </Steps>
 
 <Callout kind="tip" collapsed="false">
-
-NomadBill auto-numbers invoices per company using the `R-00001` format, so your first invoice is numbered automatically.
-
+  NomadBill auto-numbers invoices per company using the `R-00001` format, so your first invoice is numbered automatically.
 </Callout>
 
 ## Log your first expense
@@ -117,27 +101,21 @@ Upload an incoming invoice or receipt to start tracking supplier costs.
 
 <Steps>
   <Step title="Open Incoming Invoices" icon="upload" title-type="p">
+    Go to `Incoming Invoices` or open `/incoming`.
 
-Go to `Incoming Invoices` or open `/incoming`.
-
-This area stores uploaded files in your workspace and keeps them attached to the expense record.
-
+    This area stores uploaded files in your workspace and keeps them attached to the expense record.
   </Step>
 
   <Step title="Upload the file" icon="plus" title-type="p">
+    Upload a supplier invoice or receipt as a PDF or image.
 
-Upload a supplier invoice or receipt as a PDF or image.
-
-NomadBill stores the file in the `incoming-invoices` storage bucket so you can access it again later.
-
+    NomadBill stores the file in the `incoming-invoices` storage bucket so you can access it again later.
   </Step>
 
   <Step title="Complete the expense details" icon="edit" title-type="p">
+    Add the supplier name, amount, category, invoice date, and due date if relevant.
 
-Add the supplier name, amount, category, invoice date, and due date if relevant.
-
-After you save the record, the expense is available for review alongside the original uploaded document.
-
+    After you save the record, the expense is available for review alongside the original uploaded document.
   </Step>
 </Steps>
 
@@ -145,20 +123,21 @@ After you save the record, the expense is available for review alongside the ori
 
 Once your company is set up and your first records are in place, connect the workflows you use most often.
 
-<Columns cols={2}>
-  <Card title="Bank Sync" href="/user-guide/bank-sync" icon="database">
+<Columns cols="2">
+  <Card title="Bank Sync" href="/user-guide/bank-sync" icon="database" horizontal="false">
     Connect supported US and EU banks through Plaid and import up to 365 days of transaction history.
   </Card>
 
-  <Card title="Email Intelligence" href="/user-guide/email-intelligence" icon="zap">
+  <Card title="Email Intelligence" href="/user-guide/email-intelligence" icon="zap" horizontal="false">
     Automate document intake and reduce manual data entry from supplier emails.
   </Card>
 
-  <Card title="Settings" href="/user-guide/settings" icon="settings">
+  <Card title="Settings" href="/user-guide/settings" icon="settings" horizontal="false">
     Configure branding, defaults, PDF templates, and custom fields for each company.
   </Card>
 
-  <Card title="Team Management" href="/user-guide/team-management" icon="users">
+  <Card title="Team Management" href="/user-guide/team-management" icon="users" horizontal="false">
     Invite teammates and manage access across your company workspace.
   </Card>
 </Columns>
+
