@@ -1,0 +1,225 @@
+---
+title: Custom Fields
+description: Add structured metadata to customers, products, invoices, quotes, and bills with 19 custom field types and flexible display rules.
+---
+
+## Custom fields let you capture the details your business needs
+
+Add your own fields to customers, products, invoices, quotes, and incoming invoices so every record matches the way you work. Use custom fields for internal notes, reference numbers, categories, links, calculations, attachments, and AI-generated text without changing your standard workflow.
+
+<Callout kind="info">
+
+Custom fields are company-specific. A field you create is available only inside your company account and only for the entity type you assign it to.
+
+</Callout>
+
+## How custom fields work
+
+Custom fields are built from two parts: a **field definition** and a **field value**. The definition controls where the field appears, what kind of input it accepts, and whether it can be used in tables, forms, or PDF templates. The value is the actual data saved on each record.
+
+You create fields per entity type, then fill them in when you create or edit a record. For example, you might add a customer category field for customers, a SKU field for products, or a project reference field for invoices.
+
+### Entity types
+
+| Entity type | Used for |
+|---|---|
+| `customer` | Store extra details about customers, such as customer number, website, onboarding date, or internal notes. |
+| `product` | Add product-specific metadata such as SKU, category, weight, purchase price, or certifications. |
+| `invoice` | Capture invoice details such as project references, delivery notes, approval status, or calculated values. |
+| `quote` | Track quote-specific information such as revision numbers, validity notes, or sales stages. |
+| `incoming_invoice` | Save supplier bill metadata such as receipt references, approval fields, or attached supporting documents. |
+
+<Callout kind="tip">
+
+Keep field names specific to the record type. A field like `sku` makes sense on products, while `project_reference` is easier to maintain on invoices.
+
+</Callout>
+
+## Field types
+
+Choose a field type based on the kind of data you want users to enter or generate.
+
+| Field type | Description |
+|---|---|
+| `text` | Single-line text input. |
+| `multiline` | Multi-line text area for longer notes. |
+| `email` | Email address input. |
+| `url` | Website or link input. |
+| `phone` | Phone number input. |
+| `number` | Whole number input. |
+| `decimal` | Decimal number input. |
+| `amount` | Currency amount input. |
+| `percent` | Numeric input shown as a percentage. |
+| `date` | Date picker. |
+| `datetime` | Date and time picker. |
+| `boolean` | Checkbox with yes or no state. |
+| `dropdown` | Single-select field with predefined choices. |
+| `multiselect` | Multi-select field with predefined choices. |
+| `autonumber` | Automatically assigned sequential number. |
+| `lookup` | Link to another entity. |
+| `formula` | Calculated field based on an expression. |
+| `attachment` | File upload field. |
+| `ai` | AI-generated text field based on a saved prompt. |
+
+## Field configuration
+
+Field settings control validation, visibility, and ordering. Configure these options when you create a field, then update them later if your workflow changes.
+
+<ParamField body="is_required" param-type="boolean" required="false" show-location="false">
+
+Makes the field mandatory when users fill out a record form.
+
+</ParamField>
+
+<ParamField body="is_unique" param-type="boolean" required="false" show-location="false">
+
+Prevents duplicate values for that field across records of the same entity type.
+
+</ParamField>
+
+<ParamField body="show_in_table" param-type="boolean" required="false" show-location="false">
+
+Shows the field as a column in list views for that entity type.
+
+</ParamField>
+
+<ParamField body="show_in_form" param-type="boolean" required="false" show-location="false">
+
+Shows the field in create and edit forms. This setting is enabled by default.
+
+</ParamField>
+
+<ParamField body="available_in_pdf" param-type="boolean" required="false" show-location="false">
+
+Makes the field available for PDF templates. This setting is enabled by default.
+
+</ParamField>
+
+<ParamField body="sort_order" param-type="integer" required="false" show-location="false">
+
+Controls the order of custom fields within the selected entity type.
+
+</ParamField>
+
+## Creating a custom field
+
+Create fields from the custom fields manager in settings. The fastest path is to define the label and type first, then turn on only the options you need.
+
+<Steps>
+  <Step title="Open Custom Fields" icon="settings">
+
+  Sign in to NomadBill and open the custom fields area in your settings.
+
+  Choose the entity type you want to extend, such as customers, products, invoices, quotes, or incoming invoices.
+
+  </Step>
+  <Step title="Create the field definition" icon="plus">
+
+  Add a new field and enter a **label** that people on your team will recognize. NomadBill also creates a **key** for the field from that label.
+
+  Select the **field type** that matches the data you want to collect. If you choose `dropdown` or `multiselect`, add the choices you want users to pick from.
+
+  </Step>
+  <Step title="Configure visibility and validation" icon="edit">
+
+  Turn on the options you need for that field, such as required, unique, visible in forms, visible in tables, or available in PDF templates.
+
+  If you want the field to appear earlier or later than others, adjust its sort order before saving.
+
+  </Step>
+  <Step title="Save and test the field" icon="check-circle">
+
+  Save the field, then open a record of the same entity type and confirm the input appears where you expect it.
+
+  Success looks like the field showing in the form or table view based on the options you enabled.
+
+  </Step>
+</Steps>
+
+<Callout kind="alert">
+
+You cannot change a field's type after it has been created. If you need a different type, create a new field and move your workflow to that new field.
+
+</Callout>
+
+## Using custom fields in records
+
+After you create a field, NomadBill shows it on records of that entity type when `show_in_form` is enabled. Users can enter values while creating a new record or update them later from the edit view.
+
+Custom field values are saved per record. A product-level field applies only to products, and an invoice-level field applies only to invoices. If a field is also marked `show_in_table`, the value can appear in list views to help you scan and filter records more quickly.
+
+Custom fields also support detail-page editing patterns. That makes them useful for information you do not always enter upfront, such as internal notes, follow-up dates, or supporting attachments.
+
+## Auto-number fields
+
+Use auto-number fields when you need sequential IDs that NomadBill assigns automatically. This works well for customer numbers, product numbers, internal references, or other structured IDs that should not be entered manually.
+
+<Callout kind="info">
+
+Auto-number fields support three setup options:
+
+- **Prefix** adds text before the number, such as `K-` or `P-`.
+- **Padding** adds leading zeroes to reach a fixed width.
+- **Start** sets the first number in the sequence.
+
+A customer number might start at `K-1000`, while a product number might use `P-00001`.
+
+</Callout>
+
+Each time a new record is created, NomadBill assigns the next number in the sequence for that field. This reduces duplicate numbering and keeps records consistent.
+
+## Formula fields
+
+Use formula fields when a value should be calculated instead of entered manually. Formula fields are useful for totals, markups, percentage-based values, or record-specific calculations that depend on other fields.
+
+A formula expression can reference built-in numeric values and custom fields. Available variables include:
+
+- `subtotal`
+- `vat_percentage`
+- `total`
+- `unit_price`
+- `custom.KEY`
+
+For example, you can use `custom.discount_rate * subtotal / 100` to calculate a discount amount when `discount_rate` is stored in another custom field. Formula values are calculated automatically when NomadBill saves custom field values.
+
+<Callout kind="tip">
+
+Keep formula field keys simple and predictable so expressions are easier to read. A key such as `discount_rate` is easier to use in `custom.discount_rate` than a long or inconsistent naming style.
+
+</Callout>
+
+## AI-generated fields
+
+Use AI-generated fields when you want NomadBill to write text for you based on a saved prompt. This is useful for internal summaries, draft descriptions, follow-up notes, or standardized text that should be generated from record data.
+
+Before you can use an AI field, create an AI prompt in the custom fields manager. Then connect that prompt to the field when you create the field definition. On records, users can generate or re-generate the text directly from the field input.
+
+NomadBill supports these AI models for prompts:
+
+- `google/gemini-3-flash-preview`
+- `google/gemini-2.5-flash`
+- `google/gemini-2.5-pro`
+- `openai/gpt-5-mini`
+- `openai/gpt-5`
+
+<Callout kind="info">
+
+AI-generated fields store text output. Review generated content before using it in customer-facing documents.
+
+</Callout>
+
+## Custom fields in PDF templates
+
+Make a field available in PDF output by enabling `available_in_pdf` on the field definition. After that, you can place the field in your document templates and use the custom value when generating invoices, quotes, or other PDFs.
+
+If you plan to include custom fields in printed documents, set up the field before finalizing your template. That keeps your template structure stable and avoids rework later.
+
+Read [PDF Templates](/en/user-guide/pdf-templates) for template setup and document layout options.
+
+## Related guides
+
+<Columns cols={3}>
+  <Card title="Manage invoices" href="/en/user-guide/invoicing" icon="folder" cta="Open invoicing guide" />
+  <Card title="Manage products" href="/en/user-guide/products" icon="package" cta="Open products guide" />
+  <Card title="Design PDF templates" href="/en/user-guide/pdf-templates" icon="book-open" cta="Open PDF templates guide" />
+</Columns>

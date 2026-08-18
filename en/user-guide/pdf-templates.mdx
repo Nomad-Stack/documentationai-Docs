@@ -1,0 +1,175 @@
+---
+title: PDF Templates
+description: Design custom PDF layouts for invoices, quotes, and receipts with drag-and-drop editing, reusable templates, and brand colors.
+---
+
+## Design custom PDF layouts for your documents
+
+PDF templates let you control how invoices, quotes, and incoming documents look when you preview, export, or send them. You can start from a blank layout, choose a pre-built design, or import a JSON template, then adjust the result in a drag-and-drop editor.
+
+<Callout kind="info">
+
+Manage templates in **Settings → Templates**. NomadBill keeps separate template lists for invoices, quotes, and incoming documents, so you can design each document type independently.
+
+</Callout>
+
+## How PDF templates work
+
+Each PDF template stores the full layout for one document type. That includes the page structure, text blocks, tables, images, and styling used to generate the final PDF.
+
+When you create or edit an invoice, quote, or incoming document, you can use the default template for that document type or choose a different saved template. This gives you a consistent way to keep everyday documents on-brand while still allowing alternate layouts when needed.
+
+NomadBill supports three document types:
+
+| Document type | Used for | Where you select it |
+| --- | --- | --- |
+| Invoice | Outgoing invoices you send to customers | Invoice form and preview |
+| Quote | Quotes or offers you send before invoicing | Quote form and preview |
+| Incoming | Incoming invoices, supplier bills, or receipts | Incoming document flows |
+
+## Document types
+
+Templates are grouped by document type because each type has a different purpose and may need different wording or layout emphasis.
+
+| Type | Typical title in PDF | Common use |
+| --- | --- | --- |
+| `invoice` | Invoice | Billing a customer for completed work or delivered goods |
+| `quote` | Quote | Sending a price proposal before work starts |
+| `incoming` | Receipt or incoming invoice | Recording supplier expenses or uploaded receipts |
+
+<Callout kind="tip">
+
+If you want different layouts for the same document type, create multiple templates and set one as the default. You can still pick another template for a specific document when needed.
+
+</Callout>
+
+## Creating a template
+
+You can create templates in three ways: start blank, start from the gallery, or import an existing JSON file.
+
+<Steps>
+  <Step title="Create a blank template" icon="plus">
+
+  Open **Settings → Templates**, choose the document type tab, then create a new template and select **Blank**.
+
+  A blank template starts from NomadBill's default layout for that document type. This is the fastest option when you want full control but still want the required standard fields already mapped.
+
+  </Step>
+  <Step title="Start from the gallery" icon="book-open">
+
+  Open **Settings → Templates**, choose the document type tab, then create a new template and select **Gallery**.
+
+  Pick one of the seven built-in templates if you want a finished layout you can adapt. This is the best starting point when you want a professional layout without building every section from scratch.
+
+  </Step>
+  <Step title="Import a JSON template" icon="upload">
+
+  Open **Settings → Templates**, choose the document type tab, then create a new template and select **Import from JSON**.
+
+  Upload a `.json` file that contains a valid template structure. Use this path if you already have a compatible template file and want to reuse it across companies or environments.
+
+  </Step>
+</Steps>
+
+## Template gallery
+
+NomadBill includes seven pre-built templates you can use as a starting point.
+
+| Template | Style | Best for |
+| --- | --- | --- |
+| Classic | Balanced default with a brand-color header | General-purpose invoices and quotes |
+| Modern | Coloured top bar with a bold title | Brand-forward layouts |
+| Minimal | Monochrome layout with no colored accents | Simple, low-ink documents |
+| White | Clean printable layout with a payment method block | Formal invoices and print workflows |
+| Blue | Blue accents with a filled total row | High-contrast totals and summary sections |
+| Green | Green left accent bar | Alternative branded layouts |
+| Elegant | Large title with a subtle grey table | Polished client-facing documents |
+
+## Editing a template
+
+The template editor opens in a full-screen designer so you can build and adjust layouts visually. You can drag fields into position, resize them, change text, and refine the visual structure without editing the underlying JSON by hand.
+
+Available field types include text, multi-variable text, tables, lists, lines, shapes, images, signatures, dates, checkboxes, radio groups, QR codes, and barcodes. This gives you enough flexibility to create standard invoice layouts as well as more customized document designs.
+
+Most users will spend their time adjusting positions, spacing, labels, and table presentation. If you keep the standard field names intact, NomadBill continues to fill those fields automatically when it generates the PDF.
+
+<Callout kind="info">
+
+The document item list is typically rendered through the `items` table field. If you remove or rename that field, line items will no longer appear in the generated PDF.
+
+</Callout>
+
+## Standard fields
+
+NomadBill fills specific field names automatically when it renders a PDF. Keep these names unchanged if you want the application to keep mapping document data into the template.
+
+| Field name | Contains |
+| --- | --- |
+| `company_logo` | Your company logo image |
+| `company_name` | Your company display name |
+| `company_address` | Your company address, usually multi-line |
+| `company_vat` | Your VAT or tax ID label and value |
+| `doc_title` | Document title such as Invoice, Quote, or Receipt |
+| `doc_number` | Document number |
+| `doc_date` | Issue date label and value |
+| `doc_due_date` | Due date label and value |
+| `bill_to_label` | Customer section label |
+| `customer_name` | Customer name |
+| `customer_address` | Customer address |
+| `items` | Table of line items |
+| `subtotal_label` | Subtotal label |
+| `subtotal` | Subtotal amount |
+| `vat_label` | VAT label |
+| `vat_amount` | VAT amount |
+| `total_label` | Total label |
+| `total` | Total amount |
+| `bank_label` | Payment details section label |
+| `bank_details` | Bank or payment instructions |
+| `signature` | Signature image |
+| `footer` | Footer text |
+
+## Brand colors
+
+Gallery templates can apply your company brand colors automatically. NomadBill reads your primary and secondary colors from company settings and uses them to recolor supported template elements.
+
+This works best when you want consistent branding across all invoices and quotes without manually updating every text block, header, or accent element. Depending on the template, the accent color is usually applied to headers, bars, totals, or background highlights.
+
+Some branded layouts also support keeping text black while still applying your brand palette to accent areas. Use that approach if your brand colors are light or if readability is more important than full-color text styling.
+
+## Multi-language templates
+
+Templates support four languages: DE, EN, FR, and ES. Language changes update built-in labels such as the document title, date labels, subtotal, VAT, total, and other standard text used in default templates.
+
+NomadBill translates template labels separately from the layout itself. That means you can switch languages without losing positions, spacing, colors, or other design changes you made in the editor.
+
+If you work in multiple languages, create one template per language when you need complete control over wording and formatting. If the layout stays the same, you can reuse the same design and rely on translated labels where appropriate.
+
+## Custom fields in templates
+
+Custom fields let you add company, customer, or document-specific values to your PDFs. In templates, these values use field names in the format `cf_{entity}_{key}`.
+
+For example, a custom field tied to an invoice can be mapped with a field name such as `cf_invoice_project_reference`. A customer-level custom field follows the same pattern with the customer entity segment.
+
+Read [Custom Fields](/en/user-guide/custom-fields) before adding these placeholders so your field keys and template field names stay aligned.
+
+<Callout kind="tip">
+
+If a custom field appears blank in the PDF, first confirm that the field exists, the key matches exactly, and the field name in the template uses the expected `cf_{entity}_{key}` pattern.
+
+</Callout>
+
+## Setting a default template
+
+Each document type can have one default template. The default template is used automatically unless you choose a different one on the document form or preview screen.
+
+To change the default, open **Settings → Templates**, find the template in the correct document type tab, and use **Set default**. The updated template becomes the new starting point for that document type across your company.
+
+This is useful when you are rolling out a refreshed layout. Set the new template as default first, then keep older templates available for special cases or historical consistency.
+
+## Related guides
+
+<Columns cols={3}>
+  <Card title="Invoicing" href="/en/user-guide/invoicing" icon="book-open" cta="Open guide" />
+  <Card title="Quotes" href="/en/user-guide/quotes" icon="arrow-right" cta="View related guide" />
+  <Card title="Custom Fields" href="/en/user-guide/custom-fields" icon="settings" cta="Learn how fields map" />
+</Columns>

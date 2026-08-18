@@ -1,0 +1,114 @@
+---
+title: Team Management
+description: Invite teammates, assign admin, editor, or viewer roles, and manage access across each company workspace in NomadBill.
+---
+
+## Team Management lets you control who can access each company workspace
+
+Use Team Management to invite teammates, assign the right role for their work, and keep access limited to the companies they belong to. You can give full administrative access to company owners, editing access to people who create documents, and read-only access to anyone who only needs visibility.
+
+<Callout kind="info">
+
+Team access is managed per company. If you switch to a different company, you are managing a different team.
+
+</Callout>
+
+## How team access works
+
+A team in NomadBill belongs to a single company. When you add someone to your team, you are giving that person access to that specific company workspace, not to every company in your account.
+
+This matters if you work across multiple companies. The same person can belong to more than one company and have a different role in each one.
+
+NomadBill also uses role-based permissions to control what each team member can do. A member's role determines whether they can manage the team, change company settings, edit documents, or only view company data.
+
+<Callout kind="tip">
+
+Use **viewer** for accountants, clients, or internal stakeholders who need visibility without edit access. Use **editor** for teammates who create invoices, quotes, or other documents.
+
+</Callout>
+
+## Team roles
+
+Choose the role that matches the work each teammate needs to do.
+
+| Role | Access level | What this role can do |
+| --- | --- | --- |
+| **admin** | Full access | Manage company settings, invite and manage team members, and access all company documents and data |
+| **editor** | Working access | Create and edit documents such as invoices and quotes, but cannot manage company settings or the team |
+| **viewer** | Read-only access | View company data and documents without making changes |
+
+<Callout kind="alert">
+
+Only assign **admin** to people who should be able to manage access for the whole company workspace.
+
+</Callout>
+
+## Inviting a team member
+
+Admins can invite new team members by email and assign a role during the invitation.
+
+<Steps>
+  <Step title="Open Team Management" icon="users">
+
+  Sign in to NomadBill, switch to the company you want to manage, and open the **Team** page.
+
+  </Step>
+  <Step title="Start a new invitation" icon="plus">
+
+  Select the option to invite a team member. NomadBill opens an invitation form where you enter the teammate's email address and choose their role.
+
+  </Step>
+  <Step title="Choose the right role" icon="shield">
+
+  Select **admin**, **editor**, or **viewer** based on the access the person needs. The assigned role is applied when they accept the invitation.
+
+  </Step>
+  <Step title="Send the invitation" icon="send">
+
+  Submit the invitation. NomadBill generates a unique invitation token and sends the invitee a link they can use to join the company.
+
+  </Step>
+</Steps>
+
+After you send the invitation, the invited person is not yet a team member. They become a member only after they accept the invitation link.
+
+## Accepting an invitation
+
+Each invitation includes a unique token-based link. When the invitee opens that link, NomadBill takes them through the invitation acceptance flow and adds them to the company with the assigned role.
+
+If the invitee already works in NomadBill, they still need to accept the invitation for that company. Company membership is separate, so joining one company does not automatically grant access to another.
+
+A successful acceptance adds the person to the team for that company. After that, they can switch into the company workspace and use NomadBill based on their assigned role.
+
+## Managing existing members
+
+Once someone has joined the team, admins can manage that membership from the Team page.
+
+### Change a member's role
+
+Update a role when someone's responsibilities change. For example, promote an editor to admin if they need to manage settings and team access, or move an editor to viewer if they no longer need to create documents.
+
+Role changes apply to the current company only. If the same person belongs to another company, their access there stays the same.
+
+### Remove a member
+
+Remove a team member when they should no longer access the company workspace. Removing a member revokes their access to that company's data, documents, and settings.
+
+This does not remove the person from other companies they belong to. It only affects the currently selected company.
+
+<Callout kind="info">
+
+If someone says they cannot see invoices, quotes, or settings after joining, first confirm that they accepted the invitation and that you are both working in the same company workspace.
+
+</Callout>
+
+## Related guides
+
+<Columns cols={2}>
+  <Card title="Settings" href="/en/user-guide/settings" icon="settings" cta="Open guide">
+    Manage company-level configuration that admins can access.
+  </Card>
+  <Card title="Invoicing" href="/en/user-guide/invoicing" icon="file-text" cta="Open guide">
+    See what editors and admins can create and manage in day-to-day billing work.
+  </Card>
+</Columns>
