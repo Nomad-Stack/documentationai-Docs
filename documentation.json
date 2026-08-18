@@ -45,6 +45,72 @@
                 ]
               },
               {
+                "group": "User Guide",
+                "icon": "book-open",
+                "pages": [
+                  {
+                    "title": "Dashboard",
+                    "path": "en/user-guide/dashboard",
+                    "icon": "layout-dashboard"
+                  },
+                  {
+                    "title": "Customers",
+                    "path": "en/user-guide/customers",
+                    "icon": "users"
+                  },
+                  {
+                    "title": "Products",
+                    "path": "en/user-guide/products",
+                    "icon": "package"
+                  },
+                  {
+                    "title": "Invoicing",
+                    "path": "en/user-guide/invoicing",
+                    "icon": "file-text"
+                  },
+                  {
+                    "title": "Quotes",
+                    "path": "en/user-guide/quotes",
+                    "icon": "file"
+                  },
+                  {
+                    "title": "Incoming Invoices",
+                    "path": "en/user-guide/incoming-invoices",
+                    "icon": "inbox"
+                  },
+                  {
+                    "title": "Bank Sync",
+                    "path": "en/user-guide/bank-sync",
+                    "icon": "landmark"
+                  },
+                  {
+                    "title": "Email Intelligence",
+                    "path": "en/user-guide/email-intelligence",
+                    "icon": "mail"
+                  },
+                  {
+                    "title": "PDF Templates",
+                    "path": "en/user-guide/pdf-templates",
+                    "icon": "file-type"
+                  },
+                  {
+                    "title": "Custom Fields",
+                    "path": "en/user-guide/custom-fields",
+                    "icon": "sliders"
+                  },
+                  {
+                    "title": "Team Management",
+                    "path": "en/user-guide/team-management",
+                    "icon": "user-cog"
+                  },
+                  {
+                    "title": "Settings",
+                    "path": "en/user-guide/settings",
+                    "icon": "settings"
+                  }
+                ]
+              },
+              {
                 "group": "Advanced",
                 "icon": "settings",
                 "pages": [
@@ -83,7 +149,7 @@
                 "expandable": false,
                 "pages": [
                   {
-                    "title": "How to Create Invoice",
+                    "title": "How do I create an invoice?",
                     "path": "en/help-center/faq/how-to-create-invoice"
                   }
                 ]
@@ -105,7 +171,7 @@
                 "expandable": false,
                 "pages": [
                   {
-                    "title": "Add Client",
+                    "title": "Add a Customer",
                     "path": "en/help-center/guides/add-client"
                   }
                 ]
