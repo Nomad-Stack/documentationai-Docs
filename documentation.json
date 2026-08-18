@@ -2,10 +2,14 @@
   "name": "Nomadbill",
   "colors": {
     "light": {
-      "brand": "#B3D4BA"
+      "brand": "#113B36",
+      "heading": "#1a1a1a",
+      "text": "#374151"
     },
     "dark": {
-      "brand": "#252D2B"
+      "brand": "#b3d4ba",
+      "heading": "#f2f2f2",
+      "text": "#c1c1c1"
     }
   },
   "navigation": {
@@ -373,5 +377,8 @@
         ]
       }
     ]
-  }
+  },
+  "logo-dark": "https://blob-cdn.documentation.ai/org-38452da2-c600-4666-91f2-cd9f92fa8ac3/doc-07b6e514-e33f-412c-bb29-50d6ff980bf0/1787059272630-jv7iyuexqs-nomadbill-logo-white.png?fm=auto&auto=compress%2Cformat",
+  "logo-light": "https://blob-cdn.documentation.ai/org-38452da2-c600-4666-91f2-cd9f92fa8ac3/doc-07b6e514-e33f-412c-bb29-50d6ff980bf0/1787059285842-3ssozbew651-nomadbill-logo.webp?fm=auto&auto=compress%2Cformat",
+  "favicon": "https://blob-cdn.documentation.ai/org-38452da2-c600-4666-91f2-cd9f92fa8ac3/doc-07b6e514-e33f-412c-bb29-50d6ff980bf0/1787059313977-ihd5b3wl5db-favicon--1-.ico?fm=auto&auto=compress%2Cformat"
 }
