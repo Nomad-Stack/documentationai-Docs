@@ -1,0 +1,128 @@
+---
+title: Customers
+description: Manage customer records with contact details, custom fields, and reuse across invoices and quotes.
+---
+
+## Keep your customer details in one place
+
+Customers store the contact information you reuse across your billing workflow. Add each customer once on `/customers`, keep their details up to date, and use those records again when you create invoices and quotes.
+
+Company owners and team members can manage customers in their company workspace. The customer list is sorted alphabetically by name, and the table shows the standard contact fields plus any custom fields configured to appear in the table.
+
+## Customer fields
+
+Every customer record includes the core contact fields below.
+
+<ParamField body="name" param-type="string" required="true" show-location="false">
+
+The customer's display name. NomadBill requires this field and uses it as the primary label in the customer list.
+
+</ParamField>
+
+<ParamField body="email" param-type="string" required="false" show-location="false">
+
+The customer's email address.
+
+</ParamField>
+
+<ParamField body="phone" param-type="string" required="false" show-location="false">
+
+The customer's phone number.
+
+</ParamField>
+
+<ParamField body="address" param-type="string" required="false" show-location="false">
+
+The customer's address. In the create and edit dialog, this field uses a multiline text area so you can enter a full billing address.
+
+</ParamField>
+
+<Callout kind="info">
+
+The customer list shows **name**, **email**, and **phone** by default. It also shows customer custom fields where table visibility is enabled.
+
+</Callout>
+
+## Creating a customer
+
+Add a customer from the customers page, then fill in the contact details you want to reuse later.
+
+<Steps>
+  <Step title="Open the customers page" icon="users">
+
+  Go to `/customers` in your workspace.
+
+  You should see a customer table sorted by name. If you already created customer custom fields with table visibility enabled, those columns also appear here.
+
+  </Step>
+  <Step title="Start a new customer record" icon="plus">
+
+  Create a new customer from the page action.
+
+  NomadBill opens a create dialog with the standard customer fields and any custom fields assigned to the `customer` entity.
+
+  </Step>
+  <Step title="Enter the required and optional details" icon="edit">
+
+  Fill in the customer information:
+
+  - **Name** is required.
+  - **Email** is optional.
+  - **Phone** is optional.
+  - **Address** is optional and supports multiline text.
+  - **Custom fields** appear when you configured them for customers.
+
+  Demo workspaces may already include seeded fields such as `kundennummer`, `kundenkategorie`, `website`, `kunden_seit`, `notizen_intern`, `praeferierte_sprachen`, and `newsletter`.
+
+  </Step>
+  <Step title="Save and verify the result" icon="check-circle">
+
+  Save the customer.
+
+  After saving, the customer appears in the list view under the correct alphabetical position. If a custom field is configured to show in tables, its value also appears as a column in the row.
+
+  </Step>
+</Steps>
+
+## Editing and deleting customers
+
+Update a customer from the same dialog used for creation. You can change the standard contact fields and any assigned customer custom fields at any time.
+
+When you delete a customer, NomadBill asks you to confirm the action before removing the record. Use deletion carefully if you rely on that customer information in your regular billing process.
+
+## Using customers in invoices
+
+Customers are designed to save time when you create invoices. Instead of retyping contact details for every document, you select or reuse an existing customer record.
+
+Invoices store the customer name in the `customer_name` field. That means the customer record provides the source name you use in invoice workflows, while keeping your customer list organized in one place.
+
+<Callout kind="tip">
+
+Set up customers before you start sending invoices regularly. A clean customer list makes invoice creation faster and reduces naming inconsistencies across documents.
+
+</Callout>
+
+## Custom fields for customers
+
+Customer custom fields let you track information beyond the standard contact fields. NomadBill assigns these fields to the `customer` entity type, which means they appear in customer forms and, when configured, in the customer table.
+
+Use custom fields for data such as internal customer numbers, categories, websites, start dates, language preferences, notes, or newsletter opt-in status. Demo data may include fields like `kundennummer` as an autonumber, `kundenkategorie` as a dropdown, `website` as a URL, `kunden_seit` as a date, `notizen_intern` as multiline text, `praeferierte_sprachen` as a multiselect, and `newsletter` as a boolean.
+
+For setup instructions and field types, see [Custom fields](/user-guide/custom-fields).
+
+## Where to go next
+
+<Columns cols={2}>
+  <Card
+    title="Invoicing"
+    href="/user-guide/invoicing"
+    icon="book-open"
+    cta="Open invoicing guide"
+  />
+  <Card
+    title="Custom fields"
+    href="/user-guide/custom-fields"
+    icon="settings"
+    cta="Configure custom fields"
+  />
+</Columns>

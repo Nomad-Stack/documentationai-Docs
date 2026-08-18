@@ -1,0 +1,246 @@
+---
+title: Email Intelligence
+description: Automatically classify incoming emails, extract document data with AI, and match emails to invoices, quotes, and receipts.
+---
+
+## Turn your shared mailbox into a document inbox
+
+Email Intelligence gives your company a dedicated mailbox that watches incoming messages, identifies business documents, extracts key data, and suggests links to the right records in NomadBill. It is designed for the way freelancers and small teams already work: suppliers send invoices by email, clients reply to quotes, and payment confirmations arrive in the same inbox.
+
+## Agent mailbox
+
+Each company gets one dedicated agent mailbox in the format `agent_name@agent.nomadbill.co`. If your workspace uses a custom agent domain, the mailbox uses that domain instead.
+
+Only the company owner can provision the mailbox. During setup, NomadBill normalizes the agent name into a mailbox-safe format by converting it to lowercase, replacing spaces with hyphens, and limiting the slug to 40 characters.
+
+Once provisioning starts, NomadBill:
+
+- creates a mail grant with Nylas
+- stores the mailbox connection in the `company_email_accounts` record
+- registers a webhook for incoming mail events
+
+The webhook listens for these events:
+
+- `message.created`
+- `message.updated`
+- `grant.expired`
+
+NomadBill registers the webhook at `/api/public/nylas-webhook`. During the initial webhook handshake, the `GET` handler returns the `challenge` query parameter exactly as received.
+
+## How incoming emails are processed
+
+Every new message follows the same processing flow so results stay consistent and duplicate work is avoided.
+
+<Steps>
+  <Step title="Receive the webhook event" icon="zap">
+
+  Nylas sends a webhook event to `/api/public/nylas-webhook` when a message is created or updated, or when a grant expires.
+
+  NomadBill can verify the `x-nylas-signature` header with HMAC-SHA256. Signature verification is optional, but you should treat it as the recommended production setup.
+
+  </Step>
+
+  <Step title="Fetch the full email" icon="download">
+
+  After a valid event arrives, NomadBill fetches the full email content and metadata from the connected mailbox.
+
+  The system also guards against duplicate processing. If the same email was already completed, already skipped, or is still being processed within a five-minute window, NomadBill does not analyze it again.
+
+  </Step>
+
+  <Step title="Skip messages that should not be analyzed" icon="shield">
+
+  NomadBill skips messages sent from the agent mailbox itself. This self-email guard prevents loops and avoids analyzing system-generated mail.
+
+  Outbound or irrelevant messages can also be excluded during classification if they do not represent a usable business document.
+
+  </Step>
+
+  <Step title="Download attachments and message content" icon="paperclip">
+
+  The processor gathers the email body and any available attachments before running document analysis.
+
+  This gives the classifier enough context to recognize whether the message contains an invoice, receipt, quote, confirmation, or another document type.
+
+  </Step>
+
+  <Step title="Run AI classification and extraction" icon="code">
+
+  NomadBill sends the email content to the AI pipeline using `google/gemini-3.6-flash` through the Lovable AI gateway.
+
+  The model classifies the document and extracts structured fields such as totals, dates, names, and reference numbers so you can review them inside NomadBill instead of copying data by hand.
+
+  </Step>
+
+  <Step title="Compute matching suggestions" icon="check-circle">
+
+  After extraction, the matching engine compares the email against invoices, quotes, incoming invoices, bank transactions, and customers in your company.
+
+  Each possible match gets a score. NomadBill keeps suggestions that meet the minimum threshold and shows the strongest candidates first.
+
+  </Step>
+
+  <Step title="Store the result and preserve your decisions" icon="database">
+
+  The final analysis is stored with the email record, including extracted data and suggested links.
+
+  If you already linked or dismissed a suggestion, NomadBill preserves that decision on later re-analysis instead of resetting your work.
+
+  </Step>
+</Steps>
+
+## Document classification
+
+Email Intelligence classifies each analyzed message into one of these document types:
+
+- `incoming_invoice`
+- `receipt`
+- `outgoing_invoice`
+- `quote`
+- `payment_confirmation`
+- `reminder`
+- `contract`
+- `other`
+
+The classification helps NomadBill decide what actions to offer next. For example, only `incoming_invoice` and `receipt` emails can be turned directly into an incoming invoice record.
+
+## AI-extracted data
+
+The analysis result can include the following extracted fields.
+
+<ParamField body="doc_type" param-type="string" required="true" show-location="false">
+The detected document type for the email.
+</ParamField>
+
+<ParamField body="confidence" param-type="number" show-location="false">
+The model confidence score for the classification result.
+</ParamField>
+
+<ParamField body="summary" param-type="string" show-location="false">
+A short summary of what the email or attachment appears to contain.
+</ParamField>
+
+<ParamField body="document_number" param-type="string" show-location="false">
+The main invoice, receipt, quote, or confirmation number detected in the document.
+</ParamField>
+
+<ParamField body="reference_numbers" param-type="array" show-location="false">
+Additional reference identifiers found in the email or attachment.
+</ParamField>
+
+<ParamField body="total_amount" param-type="number" show-location="false">
+The total gross amount detected for the document.
+</ParamField>
+
+<ParamField body="net_amount" param-type="number" show-location="false">
+The net amount before VAT, when the document provides it.
+</ParamField>
+
+<ParamField body="vat_amount" param-type="number" show-location="false">
+The VAT amount extracted from the document.
+</ParamField>
+
+<ParamField body="vat_percentage" param-type="number" show-location="false">
+The VAT rate when it can be identified reliably.
+</ParamField>
+
+<ParamField body="currency" param-type="string" show-location="false">
+The detected currency code for the document amount.
+</ParamField>
+
+<ParamField body="document_date" param-type="string" show-location="false">
+The issue date found in the document.
+</ParamField>
+
+<ParamField body="due_date" param-type="string" show-location="false">
+The payment due date, when present.
+</ParamField>
+
+<ParamField body="vendor_name" param-type="string" show-location="false">
+The supplier or sender name associated with the document.
+</ParamField>
+
+<ParamField body="customer_name" param-type="string" show-location="false">
+The customer name referenced in the document.
+</ParamField>
+
+<ParamField body="iban" param-type="string" show-location="false">
+The bank account number detected in the email or document.
+</ParamField>
+
+<ParamField body="category" param-type="string" show-location="false">
+A broad category assigned during analysis.
+</ParamField>
+
+<ParamField body="ocr_text" param-type="string" show-location="false">
+The extracted document text used for downstream classification and matching.
+</ParamField>
+
+<ParamField body="line_items" param-type="array" show-location="false">
+Detected line items from the document, when the attachment contains itemized detail.
+</ParamField>
+
+## Matching and suggestions
+
+After analysis, NomadBill looks for related records in your workspace and scores each candidate. A suggestion must reach a minimum score of `0.35` to appear, and the system returns up to 12 suggestions per email.
+
+The matching engine evaluates several record types:
+
+- invoices
+- quotes
+- incoming invoices
+- bank transactions
+- customers
+
+For invoices, the strongest signals are document number, amount, recipient, and customer identity. The scoring model adds points for:
+
+- number found: `+0.55`
+- amount within about `±0.5%` or `±0.02`: `+0.30`
+- currency match: `+0.05`
+- date within 14 days: `+0.10`
+- `sent_to` contains the sender email: `+0.25`
+- customer name match: `+0.15`
+
+For bank transactions, the engine focuses on payment evidence and counterpart identity. It adds points for:
+
+- amount match: `+0.45`
+- candidate number found: `+0.35`
+- counterpart name match: `+0.20`
+- date within 30 days: `+0.10`
+
+For customers, the engine tries to identify who the email belongs to before suggesting operational records. It adds points for:
+
+- exact email match: `+0.80`
+- same domain: `+0.50`
+- name match: `+0.30`
+
+These scores are additive, so strong matches usually combine several signals at once instead of depending on one field.
+
+## Managing email links
+
+NomadBill keeps track of how each email relates to your records. Links can be in one of three states:
+
+- **Suggested** — NomadBill found a likely match and is waiting for your review.
+- **Linked** — You confirmed that the email belongs to a specific invoice, quote, receipt, transaction, or customer.
+- **Dismissed** — You rejected a suggestion, and that decision is preserved if the email is analyzed again.
+
+Use the Email Intelligence card on the email view to review extracted fields, inspect suggestions, and confirm or dismiss matches. When an email is already connected to a record, linked email activity also appears from the other side on invoice, quote, receipt, transaction, and customer detail pages.
+
+If the document type is `incoming_invoice` or `receipt`, you can create an incoming invoice directly from the email. The `createReceiptFromEmail` action uses the extracted document data to prefill the new record and avoids creating duplicates when the email was already processed or intentionally skipped.
+
+<Callout kind="info">
+
+Email Intelligence updates in near real time. NomadBill listens for mailbox activity through Supabase Realtime on `company_email_accounts.last_event_at` and falls back to a 30-second polling cycle when needed.
+
+</Callout>
+
+## Related guides
+
+<Columns cols={2}>
+  <Card title="Invoicing" href="/user-guide/invoicing" icon="file-text" cta="Open guide">
+    Manage outgoing invoices and understand how linked emails support follow-up and payment tracking.
+  </Card>
+  <Card title="Incoming invoices" href="/user-guide/incoming-invoices" icon="folder" cta="Open guide">
+    Review supplier bills, create records from email analysis, and keep purchase documents organized.
+  </Card>
+</Columns>

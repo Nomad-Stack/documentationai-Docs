@@ -1,0 +1,160 @@
+---
+title: Quotes
+description: Create, send, and convert quotes into invoices with multi-currency support and PDF generation.
+---
+
+## Turn project estimates into client-ready quotes
+
+Quotes let you prepare an offer, send it to a client, and convert it into an invoice once the client accepts. The quote workflow uses the same core data as invoices, including customer details, line items, VAT, currency, language, PDF output, email delivery, custom fields, CSV export, and custom PDF templates.
+
+## Quote statuses
+
+Each quote tracks two separate states: **status** and **payment status**. Together they tell you where the quote is in your sales process and whether any payment connected to it has been completed.
+
+### Quote status
+
+| Status | What it means |
+|---|---|
+| **draft** | You are still preparing the quote. The quote has not been finalized or converted. |
+| **sent** | You have sent the quote to the client by email. |
+| **converted** | You converted the quote into an invoice. A new invoice record was created from the quote data. |
+
+### Payment status
+
+| Payment status | What it means |
+|---|---|
+| **unpaid** | No payment has been recorded. |
+| **pending** | A payment has been initiated but not completed yet. |
+| **paid** | Payment completed successfully. |
+| **failed** | A payment attempt was made but did not succeed. |
+
+<Callout kind="info">
+
+A quote can be marked as `sent` without being paid, and it can be converted into an invoice even if its payment status is still `unpaid`. Status and payment status are tracked independently.
+
+</Callout>
+
+## Creating a quote
+
+Create a quote the same way you build an invoice, then save it as an offer for the client.
+
+<Steps>
+  <Step title="Add the customer" icon="users">
+
+  Select an existing customer or enter the customer details directly on the quote. Use the same customer information fields you use for invoices, including the customer name and address.
+
+  </Step>
+  <Step title="Set the quote details" icon="settings">
+
+  Enter the quote date, due date, currency, and language. Quotes support the same currencies and languages as invoices.
+
+  Supported currencies:
+  
+  - `EUR`
+  - `USD`
+  - `GBP`
+  - `CHF`
+  - `AED`
+
+  Supported languages:
+  
+  - `DE`
+  - `EN`
+  - `FR`
+  - `ES`
+
+  </Step>
+  <Step title="Add line items and VAT" icon="edit">
+
+  Add the products or services you want to offer, then review quantities, prices, and VAT. The quote stores line items in the same structure used by invoices, so totals and tax calculations follow the same pattern.
+
+  Check the total before saving. Your quote should now show the full amount with the selected VAT percentage applied.
+
+  </Step>
+  <Step title="Choose a template and review the PDF" icon="file-text">
+
+  Select a PDF template if you use custom quote or invoice layouts. Then preview the PDF to confirm that pricing, branding, language, and customer information are correct.
+
+  When the preview looks right, save the quote. The quote is now ready to send or convert later.
+
+  </Step>
+</Steps>
+
+## Quote-to-invoice conversion
+
+Convert a quote when the client accepts your offer. Conversion changes the quote status to `converted` and creates a new invoice with the same underlying business data.
+
+The new invoice copies the quote's customer details, address, dates, currency, language, line items, VAT percentage, template, and total amount. This gives you a billing document without re-entering the same information.
+
+### How the relationship works
+
+The invoice stores a `quote_id` reference back to the original quote. That means the relationship is tracked from the invoice to the quote, not from the quote to the invoice.
+
+If you need to confirm that a quote was turned into an invoice, look at the invoice record linked by `quote_id`. The quote itself changes status to `converted`, but the direct database relationship is navigable from invoice to quote.
+
+<Callout kind="tip">
+
+Use conversion when the commercial terms are final. It keeps your quote history intact and creates a clean handoff from sales to billing.
+
+</Callout>
+
+## Quote numbering
+
+Every quote gets its own document number in the format `A-00001`. The `A` prefix stands for Angebot.
+
+Quote numbers are generated per company and assigned atomically. This prevents duplicate numbers when multiple people create documents at the same time and keeps each company's quote sequence consistent.
+
+If needed, you can edit the quote number before sending the document.
+
+## Sending quotes by email
+
+Send quotes by email with the same delivery flow used for invoices. NomadBill generates the document summary email and sends it through Resend using `noreply@nomadbill.co`.
+
+Before sending, review the PDF preview and recipient details. After sending, the quote status moves to `sent`, which helps you distinguish prepared quotes from quotes already delivered to the client.
+
+If you need branded documents, combine email sending with your selected PDF template so the client receives the final layout you want them to see.
+
+## Deposits and payments
+
+Quotes include a payment flow, but it is tied to the invoice checkout process. In practice, the payment action calls the invoice checkout flow rather than a quote-specific payment record.
+
+That means payment handling works correctly once the quote has been converted into an invoice. At that point, the invoice can be used for checkout and payment updates.
+
+<Callout kind="alert">
+
+Deposit payment for a quote works correctly only after you convert the quote into an invoice. The current payment flow queries the invoices table, not the quotes table, so quote-only payment handling is limited.
+
+</Callout>
+
+Payment statuses still appear on quotes, but the underlying payment update flow is invoice-based. If you need a reliable payment link or Stripe-backed status updates, convert the quote first and collect payment from the invoice.
+
+## What you can do with quotes
+
+Quotes support the same document features available for invoices:
+
+- PDF preview before sending
+- Email delivery
+- Custom fields
+- Linked emails
+- CSV export
+- Custom PDF templates
+- Manual quote number editing
+
+These shared features make it easier to move from quote to invoice without changing your document workflow.
+
+## Continue with related guides
+
+<Columns cols={2}>
+  <Card
+    title="Manage invoices"
+    href="/user-guide/invoicing"
+    icon="file-text"
+    cta="Open guide"
+  />
+  <Card
+    title="Customize PDF templates"
+    href="/user-guide/pdf-templates"
+    icon="edit"
+    cta="Open guide"
+  />
+</Columns>

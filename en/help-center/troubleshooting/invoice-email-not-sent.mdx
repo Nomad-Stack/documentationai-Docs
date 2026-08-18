@@ -3,22 +3,46 @@ title: Invoice Email Not Sent
 description: Troubleshoot invoice delivery issues in Nomadbill.
 ---
 
-## Symptoms
-- Client didn't receive invoice email
-- No delivery confirmation in history
+## Troubleshoot invoice email delivery
+Invoice emails should update the invoice record when NomadBill sends them. If a client did not receive an invoice, first confirm the recipient address, then verify whether the invoice was actually marked as sent before you resend it.
 
-## Quick Fix
 <Steps>
-  <Step title="Check client email address">
-    Ensure the email on the invoice matches your client's email.
+  <Step title="Check the recipient email address">
+
+    Open the invoice and review the recipient email address carefully. A typo, outdated address, or the wrong contact on the invoice is the most common reason an email never arrives.
+
+    If you have sent the invoice before, note that NomadBill stores the last recipient in the `sent_to` field. The resend form uses that same address as the default recipient, so correct it before sending again if needed.
+
   </Step>
-  <Step title="Resend from dashboard">
-    Open the invoice and click "Resend Email".
+  <Step title="Verify the invoice was marked as sent">
+
+    Check the invoice fields that track email activity:
+
+    - `sent_at` shows when NomadBill recorded the email as sent.
+    - `sent_to` shows which email address received the message.
+    - `email_status` should be `sent` after a successful send action.
+
+    If these fields are blank or `email_status` is not `sent`, NomadBill did not finish the send step. In that case, resending from the invoice is the next check.
+
   </Step>
-  <Step title="Check spam/junk folders">
-    Ask your client to look for emails from `no-reply@nomadbill.com`.
+  <Step title="Resend the invoice email">
+
+    Open the invoice and use the send or resend email action in the email modal. NomadBill sends an HTML invoice summary that includes the document number, customer name, amount, and any custom message you add.
+
+    After you send it, confirm that the invoice updates with a new `sent_at` value, the correct `sent_to` address, and `email_status` set to `sent`. Those fields are your best confirmation that NomadBill processed the email request.
+
   </Step>
-  <Step title="Contact support">
-    If still not delivered, email support@nomadbill.com with invoice ID.
+  <Step title="Check spam or junk folders">
+
+    Ask your client to search their spam, junk, promotions, or filtered folders for messages from `noreply@nomadbill.co`.
+
+    If the invoice shows `sent_at`, `sent_to`, and `email_status` as expected but the client still cannot find the message, their mail provider may have filtered it after delivery.
+
   </Step>
 </Steps>
+
+<Callout kind="alert">
+
+If invoice emails consistently fail to send, the Resend integration may not be configured for your workspace. Contact your account administrator to verify that the email service is set up correctly.
+
+</Callout>

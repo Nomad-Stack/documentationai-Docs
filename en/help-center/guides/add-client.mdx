@@ -1,21 +1,44 @@
 ---
-title: Adding a New Client
-description: Quick guide: Add clients to your Nomadbill account.
+title: Add a Customer
+description: Create customer records in NomadBill to reuse across invoices and quotes.
 ---
 
-## Add Your First Client
+## Add a customer
+
+Add a customer from the Customers page so you can select that record again when creating invoices and quotes. NomadBill keeps customers sorted alphabetically by name, which makes saved records easy to find later.
 
 <Steps>
-  <Step title="Go to Clients tab">
-    From your dashboard, click "Clients" in the main menu.
+  <Step title="Open the Customers page">
+
+    From your dashboard, open **Customers**. The customer list shows each customer's name, email, and phone, along with any custom fields configured to appear in the table.
+
   </Step>
-  <Step title="Click Add Client">
-    Select the "Add Client" button.
+  <Step title="Add a new customer">
+
+    Click **Add customer** to open the create customer form.
+
   </Step>
-  <Step title="Enter details">
-    Fill in the client name, email, company, and country.
+  <Step title="Enter customer details">
+
+    Complete the customer record:
+
+    - **Name** — required
+    - **Email** — optional
+    - **Phone** — optional
+    - **Address** — optional
+
+    If your workspace uses custom fields for customers, the form also includes those fields.
+
   </Step>
-  <Step title="Save">
-    Click "Save" to add them. Your new client is ready for invoicing!
+  <Step title="Save the customer">
+
+    Click **Save** to create the customer. The new customer appears in the list in alphabetical order by name.
+
   </Step>
 </Steps>
+
+<Callout kind="info">
+
+Use saved customers when creating invoices by filling the `customer_name` field with an existing customer record. If you need to store extra information, add custom fields for the `customer` entity type and choose whether they appear in the customer table.
+
+</Callout>

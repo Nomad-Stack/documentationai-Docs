@@ -1,0 +1,197 @@
+---
+title: Bank Sync
+description: Connect US and EU bank accounts, sync transactions automatically, and reconcile payments with invoices.
+---
+
+## Bank Sync brings your bank transactions into NomadBill so you can track incoming and outgoing payments against your invoices.
+
+Once you connect an account, NomadBill syncs up to 365 days of transaction history and keeps the connection updated with incremental syncs. The synced transactions can then be matched automatically or manually to outgoing invoices and incoming invoices.
+
+<Callout kind="info">
+
+Choose the bank region that matches the institution you want to connect. The Bank Sync page has separate connection buttons for **US** and **EU** banks, and you must start with the correct one.
+
+- **US** supports banks in `US` and `CA`
+- **EU** supports banks in `GB`, `FR`, `ES`, `NL`, `IE`, and `DE`
+
+If your bank is not available in one region, try the other only if the institution actually operates there.
+
+</Callout>
+
+## Connecting a bank account
+
+Connect each bank account from the Bank Sync page. NomadBill uses Plaid as the connection provider and stores the connection under your company.
+
+<Steps>
+  <Step title="Open the Bank Sync page" icon="folder">
+
+  Sign in to NomadBill and open **Bank Sync** from the authenticated area of the app.
+
+  You should see two connection options on the page: one for **US** banks and one for **EU** banks.
+
+  </Step>
+
+  <Step title="Choose the correct region" icon="globe">
+
+  Select the button for the region where your bank account is held.
+
+  - Use the **US** option for banks in `US` or `CA`
+  - Use the **EU** option for banks in `GB`, `FR`, `ES`, `NL`, `IE`, or `DE`
+
+  After you choose a region, Plaid opens a secure bank connection flow.
+
+  </Step>
+
+  <Step title="Authenticate with your bank" icon="lock">
+
+  Complete the Plaid flow by selecting your institution and signing in with your bank credentials if required.
+
+  Plaid returns the connection details to NomadBill, including the linked accounts and institution name.
+
+  </Step>
+
+  <Step title="Wait for the initial sync" icon="refresh-cw">
+
+  After the connection is created, NomadBill starts the first transaction sync.
+
+  A successful connection stores details such as the provider, region, institution, linked accounts, sync status, and the last successful sync time. Once the sync finishes, your transactions appear under the connected bank account.
+
+  </Step>
+</Steps>
+
+## Transaction sync
+
+NomadBill uses cursor-based incremental sync to keep your transaction list current. The first sync requests up to 365 days of history, and later syncs continue from the last saved cursor instead of pulling the full history again.
+
+### What gets synced
+
+Each bank connection stores its own sync state, including the Plaid item, linked accounts, and a sync cursor. Transactions are saved with details such as amount, currency, direction, booking date, counterpart information, merchant details, categories, pending status, and the original raw transaction payload.
+
+### How incremental sync works
+
+NomadBill syncs transactions through Plaid's incremental transaction sync flow. Each sync reads pages of results until Plaid has no more changes to return or the sync reaches the safety limit.
+
+- The sync is **cursor-based**, so each run continues from the last successful sync point
+- A single sync processes up to **20 pages**
+- Each page can include up to **500 transactions**
+- The effective limit per sync run is **10,000 transactions**
+
+NomadBill saves the updated sync cursor **only after the full sync completes successfully**. If a sync fails partway through, NomadBill keeps the previous cursor so the next run can retry safely.
+
+### How transactions are written
+
+Synced transactions are inserted or updated in batches of **200** records at a time. This keeps large syncs manageable while still handling high transaction volume efficiently.
+
+Each transaction is tied to:
+
+- your company
+- the bank connection it came from
+- the original external transaction ID
+- the source account inside the connected institution
+
+### How amounts and directions work
+
+Plaid and NomadBill use opposite amount conventions for cash flow. Plaid treats positive amounts as money leaving the account, while NomadBill stores positive amounts as money received.
+
+| Plaid sign | Meaning in Plaid | Stored amount in NomadBill | Direction |
+|---|---|---:|---|
+| Positive | Money leaving the account | Negative | `out` |
+| Negative | Money entering the account | Positive | `in` |
+
+This sign flip makes reconciliation more intuitive inside NomadBill. Incoming customer payments appear as positive amounts, and outgoing payments such as supplier bills appear as negative amounts.
+
+## Automatic matching
+
+NomadBill automatically tries to reconcile synced transactions against invoices. The matching logic is different for money coming in and money going out.
+
+### How matching works
+
+Incoming money is compared against your sent and overdue invoices. Outgoing money is compared against your incoming invoices. In both cases, NomadBill looks for an exact amount and currency match, then checks whether the transaction date is within 14 days of the invoice date window.
+
+If a match is found, NomadBill writes the link to the transaction and updates the invoice payment status automatically.
+
+### Match confidence and result
+
+| Match flow | Transaction type | Match rule | Confidence | Result |
+|---|---|---|---:|---|
+| `autoMatchInvoices` | Incoming payment | Exact amount + currency + date within 14 days | 90 | Sets `matched_invoice_id`, `match_method` to `amount+date`, invoice `payment_status` to `paid`, and invoice `status` to `paid` |
+| `autoMatchIncomingInvoices` | Outgoing payment | Exact amount + currency + date within 14 days | 85 | Sets `matched_incoming_invoice_id`, `match_method` to `amount+date`, and incoming invoice `payment_status` to `paid` |
+
+### What gets matched automatically
+
+A transaction can be auto-matched when it meets all of these conditions:
+
+- the amount matches exactly
+- the currency matches exactly
+- the date falls within the 14-day matching window
+- the invoice is in a state that can still be reconciled
+
+For outgoing invoices, NomadBill targets invoices that are already **sent** or **overdue**. For incoming invoices, NomadBill marks the invoice as paid without changing it into a different document state.
+
+## Manual matching
+
+Automatic matching handles the obvious cases first. When a transaction needs review, you can match it manually.
+
+### Candidate suggestions
+
+NomadBill generates manual review candidates with a wider search window than the automatic matcher.
+
+- It searches within a **30-day** date window
+- It returns up to **5 candidates** per transaction
+- It is designed for review, not automatic assignment
+
+This helps when the payment date differs from the invoice date more than expected or when you want to confirm one of several likely matches.
+
+### Manual link behavior
+
+When you link a transaction manually, NomadBill records it as a confirmed match.
+
+- `match_confidence` is set to **100**
+- `match_method` is set to `manual`
+
+A manual link overrides the need for further suggestion logic on that transaction and makes it clear that the match was user-confirmed.
+
+## Unlinking and managing connections
+
+Use unlinking when the transaction is connected to the wrong invoice. Delete a connection when you want to remove the bank feed entirely.
+
+### Unlink a matched transaction
+
+Unlinking removes the relationship between a transaction and its matched invoice record.
+
+When you unlink a transaction, NomadBill:
+
+- clears all match-related fields on the transaction
+- sets the linked outgoing invoice `payment_status` back to `unpaid`
+- leaves an outgoing invoice `status` unchanged if it was already set to `paid`
+- sets the linked incoming invoice `payment_status` back to `unpaid`
+
+Use unlinking carefully if you already rely on the paid status for bookkeeping review, because unlinking does not move an outgoing invoice status back from `paid` to `sent`.
+
+### Delete a bank connection
+
+Deleting a connection removes the Plaid link and all synced transactions that belong to it.
+
+When you delete a connection, NomadBill:
+
+- attempts to revoke Plaid access for that item
+- continues even if the Plaid revoke step fails
+- deletes the bank connection record
+- cascades deletion to all transactions under that connection
+
+If you reconnect the same bank later, NomadBill creates a new connection and sync state.
+
+<Columns cols={2}>
+  <Card
+    title="Manage outgoing invoices"
+    href="/user-guide/invoicing"
+    icon="file-text"
+    cta="Open invoicing guide"
+  />
+  <Card
+    title="Track supplier bills"
+    href="/user-guide/incoming-invoices"
+    icon="folder"
+    cta="Open incoming invoices guide"
+  />
+</Columns>

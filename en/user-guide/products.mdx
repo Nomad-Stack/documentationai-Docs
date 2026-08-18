@@ -1,0 +1,137 @@
+---
+title: Products
+description: Create a reusable catalog of products and services for invoices and quotes.
+---
+
+## Build a reusable product catalog
+
+Products in NomadBill let you save the items and services you sell once, then reuse them in invoices and quotes. Your product catalog lives at `/items`, is shared at the company level, and can include both standard fields and custom fields that fit your business.
+
+<Callout kind="info">
+
+NomadBill stores products in the `items` table. The catalog belongs to your company, not to an individual user, so the table uses `company_id` and does not include `user_id`.
+
+</Callout>
+
+## Product fields
+
+Each product includes a small set of standard fields. You can add more structure with custom fields if you need to track inventory, SKUs, certifications, or internal pricing details.
+
+<ParamField body="name" param-type="string" required="true" show-location="false">
+
+The product or service name. NomadBill requires this field when you create or edit a product.
+
+</ParamField>
+
+<ParamField body="description" param-type="string" required="false" show-location="false">
+
+A longer description shown in the create and edit dialog as a multiline text field. Use it for service details, specifications, or internal notes you want available when reusing the item.
+
+</ParamField>
+
+<ParamField body="price" param-type="numeric" required="false" show-location="false">
+
+The default price for the product. The field uses numeric input with a step of `0.01`, and new products default to `0` if you do not enter a price.
+
+</ParamField>
+
+<ParamField body="company_id" param-type="string" required="true" show-location="false">
+
+The company that owns the product. Products are company-level records, which means anyone with access to the company works from the same catalog.
+
+</ParamField>
+
+In the list view, NomadBill shows the standard columns for **name**, **description**, and **price**. The price is formatted to two decimal places so amounts stay consistent across the catalog.
+
+If you mark custom product fields to appear in tables, NomadBill adds those columns to the list view as well. Custom field columns are shown only when `show_in_table` is enabled, and they appear in alphabetical order by field name.
+
+## Creating a product
+
+Add products from the `/items` page when you want faster document creation and more consistent line items. Once a product is in your catalog, you can pick it again instead of retyping the same details for every invoice or quote.
+
+<Steps>
+
+<Step title="Open the products page" icon="folder">
+
+Go to `/items` from the app navigation.
+
+You should see your current product list with columns for name, description, price, and any product custom fields configured to show in the table.
+
+</Step>
+
+<Step title="Start a new product" icon="plus">
+
+Select the option to create a new product.
+
+NomadBill opens a dialog where you can enter the standard product details and any custom fields assigned to the product entity.
+
+</Step>
+
+<Step title="Enter the required details" icon="edit">
+
+Complete the product form:
+
+- Enter a **name**.
+- Add a **description** if you want more detail on the saved item.
+- Enter a **price** using decimal values such as `125.00`.
+- Fill in any product custom fields that apply to this item.
+
+If the form saves successfully, the new product appears in the list on `/items`.
+
+</Step>
+
+<Step title="Review and update the saved product" icon="check-circle">
+
+Check the product row in the list view to confirm the name, description, price, and visible custom field values look correct.
+
+If you need to change anything, open the edit dialog from the list and save your updates. To remove a product, use the built-in delete action, which confirms the action before deletion.
+
+</Step>
+
+</Steps>
+
+<Callout kind="tip">
+
+Delete actions use a confirmation step. Review the product name before confirming so you do not remove the wrong catalog item.
+
+</Callout>
+
+## Using products in documents
+
+Saved products are designed to speed up document creation. When you build an invoice or quote, NomadBill reuses product data in the line items so you do not need to re-enter the same names, descriptions, or pricing each time.
+
+This is most useful for recurring services, standard packages, and frequently sold products. Instead of manually typing each line, you select an existing product and start from the saved values already stored in your catalog.
+
+Because products are shared at the company level, your team works from the same item list across invoices and quotes. That keeps pricing and naming more consistent, especially when more than one person creates documents.
+
+## Custom fields for products
+
+Custom fields let you turn the basic product catalog into a structured inventory or service register. In NomadBill, product custom fields use the entity type `product`.
+
+Common examples include internal identifiers, stock information, supplier costs, dates, URLs, and file attachments. Seeded examples include `produkt_nummer`, `sku`, `produktkategorie`, detailed description, `gewicht_kg`, `einkaufspreis`, `auf_lager`, `produkt_url`, `gueltig_ab`, `zertifizierungen`, `datenblatt`, and `marge_formel`.
+
+Different field types support different kinds of product data:
+
+- **Identifiers** such as auto numbers or unique text values
+- **Commercial values** such as purchase price, sale price, or margin formulas
+- **Operational data** such as stock status, categories, and effective dates
+- **Supporting material** such as datasheets and external product links
+
+Configure these fields in [Custom fields](/user-guide/custom-fields). When a product custom field is set to show in tables, it also becomes part of the `/items` list view.
+
+## Related guides
+
+<Columns cols={2}>
+  <Card
+    title="Invoicing"
+    href="/user-guide/invoicing"
+    icon="book-open"
+    cta="Open guide"
+  />
+  <Card
+    title="Custom fields"
+    href="/user-guide/custom-fields"
+    icon="settings"
+    cta="Manage fields"
+  />
+</Columns>

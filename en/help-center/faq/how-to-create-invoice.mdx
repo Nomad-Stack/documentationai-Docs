@@ -1,16 +1,78 @@
 ---
 title: How do I create an invoice?
-description: Easy steps to create and send invoices in Nomadbill.
+description: Create, customize, and send invoices in NomadBill with multi-currency support, VAT calculation, and PDF delivery.
 ---
 
-## Steps
+## Create and send an invoice
 
-1. Log in to your Nomadbill dashboard.
-2. Click "Create Invoice" at the top right.
-3. Add client details, invoice items, and due date.
-4. Review totals and taxes (Nomadbill auto-calculates for you).
-5. Click "Preview" to check your invoice.
-6. Hit "Send"—your client will receive it by email.
+Create a new invoice from the **Invoices** page, fill in the customer and billing details, review the PDF preview, and then send or download the final invoice. NomadBill saves unsent invoices as drafts, so you can come back and finish them before delivery.
 
-**Tip:**
-Invoices save automatically as drafts until sent. You can edit drafts at any time before sending.
+<Steps>
+  <Step title="Navigate to Invoices and create a new invoice" icon="file-text">
+
+  Open **Invoices** in your dashboard and click **New**. You can also go directly to `/invoices/new` if you already know the route.
+
+  When the form opens, the invoice starts in **draft** status. You can continue editing the draft until you send it.
+
+  </Step>
+
+  <Step title="Select currency and language" icon="settings">
+
+  Choose the invoice **currency** and **language** before you add the rest of the details. NomadBill supports these currencies: **EUR**, **USD**, **GBP**, **CHF**, and **AED**.
+
+  For invoice language, choose **DE**, **EN**, **FR**, or **ES**. Use the language that matches what your customer expects to receive.
+
+  </Step>
+
+  <Step title="Enter customer details" icon="users">
+
+  Add the customer's **name** and **address** exactly as they should appear on the invoice. These details are used in the invoice document and PDF preview.
+
+  Double-check spelling and formatting here before moving on. Fixing customer details at this stage is faster than updating a sent invoice later.
+
+  </Step>
+
+  <Step title="Add line items" icon="plus">
+
+  Add one or more line items for the goods or services you are billing. Each line item includes a **name**, **quantity**, and **price**.
+
+  If you need to change the order, drag line items into the sequence you want. The invoice subtotal updates as you add or edit items.
+
+  </Step>
+
+  <Step title="Set VAT and review totals" icon="bar-chart">
+
+  Set the **VAT percentage** for the invoice. NomadBill defaults VAT to **19%**, but you can change it when needed.
+
+  The total is calculated as `subtotal + (subtotal x VAT%)`. Review the subtotal, VAT amount, and final total before you continue.
+
+  </Step>
+
+  <Step title="Preview and send" icon="send">
+
+  Preview the invoice as a PDF to confirm the layout, customer details, line items, and totals. If everything looks correct, send the invoice by email or download it instead.
+
+  Sent invoices are delivered through Resend from `noreply@nomadbill.co`. If you enable Stripe payment on the invoice, the customer receives a checkout link as part of the payment flow.
+
+  </Step>
+</Steps>
+
+<Callout kind="tip">
+
+NomadBill generates the invoice number automatically in the format `R-00001`. Numbering is managed per company, so each company keeps its own invoice sequence.
+
+</Callout>
+
+<Callout kind="info">
+
+Invoice status moves through `draft` to `sent`, and then to `paid` or `overdue`. Payment status is tracked separately as `unpaid`, `pending`, `paid`, or `failed`.
+
+If the customer starts Stripe checkout, payment status changes to `pending`. When Stripe confirms the payment, the status changes to `paid`. If the payment does not complete, the status changes to `failed`.
+
+</Callout>
+
+## What else should you know?
+
+Draft invoices remain editable until you send them. That makes drafts the safest place to adjust customer details, reorder items, or update VAT before delivery.
+
+NomadBill also supports recurring invoice metadata. You can set the recurring flag and choose a frequency of `weekly`, `monthly`, `quarterly`, or `yearly`, but this does not create invoices automatically on a schedule.

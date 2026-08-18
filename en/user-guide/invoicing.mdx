@@ -1,0 +1,299 @@
+---
+title: Invoicing
+description: Create, send, and track invoices in multiple currencies with VAT calculation, PDF generation, and Stripe payments.
+---
+
+## Create, send, and track invoices
+
+Use NomadBill invoicing to create professional invoices, calculate VAT, export branded PDFs, send invoices by email, and accept online payments through Stripe. You can manage draft and sent invoices, track payment progress, and keep invoice numbers consistent across your company.
+
+<Callout kind="info">
+
+If you start from an approved quote, use the quote-to-invoice flow described in [Quotes](/user-guide/quotes).
+
+</Callout>
+
+## Invoice statuses
+
+NomadBill tracks invoices with two separate fields: `status` and `payment_status`. The invoice badge prioritizes payment information, so when `payment_status` is `paid`, the invoice displays as paid even if the general `status` field would otherwise show something else.
+
+| Field | Values | What it means |
+| --- | --- | --- |
+| `status` | `draft`, `sent`, `paid`, `overdue` | The document lifecycle status |
+| `payment_status` | `unpaid`, `pending`, `paid`, `failed` | The payment processing state |
+
+A practical way to read this is:
+
+- **`draft`** — you are still editing the invoice and have not finalized sending it.
+- **`sent`** — the invoice has been delivered or marked as sent.
+- **`overdue`** — the due date has passed and the invoice is still not settled.
+- **`paid`** — the invoice is settled.
+
+Payment-specific states add more detail:
+
+- **`unpaid`** — no payment has been recorded yet.
+- **`pending`** — payment is in progress.
+- **`paid`** — payment completed successfully.
+- **`failed`** — a payment attempt did not complete.
+
+<Callout kind="tip">
+
+If an invoice shows `paid` in the UI, that paid state takes priority over the general document status for badge display.
+
+</Callout>
+
+## Creating an invoice
+
+Create a new invoice from the **Invoices** area, complete the customer and billing details, add your line items, and then review the result before sending it. NomadBill keeps unfinished invoices as drafts so you can return to them later.
+
+<Steps>
+  <Step title="Open a new invoice" icon="file-text">
+
+  Go to **Invoices** and create a new invoice. NomadBill prepares the document with your company context and assigns numbering when the invoice is created.
+
+  When the invoice opens, you should see editable billing fields, line items, totals, and document settings.
+
+  </Step>
+
+  <Step title="Add customer and billing details" icon="users">
+
+  Enter the customer information, invoice date, due date, currency, and language. Choose the invoice language that matches the recipient so labels in the PDF and email are presented correctly.
+
+  After saving, the invoice remains in **draft** status until you send it or mark it otherwise.
+
+  </Step>
+
+  <Step title="Add line items" icon="plus">
+
+  Add each product or service as a separate line item with a name, quantity, and unit price. Include a description when you need to clarify scope, billing period, or deliverables.
+
+  Your subtotal updates as you add or edit items.
+
+  </Step>
+
+  <Step title="Review VAT and totals" icon="bar-chart">
+
+  Confirm the VAT percentage before sending the invoice. NomadBill calculates the total from the subtotal and VAT percentage, so you can verify the amount before generating the PDF or payment link.
+
+  A correct review step should leave you with a clear subtotal, VAT amount, and final total.
+
+  </Step>
+
+  <Step title="Export, send, or collect payment" icon="arrow-right">
+
+  Once the invoice looks correct, generate the PDF, send it by email, or enable Stripe checkout if you want the customer to pay online. After sending, NomadBill can record delivery details such as who received the invoice and when it was sent.
+
+  At that point, the invoice moves from editing into active tracking.
+
+  </Step>
+</Steps>
+
+## Line items
+
+Each invoice line item stores a small, consistent structure so you can keep charges clear and predictable. A line item includes:
+
+- **`id`** — optional internal identifier
+- **`name`** — the line item title
+- **`description`** — optional detail text
+- **`quantity`** — how many units you bill
+- **`price`** — the price per unit
+
+Use one line item per billable service, product, or billing period. This makes the PDF easier to read and helps your customer understand how the total was built.
+
+NomadBill also supports drag-and-drop reordering for line items. Reorder items to match the story you want the invoice to tell, such as listing core services first and reimbursable expenses last.
+
+## VAT calculation
+
+NomadBill calculates invoice totals from the subtotal and VAT percentage. The formula is:
+
+`total = subtotal + (subtotal x vat_percentage / 100)`
+
+The default VAT rate is **19%**, which matches the standard German rate. You can change the VAT percentage per invoice as needed, as long as the value stays within the allowed range of **0 to 100**.
+
+That means:
+
+- **`0`** is valid for VAT-exempt or zero-rated invoices
+- **`19`** is the default starting point
+- **`100`** is the upper allowed limit
+
+<Callout kind="info">
+
+Check the VAT rate before sending the invoice, especially if you bill across jurisdictions or work with mixed tax treatments.
+
+</Callout>
+
+## Currencies and languages
+
+NomadBill supports five invoice currencies and four invoice languages. These values are enforced, so invoices always use one of the supported options.
+
+### Supported currencies
+
+- **EUR**
+- **USD**
+- **GBP**
+- **CHF**
+- **AED**
+
+### Supported invoice languages
+
+- **DE**
+- **EN**
+- **FR**
+- **ES**
+
+### How the default currency is chosen
+
+NomadBill resolves the invoice currency in this order:
+
+1. **Invoice currency** — if the invoice already has a currency, that value is used.
+2. **Company default currency** — if the invoice has no explicit currency, NomadBill checks the company default.
+3. **Global currency preference** — if neither of the first two exists, NomadBill falls back to the global currency stored in local browser storage as `nb.currency`.
+
+This priority keeps existing invoices stable while still giving you a company-wide and user-level fallback.
+
+## Invoice numbering
+
+Invoice numbers use the format `R-00001`. The `R` prefix identifies the document type, and the numeric portion uses five digits with leading zeros.
+
+NomadBill generates numbers through a database function that assigns the next document number atomically for each company. That matters if multiple people create invoices at the same time, because the sequence remains safe from race conditions.
+
+Two details are important for day-to-day use:
+
+- Invoice numbers are **per company**, not shared globally across all accounts.
+- Each invoice number must be unique within the same company through the `company_id` and `invoice_number` combination.
+
+## PDF generation
+
+NomadBill can export invoices as PDF documents for download, sharing, or email delivery. The PDF engine uses standard invoice data together with your company branding to produce a finished document.
+
+The generated PDF uses an **A4 portrait** layout with **15 mm margins** and can include:
+
+- company logo
+- brand color
+- line items table
+- totals block
+- bank details
+- footer
+
+PDF output also supports all four invoice languages, so labels appear in the language selected on the invoice. If you use custom PDF layouts, NomadBill also supports template-based rendering.
+
+<Columns cols={2}>
+  <Card
+    title="PDF templates"
+    href="/user-guide/pdf-templates"
+    icon="book-open"
+    cta="Open guide"
+  />
+  <Card
+    title="Quotes"
+    href="/user-guide/quotes"
+    icon="arrow-right"
+    cta="View related guide"
+  />
+</Columns>
+
+## Sending invoices by email
+
+NomadBill sends invoice emails through Resend using `noreply@nomadbill.co` as the sender address. You can send either a document email with HTML content and an optional PDF attachment, or a summary-style email that records delivery details in the database.
+
+When you send an invoice summary email, NomadBill updates these tracking fields:
+
+- **`sent_at`** — when the invoice was sent
+- **`sent_to`** — which recipient received it
+- **`email_status`** — set to `sent`
+
+The email content can include:
+
+- the document number
+- the customer name
+- an optional custom message
+- the total amount
+
+This gives you both outbound delivery and a basic audit trail inside the invoice record.
+
+## Accepting payments with Stripe
+
+Enable Stripe on an invoice when you want the customer to pay through a hosted checkout page. NomadBill creates a Stripe Checkout Session for the invoice and sends the customer to Stripe to complete payment.
+
+### How the Stripe flow works
+
+<Steps>
+  <Step title="Enable Stripe for the invoice" icon="settings">
+
+  Turn on Stripe for the invoice so `stripe_enabled` is active. This marks the invoice as eligible for online payment.
+
+  Once enabled, the invoice can create a hosted payment session.
+
+  </Step>
+
+  <Step title="Create the checkout session" icon="lock">
+
+  NomadBill creates a Stripe Checkout Session from the invoice total. The amount sent to Stripe is converted to cents using `Math.round(total_amount * 100)`, and the currency code is converted to lowercase for the Stripe API.
+
+  This ensures Stripe receives the amount in the format it expects.
+
+  </Step>
+
+  <Step title="Redirect the customer to Stripe" icon="external-link">
+
+  The customer is redirected to the Stripe-hosted checkout page to complete payment securely. You do not need to collect card details directly inside the invoice page.
+
+  A successful redirect means the customer is now completing payment on Stripe.
+
+  </Step>
+
+  <Step title="Handle success or cancellation" icon="check-circle">
+
+  After payment, Stripe sends the customer back to one of two invoice routes:
+
+  - **Success:** `/invoices/$id/pay/success`
+  - **Cancel:** `/invoices/$id/pay/cancel`
+
+  The success page confirms payment and triggers purchase tracking. The cancel page lets the customer try again.
+
+  </Step>
+
+  <Step title="Update the invoice after webhook confirmation" icon="shield">
+
+  When Stripe sends the `checkout.session.completed` webhook event, NomadBill updates the invoice to `payment_status=paid` and `status=paid`.
+
+  This webhook update is what finalizes the paid state inside NomadBill.
+
+  </Step>
+</Steps>
+
+## Recurring invoices
+
+Recurring invoices let you mark an invoice as part of a repeated billing pattern. NomadBill stores this with the `is_recurring` flag and a `recurring_frequency` value.
+
+Supported recurring frequencies are:
+
+- **weekly**
+- **monthly**
+- **quarterly**
+- **yearly**
+
+<Callout kind="alert">
+
+Recurring invoices are metadata only. NomadBill does not run an automatic cron job and does not generate new invoices on a schedule from this flag alone.
+
+</Callout>
+
+Use recurring settings to label and organize repeat billing, but do not rely on them as an automated subscription engine.
+
+## What to do next
+
+<Columns cols={2}>
+  <Card
+    title="Manage PDF templates"
+    href="/user-guide/pdf-templates"
+    icon="edit"
+    cta="Customize layouts"
+  />
+  <Card
+    title="Work with quotes"
+    href="/user-guide/quotes"
+    icon="folder"
+    cta="Create quote-based invoices"
+  />
+</Columns>
