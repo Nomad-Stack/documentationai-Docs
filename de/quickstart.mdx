@@ -1,0 +1,142 @@
+---
+title: Schnellstart
+description: >-
+  Richten Sie Ihr NomadBill-Konto ein, erstellen Sie Ihr erstes Unternehmen und
+  versenden Sie Ihre erste Rechnung in wenigen Minuten.
+---
+## Voraussetzungen
+
+Bevor Sie beginnen, stellen Sie sicher, dass Sie Folgendes haben:
+
+- Eine gültige E-Mail-Adresse
+- Ihre Geschäftsdaten, einschließlich Firmenname, Adresse und ggf. USt-IdNr.
+- Ihre bevorzugte Standardsprache und -währung
+- Bankverbindungsdaten, falls Sie später Auszahlungs- oder Zahlungsinformationen hinterlegen möchten
+
+<Callout kind="info" collapsed="false">
+  Starten Sie mit einer 7-tägigen kostenlosen Testphase. Bei der Anmeldung ist keine Kreditkarte erforderlich.
+</Callout>
+
+## Anmelden und Unternehmen einrichten
+
+Erstellen Sie Ihr Konto und konfigurieren Sie anschließend das Unternehmen, von dem aus Sie Rechnungen stellen.
+
+<Steps>
+  <Step title="Konto erstellen" icon="users" title-type="p">
+    Besuchen Sie [app.nomadbill.co](https://app.nomadbill.co/) und melden Sie sich mit E-Mail und Passwort an, oder fahren Sie mit Google fort.
+
+    Nach der Bestätigung Ihres Kontos meldet NomadBill Sie an und führt Sie zur Unternehmenseinrichtung.
+  </Step>
+
+  <Step title="Erstes Unternehmen erstellen" icon="plus" title-type="p">
+    Geben Sie Ihren Firmennamen ein und wählen Sie einen Unternehmens-Slug. NomadBill verwendet den Slug, um Ihren Unternehmens-Workspace zu identifizieren.
+
+    Wählen Sie eine Standardsprache aus `DE`, `EN`, `FR` oder `ES`, und legen Sie dann Ihre Standardwährung fest: `EUR`, `USD`, `GBP`, `CHF` oder `AED`.
+  </Step>
+
+  <Step title="Unternehmensdaten in den Einstellungen ergänzen" icon="settings" title-type="p">
+    Öffnen Sie [Einstellungen](https://app.nomadbill.co/settings) und vervollständigen Sie Ihr Unternehmensprofil mit dem rechtlichen Firmennamen, der Adresse, der USt-IdNr. und den Bankdaten.
+
+    Im selben Bereich können Sie auch Branding, Rechnungsstandards, PDF-Vorlagen und benutzerdefinierte Felder konfigurieren.
+  </Step>
+</Steps>
+
+## Dashboard-Übersicht
+
+Ihr Dashboard gibt Ihnen sofort einen Überblick über Ihr Geschäft. Oben sehen Sie Umsatz, Kosten, Gewinn und ausstehende Beträge, gefolgt von Diagrammen und Aktivitäten, die zeigen, was sich verändert hat.
+
+Unter den wichtigsten KPIs können Sie Umsatz-, Kosten- und Gewinntrends der letzten sechs Monate, die Altersstruktur der Forderungen, Umsatz nach Kunde, aktuelle Aktivitäten und Ihre Währungsverteilung einsehen.
+
+<Columns cols="3">
+  <Card title="Dashboard" href="/de/user-guide/dashboard" icon="bar-chart" horizontal="false">
+    Prüfen Sie KPIs, Trends, Altersstruktur und aktuelle Kontoaktivitäten.
+  </Card>
+
+  <Card title="Rechnungsstellung" href="/de/user-guide/invoicing" icon="file-text" horizontal="false">
+    Erstellen Sie Rechnungen, verwalten Sie Kunden und versenden Sie PDFs per E-Mail.
+  </Card>
+
+  <Card title="Eingangsrechnungen" href="/de/user-guide/incoming-invoices" icon="upload" horizontal="false">
+    Laden Sie Lieferantenrechnungen und Belege für die Kostenerfassung hoch.
+  </Card>
+</Columns>
+
+## Erste Rechnung versenden
+
+Erstellen Sie Ihre erste Rechnung im Rechnungseditor und versenden Sie sie anschließend als PDF per E-Mail oder laden Sie sie für die manuelle Zustellung herunter.
+
+<Steps>
+  <Step title="Neue Rechnung öffnen" icon="plus" title-type="p">
+    Gehen Sie zu `Invoices` und klicken Sie auf `New`, oder öffnen Sie direkt `/invoices/new`.
+
+    NomadBill erstellt eine Entwurfsrechnung für das Unternehmen, in dem Sie gerade arbeiten.
+  </Step>
+
+  <Step title="Kunde, Währung und Sprache festlegen" icon="users" title-type="p">
+    Wählen Sie die Rechnungswährung und die Dokumentsprache, und geben Sie dann Kundenname und Adresse ein.
+
+    Verwenden Sie eine der unterstützten Rechnungswährungen: `EUR`, `USD`, `GBP`, `CHF` oder `AED`. Verwenden Sie eine der unterstützten Rechnungssprachen: `DE`, `EN`, `FR` oder `ES`.
+  </Step>
+
+  <Step title="Positionen und MwSt. hinzufügen" icon="edit" title-type="p">
+    Fügen Sie jede Position mit Name, Menge und Stückpreis hinzu. Legen Sie anschließend den MwSt.-Satz für die Rechnung oder die Positionen entsprechend Ihren Abrechnungsanforderungen fest.
+
+    Ein üblicher Standardwert ist `19%` MwSt. Prüfen Sie die Summen, bevor Sie fortfahren.
+  </Step>
+
+  <Step title="PDF Vorschau und Versand" icon="send" title-type="p">
+    Sehen Sie sich das generierte PDF in der Vorschau an, um Layout, Kundendaten, Summen und MwSt. zu prüfen.
+
+    Wenn alles stimmt, versenden Sie die Rechnung per E-Mail oder laden Sie das PDF herunter und stellen Sie es selbst zu. Wenn Sie aus NomadBill versenden, wird die E-Mail über Resend zugestellt.
+  </Step>
+</Steps>
+
+<Callout kind="tip" collapsed="false">
+  NomadBill nummeriert Rechnungen pro Unternehmen automatisch im Format `R-00001`, sodass Ihre erste Rechnung automatisch eine Nummer erhält.
+</Callout>
+
+## Erste Ausgabe erfassen
+
+Laden Sie eine Eingangsrechnung oder einen Beleg hoch, um Lieferantenkosten zu erfassen.
+
+<Steps>
+  <Step title="Eingangsrechnungen öffnen" icon="upload" title-type="p">
+    Gehen Sie zu `Incoming Invoices` oder öffnen Sie `/incoming`.
+
+    In diesem Bereich werden hochgeladene Dateien in Ihrem Workspace gespeichert und am Ausgabendatensatz angehängt.
+  </Step>
+
+  <Step title="Datei hochladen" icon="plus" title-type="p">
+    Laden Sie eine Lieferantenrechnung oder einen Beleg als PDF oder Bild hoch.
+
+    NomadBill speichert die Datei im Storage-Bucket `incoming-invoices`, damit Sie später wieder darauf zugreifen können.
+  </Step>
+
+  <Step title="Ausgabendetails vervollständigen" icon="edit" title-type="p">
+    Erfassen Sie Lieferantenname, Betrag, Kategorie, Rechnungsdatum und ggf. Fälligkeitsdatum.
+
+    Nach dem Speichern steht die Ausgabe zur Prüfung neben dem Originaldokument zur Verfügung.
+  </Step>
+</Steps>
+
+## Nächste Schritte
+
+Sobald Ihr Unternehmen eingerichtet ist und die ersten Datensätze vorhanden sind, verbinden Sie die Workflows, die Sie am häufigsten nutzen.
+
+<Columns cols="2">
+  <Card title="Banksynchronisation" href="/de/user-guide/bank-sync" icon="database" horizontal="false">
+    Verbinden Sie unterstützte US- und EU-Banken über Plaid und importieren Sie bis zu 365 Tage Transaktionshistorie.
+  </Card>
+
+  <Card title="E-Mail-Intelligence" href="/de/user-guide/email-intelligence" icon="zap" horizontal="false">
+    Automatisieren Sie den Dokumenteneingang und reduzieren Sie die manuelle Datenerfassung aus Lieferanten-E-Mails.
+  </Card>
+
+  <Card title="Einstellungen" href="/de/user-guide/settings" icon="settings" horizontal="false">
+    Konfigurieren Sie Branding, Standards, PDF-Vorlagen und benutzerdefinierte Felder für jedes Unternehmen.
+  </Card>
+
+  <Card title="Teamverwaltung" href="/de/user-guide/team-management" icon="users" horizontal="false">
+    Laden Sie Teammitglieder ein und verwalten Sie den Zugriff in Ihrem Unternehmens-Workspace.
+  </Card>
+</Columns>

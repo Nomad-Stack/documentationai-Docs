@@ -1,0 +1,175 @@
+---
+title: PDF-Vorlagen
+description: Gestalte individuelle PDF-Layouts für Rechnungen, Angebote und Belege mit Drag-and-Drop-Bearbeitung, wiederverwendbaren Vorlagen und Markenfarben.
+---
+
+## Gestalte individuelle PDF-Layouts für deine Dokumente
+
+PDF-Vorlagen steuern, wie Rechnungen, Angebote und Eingangsdokumente bei Vorschau, Export oder Versand aussehen. Du kannst mit einem leeren Layout starten, ein vorgefertigtes Design wählen oder eine JSON-Vorlage importieren und das Ergebnis anschließend im Drag-and-Drop-Editor anpassen.
+
+<Callout kind="info">
+
+Verwalte Vorlagen unter **Einstellungen → Vorlagen**. NomadBill führt getrennte Vorlagenlisten für Rechnungen, Angebote und Eingangsdokumente, sodass du jeden Dokumenttyp unabhängig gestalten kannst.
+
+</Callout>
+
+## So funktionieren PDF-Vorlagen
+
+Jede PDF-Vorlage speichert das vollständige Layout für einen Dokumenttyp. Dazu gehören die Seitenstruktur, Textblöcke, Tabellen, Bilder und das Styling, das zur Erzeugung des finalen PDFs verwendet wird.
+
+Wenn du eine Rechnung, ein Angebot oder ein Eingangsdokument erstellst oder bearbeitest, kannst du die Standardvorlage für diesen Dokumenttyp verwenden oder eine andere gespeicherte Vorlage wählen. So bleiben Alltagsdokumente konsistent on-brand, während du bei Bedarf weiterhin alternative Layouts nutzen kannst.
+
+NomadBill unterstützt drei Dokumenttypen:
+
+| Dokumenttyp | Verwendung | Wo du ihn auswählst |
+| --- | --- | --- |
+| Invoice | Ausgehende Rechnungen, die du an Kunden sendest | Rechnungsformular und Vorschau |
+| Quote | Angebote oder Offerten, die du vor der Rechnungstellung sendest | Angebotsformular und Vorschau |
+| Incoming | Eingangsrechnungen, Lieferantenrechnungen oder Belege | Abläufe für Eingangsdokumente |
+
+## Dokumenttypen
+
+Vorlagen sind nach Dokumenttyp gruppiert, weil jeder Typ einen anderen Zweck hat und andere Formulierungen oder Layout-Schwerpunkte brauchen kann.
+
+| Typ | Typischer Titel im PDF | Übliche Verwendung |
+| --- | --- | --- |
+| `invoice` | Invoice | Abrechnung eines Kunden für abgeschlossene Arbeit oder gelieferte Waren |
+| `quote` | Quote | Zusendung eines Preisvorschlags vor Arbeitsbeginn |
+| `incoming` | Receipt oder incoming invoice | Erfassung von Lieferantenausgaben oder hochgeladenen Belegen |
+
+<Callout kind="tip">
+
+Wenn du unterschiedliche Layouts für denselben Dokumenttyp möchtest, erstelle mehrere Vorlagen und lege eine als Standard fest. Du kannst bei Bedarf weiterhin eine andere Vorlage für ein bestimmtes Dokument wählen.
+
+</Callout>
+
+## Eine Vorlage erstellen
+
+Du kannst Vorlagen auf drei Arten erstellen: leer starten, aus der Galerie starten oder eine vorhandene JSON-Datei importieren.
+
+<Steps>
+  <Step title="Leere Vorlage erstellen" icon="plus">
+
+  Öffne **Einstellungen → Vorlagen**, wähle den Tab des Dokumenttyps, erstelle dann eine neue Vorlage und wähle **Blank**.
+
+  Eine leere Vorlage startet vom Standardlayout von NomadBill für diesen Dokumenttyp. Das ist die schnellste Option, wenn du volle Kontrolle möchtest, aber die erforderlichen Standardfelder bereits gemappt haben willst.
+
+  </Step>
+  <Step title="Aus der Galerie starten" icon="book-open">
+
+  Öffne **Einstellungen → Vorlagen**, wähle den Tab des Dokumenttyps, erstelle dann eine neue Vorlage und wähle **Gallery**.
+
+  Wähle eine der sieben integrierten Vorlagen, wenn du ein fertiges Layout anpassen möchtest. Das ist der beste Einstieg, wenn du ein professionelles Layout willst, ohne jeden Abschnitt von Grund auf zu bauen.
+
+  </Step>
+  <Step title="JSON-Vorlage importieren" icon="upload">
+
+  Öffne **Einstellungen → Vorlagen**, wähle den Tab des Dokumenttyps, erstelle dann eine neue Vorlage und wähle **Import from JSON**.
+
+  Lade eine `.json`-Datei mit einer gültigen Vorlagenstruktur hoch. Nutze diesen Weg, wenn du bereits eine kompatible Vorlagendatei hast und sie über Unternehmen oder Umgebungen hinweg wiederverwenden möchtest.
+
+  </Step>
+</Steps>
+
+## Vorlagengalerie
+
+NomadBill enthält sieben vorgefertigte Vorlagen, die du als Ausgangspunkt nutzen kannst.
+
+| Vorlage | Stil | Am besten geeignet für |
+| --- | --- | --- |
+| Classic | Ausgewogener Standard mit Markenfarben-Header | Allzweck-Rechnungen und Angebote |
+| Modern | Farbige obere Leiste mit fettem Titel | Markenstarke Layouts |
+| Minimal | Monochromes Layout ohne farbige Akzente | Einfache, drucksparende Dokumente |
+| White | Sauberes Drucklayout mit Zahlungsartenblock | Formale Rechnungen und Druckabläufe |
+| Blue | Blaue Akzente mit gefüllter Gesamtsummenzeile | Kontrastreiche Summen und Zusammenfassungsbereiche |
+| Green | Grüne Akzentleiste links | Alternative Markenlayouts |
+| Elegant | Großer Titel mit dezenter grauer Tabelle | Ausgearbeitete kundenorientierte Dokumente |
+
+## Eine Vorlage bearbeiten
+
+Der Vorlageneditor öffnet sich in einem Vollbild-Designer, damit du Layouts visuell aufbauen und anpassen kannst. Du kannst Felder ziehen, ihre Größe ändern, Text anpassen und die visuelle Struktur verfeinern, ohne das zugrunde liegende JSON manuell zu bearbeiten.
+
+Verfügbare Feldtypen umfassen Text, Multi-Variablen-Text, Tabellen, Listen, Linien, Formen, Bilder, Signaturen, Daten, Checkboxen, Radiogruppen, QR-Codes und Barcodes. Das gibt dir genug Flexibilität für Standard-Rechnungslayouts sowie stärker angepasste Dokumentdesigns.
+
+Die meisten Nutzer verbringen ihre Zeit mit dem Anpassen von Positionen, Abständen, Beschriftungen und Tabellendarstellung. Wenn du die Standard-Feldnamen unverändert lässt, befüllt NomadBill diese Felder weiterhin automatisch beim Erzeugen des PDFs.
+
+<Callout kind="info">
+
+Die Dokumentpositionsliste wird typischerweise über das Tabellenfeld `items` gerendert. Wenn du dieses Feld entfernst oder umbenennst, erscheinen Positionszeilen nicht mehr im erzeugten PDF.
+
+</Callout>
+
+## Standardfelder
+
+NomadBill füllt bestimmte Feldnamen automatisch, wenn es ein PDF rendert. Belasse diese Namen unverändert, wenn die Anwendung die Dokumentdaten weiterhin in die Vorlage mappen soll.
+
+| Feldname | Inhalt |
+| --- | --- |
+| `company_logo` | Dein Firmenlogo |
+| `company_name` | Dein angezeigter Firmenname |
+| `company_address` | Deine Firmenadresse, meist mehrzeilig |
+| `company_vat` | Deine MwSt.- oder Steuer-ID-Bezeichnung und der Wert |
+| `doc_title` | Dokumenttitel wie Invoice, Quote oder Receipt |
+| `doc_number` | Dokumentnummer |
+| `doc_date` | Ausstellungsdatum-Bezeichnung und Wert |
+| `doc_due_date` | Fälligkeitsdatum-Bezeichnung und Wert |
+| `bill_to_label` | Beschriftung des Kundenabschnitts |
+| `customer_name` | Kundenname |
+| `customer_address` | Kundenadresse |
+| `items` | Tabelle der Positionszeilen |
+| `subtotal_label` | Zwischensummen-Beschriftung |
+| `subtotal` | Zwischensummenbetrag |
+| `vat_label` | MwSt.-Beschriftung |
+| `vat_amount` | MwSt.-Betrag |
+| `total_label` | Gesamtsummen-Beschriftung |
+| `total` | Gesamtsumme |
+| `bank_label` | Beschriftung des Zahlungsdetails-Abschnitts |
+| `bank_details` | Bank- oder Zahlungsanweisungen |
+| `signature` | Signaturbild |
+| `footer` | Fußzeilentext |
+
+## Markenfarben
+
+Galerievorlagen können deine Unternehmensmarkenfarben automatisch anwenden. NomadBill liest deine Primär- und Sekundärfarben aus den Unternehmenseinstellungen und nutzt sie, um unterstützte Vorlagenelemente umzufärben.
+
+Das funktioniert am besten, wenn du konsistentes Branding über alle Rechnungen und Angebote hinweg möchtest, ohne jeden Textblock, Header oder Akzentelement manuell zu aktualisieren. Je nach Vorlage wird die Akzentfarbe meist auf Header, Leisten, Summen oder Hintergrundhervorhebungen angewendet.
+
+Einige Markenlayouts unterstützen außerdem, Text schwarz zu belassen und deine Markenpalette nur auf Akzentbereiche anzuwenden. Nutze diesen Ansatz, wenn deine Markenfarben hell sind oder Lesbarkeit wichtiger ist als vollfarbige Textgestaltung.
+
+## Mehrsprachige Vorlagen
+
+Vorlagen unterstützen vier Sprachen: DE, EN, FR und ES. Sprachänderungen aktualisieren integrierte Beschriftungen wie Dokumenttitel, Datumsbeschriftungen, Zwischensumme, MwSt., Gesamtsumme und anderen Standardtext in Standardvorlagen.
+
+NomadBill übersetzt Vorlagenbeschriftungen getrennt vom Layout selbst. Das bedeutet, du kannst die Sprache wechseln, ohne Positionen, Abstände, Farben oder andere Designänderungen zu verlieren, die du im Editor vorgenommen hast.
+
+Wenn du in mehreren Sprachen arbeitest, erstelle eine Vorlage pro Sprache, wenn du volle Kontrolle über Formulierung und Formatierung brauchst. Wenn das Layout gleich bleibt, kannst du dasselbe Design wiederverwenden und dich wo sinnvoll auf übersetzte Beschriftungen verlassen.
+
+## Benutzerdefinierte Felder in Vorlagen
+
+Benutzerdefinierte Felder ermöglichen es, unternehmens-, kunden- oder dokumentbezogene Werte in deine PDFs aufzunehmen. In Vorlagen verwenden diese Werte Feldnamen im Format `cf_{entity}_{key}`.
+
+Zum Beispiel kann ein benutzerdefiniertes Feld, das an eine Rechnung gebunden ist, mit einem Feldnamen wie `cf_invoice_project_reference` gemappt werden. Ein kundenbezogenes benutzerdefiniertes Feld folgt demselben Muster mit dem Kunden-Entity-Segment.
+
+Lies [Benutzerdefinierte Felder](/de/user-guide/custom-fields), bevor du diese Platzhalter hinzufügst, damit deine Feldschlüssel und Vorlagen-Feldnamen aufeinander abgestimmt bleiben.
+
+<Callout kind="tip">
+
+Wenn ein benutzerdefiniertes Feld im PDF leer erscheint, prüfe zuerst, ob das Feld existiert, der Schlüssel exakt übereinstimmt und der Feldname in der Vorlage dem erwarteten Muster `cf_{entity}_{key}` folgt.
+
+</Callout>
+
+## Eine Standardvorlage festlegen
+
+Jeder Dokumenttyp kann eine Standardvorlage haben. Die Standardvorlage wird automatisch verwendet, sofern du auf dem Dokumentformular oder dem Vorschaubildschirm keine andere wählst.
+
+Um den Standard zu ändern, öffne **Einstellungen → Vorlagen**, finde die Vorlage im richtigen Dokumenttyp-Tab und nutze **Set default**. Die aktualisierte Vorlage wird der neue Ausgangspunkt für diesen Dokumenttyp in deinem Unternehmen.
+
+Das ist nützlich, wenn du ein überarbeitetes Layout ausrollst. Lege die neue Vorlage zuerst als Standard fest und behalte ältere Vorlagen für Sonderfälle oder historische Konsistenz verfügbar.
+
+## Verwandte Leitfäden
+
+<Columns cols={3}>
+  <Card title="Rechnungsstellung" href="/de/user-guide/invoicing" icon="book-open" cta="Leitfaden öffnen" />
+  <Card title="Angebote" href="/de/user-guide/quotes" icon="arrow-right" cta="Verwandten Leitfaden ansehen" />
+  <Card title="Benutzerdefinierte Felder" href="/de/user-guide/custom-fields" icon="settings" cta="Feldzuordnung lernen" />
+</Columns>

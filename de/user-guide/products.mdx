@@ -1,0 +1,137 @@
+---
+title: Produkte
+description: Erstelle einen wiederverwendbaren Katalog aus Produkten und Dienstleistungen für Rechnungen und Angebote.
+---
+
+## Baue einen wiederverwendbaren Produktkatalog auf
+
+Produkte in NomadBill lassen dich die Artikel und Dienstleistungen, die du verkaufst, einmal speichern und anschließend in Rechnungen und Angeboten wiederverwenden. Dein Produktkatalog liegt unter `/items`, wird auf Unternehmensebene geteilt und kann sowohl Standardfelder als auch benutzerdefinierte Felder enthalten, die zu deinem Geschäft passen.
+
+<Callout kind="info">
+
+NomadBill speichert Produkte in der Tabelle `items`. Der Katalog gehört zu deinem Unternehmen, nicht zu einem einzelnen Nutzer. Deshalb verwendet die Tabelle `company_id` und enthält kein `user_id`.
+
+</Callout>
+
+## Produktfelder
+
+Jedes Produkt enthält eine kleine Menge an Standardfeldern. Du kannst bei Bedarf mit benutzerdefinierten Feldern mehr Struktur hinzufügen, etwa für Bestand, SKUs, Zertifizierungen oder interne Preisdetails.
+
+<ParamField body="name" param-type="string" required="true" show-location="false">
+
+Der Name des Produkts oder der Dienstleistung. NomadBill erfordert dieses Feld, wenn du ein Produkt erstellst oder bearbeitest.
+
+</ParamField>
+
+<ParamField body="description" param-type="string" required="false" show-location="false">
+
+Eine längere Beschreibung, die im Dialog zum Erstellen und Bearbeiten als mehrzeiliges Textfeld angezeigt wird. Nutze sie für Dienstleistungsdetails, Spezifikationen oder interne Notizen, die beim Wiederverwenden des Artikels verfügbar sein sollen.
+
+</ParamField>
+
+<ParamField body="price" param-type="numeric" required="false" show-location="false">
+
+Der Standardpreis für das Produkt. Das Feld verwendet eine numerische Eingabe mit einer Schrittweite von `0.01`, und neue Produkte starten mit `0`, wenn du keinen Preis eingibst.
+
+</ParamField>
+
+<ParamField body="company_id" param-type="string" required="true" show-location="false">
+
+Das Unternehmen, dem das Produkt gehört. Produkte sind Datensätze auf Unternehmensebene. Das bedeutet, dass jeder mit Zugriff auf das Unternehmen denselben Katalog verwendet.
+
+</ParamField>
+
+In der Listenansicht zeigt NomadBill die Standardspalten für **name**, **description** und **price**. Der Preis wird auf zwei Dezimalstellen formatiert, damit Beträge im Katalog konsistent bleiben.
+
+Wenn du benutzerdefinierte Produktfelder für die Tabellenansicht markierst, fügt NomadBill diese Spalten ebenfalls der Listenansicht hinzu. Spalten für benutzerdefinierte Felder werden nur angezeigt, wenn `show_in_table` aktiviert ist, und erscheinen alphabetisch nach Feldname.
+
+## Ein Produkt erstellen
+
+Füge Produkte auf der Seite `/items` hinzu, wenn du Dokumente schneller erstellen und konsistentere Positionen möchtest. Sobald ein Produkt in deinem Katalog ist, kannst du es erneut auswählen, statt dieselben Angaben für jede Rechnung oder jedes Angebot neu einzugeben.
+
+<Steps>
+
+<Step title="Produktseite öffnen" icon="folder">
+
+Gehe über die App-Navigation zu `/items`.
+
+Du solltest deine aktuelle Produktliste mit Spalten für Name, Beschreibung, Preis und alle Produkt-Custom-Fields sehen, die für die Tabelle konfiguriert sind.
+
+</Step>
+
+<Step title="Neues Produkt starten" icon="plus">
+
+Wähle die Option zum Erstellen eines neuen Produkts.
+
+NomadBill öffnet einen Dialog, in dem du die Standard-Produktdetails und alle der Produktentität zugewiesenen benutzerdefinierten Felder eingeben kannst.
+
+</Step>
+
+<Step title="Erforderliche Angaben eintragen" icon="edit">
+
+Fülle das Produktformular aus:
+
+- Gib einen **name** ein.
+- Füge eine **description** hinzu, wenn du mehr Details zum gespeicherten Artikel möchtest.
+- Gib einen **price** mit Dezimalwerten wie `125.00` ein.
+- Fülle alle Produkt-Custom-Fields aus, die für diesen Artikel gelten.
+
+Wenn das Formular erfolgreich gespeichert wird, erscheint das neue Produkt in der Liste unter `/items`.
+
+</Step>
+
+<Step title="Gespeichertes Produkt prüfen und aktualisieren" icon="check-circle">
+
+Prüfe die Produktzeile in der Listenansicht, um zu bestätigen, dass Name, Beschreibung, Preis und sichtbare Werte der benutzerdefinierten Felder korrekt aussehen.
+
+Wenn du etwas ändern musst, öffne den Bearbeitungsdialog aus der Liste und speichere deine Updates. Um ein Produkt zu entfernen, nutze die integrierte Löschaktion, die die Aktion vor dem Löschen bestätigt.
+
+</Step>
+
+</Steps>
+
+<Callout kind="tip">
+
+Löschaktionen verwenden einen Bestätigungsschritt. Prüfe den Produktnamen vor dem Bestätigen, damit du nicht den falschen Katalogartikel entfernst.
+
+</Callout>
+
+## Produkte in Dokumenten verwenden
+
+Gespeicherte Produkte sind dafür gedacht, die Dokumenterstellung zu beschleunigen. Wenn du eine Rechnung oder ein Angebot erstellst, verwendet NomadBill Produktdaten in den Positionen erneut, sodass du nicht jedes Mal dieselben Namen, Beschreibungen oder Preise neu eingeben musst.
+
+Das ist besonders nützlich für wiederkehrende Dienstleistungen, Standardpakete und häufig verkaufte Produkte. Statt jede Position manuell zu tippen, wählst du ein vorhandenes Produkt und startest mit den bereits im Katalog gespeicherten Werten.
+
+Weil Produkte auf Unternehmensebene geteilt werden, arbeitet dein Team über Rechnungen und Angebote hinweg mit derselben Artikelliste. Das hält Preise und Bezeichnungen konsistenter, besonders wenn mehr als eine Person Dokumente erstellt.
+
+## Benutzerdefinierte Felder für Produkte
+
+Benutzerdefinierte Felder lassen dich den einfachen Produktkatalog in ein strukturiertes Inventar oder Dienstleistungsregister verwandeln. In NomadBill verwenden Produkt-Custom-Fields den Entitätstyp `product`.
+
+Häufige Beispiele sind interne Kennungen, Bestandsinformationen, Lieferantenkosten, Daten, URLs und Dateianhänge. Vorbelegte Beispiele umfassen `produkt_nummer`, `sku`, `produktkategorie`, detaillierte Beschreibung, `gewicht_kg`, `einkaufspreis`, `auf_lager`, `produkt_url`, `gueltig_ab`, `zertifizierungen`, `datenblatt` und `marge_formel`.
+
+Unterschiedliche Feldtypen unterstützen unterschiedliche Arten von Produktdaten:
+
+- **Kennungen** wie Autonummern oder eindeutige Textwerte
+- **Kaufmännische Werte** wie Einkaufspreis, Verkaufspreis oder Margenformeln
+- **Operative Daten** wie Lagerstatus, Kategorien und Gültigkeitsdaten
+- **Begleitmaterial** wie Datenblätter und externe Produktlinks
+
+Konfiguriere diese Felder unter [Benutzerdefinierte Felder](/de/user-guide/custom-fields). Wenn ein Produkt-Custom-Field so eingestellt ist, dass es in Tabellen angezeigt wird, wird es auch Teil der Listenansicht unter `/items`.
+
+## Verwandte Anleitungen
+
+<Columns cols={2}>
+  <Card
+    title="Rechnungen"
+    href="/de/user-guide/invoicing"
+    icon="book-open"
+    cta="Leitfaden öffnen"
+  />
+  <Card
+    title="Benutzerdefinierte Felder"
+    href="/de/user-guide/custom-fields"
+    icon="settings"
+    cta="Felder verwalten"
+  />
+</Columns>

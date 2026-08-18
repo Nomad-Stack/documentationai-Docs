@@ -1,0 +1,83 @@
+---
+title: Integrationen
+description: Verbinden Sie NomadBill mit Stripe für Zahlungen, Plaid für die Banksynchronisation, Nylas für E-Mail-Intelligence und Resend für den E-Mail-Versand.
+---
+
+## Verbundene Dienste
+
+NomadBill verbindet sich mit externen Diensten, um Zahlungseinzug, Import von Banktransaktionen, E-Mail-Zustellung und Dokumentenverarbeitung zu automatisieren. Diese Integrationen greifen ineinander, sodass Rechnungen, Zahlungen, Banktransaktionen und Lieferantendokumente ohne manuelle Dateneingabe verknüpft bleiben.
+
+<Columns cols={2}>
+  <Card title="Stripe" icon="credit-card" href="/de/user-guide/invoicing">
+    Rechnungs-Checkout-Sessions und Abonnementabrechnung mit webhook-gesteuerten Statusaktualisierungen.
+  </Card>
+  <Card title="Plaid" icon="banknote" href="/de/user-guide/bank-sync">
+    Bankkontoverknüpfung für US- und europäische Banken mit bis zu 365 Tagen Transaktionshistorie.
+  </Card>
+  <Card title="Nylas" icon="mail" href="/de/user-guide/email-intelligence">
+    Agenten-E-Mail-Postfach mit KI-gestützter Dokumentenklassifikation und Entitätsabgleich.
+  </Card>
+  <Card title="Resend" icon="send">
+    Transaktionaler E-Mail-Versand für Rechnungen, Angebote und Teameinladungen.
+  </Card>
+  <Card title="pdfme" icon="layout" href="/de/user-guide/pdf-templates">
+    Drag-and-Drop-PDF-Vorlagendesigner und Dokumentengenerator.
+  </Card>
+  <Card title="Supabase" icon="database">
+    PostgreSQL-Datenbank, Authentifizierung und Dateispeicher mit Row-Level Security.
+  </Card>
+</Columns>
+
+## Zahlungsabwicklung
+
+Stripe steuert zwei Zahlungsabläufe in NomadBill:
+
+- **Rechnungszahlungen** — Wenn Sie die Zahlung auf einer Rechnung aktivieren, erstellt NomadBill eine Stripe-Checkout-Session. Der Kunde zahlt auf der von Stripe gehosteten Seite, und ein Webhook aktualisiert den Rechnungsstatus automatisch auf bezahlt.
+- **Abonnementabrechnung** — Die Pläne Starter und Professional werden über Stripe mit einer 7-tägigen Testphase abgerechnet. Abonnementstatus-Updates fließen über Webhook-Ereignisse zurück in Ihr Profil.
+
+Pro Unternehmen können Stripe-Connect-Schlüssel in den Einstellungen hinterlegt werden, sodass jedes Unternehmen für Rechnungszahlungen sein eigenes Stripe-Konto nutzen kann.
+
+## Banksynchronisation
+
+Plaid verbindet Bankkonten in zwei Regionen:
+
+- **US-Banken** — Unterstützt Institute in den Vereinigten Staaten und Kanada
+- **EU-Banken** — Unterstützt Institute in Deutschland, Frankreich, Spanien, den Niederlanden, Irland und dem Vereinigten Königreich
+
+Transaktionen werden über die cursorbasierte inkrementelle Synchronisation von Plaid synchronisiert. Bei der ersten Verbindung werden bis zu 365 Tage Historie importiert. Nachfolgende Synchronisationen holen nur neue, geänderte oder entfernte Transaktionen.
+
+## E-Mail-Intelligence
+
+Nylas stellt für jedes Unternehmen ein eigenes Agenten-Postfach bereit (zum Beispiel `yourcompany@agent.nomadbill.co`). Eingehende E-Mails werden über eine KI-Pipeline verarbeitet, die:
+
+- Nachrichten in Dokumenttypen klassifiziert (Eingangsrechnung, Beleg, Zahlungsbestätigung, Mahnung, Vertrag und weitere)
+- strukturierte Daten wie Beträge, MwSt., IBAN, Daten und Positionen aus E-Mail-Text und Anhängen extrahiert
+- E-Mails mit bestehenden Rechnungen, Angeboten, Eingangsrechnungen, Banktransaktionen und Kunden über eine Bewertungsengine abgleicht
+
+## E-Mail-Zustellung
+
+Resend versendet transaktionale E-Mails im Namen von NomadBill:
+
+- Rechnungs- und Angebotsversand-E-Mails
+- Teameinladungs-E-Mails
+- Absenderadresse: `noreply@nomadbill.co`
+
+## PDF-Erzeugung
+
+Die Bibliothek pdfme betreibt das PDF-Vorlagensystem. Sie können individuelle Vorlagen für Rechnungen, Angebote und Eingangsrechnungen mit einem visuellen Drag-and-Drop-Editor gestalten. Vorlagen unterstützen mehrere Sprachen und können Platzhalter für benutzerdefinierte Felder enthalten.
+
+## Automatischer Abgleich
+
+Wenn Banktransaktionen synchronisiert werden, gleicht NomadBill sie automatisch mit bestehenden Rechnungen und Eingangsrechnungen ab:
+
+| Abgleichstyp | Methode | Konfidenzwert |
+|---|---|---|
+| Rechnung (eingehende Zahlung) | Exakter Betrag + Währung + Datum innerhalb von 14 Tagen | 90 |
+| Ausgabe (ausgehende Zahlung) | Exakter Betrag + Währung + Datum innerhalb von 14 Tagen | 85 |
+| Manuelle Verknüpfung | Vom Benutzer ausgewählt | 100 |
+
+Nicht abgeglichene Transaktionen mit plausiblen Kandidaten werden als Vorschläge mit einem erweiterten 30-Tage-Fenster zur manuellen Prüfung angezeigt.
+
+<Callout kind="info">
+  NomadBill bietet derzeit keine öffentliche REST-API und keine ausgehenden Webhooks für externe Entwickler. Die Stripe- und Nylas-Webhooks sind eingehende Endpunkte, die NomadBill empfängt, um Zahlungs- und E-Mail-Ereignisse zu verarbeiten.
+</Callout>

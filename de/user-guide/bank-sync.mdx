@@ -1,0 +1,197 @@
+---
+title: Banksynchronisation
+description: Verbinde US- und EU-Bankkonten, synchronisiere Transaktionen automatisch und gleiche Zahlungen mit Rechnungen ab.
+---
+
+## Die Banksynchronisation bringt deine Banktransaktionen in NomadBill, damit du eingehende und ausgehende Zahlungen mit deinen Rechnungen abgleichen kannst.
+
+Sobald du ein Konto verbindest, synchronisiert NomadBill bis zu 365 Tage Transaktionshistorie und hält die Verbindung mit inkrementellen Syncs aktuell. Die synchronisierten Transaktionen können anschließend automatisch oder manuell mit ausgehenden Rechnungen und Eingangsrechnungen abgeglichen werden.
+
+<Callout kind="info">
+
+Wähle die Bankregion, die zum Institut passt, das du verbinden möchtest. Die Seite Banksynchronisation hat separate Verbindungsschaltflächen für **US**- und **EU**-Banken, und du musst mit der richtigen beginnen.
+
+- **US** unterstützt Banken in `US` und `CA`
+- **EU** unterstützt Banken in `GB`, `FR`, `ES`, `NL`, `IE` und `DE`
+
+Wenn deine Bank in einer Region nicht verfügbar ist, versuche die andere nur, wenn das Institut dort tatsächlich tätig ist.
+
+</Callout>
+
+## Ein Bankkonto verbinden
+
+Verbinde jedes Bankkonto über die Seite Banksynchronisation. NomadBill nutzt Plaid als Verbindungsanbieter und speichert die Verbindung unter deinem Unternehmen.
+
+<Steps>
+  <Step title="Seite Banksynchronisation öffnen" icon="folder">
+
+  Melde dich bei NomadBill an und öffne **Banksynchronisation** im authentifizierten Bereich der App.
+
+  Auf der Seite solltest du zwei Verbindungsoptionen sehen: eine für **US**-Banken und eine für **EU**-Banken.
+
+  </Step>
+
+  <Step title="Die richtige Region wählen" icon="globe">
+
+  Wähle die Schaltfläche für die Region, in der dein Bankkonto geführt wird.
+
+  - Nutze die Option **US** für Banken in `US` oder `CA`
+  - Nutze die Option **EU** für Banken in `GB`, `FR`, `ES`, `NL`, `IE` oder `DE`
+
+  Nach der Regionwahl öffnet Plaid einen sicheren Bankverbindungsfluss.
+
+  </Step>
+
+  <Step title="Bei deiner Bank authentifizieren" icon="lock">
+
+  Schließe den Plaid-Ablauf ab, indem du dein Institut auswählst und dich bei Bedarf mit deinen Bankzugangsdaten anmeldest.
+
+  Plaid gibt die Verbindungsdetails an NomadBill zurück, einschließlich der verknüpften Konten und des Institutnamens.
+
+  </Step>
+
+  <Step title="Auf die initiale Synchronisation warten" icon="refresh-cw">
+
+  Nach dem Erstellen der Verbindung startet NomadBill den ersten Transaktionssync.
+
+  Eine erfolgreiche Verbindung speichert Details wie Anbieter, Region, Institut, verknüpfte Konten, Sync-Status und den Zeitpunkt der letzten erfolgreichen Synchronisation. Sobald der Sync abgeschlossen ist, erscheinen deine Transaktionen unter dem verbundenen Bankkonto.
+
+  </Step>
+</Steps>
+
+## Transaktionssynchronisation
+
+NomadBill nutzt cursorbasierte inkrementelle Synchronisation, um deine Transaktionsliste aktuell zu halten. Der erste Sync fordert bis zu 365 Tage Historie an, spätere Syncs setzen am zuletzt gespeicherten Cursor fort, statt die gesamte Historie erneut abzurufen.
+
+### Was wird synchronisiert
+
+Jede Bankverbindung speichert ihren eigenen Sync-Zustand, einschließlich des Plaid-Items, der verknüpften Konten und eines Sync-Cursors. Transaktionen werden mit Details wie Betrag, Währung, Richtung, Buchungsdatum, Gegenparteiinformationen, Händlerdetails, Kategorien, Pending-Status und dem ursprünglichen Roh-Transaktionspayload gespeichert.
+
+### So funktioniert die inkrementelle Synchronisation
+
+NomadBill synchronisiert Transaktionen über Plaids inkrementellen Transaktionssync-Ablauf. Jeder Sync liest Ergebnis-Seiten, bis Plaid keine weiteren Änderungen zurückgibt oder der Sync das Sicherheitslimit erreicht.
+
+- Der Sync ist **cursorbasiert**, sodass jeder Lauf am letzten erfolgreichen Sync-Punkt fortsetzt
+- Ein einzelner Sync verarbeitet bis zu **20 Seiten**
+- Jede Seite kann bis zu **500 Transaktionen** enthalten
+- Das effektive Limit pro Sync-Lauf beträgt **10.000 Transaktionen**
+
+NomadBill speichert den aktualisierten Sync-Cursor **erst nach erfolgreichem Abschluss des gesamten Syncs**. Wenn ein Sync teilweise fehlschlägt, behält NomadBill den vorherigen Cursor, damit der nächste Lauf sicher erneut versuchen kann.
+
+### So werden Transaktionen geschrieben
+
+Synchronisierte Transaktionen werden in Batches von **200** Datensätzen eingefügt oder aktualisiert. Das hält große Syncs handhabbar und bewältigt gleichzeitig hohe Transaktionsvolumen effizient.
+
+Jede Transaktion ist verknüpft mit:
+
+- deinem Unternehmen
+- der Bankverbindung, von der sie stammt
+- der ursprünglichen externen Transaktions-ID
+- dem Quellkonto innerhalb des verbundenen Instituts
+
+### So funktionieren Beträge und Richtungen
+
+Plaid und NomadBill verwenden entgegengesetzte Betragskonventionen für den Cashflow. Plaid behandelt positive Beträge als Geld, das das Konto verlässt, während NomadBill positive Beträge als empfangenes Geld speichert.
+
+| Plaid-Vorzeichen | Bedeutung in Plaid | Gespeicherter Betrag in NomadBill | Richtung |
+|---|---|---:|---|
+| Positive | Geld verlässt das Konto | Negative | `out` |
+| Negative | Geld geht auf dem Konto ein | Positive | `in` |
+
+Diese Vorzeichenumkehr macht den Abgleich in NomadBill intuitiver. Eingehende Kundenzahlungen erscheinen als positive Beträge, ausgehende Zahlungen wie Lieferantenrechnungen als negative Beträge.
+
+## Automatischer Abgleich
+
+NomadBill versucht automatisch, synchronisierte Transaktionen mit Rechnungen abzugleichen. Die Abgleichslogik unterscheidet sich für eingehendes und ausgehendes Geld.
+
+### So funktioniert der Abgleich
+
+Eingehendes Geld wird mit deinen gesendeten und überfälligen Rechnungen verglichen. Ausgehendes Geld wird mit deinen Eingangsrechnungen verglichen. In beiden Fällen sucht NomadBill nach einer exakten Übereinstimmung von Betrag und Währung und prüft anschließend, ob das Transaktionsdatum innerhalb von 14 Tagen des Rechnungsdatum-Fensters liegt.
+
+Wenn ein Treffer gefunden wird, schreibt NomadBill die Verknüpfung zur Transaktion und aktualisiert den Zahlungsstatus der Rechnung automatisch.
+
+### Abgleichskonfidenz und Ergebnis
+
+| Abgleichsablauf | Transaktionstyp | Abgleichsregel | Konfidenz | Ergebnis |
+|---|---|---|---:|---|
+| `autoMatchInvoices` | Eingehende Zahlung | Exakter Betrag + Währung + Datum innerhalb von 14 Tagen | 90 | Setzt `matched_invoice_id`, `match_method` auf `amount+date`, Rechnungs-`payment_status` auf `paid` und Rechnungs-`status` auf `paid` |
+| `autoMatchIncomingInvoices` | Ausgehende Zahlung | Exakter Betrag + Währung + Datum innerhalb von 14 Tagen | 85 | Setzt `matched_incoming_invoice_id`, `match_method` auf `amount+date` und Eingangsrechnungs-`payment_status` auf `paid` |
+
+### Was automatisch abgeglichen wird
+
+Eine Transaktion kann automatisch abgeglichen werden, wenn sie alle diese Bedingungen erfüllt:
+
+- der Betrag stimmt exakt überein
+- die Währung stimmt exakt überein
+- das Datum liegt im 14-Tage-Abgleichsfenster
+- die Rechnung befindet sich in einem Zustand, der noch abgeglichen werden kann
+
+Bei ausgehenden Rechnungen zielt NomadBill auf Rechnungen ab, die bereits **sent** oder **overdue** sind. Bei Eingangsrechnungen markiert NomadBill die Rechnung als bezahlt, ohne sie in einen anderen Dokumentstatus zu versetzen.
+
+## Manueller Abgleich
+
+Der automatische Abgleich erledigt zuerst die klaren Fälle. Wenn eine Transaktion geprüft werden muss, kannst du sie manuell zuordnen.
+
+### Kandidatenvorschläge
+
+NomadBill erzeugt Kandidaten für die manuelle Prüfung mit einem größeren Suchfenster als der automatische Matcher.
+
+- Die Suche erfolgt in einem **30-Tage**-Datumsfenster
+- Es werden bis zu **5 Kandidaten** pro Transaktion zurückgegeben
+- Der Mechanismus ist für die Prüfung gedacht, nicht für die automatische Zuweisung
+
+Das hilft, wenn das Zahlungsdatum stärker als erwartet vom Rechnungsdatum abweicht oder wenn du einen von mehreren wahrscheinlichen Treffern bestätigen möchtest.
+
+### Verhalten bei manueller Verknüpfung
+
+Wenn du eine Transaktion manuell verknüpfst, erfasst NomadBill sie als bestätigten Treffer.
+
+- `match_confidence` wird auf **100** gesetzt
+- `match_method` wird auf `manual` gesetzt
+
+Eine manuelle Verknüpfung ersetzt die weitere Vorschlagslogik für diese Transaktion und macht klar, dass der Treffer vom Nutzer bestätigt wurde.
+
+## Verknüpfung aufheben und Verbindungen verwalten
+
+Nutze das Aufheben der Verknüpfung, wenn die Transaktion mit der falschen Rechnung verbunden ist. Lösche eine Verbindung, wenn du den Bank-Feed vollständig entfernen möchtest.
+
+### Eine abgeglichene Transaktion entknüpfen
+
+Das Entknüpfen entfernt die Beziehung zwischen einer Transaktion und ihrem abgeglichenen Rechnungsdatensatz.
+
+Wenn du eine Transaktion entknüpfst, macht NomadBill Folgendes:
+
+- löscht alle abgleichsbezogenen Felder an der Transaktion
+- setzt den `payment_status` der verknüpften ausgehenden Rechnung zurück auf `unpaid`
+- lässt den `status` einer ausgehenden Rechnung unverändert, wenn er bereits auf `paid` gesetzt war
+- setzt den `payment_status` der verknüpften Eingangsrechnung zurück auf `unpaid`
+
+Nutze das Entknüpfen vorsichtig, wenn du den bezahlten Status bereits für die Buchhaltungsprüfung verwendest, denn das Entknüpfen setzt den Status einer ausgehenden Rechnung nicht von `paid` zurück auf `sent`.
+
+### Eine Bankverbindung löschen
+
+Das Löschen einer Verbindung entfernt die Plaid-Verknüpfung und alle synchronisierten Transaktionen, die dazu gehören.
+
+Wenn du eine Verbindung löschst, macht NomadBill Folgendes:
+
+- versucht, den Plaid-Zugriff für dieses Item zu widerrufen
+- fährt fort, auch wenn der Plaid-Widerruf fehlschlägt
+- löscht den Bankverbindungsdatensatz
+- löscht kaskadierend alle Transaktionen unter dieser Verbindung
+
+Wenn du später dieselbe Bank erneut verbindest, erstellt NomadBill eine neue Verbindung und einen neuen Sync-Zustand.
+
+<Columns cols={2}>
+  <Card
+    title="Ausgehende Rechnungen verwalten"
+    href="/de/user-guide/invoicing"
+    icon="file-text"
+    cta="Rechnungsleitfaden öffnen"
+  />
+  <Card
+    title="Lieferantenrechnungen verfolgen"
+    href="/de/user-guide/incoming-invoices"
+    icon="folder"
+    cta="Leitfaden Eingangsrechnungen öffnen"
+  />
+</Columns>

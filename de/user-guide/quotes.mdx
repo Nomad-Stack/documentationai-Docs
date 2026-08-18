@@ -1,0 +1,160 @@
+---
+title: Angebote
+description: Erstelle, versende und wandle Angebote in Rechnungen um – mit Mehrwährungsunterstützung und PDF-Erzeugung.
+---
+
+## Projektkalkulationen in kundenfertige Angebote verwandeln
+
+Angebote lassen dich ein Angebot vorbereiten, an einen Kunden senden und nach Annahme in eine Rechnung umwandeln. Der Angebots-Workflow verwendet dieselben Kerndaten wie Rechnungen, einschließlich Kundendetails, Positionen, MwSt., Währung, Sprache, PDF-Ausgabe, E-Mail-Zustellung, benutzerdefinierte Felder, CSV-Export und benutzerdefinierte PDF-Vorlagen.
+
+## Angebotsstatus
+
+Jedes Angebot verfolgt zwei getrennte Zustände: **status** und **payment status**. Zusammen zeigen sie dir, wo das Angebot in deinem Verkaufsprozess steht und ob eine damit verbundene Zahlung abgeschlossen wurde.
+
+### Angebotsstatus
+
+| Status | Bedeutung |
+|---|---|
+| **draft** | Du bereitest das Angebot noch vor. Das Angebot wurde weder finalisiert noch umgewandelt. |
+| **sent** | Du hast das Angebot per E-Mail an den Kunden gesendet. |
+| **converted** | Du hast das Angebot in eine Rechnung umgewandelt. Aus den Angebotsdaten wurde ein neuer Rechnungsdatensatz erstellt. |
+
+### Zahlungsstatus
+
+| Zahlungsstatus | Bedeutung |
+|---|---|
+| **unpaid** | Es wurde keine Zahlung erfasst. |
+| **pending** | Eine Zahlung wurde gestartet, aber noch nicht abgeschlossen. |
+| **paid** | Die Zahlung wurde erfolgreich abgeschlossen. |
+| **failed** | Ein Zahlungsversuch wurde unternommen, war aber nicht erfolgreich. |
+
+<Callout kind="info">
+
+Ein Angebot kann als `sent` markiert sein, ohne bezahlt zu sein, und es kann in eine Rechnung umgewandelt werden, auch wenn der Zahlungsstatus noch `unpaid` ist. Status und Zahlungsstatus werden unabhängig voneinander verfolgt.
+
+</Callout>
+
+## Ein Angebot erstellen
+
+Erstelle ein Angebot auf dieselbe Weise wie eine Rechnung und speichere es anschließend als Angebot für den Kunden.
+
+<Steps>
+  <Step title="Kunden hinzufügen" icon="users">
+
+  Wähle einen vorhandenen Kunden aus oder gib die Kundendetails direkt im Angebot ein. Verwende dieselben Kundeninformationsfelder wie bei Rechnungen, einschließlich Kundenname und Adresse.
+
+  </Step>
+  <Step title="Angebotsdetails festlegen" icon="settings">
+
+  Gib Angebotsdatum, Fälligkeitsdatum, Währung und Sprache ein. Angebote unterstützen dieselben Währungen und Sprachen wie Rechnungen.
+
+  Unterstützte Währungen:
+  
+  - `EUR`
+  - `USD`
+  - `GBP`
+  - `CHF`
+  - `AED`
+
+  Unterstützte Sprachen:
+  
+  - `DE`
+  - `EN`
+  - `FR`
+  - `ES`
+
+  </Step>
+  <Step title="Positionen und MwSt. hinzufügen" icon="edit">
+
+  Füge die Produkte oder Dienstleistungen hinzu, die du anbieten möchtest, und prüfe anschließend Mengen, Preise und MwSt. Das Angebot speichert Positionen in derselben Struktur wie Rechnungen, sodass Summen und Steuerberechnungen demselben Muster folgen.
+
+  Prüfe die Gesamtsumme vor dem Speichern. Dein Angebot sollte jetzt den vollständigen Betrag mit dem gewählten MwSt.-Prozentsatz zeigen.
+
+  </Step>
+  <Step title="Vorlage wählen und PDF prüfen" icon="file-text">
+
+  Wähle eine PDF-Vorlage, wenn du benutzerdefinierte Angebots- oder Rechnungslayouts verwendest. Vorschau anschließend das PDF, um zu bestätigen, dass Preisgestaltung, Branding, Sprache und Kundeninformationen korrekt sind.
+
+  Wenn die Vorschau stimmt, speichere das Angebot. Das Angebot ist jetzt bereit zum Versenden oder späteren Umwandeln.
+
+  </Step>
+</Steps>
+
+## Umwandlung von Angebot zu Rechnung
+
+Wandle ein Angebot um, wenn der Kunde dein Angebot annimmt. Die Umwandlung ändert den Angebotsstatus auf `converted` und erstellt eine neue Rechnung mit denselben zugrunde liegenden Geschäftsdaten.
+
+Die neue Rechnung kopiert Kundendetails, Adresse, Daten, Währung, Sprache, Positionen, MwSt.-Prozentsatz, Vorlage und Gesamtbetrag des Angebots. So erhältst du ein Abrechnungsdokument, ohne dieselben Informationen erneut einzugeben.
+
+### Wie die Beziehung funktioniert
+
+Die Rechnung speichert eine `quote_id`-Referenz zurück zum ursprünglichen Angebot. Die Beziehung wird also von der Rechnung zum Angebot verfolgt, nicht vom Angebot zur Rechnung.
+
+Wenn du bestätigen musst, dass ein Angebot in eine Rechnung umgewandelt wurde, schaue dir den Rechnungsdatensatz an, der über `quote_id` verknüpft ist. Das Angebot selbst wechselt in den Status `converted`, aber die direkte Datenbankbeziehung ist von Rechnung zu Angebot navigierbar.
+
+<Callout kind="tip">
+
+Nutze die Umwandlung, wenn die kommerziellen Bedingungen final sind. So bleibt deine Angebotshistorie erhalten und es entsteht eine saubere Übergabe vom Verkauf zur Abrechnung.
+
+</Callout>
+
+## Angebotsnummerierung
+
+Jedes Angebot erhält eine eigene Dokumentnummer im Format `A-00001`. Das Präfix `A` steht für Angebot.
+
+Angebotsnummern werden pro Unternehmen erzeugt und atomar vergeben. Das verhindert doppelte Nummern, wenn mehrere Personen gleichzeitig Dokumente erstellen, und hält die Angebotssequenz jedes Unternehmens konsistent.
+
+Bei Bedarf kannst du die Angebotsnummer vor dem Versand des Dokuments bearbeiten.
+
+## Angebote per E-Mail versenden
+
+Versende Angebote per E-Mail mit demselben Zustellungsflow wie bei Rechnungen. NomadBill erzeugt die Dokumentzusammenfassungs-E-Mail und sendet sie über Resend mit `noreply@nomadbill.co`.
+
+Prüfe vor dem Versand die PDF-Vorschau und die Empfängerdetails. Nach dem Versand wechselt der Angebotsstatus auf `sent`, sodass du vorbereitete Angebote von bereits an den Kunden zugestellten Angeboten unterscheiden kannst.
+
+Wenn du gebrandete Dokumente brauchst, kombiniere den E-Mail-Versand mit deiner gewählten PDF-Vorlage, damit der Kunde das finale Layout erhält, das er sehen soll.
+
+## Anzahlungen und Zahlungen
+
+Angebote enthalten einen Zahlungsflow, der jedoch an den Rechnungs-Checkout-Prozess gebunden ist. In der Praxis ruft die Zahlungsaktion den Rechnungs-Checkout-Flow auf und nicht einen angebotsspezifischen Zahlungsdatensatz.
+
+Das bedeutet, dass die Zahlungsabwicklung korrekt funktioniert, sobald das Angebot in eine Rechnung umgewandelt wurde. Ab diesem Punkt kann die Rechnung für Checkout und Zahlungsaktualisierungen verwendet werden.
+
+<Callout kind="alert">
+
+Eine Anzahlungszahlung für ein Angebot funktioniert korrekt nur, nachdem du das Angebot in eine Rechnung umgewandelt hast. Der aktuelle Zahlungsflow fragt die Rechnungs-Tabelle ab, nicht die Angebots-Tabelle, daher ist die rein angebotsbezogene Zahlungsabwicklung eingeschränkt.
+
+</Callout>
+
+Zahlungsstatus erscheinen weiterhin auf Angeboten, aber der zugrunde liegende Update-Flow für Zahlungen ist rechnungsbasiert. Wenn du einen zuverlässigen Zahlungslink oder Stripe-gestützte Statusaktualisierungen brauchst, wandle das Angebot zuerst um und ziehe die Zahlung über die Rechnung ein.
+
+## Was du mit Angeboten machen kannst
+
+Angebote unterstützen dieselben Dokumentfunktionen wie Rechnungen:
+
+- PDF-Vorschau vor dem Versand
+- E-Mail-Zustellung
+- Benutzerdefinierte Felder
+- Verknüpfte E-Mails
+- CSV-Export
+- Benutzerdefinierte PDF-Vorlagen
+- Manuelles Bearbeiten der Angebotsnummer
+
+Diese gemeinsamen Funktionen erleichtern den Übergang vom Angebot zur Rechnung, ohne deinen Dokument-Workflow zu ändern.
+
+## Weiter mit verwandten Anleitungen
+
+<Columns cols={2}>
+  <Card
+    title="Rechnungen verwalten"
+    href="/de/user-guide/invoicing"
+    icon="file-text"
+    cta="Leitfaden öffnen"
+  />
+  <Card
+    title="PDF-Vorlagen anpassen"
+    href="/de/user-guide/pdf-templates"
+    icon="edit"
+    cta="Leitfaden öffnen"
+  />
+</Columns>

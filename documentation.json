@@ -226,6 +226,72 @@
                 ]
               },
               {
+                "group": "Benutzerhandbuch",
+                "icon": "book-open",
+                "pages": [
+                  {
+                    "title": "Dashboard",
+                    "path": "de/user-guide/dashboard",
+                    "icon": "layout-dashboard"
+                  },
+                  {
+                    "title": "Kunden",
+                    "path": "de/user-guide/customers",
+                    "icon": "users"
+                  },
+                  {
+                    "title": "Produkte",
+                    "path": "de/user-guide/products",
+                    "icon": "package"
+                  },
+                  {
+                    "title": "Rechnungen",
+                    "path": "de/user-guide/invoicing",
+                    "icon": "file-text"
+                  },
+                  {
+                    "title": "Angebote",
+                    "path": "de/user-guide/quotes",
+                    "icon": "file"
+                  },
+                  {
+                    "title": "Eingangsrechnungen",
+                    "path": "de/user-guide/incoming-invoices",
+                    "icon": "inbox"
+                  },
+                  {
+                    "title": "Banksynchronisation",
+                    "path": "de/user-guide/bank-sync",
+                    "icon": "landmark"
+                  },
+                  {
+                    "title": "E-Mail-Intelligenz",
+                    "path": "de/user-guide/email-intelligence",
+                    "icon": "mail"
+                  },
+                  {
+                    "title": "PDF-Vorlagen",
+                    "path": "de/user-guide/pdf-templates",
+                    "icon": "file-type"
+                  },
+                  {
+                    "title": "Benutzerdefinierte Felder",
+                    "path": "de/user-guide/custom-fields",
+                    "icon": "sliders"
+                  },
+                  {
+                    "title": "Teamverwaltung",
+                    "path": "de/user-guide/team-management",
+                    "icon": "user-cog"
+                  },
+                  {
+                    "title": "Einstellungen",
+                    "path": "de/user-guide/settings",
+                    "icon": "settings"
+                  }
+                ]
+              },
+              {
                 "group": "Erweitert",
                 "icon": "settings",
                 "pages": [
@@ -264,7 +330,7 @@
                 "expandable": false,
                 "pages": [
                   {
-                    "title": "Rechnung erstellen",
+                    "title": "Wie erstelle ich eine Rechnung?",
                     "path": "de/help-center/faq/how-to-create-invoice"
                   }
                 ]

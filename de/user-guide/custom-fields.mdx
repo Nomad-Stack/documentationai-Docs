@@ -1,0 +1,225 @@
+---
+title: Benutzerdefinierte Felder
+description: Füge strukturierte Metadaten zu Kunden, Produkten, Rechnungen, Angeboten und Belegen mit 19 Feldtypen und flexiblen Anzeigeregeln hinzu.
+---
+
+## Benutzerdefinierte Felder lassen dich die Details erfassen, die dein Unternehmen braucht
+
+Füge eigene Felder zu Kunden, Produkten, Rechnungen, Angeboten und Eingangsrechnungen hinzu, damit jeder Datensatz zu deiner Arbeitsweise passt. Nutze benutzerdefinierte Felder für interne Notizen, Referenznummern, Kategorien, Links, Berechnungen, Anhänge und KI-generierten Text, ohne deinen Standardablauf zu ändern.
+
+<Callout kind="info">
+
+Benutzerdefinierte Felder sind unternehmensspezifisch. Ein Feld, das du erstellst, ist nur in deinem Unternehmenskonto und nur für den Entity-Typ verfügbar, dem du es zuweist.
+
+</Callout>
+
+## So funktionieren benutzerdefinierte Felder
+
+Benutzerdefinierte Felder bestehen aus zwei Teilen: einer **Felddefinition** und einem **Feldwert**. Die Definition steuert, wo das Feld erscheint, welche Eingabe es akzeptiert und ob es in Tabellen, Formularen oder PDF-Vorlagen genutzt werden kann. Der Wert enthält die tatsächlichen Daten, die an jedem Datensatz gespeichert werden.
+
+Du erstellst Felder pro Entity-Typ und füllst sie aus, wenn du einen Datensatz erstellst oder bearbeitest. Zum Beispiel kannst du ein Kundenkategorie-Feld für Kunden, ein SKU-Feld für Produkte oder ein Projektreferenz-Feld für Rechnungen hinzufügen.
+
+### Entity-Typen
+
+| Entity-Typ | Verwendung |
+|---|---|
+| `customer` | Zusätzliche Kundendetails speichern, z. B. Kundennummer, Website, Onboarding-Datum oder interne Notizen. |
+| `product` | Produktspezifische Metadaten hinzufügen, z. B. SKU, Kategorie, Gewicht, Einkaufspreis oder Zertifizierungen. |
+| `invoice` | Rechnungsdetails erfassen, z. B. Projektreferenzen, Lieferscheine, Freigabestatus oder berechnete Werte. |
+| `quote` | Angebotsspezifische Informationen verfolgen, z. B. Revisionsnummern, Gültigkeitshinweise oder Vertriebsphasen. |
+| `incoming_invoice` | Metadaten zu Lieferantenrechnungen speichern, z. B. Belegreferenzen, Freigabefelder oder angehängte Belege. |
+
+<Callout kind="tip">
+
+Halte Feldnamen spezifisch für den Datensatztyp. Ein Feld wie `sku` ergibt auf Produkten Sinn, während `project_reference` auf Rechnungen leichter zu pflegen ist.
+
+</Callout>
+
+## Feldtypen
+
+Wähle einen Feldtyp anhand der Art von Daten, die Nutzer eingeben oder generieren sollen.
+
+| Feldtyp | Beschreibung |
+|---|---|
+| `text` | Einzeilige Texteingabe. |
+| `multiline` | Mehrzeiliger Textbereich für längere Notizen. |
+| `email` | E-Mail-Adresseneingabe. |
+| `url` | Website- oder Link-Eingabe. |
+| `phone` | Telefonnummerneingabe. |
+| `number` | Ganzzahleingabe. |
+| `decimal` | Dezimalzahleingabe. |
+| `amount` | Währungsbetragseingabe. |
+| `percent` | Numerische Eingabe, angezeigt als Prozentsatz. |
+| `date` | Datumsauswahl. |
+| `datetime` | Datums- und Zeitauswahl. |
+| `boolean` | Checkbox mit Ja- oder Nein-Zustand. |
+| `dropdown` | Einzelauswahlfeld mit vordefinierten Optionen. |
+| `multiselect` | Mehrfachauswahlfeld mit vordefinierten Optionen. |
+| `autonumber` | Automatisch vergebene fortlaufende Nummer. |
+| `lookup` | Verknüpfung zu einer anderen Entity. |
+| `formula` | Berechnetes Feld basierend auf einem Ausdruck. |
+| `attachment` | Datei-Upload-Feld. |
+| `ai` | KI-generiertes Textfeld basierend auf einem gespeicherten Prompt. |
+
+## Feldkonfiguration
+
+Feldeinstellungen steuern Validierung, Sichtbarkeit und Reihenfolge. Konfiguriere diese Optionen beim Erstellen eines Feldes und aktualisiere sie später, wenn sich dein Workflow ändert.
+
+<ParamField body="is_required" param-type="boolean" required="false" show-location="false">
+
+Macht das Feld verpflichtend, wenn Nutzer ein Datensatzformular ausfüllen.
+
+</ParamField>
+
+<ParamField body="is_unique" param-type="boolean" required="false" show-location="false">
+
+Verhindert doppelte Werte für dieses Feld über Datensätze desselben Entity-Typs hinweg.
+
+</ParamField>
+
+<ParamField body="show_in_table" param-type="boolean" required="false" show-location="false">
+
+Zeigt das Feld als Spalte in Listenansichten für diesen Entity-Typ.
+
+</ParamField>
+
+<ParamField body="show_in_form" param-type="boolean" required="false" show-location="false">
+
+Zeigt das Feld in Erstellungs- und Bearbeitungsformularen. Diese Einstellung ist standardmäßig aktiviert.
+
+</ParamField>
+
+<ParamField body="available_in_pdf" param-type="boolean" required="false" show-location="false">
+
+Macht das Feld für PDF-Vorlagen verfügbar. Diese Einstellung ist standardmäßig aktiviert.
+
+</ParamField>
+
+<ParamField body="sort_order" param-type="integer" required="false" show-location="false">
+
+Steuert die Reihenfolge benutzerdefinierter Felder innerhalb des ausgewählten Entity-Typs.
+
+</ParamField>
+
+## Ein benutzerdefiniertes Feld erstellen
+
+Erstelle Felder im Manager für benutzerdefinierte Felder in den Einstellungen. Der schnellste Weg ist, zuerst Bezeichnung und Typ festzulegen und dann nur die Optionen zu aktivieren, die du brauchst.
+
+<Steps>
+  <Step title="Benutzerdefinierte Felder öffnen" icon="settings">
+
+  Melde dich bei NomadBill an und öffne den Bereich für benutzerdefinierte Felder in deinen Einstellungen.
+
+  Wähle den Entity-Typ, den du erweitern möchtest, z. B. Kunden, Produkte, Rechnungen, Angebote oder Eingangsrechnungen.
+
+  </Step>
+  <Step title="Felddefinition erstellen" icon="plus">
+
+  Füge ein neues Feld hinzu und gib eine **label** ein, die dein Team erkennt. NomadBill erstellt aus dieser Bezeichnung außerdem einen **key** für das Feld.
+
+  Wähle den **field type**, der zu den Daten passt, die du erfassen möchtest. Wenn du `dropdown` oder `multiselect` wählst, füge die Optionen hinzu, aus denen Nutzer wählen sollen.
+
+  </Step>
+  <Step title="Sichtbarkeit und Validierung konfigurieren" icon="edit">
+
+  Aktiviere die Optionen, die du für dieses Feld brauchst, z. B. erforderlich, eindeutig, sichtbar in Formularen, sichtbar in Tabellen oder verfügbar in PDF-Vorlagen.
+
+  Wenn das Feld früher oder später als andere erscheinen soll, passe die Sortierreihenfolge vor dem Speichern an.
+
+  </Step>
+  <Step title="Feld speichern und testen" icon="check-circle">
+
+  Speichere das Feld, öffne dann einen Datensatz desselben Entity-Typs und prüfe, ob die Eingabe dort erscheint, wo du sie erwartest.
+
+  Erfolg bedeutet, dass das Feld basierend auf den aktivierten Optionen in der Formular- oder Tabellenansicht angezeigt wird.
+
+  </Step>
+</Steps>
+
+<Callout kind="alert">
+
+Du kannst den Typ eines Feldes nach der Erstellung nicht mehr ändern. Wenn du einen anderen Typ brauchst, erstelle ein neues Feld und stelle deinen Workflow auf dieses neue Feld um.
+
+</Callout>
+
+## Benutzerdefinierte Felder in Datensätzen verwenden
+
+Nachdem du ein Feld erstellt hast, zeigt NomadBill es auf Datensätzen dieses Entity-Typs an, wenn `show_in_form` aktiviert ist. Nutzer können Werte beim Erstellen eines neuen Datensatzes eingeben oder sie später in der Bearbeitungsansicht aktualisieren.
+
+Werte benutzerdefinierter Felder werden pro Datensatz gespeichert. Ein produktbezogenes Feld gilt nur für Produkte, ein rechnungsbezogenes Feld nur für Rechnungen. Wenn ein Feld außerdem mit `show_in_table` markiert ist, kann der Wert in Listenansichten erscheinen und dir helfen, Datensätze schneller zu scannen und zu filtern.
+
+Benutzerdefinierte Felder unterstützen auch Bearbeitungsmuster auf Detailseiten. Das macht sie nützlich für Informationen, die du nicht immer sofort eingibst, z. B. interne Notizen, Follow-up-Daten oder unterstützende Anhänge.
+
+## Auto-Nummer-Felder
+
+Nutze Auto-Nummer-Felder, wenn du fortlaufende IDs brauchst, die NomadBill automatisch vergibt. Das eignet sich gut für Kundennummern, Produktnummern, interne Referenzen oder andere strukturierte IDs, die nicht manuell eingegeben werden sollten.
+
+<Callout kind="info">
+
+Auto-Nummer-Felder unterstützen drei Einrichtungsoptionen:
+
+- **Prefix** fügt Text vor der Nummer hinzu, z. B. `K-` oder `P-`.
+- **Padding** fügt führende Nullen hinzu, um eine feste Breite zu erreichen.
+- **Start** setzt die erste Nummer in der Sequenz.
+
+Eine Kundennummer könnte bei `K-1000` beginnen, während eine Produktnummer `P-00001` verwenden könnte.
+
+</Callout>
+
+Jedes Mal, wenn ein neuer Datensatz erstellt wird, vergibt NomadBill die nächste Nummer in der Sequenz für dieses Feld. Das reduziert doppelte Nummerierung und hält Datensätze konsistent.
+
+## Formel-Felder
+
+Nutze Formel-Felder, wenn ein Wert berechnet statt manuell eingegeben werden soll. Formel-Felder sind nützlich für Summen, Aufschläge, prozentbasierte Werte oder datensatzspezifische Berechnungen, die von anderen Feldern abhängen.
+
+Ein Formelausdruck kann auf integrierte numerische Werte und benutzerdefinierte Felder verweisen. Verfügbare Variablen umfassen:
+
+- `subtotal`
+- `vat_percentage`
+- `total`
+- `unit_price`
+- `custom.KEY`
+
+Zum Beispiel kannst du `custom.discount_rate * subtotal / 100` verwenden, um einen Rabattbetrag zu berechnen, wenn `discount_rate` in einem anderen benutzerdefinierten Feld gespeichert ist. Formelwerte werden automatisch berechnet, wenn NomadBill Werte benutzerdefinierter Felder speichert.
+
+<Callout kind="tip">
+
+Halte Schlüssel von Formel-Feldern einfach und vorhersehbar, damit Ausdrücke leichter lesbar sind. Ein Schlüssel wie `discount_rate` ist in `custom.discount_rate` leichter zu verwenden als ein langer oder inkonsistenter Namensstil.
+
+</Callout>
+
+## KI-generierte Felder
+
+Nutze KI-generierte Felder, wenn NomadBill Text für dich auf Basis eines gespeicherten Prompts schreiben soll. Das ist nützlich für interne Zusammenfassungen, Entwurfsbeschreibungen, Follow-up-Notizen oder standardisierten Text, der aus Datensatzdaten generiert werden soll.
+
+Bevor du ein KI-Feld nutzen kannst, erstelle einen KI-Prompt im Manager für benutzerdefinierte Felder. Verbinde diesen Prompt anschließend mit dem Feld, wenn du die Felddefinition erstellst. In Datensätzen können Nutzer den Text direkt aus der Feldeingabe generieren oder erneut generieren.
+
+NomadBill unterstützt diese KI-Modelle für Prompts:
+
+- `google/gemini-3-flash-preview`
+- `google/gemini-2.5-flash`
+- `google/gemini-2.5-pro`
+- `openai/gpt-5-mini`
+- `openai/gpt-5`
+
+<Callout kind="info">
+
+KI-generierte Felder speichern Textausgaben. Prüfe generierte Inhalte, bevor du sie in kundenorientierten Dokumenten verwendest.
+
+</Callout>
+
+## Benutzerdefinierte Felder in PDF-Vorlagen
+
+Mache ein Feld in der PDF-Ausgabe verfügbar, indem du `available_in_pdf` an der Felddefinition aktivierst. Danach kannst du das Feld in deinen Dokumentvorlagen platzieren und den benutzerdefinierten Wert beim Erzeugen von Rechnungen, Angeboten oder anderen PDFs nutzen.
+
+Wenn du benutzerdefinierte Felder in gedruckten Dokumenten einbinden möchtest, richte das Feld ein, bevor du deine Vorlage finalisierst. So bleibt deine Vorlagenstruktur stabil und du vermeidest spätere Nacharbeit.
+
+Lies [PDF-Vorlagen](/de/user-guide/pdf-templates) für die Vorlageneinrichtung und Layout-Optionen.
+
+## Verwandte Leitfäden
+
+<Columns cols={3}>
+  <Card title="Rechnungen verwalten" href="/de/user-guide/invoicing" icon="folder" cta="Rechnungsleitfaden öffnen" />
+  <Card title="Produkte verwalten" href="/de/user-guide/products" icon="package" cta="Produktleitfaden öffnen" />
+  <Card title="PDF-Vorlagen gestalten" href="/de/user-guide/pdf-templates" icon="book-open" cta="PDF-Vorlagen-Leitfaden öffnen" />
+</Columns>

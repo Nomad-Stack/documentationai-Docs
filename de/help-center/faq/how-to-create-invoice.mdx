@@ -1,0 +1,78 @@
+---
+title: Wie erstelle ich eine Rechnung?
+description: Erstellen, anpassen und versenden Sie Rechnungen in NomadBill mit Multiwährungs-Unterstützung, MwSt.-Berechnung und PDF-Zustellung.
+---
+
+## Rechnung erstellen und versenden
+
+Erstellen Sie eine neue Rechnung über die Seite **Invoices**, tragen Sie Kunden- und Abrechnungsdaten ein, prüfen Sie die PDF-Vorschau und versenden oder laden Sie anschließend die fertige Rechnung herunter. NomadBill speichert nicht versendete Rechnungen als Entwürfe, sodass Sie später zurückkehren und sie vor dem Versand fertigstellen können.
+
+<Steps>
+  <Step title="Zu Invoices navigieren und eine neue Rechnung erstellen" icon="file-text">
+
+  Öffnen Sie **Invoices** in Ihrem Dashboard und klicken Sie auf **New**. Sie können auch direkt zu `/invoices/new` gehen, wenn Sie die Route bereits kennen.
+
+  Wenn das Formular geöffnet wird, startet die Rechnung im Status **draft**. Sie können den Entwurf weiter bearbeiten, bis Sie ihn versenden.
+
+  </Step>
+
+  <Step title="Währung und Sprache auswählen" icon="settings">
+
+  Wählen Sie die Rechnungs-**Währung** und **-Sprache**, bevor Sie die übrigen Details eingeben. NomadBill unterstützt diese Währungen: **EUR**, **USD**, **GBP**, **CHF** und **AED**.
+
+  Für die Rechnungssprache wählen Sie **DE**, **EN**, **FR** oder **ES**. Verwenden Sie die Sprache, die Ihr Kunde erwarten wird.
+
+  </Step>
+
+  <Step title="Kundendaten eingeben" icon="users">
+
+  Tragen Sie den **Namen** und die **Adresse** des Kunden genau so ein, wie sie auf der Rechnung erscheinen sollen. Diese Angaben werden im Rechnungsdokument und in der PDF-Vorschau verwendet.
+
+  Prüfen Sie Schreibweise und Formatierung an dieser Stelle, bevor Sie fortfahren. Kundendaten jetzt zu korrigieren ist schneller, als eine bereits versendete Rechnung später zu ändern.
+
+  </Step>
+
+  <Step title="Positionen hinzufügen" icon="plus">
+
+  Fügen Sie eine oder mehrere Positionen für die abzurechnenden Waren oder Dienstleistungen hinzu. Jede Position enthält einen **Namen**, eine **Menge** und einen **Preis**.
+
+  Wenn Sie die Reihenfolge ändern möchten, ziehen Sie die Positionen in die gewünschte Abfolge. Die Zwischensumme der Rechnung aktualisiert sich, während Sie Positionen hinzufügen oder bearbeiten.
+
+  </Step>
+
+  <Step title="MwSt. festlegen und Summen prüfen" icon="bar-chart">
+
+  Legen Sie den **MwSt.-Satz** für die Rechnung fest. NomadBill setzt die MwSt. standardmäßig auf **19%**, Sie können den Wert bei Bedarf ändern.
+
+  Die Gesamtsumme wird als `subtotal + (subtotal x VAT%)` berechnet. Prüfen Sie Zwischensumme, MwSt.-Betrag und Endsumme, bevor Sie fortfahren.
+
+  </Step>
+
+  <Step title="Vorschau und Versand" icon="send">
+
+  Sehen Sie sich die Rechnung als PDF in der Vorschau an, um Layout, Kundendaten, Positionen und Summen zu bestätigen. Wenn alles stimmt, versenden Sie die Rechnung per E-Mail oder laden Sie sie stattdessen herunter.
+
+  Versendete Rechnungen werden über Resend von `noreply@nomadbill.co` zugestellt. Wenn Sie die Stripe-Zahlung auf der Rechnung aktivieren, erhält der Kunde einen Checkout-Link als Teil des Zahlungsablaufs.
+
+  </Step>
+</Steps>
+
+<Callout kind="tip">
+
+NomadBill erzeugt die Rechnungsnummer automatisch im Format `R-00001`. Die Nummerierung wird pro Unternehmen verwaltet, sodass jedes Unternehmen seine eigene Rechnungsfolge behält.
+
+</Callout>
+
+<Callout kind="info">
+
+Der Rechnungsstatus wechselt von `draft` zu `sent` und anschließend zu `paid` oder `overdue`. Der Zahlungsstatus wird separat als `unpaid`, `pending`, `paid` oder `failed` erfasst.
+
+Wenn der Kunde den Stripe-Checkout startet, wechselt der Zahlungsstatus zu `pending`. Wenn Stripe die Zahlung bestätigt, wechselt der Status zu `paid`. Wenn die Zahlung nicht abgeschlossen wird, wechselt der Status zu `failed`.
+
+</Callout>
+
+## Was sollten Sie noch wissen?
+
+Entwurfsrechnungen bleiben bearbeitbar, bis Sie sie versenden. Entwürfe sind daher der sicherste Ort, um Kundendaten anzupassen, Positionen neu zu ordnen oder die MwSt. vor dem Versand zu aktualisieren.
+
+NomadBill unterstützt außerdem Metadaten für wiederkehrende Rechnungen. Sie können das Wiederholungs-Flag setzen und eine Frequenz von `weekly`, `monthly`, `quarterly` oder `yearly` wählen — dadurch werden jedoch keine Rechnungen automatisch nach Zeitplan erstellt.

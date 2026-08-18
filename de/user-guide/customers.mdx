@@ -1,0 +1,128 @@
+---
+title: Kunden
+description: Verwalte Kundendatensätze mit Kontaktdaten und benutzerdefinierten Feldern und nutze sie erneut in Rechnungen und Angeboten.
+---
+
+## Halte deine Kundendaten an einem Ort
+
+Kunden speichern die Kontaktinformationen, die du in deinem Abrechnungsworkflow wiederverwendest. Füge jeden Kunden einmal unter `/customers` hinzu, halte die Angaben aktuell und nutze diese Datensätze erneut, wenn du Rechnungen und Angebote erstellst.
+
+Unternehmensinhaber und Teammitglieder können Kunden in ihrem Unternehmens-Workspace verwalten. Die Kundenliste ist alphabetisch nach Name sortiert, und die Tabelle zeigt die Standard-Kontaktfelder sowie alle benutzerdefinierten Felder, die für die Tabellenansicht konfiguriert sind.
+
+## Kundenfelder
+
+Jeder Kundendatensatz enthält die folgenden Kern-Kontaktfelder.
+
+<ParamField body="name" param-type="string" required="true" show-location="false">
+
+Der Anzeigename des Kunden. NomadBill erfordert dieses Feld und verwendet es als primäre Bezeichnung in der Kundenliste.
+
+</ParamField>
+
+<ParamField body="email" param-type="string" required="false" show-location="false">
+
+Die E-Mail-Adresse des Kunden.
+
+</ParamField>
+
+<ParamField body="phone" param-type="string" required="false" show-location="false">
+
+Die Telefonnummer des Kunden.
+
+</ParamField>
+
+<ParamField body="address" param-type="string" required="false" show-location="false">
+
+Die Adresse des Kunden. Im Dialog zum Erstellen und Bearbeiten ist dieses Feld ein mehrzeiliges Textfeld, damit du eine vollständige Rechnungsadresse eingeben kannst.
+
+</ParamField>
+
+<Callout kind="info">
+
+Die Kundenliste zeigt standardmäßig **name**, **email** und **phone**. Außerdem werden kundenspezifische benutzerdefinierte Felder angezeigt, bei denen die Tabellensichtbarkeit aktiviert ist.
+
+</Callout>
+
+## Einen Kunden erstellen
+
+Füge einen Kunden auf der Kunden-Seite hinzu und trage die Kontaktdaten ein, die du später wiederverwenden möchtest.
+
+<Steps>
+  <Step title="Kunden-Seite öffnen" icon="users">
+
+  Gehe in deinem Workspace zu `/customers`.
+
+  Du solltest eine nach Name sortierte Kundentabelle sehen. Wenn du bereits kundenspezifische benutzerdefinierte Felder mit aktivierter Tabellensichtbarkeit erstellt hast, erscheinen diese Spalten hier ebenfalls.
+
+  </Step>
+  <Step title="Neuen Kundendatensatz starten" icon="plus">
+
+  Erstelle einen neuen Kunden über die Seitenaktion.
+
+  NomadBill öffnet einen Erstellungsdialog mit den Standard-Kundenfeldern und allen benutzerdefinierten Feldern, die der Entität `customer` zugeordnet sind.
+
+  </Step>
+  <Step title="Erforderliche und optionale Angaben eintragen" icon="edit">
+
+  Fülle die Kundeninformationen aus:
+
+  - **Name** ist erforderlich.
+  - **Email** ist optional.
+  - **Phone** ist optional.
+  - **Address** ist optional und unterstützt mehrzeiligen Text.
+  - **Custom fields** erscheinen, wenn du sie für Kunden konfiguriert hast.
+
+  Demo-Workspaces können bereits vorbefüllte Felder wie `kundennummer`, `kundenkategorie`, `website`, `kunden_seit`, `notizen_intern`, `praeferierte_sprachen` und `newsletter` enthalten.
+
+  </Step>
+  <Step title="Speichern und Ergebnis prüfen" icon="check-circle">
+
+  Speichere den Kunden.
+
+  Nach dem Speichern erscheint der Kunde in der Listenansicht an der richtigen alphabetischen Position. Wenn ein benutzerdefiniertes Feld so konfiguriert ist, dass es in Tabellen angezeigt wird, erscheint sein Wert ebenfalls als Spalte in der Zeile.
+
+  </Step>
+</Steps>
+
+## Kunden bearbeiten und löschen
+
+Aktualisiere einen Kunden über denselben Dialog wie bei der Erstellung. Du kannst die Standard-Kontaktfelder und alle zugewiesenen kundenspezifischen benutzerdefinierten Felder jederzeit ändern.
+
+Wenn du einen Kunden löschst, bittet NomadBill dich, die Aktion zu bestätigen, bevor der Datensatz entfernt wird. Lösche vorsichtig, wenn du auf diese Kundeninformationen in deinem regulären Abrechnungsprozess angewiesen bist.
+
+## Kunden in Rechnungen verwenden
+
+Kunden sind dafür gedacht, dir Zeit zu sparen, wenn du Rechnungen erstellst. Statt Kontaktdaten für jedes Dokument neu einzugeben, wählst oder wiederverwendest du einen vorhandenen Kundendatensatz.
+
+Rechnungen speichern den Kundennamen im Feld `customer_name`. Der Kundendatensatz liefert also den Quellnamen für Rechnungs-Workflows, während deine Kundenliste an einem Ort organisiert bleibt.
+
+<Callout kind="tip">
+
+Richte Kunden ein, bevor du regelmäßig Rechnungen versendest. Eine saubere Kundenliste macht die Rechnungserstellung schneller und reduziert Namensinkonsistenzen über Dokumente hinweg.
+
+</Callout>
+
+## Benutzerdefinierte Felder für Kunden
+
+Benutzerdefinierte Kundenfelder lassen dich Informationen über die Standard-Kontaktfelder hinaus erfassen. NomadBill weist diese Felder dem Entitätstyp `customer` zu, sodass sie in Kundenformularen und – sofern konfiguriert – in der Kundentabelle erscheinen.
+
+Nutze benutzerdefinierte Felder für Daten wie interne Kundennummern, Kategorien, Websites, Startdaten, Sprachpräferenzen, Notizen oder Newsletter-Opt-in-Status. Demodaten können Felder wie `kundennummer` als Autonummer, `kundenkategorie` als Dropdown, `website` als URL, `kunden_seit` als Datum, `notizen_intern` als mehrzeiligen Text, `praeferierte_sprachen` als Multiselect und `newsletter` als Boolean enthalten.
+
+Für Einrichtungsanweisungen und Feldtypen siehe [Benutzerdefinierte Felder](/de/user-guide/custom-fields).
+
+## Weiterführende Themen
+
+<Columns cols={2}>
+  <Card
+    title="Rechnungen"
+    href="/de/user-guide/invoicing"
+    icon="book-open"
+    cta="Rechnungsleitfaden öffnen"
+  />
+  <Card
+    title="Benutzerdefinierte Felder"
+    href="/de/user-guide/custom-fields"
+    icon="settings"
+    cta="Benutzerdefinierte Felder konfigurieren"
+  />
+</Columns>

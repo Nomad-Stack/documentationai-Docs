@@ -1,0 +1,299 @@
+---
+title: Rechnungen
+description: Erstelle, versende und verfolge Rechnungen in mehreren Währungen mit MwSt.-Berechnung, PDF-Erzeugung und Stripe-Zahlungen.
+---
+
+## Rechnungen erstellen, versenden und verfolgen
+
+Nutze NomadBill-Rechnungen, um professionelle Rechnungen zu erstellen, MwSt. zu berechnen, gebrandete PDFs zu exportieren, Rechnungen per E-Mail zu versenden und Online-Zahlungen über Stripe anzunehmen. Du kannst Entwürfe und versendete Rechnungen verwalten, den Zahlungsfortschritt verfolgen und Rechnungsnummern unternehmensweit konsistent halten.
+
+<Callout kind="info">
+
+Wenn du von einem genehmigten Angebot startest, nutze den Angebot-zu-Rechnung-Flow, der unter [Angebote](/de/user-guide/quotes) beschrieben ist.
+
+</Callout>
+
+## Rechnungsstatus
+
+NomadBill verfolgt Rechnungen mit zwei getrennten Feldern: `status` und `payment_status`. Das Rechnungs-Badge priorisiert Zahlungsinformationen. Wenn `payment_status` also `paid` ist, wird die Rechnung als bezahlt angezeigt, auch wenn das allgemeine Feld `status` etwas anderes zeigen würde.
+
+| Feld | Werte | Bedeutung |
+| --- | --- | --- |
+| `status` | `draft`, `sent`, `paid`, `overdue` | Der Lebenszyklusstatus des Dokuments |
+| `payment_status` | `unpaid`, `pending`, `paid`, `failed` | Der Verarbeitungsstatus der Zahlung |
+
+Eine praktische Lesart ist:
+
+- **`draft`** — du bearbeitest die Rechnung noch und hast den Versand noch nicht abgeschlossen.
+- **`sent`** — die Rechnung wurde zugestellt oder als versendet markiert.
+- **`overdue`** — das Fälligkeitsdatum ist überschritten und die Rechnung ist noch nicht beglichen.
+- **`paid`** — die Rechnung ist beglichen.
+
+Zahlungsspezifische Zustände liefern mehr Detail:
+
+- **`unpaid`** — es wurde noch keine Zahlung erfasst.
+- **`pending`** — die Zahlung ist in Bearbeitung.
+- **`paid`** — die Zahlung wurde erfolgreich abgeschlossen.
+- **`failed`** — ein Zahlungsversuch wurde nicht abgeschlossen.
+
+<Callout kind="tip">
+
+Wenn eine Rechnung in der UI `paid` anzeigt, hat dieser bezahlte Zustand Vorrang vor dem allgemeinen Dokumentstatus für die Badge-Anzeige.
+
+</Callout>
+
+## Eine Rechnung erstellen
+
+Erstelle eine neue Rechnung im Bereich **Invoices**, vervollständige Kunden- und Rechnungsdetails, füge deine Positionen hinzu und prüfe das Ergebnis vor dem Versand. NomadBill behält unfertige Rechnungen als Entwürfe, damit du später darauf zurückkommen kannst.
+
+<Steps>
+  <Step title="Neue Rechnung öffnen" icon="file-text">
+
+  Gehe zu **Invoices** und erstelle eine neue Rechnung. NomadBill bereitet das Dokument mit deinem Unternehmenskontext vor und vergibt die Nummerierung, wenn die Rechnung erstellt wird.
+
+  Wenn die Rechnung geöffnet wird, solltest du bearbeitbare Rechnungsfelder, Positionen, Summen und Dokumenteinstellungen sehen.
+
+  </Step>
+
+  <Step title="Kunden- und Rechnungsdetails hinzufügen" icon="users">
+
+  Gib die Kundeninformationen, das Rechnungsdatum, das Fälligkeitsdatum, die Währung und die Sprache ein. Wähle die Rechnungssprache, die zum Empfänger passt, damit Beschriftungen in PDF und E-Mail korrekt dargestellt werden.
+
+  Nach dem Speichern bleibt die Rechnung im Status **draft**, bis du sie versendest oder anderweitig markierst.
+
+  </Step>
+
+  <Step title="Positionen hinzufügen" icon="plus">
+
+  Füge jedes Produkt oder jede Dienstleistung als eigene Position mit Name, Menge und Stückpreis hinzu. Ergänze eine Beschreibung, wenn du Umfang, Abrechnungszeitraum oder Liefergegenstände erläutern möchtest.
+
+  Deine Zwischensumme aktualisiert sich, während du Positionen hinzufügst oder bearbeitest.
+
+  </Step>
+
+  <Step title="MwSt. und Summen prüfen" icon="bar-chart">
+
+  Bestätige den MwSt.-Prozentsatz, bevor du die Rechnung versendest. NomadBill berechnet die Gesamtsumme aus Zwischensumme und MwSt.-Prozentsatz, sodass du den Betrag prüfen kannst, bevor du PDF oder Zahlungslink erzeugst.
+
+  Ein korrekter Prütschritt sollte dir eine klare Zwischensumme, einen MwSt.-Betrag und eine Endsumme hinterlassen.
+
+  </Step>
+
+  <Step title="Exportieren, versenden oder Zahlung einziehen" icon="arrow-right">
+
+  Sobald die Rechnung korrekt aussieht, generiere das PDF, versende sie per E-Mail oder aktiviere Stripe Checkout, wenn der Kunde online bezahlen soll. Nach dem Versand kann NomadBill Zustelldetails speichern, etwa wer die Rechnung erhalten hat und wann sie versendet wurde.
+
+  Ab diesem Punkt wechselt die Rechnung vom Bearbeiten in die aktive Nachverfolgung.
+
+  </Step>
+</Steps>
+
+## Positionen
+
+Jede Rechnungsposition speichert eine kleine, konsistente Struktur, damit Gebühren klar und vorhersehbar bleiben. Eine Position enthält:
+
+- **`id`** — optionale interne Kennung
+- **`name`** — der Titel der Position
+- **`description`** — optionaler Detailtext
+- **`quantity`** — wie viele Einheiten du abrechnest
+- **`price`** — der Preis pro Einheit
+
+Verwende eine Position pro abrechenbarer Dienstleistung, Produkt oder Abrechnungszeitraum. Das macht das PDF leichter lesbar und hilft deinem Kunden zu verstehen, wie die Gesamtsumme entstanden ist.
+
+NomadBill unterstützt außerdem Drag-and-Drop-Umordnung für Positionen. Ordne Positionen so, dass sie die Geschichte erzählen, die die Rechnung vermitteln soll, etwa Kernleistungen zuerst und erstattungsfähige Ausgaben zuletzt.
+
+## MwSt.-Berechnung
+
+NomadBill berechnet Rechnungssummen aus der Zwischensumme und dem MwSt.-Prozentsatz. Die Formel lautet:
+
+`total = subtotal + (subtotal x vat_percentage / 100)`
+
+Der Standard-MwSt.-Satz ist **19%**, entsprechend dem deutschen Regelsatz. Du kannst den MwSt.-Prozentsatz pro Rechnung nach Bedarf ändern, solange der Wert im erlaubten Bereich von **0 bis 100** bleibt.
+
+Das bedeutet:
+
+- **`0`** ist gültig für MwSt.-freie oder mit 0 % besteuerte Rechnungen
+- **`19`** ist der Standard-Ausgangspunkt
+- **`100`** ist die obere erlaubte Grenze
+
+<Callout kind="info">
+
+Prüfe den MwSt.-Satz vor dem Versand der Rechnung, besonders wenn du über mehrere Rechtsräume hinweg abrechnest oder mit gemischten Steuerbehandlungen arbeitest.
+
+</Callout>
+
+## Währungen und Sprachen
+
+NomadBill unterstützt fünf Rechnungswährungen und vier Rechnungssprachen. Diese Werte sind erzwungen, sodass Rechnungen immer eine der unterstützten Optionen verwenden.
+
+### Unterstützte Währungen
+
+- **EUR**
+- **USD**
+- **GBP**
+- **CHF**
+- **AED**
+
+### Unterstützte Rechnungssprachen
+
+- **DE**
+- **EN**
+- **FR**
+- **ES**
+
+### Wie die Standardwährung gewählt wird
+
+NomadBill ermittelt die Rechnungswährung in dieser Reihenfolge:
+
+1. **Rechnungswährung** — wenn die Rechnung bereits eine Währung hat, wird dieser Wert verwendet.
+2. **Standardwährung des Unternehmens** — wenn die Rechnung keine explizite Währung hat, prüft NomadBill den Unternehmensstandard.
+3. **Globale Währungspräferenz** — wenn keines der ersten beiden vorhanden ist, fällt NomadBill auf die globale Währung zurück, die im lokalen Browserspeicher als `nb.currency` hinterlegt ist.
+
+Diese Priorität hält bestehende Rechnungen stabil und bietet dir dennoch einen unternehmensweiten und nutzerbezogenen Fallback.
+
+## Rechnungsnummerierung
+
+Rechnungsnummern verwenden das Format `R-00001`. Das Präfix `R` kennzeichnet den Dokumenttyp, und der numerische Teil verwendet fünf Stellen mit führenden Nullen.
+
+NomadBill erzeugt Nummern über eine Datenbankfunktion, die die nächste Dokumentnummer atomar pro Unternehmen vergibt. Das ist wichtig, wenn mehrere Personen gleichzeitig Rechnungen erstellen, weil die Sequenz vor Race Conditions geschützt bleibt.
+
+Zwei Details sind für den Alltag wichtig:
+
+- Rechnungsnummern sind **pro Unternehmen**, nicht global über alle Konten hinweg geteilt.
+- Jede Rechnungsnummer muss innerhalb desselben Unternehmens eindeutig sein, über die Kombination aus `company_id` und `invoice_number`.
+
+## PDF-Erzeugung
+
+NomadBill kann Rechnungen als PDF-Dokumente für Download, Weitergabe oder E-Mail-Zustellung exportieren. Die PDF-Engine verwendet Standard-Rechnungsdaten zusammen mit deinem Unternehmens-Branding, um ein fertiges Dokument zu erzeugen.
+
+Das erzeugte PDF verwendet ein **A4-Hochformat** mit **15 mm Rändern** und kann enthalten:
+
+- Unternehmenslogo
+- Markenfarbe
+- Positionstabelle
+- Summenblock
+- Bankdaten
+- Fußzeile
+
+Die PDF-Ausgabe unterstützt außerdem alle vier Rechnungssprachen, sodass Beschriftungen in der auf der Rechnung gewählten Sprache erscheinen. Wenn du benutzerdefinierte PDF-Layouts verwendest, unterstützt NomadBill auch die vorlagenbasierte Darstellung.
+
+<Columns cols={2}>
+  <Card
+    title="PDF-Vorlagen"
+    href="/de/user-guide/pdf-templates"
+    icon="book-open"
+    cta="Leitfaden öffnen"
+  />
+  <Card
+    title="Angebote"
+    href="/de/user-guide/quotes"
+    icon="arrow-right"
+    cta="Verwandten Leitfaden ansehen"
+  />
+</Columns>
+
+## Rechnungen per E-Mail versenden
+
+NomadBill sendet Rechnungs-E-Mails über Resend mit `noreply@nomadbill.co` als Absenderadresse. Du kannst entweder eine Dokument-E-Mail mit HTML-Inhalt und optionalem PDF-Anhang oder eine zusammenfassende E-Mail senden, die Zustelldetails in der Datenbank speichert.
+
+Wenn du eine Rechnungszusammenfassungs-E-Mail sendest, aktualisiert NomadBill diese Tracking-Felder:
+
+- **`sent_at`** — wann die Rechnung versendet wurde
+- **`sent_to`** — welcher Empfänger sie erhalten hat
+- **`email_status`** — gesetzt auf `sent`
+
+Der E-Mail-Inhalt kann enthalten:
+
+- die Dokumentnummer
+- den Kundennamen
+- eine optionale individuelle Nachricht
+- den Gesamtbetrag
+
+So erhältst du sowohl den ausgehenden Versand als auch einen einfachen Audit-Trail im Rechnungsdatensatz.
+
+## Zahlungen mit Stripe annehmen
+
+Aktiviere Stripe auf einer Rechnung, wenn der Kunde über eine gehostete Checkout-Seite bezahlen soll. NomadBill erstellt eine Stripe Checkout Session für die Rechnung und leitet den Kunden zu Stripe weiter, um die Zahlung abzuschließen.
+
+### So funktioniert der Stripe-Flow
+
+<Steps>
+  <Step title="Stripe für die Rechnung aktivieren" icon="settings">
+
+  Schalte Stripe für die Rechnung ein, sodass `stripe_enabled` aktiv ist. Dadurch wird die Rechnung für Online-Zahlung freigegeben.
+
+  Nach der Aktivierung kann die Rechnung eine gehostete Zahlungssession erstellen.
+
+  </Step>
+
+  <Step title="Checkout-Session erstellen" icon="lock">
+
+  NomadBill erstellt eine Stripe Checkout Session aus der Rechnungssumme. Der an Stripe gesendete Betrag wird mit `Math.round(total_amount * 100)` in Cent umgerechnet, und der Währungscode wird für die Stripe-API in Kleinbuchstaben konvertiert.
+
+  So erhält Stripe den Betrag im erwarteten Format.
+
+  </Step>
+
+  <Step title="Kunden zu Stripe weiterleiten" icon="external-link">
+
+  Der Kunde wird zur von Stripe gehosteten Checkout-Seite weitergeleitet, um die Zahlung sicher abzuschließen. Du musst Kartendaten nicht direkt auf der Rechnungsseite erfassen.
+
+  Eine erfolgreiche Weiterleitung bedeutet, dass der Kunde die Zahlung jetzt bei Stripe abschließt.
+
+  </Step>
+
+  <Step title="Erfolg oder Abbruch behandeln" icon="check-circle">
+
+  Nach der Zahlung sendet Stripe den Kunden zurück zu einer von zwei Rechnungsrouten:
+
+  - **Erfolg:** `/invoices/$id/pay/success`
+  - **Abbruch:** `/invoices/$id/pay/cancel`
+
+  Die Erfolgsseite bestätigt die Zahlung und löst Purchase-Tracking aus. Die Abbruchseite lässt den Kunden es erneut versuchen.
+
+  </Step>
+
+  <Step title="Rechnung nach Webhook-Bestätigung aktualisieren" icon="shield">
+
+  Wenn Stripe das Webhook-Ereignis `checkout.session.completed` sendet, aktualisiert NomadBill die Rechnung auf `payment_status=paid` und `status=paid`.
+
+  Dieses Webhook-Update finalisiert den bezahlten Zustand in NomadBill.
+
+  </Step>
+</Steps>
+
+## Wiederkehrende Rechnungen
+
+Wiederkehrende Rechnungen lassen dich eine Rechnung als Teil eines wiederholten Abrechnungsmusters markieren. NomadBill speichert das mit dem Flag `is_recurring` und einem Wert für `recurring_frequency`.
+
+Unterstützte Wiederholungsfrequenzen sind:
+
+- **weekly**
+- **monthly**
+- **quarterly**
+- **yearly**
+
+<Callout kind="alert">
+
+Wiederkehrende Rechnungen sind nur Metadaten. NomadBill führt keinen automatischen Cron-Job aus und erzeugt aus diesem Flag allein keine neuen Rechnungen nach Zeitplan.
+
+</Callout>
+
+Nutze Einstellungen für wiederkehrende Rechnungen, um wiederholte Abrechnung zu kennzeichnen und zu organisieren, verlasse dich aber nicht darauf als automatisierte Abo-Engine.
+
+## Nächste Schritte
+
+<Columns cols={2}>
+  <Card
+    title="PDF-Vorlagen verwalten"
+    href="/de/user-guide/pdf-templates"
+    icon="edit"
+    cta="Layouts anpassen"
+  />
+  <Card
+    title="Mit Angeboten arbeiten"
+    href="/de/user-guide/quotes"
+    icon="folder"
+    cta="Angebotsbasierte Rechnungen erstellen"
+  />
+</Columns>

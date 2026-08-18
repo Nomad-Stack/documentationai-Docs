@@ -1,0 +1,192 @@
+---
+title: Eingangsrechnungen
+description: Lade Lieferantenrechnungen, Belege und Ausgaben hoch und verwalte sie mit automatischer MwSt.-Berechnung und Bankabstimmung.
+---
+
+## Lieferantenrechnungen und Belege an einem Ort verfolgen
+
+Eingangsrechnungen lassen dich Lieferantenrechnungen, Belege und andere Betriebsausgaben zusammen mit dem Rest deiner Datensätze speichern. Du kannst ein PDF oder Bild hochladen, die Rechnungsdetails ausfüllen, den Zahlungsstatus verfolgen und die Rechnung mit einer Banktransaktion abstimmen, wenn die Zahlung erscheint.
+
+NomadBill speichert die Originaldatei sicher, berechnet MwSt.-Beträge automatisch und zeigt verwandte Informationen wie verknüpfte E-Mails, benutzerdefinierte Felder und abgestimmte Bankzahlungen auf der Rechnungsdetailseite.
+
+<Callout kind="info">
+
+Unterstützte Upload-Dateien umfassen **PDFs** und **Bilddateien**. NomadBill speichert jede Datei im Storage-Bucket `incoming-invoices` mit einem pfadbezogenen Muster pro Nutzer: `userId/timestamp-filename`.
+
+</Callout>
+
+## Belege hochladen
+
+Nutze den Bereich Eingangsrechnungen, wenn du eine Lieferantenrechnung manuell aus einer Datei hinzufügen möchtest.
+
+<Steps>
+  <Step title="Eingangsrechnungen öffnen" icon="folder">
+
+  Gehe zum Bereich Eingangsrechnungen in NomadBill und starte einen neuen Upload.
+
+  Das ist die beste Option, wenn du den Beleg oder die Lieferantenrechnung bereits auf deinem Gerät gespeichert hast.
+
+  </Step>
+
+  <Step title="Datei hochladen" icon="upload">
+
+  Wähle eine **PDF**- oder **Bilddatei** von deinem Computer oder Telefon.
+
+  NomadBill speichert die hochgeladene Datei sicher und hält einen Dateipfad im Rechnungsdatensatz. Wenn du die Datei später öffnest, erzeugt NomadBill einen signierten Anzeigelink, der 60 Sekunden gültig bleibt.
+
+  </Step>
+
+  <Step title="Rechnungsdetails eingeben" icon="edit">
+
+  Füge Lieferanten-, Rechnungs-, MwSt.- und Zahlungsinformationen für das Dokument hinzu.
+
+  Nach dem Speichern der Rechnung solltest du sie in deiner Liste der Eingangsrechnungen sehen und ihre Detailseite öffnen können.
+
+  </Step>
+
+  <Step title="Detailseite prüfen" icon="check-circle">
+
+  Öffne die gespeicherte Rechnung, um die Informationen zu verifizieren.
+
+  Die Detailansicht enthält separate Karten für Lieferantendetails, Rechnungsdetails, benutzerdefinierte Felder, verknüpfte E-Mails und Bankzahlungen.
+
+  </Step>
+</Steps>
+
+## Lieferanten- und Rechnungsdetails
+
+Jede Eingangsrechnung speichert sowohl Lieferanteninformationen als auch rechnungsspezifische Informationen. Kategorien sind Freitext, sodass du die Namensstruktur verwenden kannst, die zu deinem Buchhaltungsworkflow passt.
+
+### Lieferantenfelder
+
+<ParamField body="supplier_name" param-type="string" required="false" show-location="false">
+Name des Lieferanten oder Händlers, der die Rechnung oder den Beleg ausgestellt hat.
+</ParamField>
+
+<ParamField body="supplier_address" param-type="string" required="false" show-location="false">
+Postanschrift des Lieferanten.
+</ParamField>
+
+<ParamField body="supplier_vat_number" param-type="string" required="false" show-location="false">
+USt-IdNr. des Lieferanten, falls auf dem Dokument vorhanden.
+</ParamField>
+
+### Rechnungsfelder
+
+<ParamField body="invoice_number" param-type="string" required="false" show-location="false">
+Die eigene Rechnungs- oder Belegnummer des Lieferanten.
+</ParamField>
+
+<ParamField body="invoice_date" param-type="date" required="false" show-location="false">
+Auf der Lieferantenrechnung angegebenes Datum.
+</ParamField>
+
+<ParamField body="due_date" param-type="date" required="false" show-location="false">
+Zahlungsfälligkeitsdatum der Rechnung.
+</ParamField>
+
+<ParamField body="payment_date" param-type="date" required="false" show-location="false">
+Datum, an dem die Rechnung bezahlt wurde. Die Bankabstimmung kann dieses Datum aktualisieren, wenn eine Zahlung zugeordnet wird.
+</ParamField>
+
+<ParamField body="category" param-type="string" required="false" show-location="false">
+Freitext-Kategorie für die Ausgabe. NomadBill erzwingt keine vordefinierte Kategorieliste.
+</ParamField>
+
+<ParamField body="notes" param-type="string" required="false" show-location="false">
+Interne Notizen zum Beleg, Lieferanten oder zur Ausgabe.
+</ParamField>
+
+<ParamField body="currency" param-type="string" required="false" enum="EUR,USD,GBP,CHF,AED" show-location="false">
+Auf der Rechnung verwendete Währung. Unterstützte Werte sind `EUR`, `USD`, `GBP`, `CHF` und `AED`.
+</ParamField>
+
+<ParamField body="payment_status" param-type="string" required="false" enum="unpaid,paid" show-location="false">
+Aktueller Zahlungsstatus der Rechnung. NomadBill unterstützt `unpaid` und `paid`.
+</ParamField>
+
+### Betragsfelder
+
+<ParamField body="net_amount" param-type="number" required="false" show-location="false">
+Rechnungsbetrag vor MwSt.
+</ParamField>
+
+<ParamField body="vat_percentage" param-type="number" required="false" show-location="false">
+Auf den Rechnungsbetrag angewendeter MwSt.-Satz.
+</ParamField>
+
+<ParamField body="vat_amount" param-type="number" required="false" show-location="false">
+Berechneter MwSt.-Betrag.
+</ParamField>
+
+<ParamField body="amount" param-type="number" required="false" show-location="false">
+Brutto-Rechnungsbetrag einschließlich MwSt.
+</ParamField>
+
+### Datei- und Datensatz-Metadaten
+
+<ParamField body="file_path" param-type="string" required="false" show-location="false">
+Speicherpfad der hochgeladenen Beleg- oder Rechnungsdatei.
+</ParamField>
+
+<ParamField body="upload_date" param-type="date-time" required="false" show-location="false">
+Datum, an dem die Datei in NomadBill hochgeladen wurde.
+</ParamField>
+
+## MwSt.- und Betragsberechnung
+
+NomadBill berechnet Rechnungssummen automatisch neu, sodass du nicht jedes Betragsfeld manuell aktualisieren musst. Das reduziert Eingabefehler, besonders wenn du nur Nettobetrag und MwSt.-Satz kennst oder vom Beleg nur die Bruttosumme hast.
+
+Wenn du `net_amount` oder `vat_percentage` änderst, berechnet NomadBill sowohl `vat_amount` als auch `amount` neu. Der Bruttobetrag verwendet diese Formel: `gross = net * (1 + pct / 100)`.
+
+Wenn du `amount` änderst, berechnet NomadBill `net_amount` und `vat_amount` auf Basis des aktuellen MwSt.-Prozentsatzes neu. Das hilft, wenn der Beleg nur die Endsumme und den MwSt.-Satz zeigt.
+
+<Callout kind="tip">
+
+Prüfe die neu berechneten Werte vor dem Speichern, wenn der Beleg Rabatte, gemischte MwSt.-Sätze oder eine Lieferantenformatierung enthält, die Netto und MwSt. nicht klar trennt.
+
+</Callout>
+
+## Zahlungsstatus und Bankabstimmung
+
+Der Zahlungsstatus hilft dir zu verfolgen, welche Lieferantenrechnungen noch offen und welche bereits bezahlt sind. NomadBill verwendet zwei Status: `unpaid` und `paid`.
+
+Wenn du Bank Sync verbindest, kann NomadBill ausgehende Banktransaktionen automatisch mit Eingangsrechnungen abstimmen. Die Matching-Logik sucht nach:
+
+- Einer **ausgehenden Transaktion** mit einem Betrag unter null
+- Dem **exakt gleichen Betrag**
+- Der **gleichen Währung**
+- Einem Transaktionsdatum innerhalb von **14 Tagen** zum Rechnungsdatum
+
+Wenn NomadBill eine Übereinstimmung findet, verknüpft es die Transaktion mit der Eingangsrechnung und setzt den Zahlungsstatus auf `paid`. Verknüpfte Bankzahlungen erscheinen in der Karte für Bankzahlungen auf der Rechnungsdetailseite.
+
+Du kannst die Verbindung auch manuell im Bank-Sync-Bereich verwalten. Wenn du eine zugeordnete Transaktion trennst, setzt NomadBill den Zahlungsstatus zurück auf `unpaid`.
+
+Für den vollständigen Matching-Workflow siehe [Bank Sync](/de/user-guide/bank-sync).
+
+## Integration mit E-Mail-Intelligence
+
+NomadBill kann auch eine Eingangsrechnung aus E-Mail-Daten erstellen. Wenn E-Mail-Intelligence Beleg- oder Lieferantenrechnungsdetails aus einer Nachricht extrahiert, kann `createReceiptFromEmail` den Eingangsrechnungsdatensatz für dich anlegen.
+
+Das ist nützlich, wenn Lieferanten Rechnungen per E-Mail senden und du manuelle Eingabe reduzieren möchtest. Nach der Erstellung kannst du die Rechnungsdetailseite öffnen, die extrahierten Felder prüfen, Notizen oder Kategorien hinzufügen und bestätigen, ob die Zahlung bereits zugeordnet wurde.
+
+Die Detailseite enthält außerdem eine Karte für verknüpfte E-Mails, mit der du die Rechnung bei Bedarf zum ursprünglichen E-Mail-Kontext zurückverfolgen kannst.
+
+Für den E-Mail-Workflow siehe [E-Mail-Intelligence](/de/user-guide/email-intelligence).
+
+## Verwandte Anleitungen
+
+<Columns cols={2}>
+  <Card
+    title="Bank Sync"
+    href="/de/user-guide/bank-sync"
+    icon="database"
+    cta="Leitfaden öffnen"
+  />
+  <Card
+    title="Benutzerdefinierte Felder"
+    href="/de/user-guide/custom-fields"
+    icon="settings"
+    cta="Leitfaden öffnen"
+  />
+</Columns>

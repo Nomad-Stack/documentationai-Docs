@@ -1,0 +1,246 @@
+---
+title: E-Mail-Intelligenz
+description: Klassifiziere eingehende E-Mails automatisch, extrahiere Dokumentdaten mit KI und ordne E-Mails Rechnungen, Angeboten und Belegen zu.
+---
+
+## Mache aus deinem gemeinsamen Postfach einen Dokumenteneingang
+
+E-Mail-Intelligenz gibt deinem Unternehmen ein dediziertes Postfach, das eingehende Nachrichten überwacht, Geschäftsdokumente erkennt, Schlüsseldaten extrahiert und Verknüpfungen zu den richtigen Datensätzen in NomadBill vorschlägt. Es ist für die Arbeitsweise von Freelancern und kleinen Teams ausgelegt: Lieferanten senden Rechnungen per E-Mail, Kunden antworten auf Angebote, und Zahlungsbestätigungen landen im selben Posteingang.
+
+## Agent-Postfach
+
+Jedes Unternehmen erhält ein dediziertes Agent-Postfach im Format `agent_name@agent.nomadbill.co`. Wenn dein Workspace eine benutzerdefinierte Agent-Domain nutzt, verwendet das Postfach stattdessen diese Domain.
+
+Nur der Unternehmenseigentümer kann das Postfach bereitstellen. Während der Einrichtung normalisiert NomadBill den Agentennamen in ein postfachsicheres Format, indem er in Kleinbuchstaben umgewandelt, Leerzeichen durch Bindestriche ersetzt und der Slug auf 40 Zeichen begrenzt wird.
+
+Sobald die Bereitstellung startet, führt NomadBill Folgendes aus:
+
+- erstellt eine Mail-Grant bei Nylas
+- speichert die Postfachverbindung im Datensatz `company_email_accounts`
+- registriert einen Webhook für eingehende Mail-Ereignisse
+
+Der Webhook lauscht auf diese Ereignisse:
+
+- `message.created`
+- `message.updated`
+- `grant.expired`
+
+NomadBill registriert den Webhook unter `/api/public/nylas-webhook`. Während des initialen Webhook-Handshakes gibt der `GET`-Handler den Query-Parameter `challenge` genau so zurück, wie er empfangen wurde.
+
+## So werden eingehende E-Mails verarbeitet
+
+Jede neue Nachricht folgt demselben Verarbeitungsablauf, damit Ergebnisse konsistent bleiben und doppelte Arbeit vermieden wird.
+
+<Steps>
+  <Step title="Webhook-Ereignis empfangen" icon="zap">
+
+  Nylas sendet ein Webhook-Ereignis an `/api/public/nylas-webhook`, wenn eine Nachricht erstellt oder aktualisiert wird oder wenn eine Grant abläuft.
+
+  NomadBill kann den Header `x-nylas-signature` mit HMAC-SHA256 verifizieren. Die Signaturprüfung ist optional, sollte aber als empfohlene Produktivkonfiguration gelten.
+
+  </Step>
+
+  <Step title="Vollständige E-Mail abrufen" icon="download">
+
+  Nach einem gültigen Ereignis ruft NomadBill den vollständigen E-Mail-Inhalt und die Metadaten aus dem verbundenen Postfach ab.
+
+  Das System schützt außerdem vor Doppelverarbeitung. Wenn dieselbe E-Mail bereits abgeschlossen, bereits übersprungen oder innerhalb eines Fünf-Minuten-Fensters noch in Verarbeitung ist, analysiert NomadBill sie nicht erneut.
+
+  </Step>
+
+  <Step title="Nachrichten überspringen, die nicht analysiert werden sollen" icon="shield">
+
+  NomadBill überspringt Nachrichten, die vom Agent-Postfach selbst gesendet wurden. Dieser Selbst-E-Mail-Schutz verhindert Schleifen und vermeidet die Analyse systemgenerierter Mails.
+
+  Ausgehende oder irrelevante Nachrichten können während der Klassifikation ebenfalls ausgeschlossen werden, wenn sie kein nutzbares Geschäftsdokument darstellen.
+
+  </Step>
+
+  <Step title="Anhänge und Nachrichteninhalt herunterladen" icon="paperclip">
+
+  Der Prozessor sammelt den E-Mail-Text und alle verfügbaren Anhänge, bevor die Dokumentanalyse läuft.
+
+  Dadurch hat der Klassifikator genug Kontext, um zu erkennen, ob die Nachricht eine Rechnung, einen Beleg, ein Angebot, eine Bestätigung oder einen anderen Dokumenttyp enthält.
+
+  </Step>
+
+  <Step title="KI-Klassifikation und Extraktion ausführen" icon="code">
+
+  NomadBill sendet den E-Mail-Inhalt über das Lovable-AI-Gateway mit `google/gemini-3.6-flash` an die KI-Pipeline.
+
+  Das Modell klassifiziert das Dokument und extrahiert strukturierte Felder wie Summen, Daten, Namen und Referenznummern, damit du sie in NomadBill prüfen kannst, statt Daten manuell zu kopieren.
+
+  </Step>
+
+  <Step title="Abgleichsvorschläge berechnen" icon="check-circle">
+
+  Nach der Extraktion vergleicht die Matching-Engine die E-Mail mit Rechnungen, Angeboten, Eingangsrechnungen, Banktransaktionen und Kunden in deinem Unternehmen.
+
+  Jeder mögliche Treffer erhält einen Score. NomadBill behält Vorschläge, die den Mindestschwellenwert erreichen, und zeigt die stärksten Kandidaten zuerst.
+
+  </Step>
+
+  <Step title="Ergebnis speichern und deine Entscheidungen bewahren" icon="database">
+
+  Die finale Analyse wird mit dem E-Mail-Datensatz gespeichert, einschließlich extrahierter Daten und vorgeschlagener Verknüpfungen.
+
+  Wenn du einen Vorschlag bereits verknüpft oder verworfen hast, bewahrt NomadBill diese Entscheidung bei späteren erneuten Analysen, statt deine Arbeit zurückzusetzen.
+
+  </Step>
+</Steps>
+
+## Dokumentklassifikation
+
+E-Mail-Intelligenz klassifiziert jede analysierte Nachricht in einen dieser Dokumenttypen:
+
+- `incoming_invoice`
+- `receipt`
+- `outgoing_invoice`
+- `quote`
+- `payment_confirmation`
+- `reminder`
+- `contract`
+- `other`
+
+Die Klassifikation hilft NomadBill zu entscheiden, welche Aktionen als Nächstes angeboten werden. Zum Beispiel können nur E-Mails vom Typ `incoming_invoice` und `receipt` direkt in einen Eingangsrechnungsdatensatz umgewandelt werden.
+
+## KI-extrahierte Daten
+
+Das Analyseergebnis kann die folgenden extrahierten Felder enthalten.
+
+<ParamField body="doc_type" param-type="string" required="true" show-location="false">
+Der erkannte Dokumenttyp der E-Mail.
+</ParamField>
+
+<ParamField body="confidence" param-type="number" show-location="false">
+Der Modell-Konfidenzwert für das Klassifikationsergebnis.
+</ParamField>
+
+<ParamField body="summary" param-type="string" show-location="false">
+Eine kurze Zusammenfassung dessen, was die E-Mail oder der Anhang zu enthalten scheint.
+</ParamField>
+
+<ParamField body="document_number" param-type="string" show-location="false">
+Die wichtigste Rechnungs-, Beleg-, Angebots- oder Bestätigungsnummer, die im Dokument erkannt wurde.
+</ParamField>
+
+<ParamField body="reference_numbers" param-type="array" show-location="false">
+Zusätzliche Referenzkennungen, die in der E-Mail oder im Anhang gefunden wurden.
+</ParamField>
+
+<ParamField body="total_amount" param-type="number" show-location="false">
+Der erkannte Bruttogesamtbetrag des Dokuments.
+</ParamField>
+
+<ParamField body="net_amount" param-type="number" show-location="false">
+Der Nettobetrag vor MwSt., sofern das Dokument ihn angibt.
+</ParamField>
+
+<ParamField body="vat_amount" param-type="number" show-location="false">
+Der aus dem Dokument extrahierte MwSt.-Betrag.
+</ParamField>
+
+<ParamField body="vat_percentage" param-type="number" show-location="false">
+Der MwSt.-Satz, wenn er zuverlässig erkannt werden kann.
+</ParamField>
+
+<ParamField body="currency" param-type="string" show-location="false">
+Der erkannte Währungscode für den Dokumentbetrag.
+</ParamField>
+
+<ParamField body="document_date" param-type="string" show-location="false">
+Das im Dokument gefundene Ausstellungsdatum.
+</ParamField>
+
+<ParamField body="due_date" param-type="string" show-location="false">
+Das Fälligkeitsdatum der Zahlung, sofern vorhanden.
+</ParamField>
+
+<ParamField body="vendor_name" param-type="string" show-location="false">
+Der Lieferanten- oder Absendername, der mit dem Dokument verknüpft ist.
+</ParamField>
+
+<ParamField body="customer_name" param-type="string" show-location="false">
+Der im Dokument referenzierte Kundenname.
+</ParamField>
+
+<ParamField body="iban" param-type="string" show-location="false">
+Die in der E-Mail oder im Dokument erkannte Bankkontonummer.
+</ParamField>
+
+<ParamField body="category" param-type="string" show-location="false">
+Eine während der Analyse zugewiesene übergeordnete Kategorie.
+</ParamField>
+
+<ParamField body="ocr_text" param-type="string" show-location="false">
+Der extrahierte Dokumenttext, der für nachgelagerte Klassifikation und Matching verwendet wird.
+</ParamField>
+
+<ParamField body="line_items" param-type="array" show-location="false">
+Erkannte Positionen aus dem Dokument, wenn der Anhang eine aufgeschlüsselte Positionsliste enthält.
+</ParamField>
+
+## Matching und Vorschläge
+
+Nach der Analyse sucht NomadBill nach verwandten Datensätzen in deinem Workspace und bewertet jeden Kandidaten. Ein Vorschlag muss einen Mindestscore von `0.35` erreichen, um zu erscheinen, und das System gibt bis zu 12 Vorschläge pro E-Mail zurück.
+
+Die Matching-Engine bewertet mehrere Datensatztypen:
+
+- Rechnungen
+- Angebote
+- Eingangsrechnungen
+- Banktransaktionen
+- Kunden
+
+Bei Rechnungen sind die stärksten Signale Dokumentnummer, Betrag, Empfänger und Kundenidentität. Das Scoring-Modell vergibt Punkte für:
+
+- Nummer gefunden: `+0.55`
+- Betrag innerhalb von etwa `±0.5%` oder `±0.02`: `+0.30`
+- Währungsübereinstimmung: `+0.05`
+- Datum innerhalb von 14 Tagen: `+0.10`
+- `sent_to` enthält die Absender-E-Mail: `+0.25`
+- Kundenname stimmt überein: `+0.15`
+
+Bei Banktransaktionen konzentriert sich die Engine auf Zahlungsnachweis und Gegenpartei-Identität. Sie vergibt Punkte für:
+
+- Betragsübereinstimmung: `+0.45`
+- Kandidatennummer gefunden: `+0.35`
+- Gegenparteiname stimmt überein: `+0.20`
+- Datum innerhalb von 30 Tagen: `+0.10`
+
+Bei Kunden versucht die Engine zu erkennen, zu wem die E-Mail gehört, bevor operative Datensätze vorgeschlagen werden. Sie vergibt Punkte für:
+
+- exakte E-Mail-Übereinstimmung: `+0.80`
+- gleiche Domain: `+0.50`
+- Namensübereinstimmung: `+0.30`
+
+Diese Scores sind additiv, sodass starke Treffer in der Regel mehrere Signale gleichzeitig kombinieren, statt von einem einzelnen Feld abzuhängen.
+
+## E-Mail-Verknüpfungen verwalten
+
+NomadBill verfolgt, wie jede E-Mail mit deinen Datensätzen zusammenhängt. Verknüpfungen können einen von drei Zuständen haben:
+
+- **Vorgeschlagen** — NomadBill hat einen wahrscheinlichen Treffer gefunden und wartet auf deine Prüfung.
+- **Verknüpft** — Du hast bestätigt, dass die E-Mail zu einer bestimmten Rechnung, einem Angebot, Beleg, einer Transaktion oder einem Kunden gehört.
+- **Verworfen** — Du hast einen Vorschlag abgelehnt, und diese Entscheidung bleibt erhalten, wenn die E-Mail erneut analysiert wird.
+
+Nutze die E-Mail-Intelligenz-Karte in der E-Mail-Ansicht, um extrahierte Felder zu prüfen, Vorschläge zu inspizieren und Treffer zu bestätigen oder zu verwerfen. Wenn eine E-Mail bereits mit einem Datensatz verbunden ist, erscheint die verknüpfte E-Mail-Aktivität auch von der anderen Seite auf den Detailseiten von Rechnung, Angebot, Beleg, Transaktion und Kunde.
+
+Wenn der Dokumenttyp `incoming_invoice` oder `receipt` ist, kannst du direkt aus der E-Mail eine Eingangsrechnung erstellen. Die Aktion `createReceiptFromEmail` nutzt die extrahierten Dokumentdaten, um den neuen Datensatz vorauszufüllen, und vermeidet Duplikate, wenn die E-Mail bereits verarbeitet oder absichtlich übersprungen wurde.
+
+<Callout kind="info">
+
+E-Mail-Intelligenz aktualisiert sich nahezu in Echtzeit. NomadBill lauscht über Supabase Realtime auf Postfachaktivität an `company_email_accounts.last_event_at` und fällt bei Bedarf auf einen 30-Sekunden-Polling-Zyklus zurück.
+
+</Callout>
+
+## Verwandte Leitfäden
+
+<Columns cols={2}>
+  <Card title="Rechnungsstellung" href="/de/user-guide/invoicing" icon="file-text" cta="Leitfaden öffnen">
+    Verwalte ausgehende Rechnungen und verstehe, wie verknüpfte E-Mails Follow-up und Zahlungsverfolgung unterstützen.
+  </Card>
+  <Card title="Eingangsrechnungen" href="/de/user-guide/incoming-invoices" icon="folder" cta="Leitfaden öffnen">
+    Prüfe Lieferantenrechnungen, erstelle Datensätze aus der E-Mail-Analyse und halte Einkaufsbelege organisiert.
+  </Card>
+</Columns>

@@ -1,0 +1,114 @@
+---
+title: Teamverwaltung
+description: Lade Teammitglieder ein, weise Admin-, Editor- oder Viewer-Rollen zu und verwalte den Zugriff für jeden Unternehmens-Workspace in NomadBill.
+---
+
+## Die Teamverwaltung lässt dich steuern, wer auf jeden Unternehmens-Workspace zugreifen kann
+
+Nutze die Teamverwaltung, um Teammitglieder einzuladen, die passende Rolle für ihre Arbeit zuzuweisen und den Zugriff auf die Unternehmen zu beschränken, zu denen sie gehören. Du kannst volle Administratorrechte an Unternehmenseigentümer vergeben, Bearbeitungszugriff an Personen, die Dokumente erstellen, und Nur-Lese-Zugriff an alle, die nur Sichtbarkeit brauchen.
+
+<Callout kind="info">
+
+Teamzugriff wird pro Unternehmen verwaltet. Wenn du zu einem anderen Unternehmen wechselst, verwaltest du ein anderes Team.
+
+</Callout>
+
+## So funktioniert der Teamzugriff
+
+Ein Team in NomadBill gehört zu einem einzelnen Unternehmen. Wenn du jemanden zu deinem Team hinzufügst, gibst du dieser Person Zugriff auf diesen spezifischen Unternehmens-Workspace, nicht auf jedes Unternehmen in deinem Konto.
+
+Das ist wichtig, wenn du über mehrere Unternehmen hinweg arbeitest. Dieselbe Person kann zu mehr als einem Unternehmen gehören und in jedem eine andere Rolle haben.
+
+NomadBill nutzt außerdem rollenbasierte Berechtigungen, um zu steuern, was jedes Teammitglied tun kann. Die Rolle eines Mitglieds bestimmt, ob es das Team verwalten, Unternehmenseinstellungen ändern, Dokumente bearbeiten oder nur Unternehmensdaten einsehen kann.
+
+<Callout kind="tip">
+
+Nutze **viewer** für Buchhalter, Kunden oder interne Stakeholder, die Sichtbarkeit ohne Bearbeitungszugriff brauchen. Nutze **editor** für Teammitglieder, die Rechnungen, Angebote oder andere Dokumente erstellen.
+
+</Callout>
+
+## Teamrollen
+
+Wähle die Rolle, die zur Arbeit passt, die jedes Teammitglied erledigen muss.
+
+| Rolle | Zugriffsebene | Was diese Rolle tun kann |
+| --- | --- | --- |
+| **admin** | Voller Zugriff | Unternehmenseinstellungen verwalten, Teammitglieder einladen und verwalten sowie auf alle Unternehmensdokumente und -daten zugreifen |
+| **editor** | Arbeitszugriff | Dokumente wie Rechnungen und Angebote erstellen und bearbeiten, aber keine Unternehmenseinstellungen oder das Team verwalten |
+| **viewer** | Nur-Lese-Zugriff | Unternehmensdaten und Dokumente einsehen, ohne Änderungen vorzunehmen |
+
+<Callout kind="alert">
+
+Weise **admin** nur Personen zu, die den Zugriff für den gesamten Unternehmens-Workspace verwalten dürfen sollen.
+
+</Callout>
+
+## Ein Teammitglied einladen
+
+Admins können neue Teammitglieder per E-Mail einladen und während der Einladung eine Rolle zuweisen.
+
+<Steps>
+  <Step title="Teamverwaltung öffnen" icon="users">
+
+  Melde dich bei NomadBill an, wechsle zu dem Unternehmen, das du verwalten möchtest, und öffne die Seite **Team**.
+
+  </Step>
+  <Step title="Neue Einladung starten" icon="plus">
+
+  Wähle die Option, ein Teammitglied einzuladen. NomadBill öffnet ein Einladungsformular, in dem du die E-Mail-Adresse des Teammitglieds eingibst und die Rolle wählst.
+
+  </Step>
+  <Step title="Die richtige Rolle wählen" icon="shield">
+
+  Wähle **admin**, **editor** oder **viewer** basierend auf dem benötigten Zugriff. Die zugewiesene Rolle wird angewendet, wenn die Einladung angenommen wird.
+
+  </Step>
+  <Step title="Einladung senden" icon="send">
+
+  Sende die Einladung ab. NomadBill erzeugt ein eindeutiges Einladungstoken und sendet dem Eingeladenen einen Link, mit dem er dem Unternehmen beitreten kann.
+
+  </Step>
+</Steps>
+
+Nachdem du die Einladung gesendet hast, ist die eingeladene Person noch kein Teammitglied. Sie wird erst Mitglied, nachdem sie den Einladungslink angenommen hat.
+
+## Eine Einladung annehmen
+
+Jede Einladung enthält einen eindeutigen tokenbasierten Link. Wenn der Eingeladene diesen Link öffnet, führt NomadBill ihn durch den Annahmeablauf und fügt ihn dem Unternehmen mit der zugewiesenen Rolle hinzu.
+
+Wenn der Eingeladene bereits in NomadBill arbeitet, muss er die Einladung für dieses Unternehmen trotzdem annehmen. Die Unternehmensmitgliedschaft ist getrennt, daher gewährt der Beitritt zu einem Unternehmen nicht automatisch Zugriff auf ein anderes.
+
+Eine erfolgreiche Annahme fügt die Person dem Team für dieses Unternehmen hinzu. Danach kann sie in den Unternehmens-Workspace wechseln und NomadBill basierend auf ihrer zugewiesenen Rolle nutzen.
+
+## Bestehende Mitglieder verwalten
+
+Sobald jemand dem Team beigetreten ist, können Admins diese Mitgliedschaft von der Team-Seite aus verwalten.
+
+### Rolle eines Mitglieds ändern
+
+Aktualisiere eine Rolle, wenn sich die Verantwortlichkeiten ändern. Befördere zum Beispiel einen Editor zum Admin, wenn er Einstellungen und Teamzugriff verwalten muss, oder setze einen Editor auf Viewer, wenn er keine Dokumente mehr erstellen muss.
+
+Rollenänderungen gelten nur für das aktuelle Unternehmen. Wenn dieselbe Person zu einem anderen Unternehmen gehört, bleibt der Zugriff dort unverändert.
+
+### Ein Mitglied entfernen
+
+Entferne ein Teammitglied, wenn es keinen Zugriff mehr auf den Unternehmens-Workspace haben soll. Das Entfernen eines Mitglieds widerruft den Zugriff auf die Daten, Dokumente und Einstellungen dieses Unternehmens.
+
+Das entfernt die Person nicht aus anderen Unternehmen, zu denen sie gehört. Es betrifft nur das aktuell ausgewählte Unternehmen.
+
+<Callout kind="info">
+
+Wenn jemand nach dem Beitritt keine Rechnungen, Angebote oder Einstellungen sehen kann, prüfe zuerst, ob die Einladung angenommen wurde und ob ihr beide im selben Unternehmens-Workspace arbeitet.
+
+</Callout>
+
+## Verwandte Leitfäden
+
+<Columns cols={2}>
+  <Card title="Einstellungen" href="/de/user-guide/settings" icon="settings" cta="Leitfaden öffnen">
+    Verwalte unternehmensweite Konfigurationen, auf die Admins zugreifen können.
+  </Card>
+  <Card title="Rechnungsstellung" href="/de/user-guide/invoicing" icon="file-text" cta="Leitfaden öffnen">
+    Sieh, was Editoren und Admins in der täglichen Abrechnungsarbeit erstellen und verwalten können.
+  </Card>
+</Columns>

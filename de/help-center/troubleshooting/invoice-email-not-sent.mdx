@@ -1,0 +1,48 @@
+---
+title: Rechnungs-E-Mail nicht gesendet
+description: Fehlerbehebung bei Problemen mit der Rechnungszustellung in NomadBill.
+---
+
+## Fehlerbehebung bei der Zustellung von Rechnungs-E-Mails
+Rechnungs-E-Mails sollten den Rechnungsdatensatz aktualisieren, wenn NomadBill sie versendet. Wenn ein Kunde keine Rechnung erhalten hat, prüfen Sie zuerst die Empfängeradresse und stellen Sie dann sicher, dass die Rechnung tatsächlich als gesendet markiert wurde, bevor Sie sie erneut versenden.
+
+<Steps>
+  <Step title="Empfänger-E-Mail-Adresse prüfen">
+
+    Öffnen Sie die Rechnung und prüfen Sie die Empfänger-E-Mail-Adresse sorgfältig. Ein Tippfehler, eine veraltete Adresse oder der falsche Kontakt auf der Rechnung ist der häufigste Grund dafür, dass eine E-Mail nie ankommt.
+
+    Wenn Sie die Rechnung bereits zuvor versendet haben, speichert NomadBill den letzten Empfänger im Feld `sent_to`. Das Formular zum erneuten Versand verwendet dieselbe Adresse als Standardempfänger — korrigieren Sie sie bei Bedarf, bevor Sie erneut senden.
+
+  </Step>
+  <Step title="Prüfen, ob die Rechnung als gesendet markiert wurde">
+
+    Prüfen Sie die Rechnungsfelder, die die E-Mail-Aktivität erfassen:
+
+    - `sent_at` zeigt, wann NomadBill die E-Mail als gesendet erfasst hat.
+    - `sent_to` zeigt, welche E-Mail-Adresse die Nachricht erhalten hat.
+    - `email_status` sollte nach einer erfolgreichen Versandaktion `sent` sein.
+
+    Wenn diese Felder leer sind oder `email_status` nicht `sent` ist, hat NomadBill den Versandschritt nicht abgeschlossen. In diesem Fall ist das erneute Versenden über die Rechnung der nächste Prüfungsschritt.
+
+  </Step>
+  <Step title="Rechnungs-E-Mail erneut senden">
+
+    Öffnen Sie die Rechnung und nutzen Sie die Aktion zum Senden oder erneuten Senden der E-Mail im E-Mail-Modal. NomadBill sendet eine HTML-Rechnungszusammenfassung mit Dokumentnummer, Kundenname, Betrag und einer optionalen individuellen Nachricht.
+
+    Bestätigen Sie nach dem Versand, dass die Rechnung mit einem neuen `sent_at`-Wert, der korrekten `sent_to`-Adresse und `email_status` auf `sent` aktualisiert wird. Diese Felder sind die beste Bestätigung, dass NomadBill die E-Mail-Anfrage verarbeitet hat.
+
+  </Step>
+  <Step title="Spam- oder Junk-Ordner prüfen">
+
+    Bitten Sie Ihren Kunden, in Spam-, Junk-, Werbe- oder gefilterten Ordnern nach Nachrichten von `noreply@nomadbill.co` zu suchen.
+
+    Wenn die Rechnung `sent_at`, `sent_to` und `email_status` wie erwartet anzeigt, der Kunde die Nachricht aber trotzdem nicht findet, hat der E-Mail-Anbieter sie möglicherweise nach der Zustellung gefiltert.
+
+  </Step>
+</Steps>
+
+<Callout kind="alert">
+
+Wenn Rechnungs-E-Mails wiederholt nicht gesendet werden, ist die Resend-Integration möglicherweise nicht für Ihren Workspace konfiguriert. Wenden Sie sich an Ihren Kontoadministrator, um zu prüfen, ob der E-Mail-Dienst korrekt eingerichtet ist.
+
+</Callout>
