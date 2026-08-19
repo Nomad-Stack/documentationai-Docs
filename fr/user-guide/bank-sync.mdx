@@ -1,197 +1,197 @@
 ---
-title: Synchronisation bancaire
-description: Connectez les comptes bancaires américains et européens, synchronisez automatiquement les transactions et rapprochez les paiements avec les factures.
+title: Bank Sync
+description: Connect US and EU bank accounts, sync transactions automatically, and reconcile payments with invoices.
 ---
 
-## Bank Sync intègre vos transactions bancairesNomadBillafin que vous puissiez suivre les paiements entrants et sortants par rapport à vos factures.
+## Bank Sync brings your bank transactions into NomadBill so you can track incoming and outgoing payments against your invoices.
 
-Une fois que vous avez connecté un compte,NomadBillsynchronise jusqu'à 365 jours d'historique des transactions et maintient la connexion à jour avec des synchronisations incrémentielles. Les transactions synchronisées peuvent ensuite être rapprochées automatiquement ou manuellement des factures sortantes et des factures entrantes.
+Once you connect an account, NomadBill syncs up to 365 days of transaction history and keeps the connection updated with incremental syncs. The synced transactions can then be matched automatically or manually to outgoing invoices and incoming invoices.
 
 <Callout kind="info">
 
-Choisissez la région bancaire qui correspond à l'institution que vous souhaitez connecter. La page Bank Sync comporte des boutons de connexion distincts pour les banques **US** et **EU**, et vous devez commencer par la bonne.
+Choose the bank region that matches the institution you want to connect. The Bank Sync page has separate connection buttons for **US** and **EU** banks, and you must start with the correct one.
 
-- **Les États-Unis** soutiennent les banques`US`et`CA`
-- **UE** soutient les banques dans`GB`, `FR`, `ES`, `NL`, `IE`, et`DE`
+- **US** supports banks in `US` and `CA`
+- **EU** supports banks in `GB`, `FR`, `ES`, `NL`, `IE`, and `DE`
 
-Si votre banque n'est pas disponible dans une région, essayez l'autre uniquement si l'institution y opère réellement.
+If your bank is not available in one region, try the other only if the institution actually operates there.
 
 </Callout>
 
-## Connecter un compte bancaire
+## Connecting a bank account
 
-Connectez chaque compte bancaire à partir de la page Bank Sync.NomadBillutilisePlaiden tant que fournisseur de connexion et stocke la connexion sous votre entreprise.
+Connect each bank account from the Bank Sync page. NomadBill uses Plaid as the connection provider and stores the connection under your company.
 
 <Steps>
-  <Step title="Ouvrez la page Synchronisation bancaire" icon="folder">
+  <Step title="Open the Bank Sync page" icon="folder">
 
-Connectez-vous àNomadBillet ouvrez **Bank Sync** depuis la zone authentifiée de l'application.
+  Sign in to NomadBill and open **Bank Sync** from the authenticated area of the app.
 
-Vous devriez voir deux options de connexion sur la page : une pour les banques **américaines** et une pour les banques **européennes**.
-
-  </Step>
-
-  <Step title="Choisissez la bonne région" icon="globe">
-
-Sélectionnez le bouton de la région où est détenu votre compte bancaire.
-
-- Utilisez l'option **US** pour les banques de`US`ou`CA`
-- Utilisez l'option **UE** pour les banques en`GB`, `FR`, `ES`, `NL`, `IE`, ou`DE`
-
-Après avoir choisi une région,Plaidouvre un flux de connexion bancaire sécurisé.
+  You should see two connection options on the page: one for **US** banks and one for **EU** banks.
 
   </Step>
 
-  <Step title="Authentifiez-vous auprès de votre banque" icon="lock">
+  <Step title="Choose the correct region" icon="globe">
 
-Complétez lePlaidflux en sélectionnant votre institution et en vous connectant avec vos identifiants bancaires si nécessaire.
+  Select the button for the region where your bank account is held.
 
-  Plaidrenvoie les détails de la connexion àNomadBill, y compris les comptes liés et le nom de l'institution.
+  - Use the **US** option for banks in `US` or `CA`
+  - Use the **EU** option for banks in `GB`, `FR`, `ES`, `NL`, `IE`, or `DE`
+
+  After you choose a region, Plaid opens a secure bank connection flow.
 
   </Step>
 
-  <Step title="Attendez la synchronisation initiale" icon="refresh-cw">
+  <Step title="Authenticate with your bank" icon="lock">
 
-Une fois la connexion créée,NomadBilldémarre la première synchronisation des transactions.
+  Complete the Plaid flow by selecting your institution and signing in with your bank credentials if required.
 
-Une connexion réussie stocke des détails tels que le fournisseur, la région, l'institution, les comptes liés, l'état de la synchronisation et l'heure de la dernière synchronisation réussie. Une fois la synchronisation terminée, vos transactions apparaissent sous le compte bancaire connecté.
+  Plaid returns the connection details to NomadBill, including the linked accounts and institution name.
+
+  </Step>
+
+  <Step title="Wait for the initial sync" icon="refresh-cw">
+
+  After the connection is created, NomadBill starts the first transaction sync.
+
+  A successful connection stores details such as the provider, region, institution, linked accounts, sync status, and the last successful sync time. Once the sync finishes, your transactions appear under the connected bank account.
 
   </Step>
 </Steps>
 
-## Synchronisation des transactions
+## Transaction sync
 
-NomadBillutilise la synchronisation incrémentielle basée sur le curseur pour maintenir votre liste de transactions à jour. La première synchronisation demande jusqu'à 365 jours d'historique, et les synchronisations ultérieures continuent à partir du dernier curseur enregistré au lieu d'extraire à nouveau l'historique complet.
+NomadBill uses cursor-based incremental sync to keep your transaction list current. The first sync requests up to 365 days of history, and later syncs continue from the last saved cursor instead of pulling the full history again.
 
-### Ce qui est synchronisé
+### What gets synced
 
-Chaque connexion bancaire stocke son propre état de synchronisation, y compris lePlaidélément, comptes liés et un curseur de synchronisation. Les transactions sont enregistrées avec des détails tels que le montant, la devise, la direction, la date de réservation, les informations sur la contrepartie, les détails du commerçant, les catégories, le statut en attente et la charge utile brute de la transaction d'origine.
+Each bank connection stores its own sync state, including the Plaid item, linked accounts, and a sync cursor. Transactions are saved with details such as amount, currency, direction, booking date, counterpart information, merchant details, categories, pending status, and the original raw transaction payload.
 
-### Comment fonctionne la synchronisation incrémentielle
+### How incremental sync works
 
-NomadBillsynchronise les transactions viaPlaidle flux de synchronisation incrémentielle des transactions. Chaque synchronisation lit les pages de résultats jusqu'à ce quePlaidn'a plus de modifications à renvoyer ou la synchronisation atteint la limite de sécurité.
+NomadBill syncs transactions through Plaid's incremental transaction sync flow. Each sync reads pages of results until Plaid has no more changes to return or the sync reaches the safety limit.
 
-- La synchronisation est **basée sur un curseur**, donc chaque exécution continue à partir du dernier point de synchronisation réussi
-- Une seule synchronisation traite jusqu'à **20 pages**
-- Chaque page peut inclure jusqu'à **500 transactions**
-- La limite effective par exécution de synchronisation est de **10 000 transactions**
+- The sync is **cursor-based**, so each run continues from the last successful sync point
+- A single sync processes up to **20 pages**
+- Each page can include up to **500 transactions**
+- The effective limit per sync run is **10,000 transactions**
 
-NomadBillenregistre le curseur de synchronisation mis à jour **uniquement une fois la synchronisation complète terminée avec succès**. Si une synchronisation échoue en cours de route,NomadBillconserve le curseur précédent afin que la prochaine exécution puisse réessayer en toute sécurité.
+NomadBill saves the updated sync cursor **only after the full sync completes successfully**. If a sync fails partway through, NomadBill keeps the previous cursor so the next run can retry safely.
 
-### Comment les transactions sont écrites
+### How transactions are written
 
-Les transactions synchronisées sont insérées ou mises à jour par lots de **200** enregistrements à la fois. Cela permet de gérer les synchronisations importantes tout en gérant efficacement un volume de transactions élevé.
+Synced transactions are inserted or updated in batches of **200** records at a time. This keeps large syncs manageable while still handling high transaction volume efficiently.
 
-Chaque transaction est liée à :
+Each transaction is tied to:
 
-- votre entreprise
-- la connexion bancaire d'où il vient
-- l'ID de transaction externe d'origine
-- le compte source au sein de l'institution connectée
+- your company
+- the bank connection it came from
+- the original external transaction ID
+- the source account inside the connected institution
 
-### Comment fonctionnent les montants et les directions
+### How amounts and directions work
 
-PlaidetNomadBillutiliser des conventions de montant opposé pour les flux de trésorerie.Plaidtraite les montants positifs comme de l'argent sortant du compte, tandis queNomadBillstocke les montants positifs sous forme d’argent reçu.
+Plaid and NomadBill use opposite amount conventions for cash flow. Plaid treats positive amounts as money leaving the account, while NomadBill stores positive amounts as money received.
 
-| Plaidsigne|Signification dansPlaid |Montant stocké dansNomadBill |Direction|
+| Plaid sign | Meaning in Plaid | Stored amount in NomadBill | Direction |
 |---|---|---:|---|
-|Positif|Argent sortant du compte|Négatif| `out` |
-|Négatif|Argent entrant sur le compte|Positif| `in` |
+| Positive | Money leaving the account | Negative | `out` |
+| Negative | Money entering the account | Positive | `in` |
 
-Ce retournement de signe rend la réconciliation plus intuitive à l'intérieurNomadBill. Les paiements clients entrants apparaissent sous forme de montants positifs et les paiements sortants tels que les factures fournisseurs apparaissent sous forme de montants négatifs.
+This sign flip makes reconciliation more intuitive inside NomadBill. Incoming customer payments appear as positive amounts, and outgoing payments such as supplier bills appear as negative amounts.
 
-## Correspondance automatique
+## Automatic matching
 
-NomadBilltente automatiquement de rapprocher les transactions synchronisées avec les factures. La logique d’appariement est différente pour l’argent entrant et l’argent sortant.
+NomadBill automatically tries to reconcile synced transactions against invoices. The matching logic is different for money coming in and money going out.
 
-### Comment fonctionne la correspondance
+### How matching works
 
-L'argent entrant est comparé à vos factures envoyées et en retard. L'argent sortant est comparé à vos factures entrantes. Dans les deux cas,NomadBillrecherche une correspondance exacte entre le montant et la devise, puis vérifie si la date de transaction se situe dans les 14 jours suivant la fenêtre de date de facture.
+Incoming money is compared against your sent and overdue invoices. Outgoing money is compared against your incoming invoices. In both cases, NomadBill looks for an exact amount and currency match, then checks whether the transaction date is within 14 days of the invoice date window.
 
-Si une correspondance est trouvée,NomadBillécrit le lien vers la transaction et met automatiquement à jour le statut de paiement de la facture.
+If a match is found, NomadBill writes the link to the transaction and updates the invoice payment status automatically.
 
-### Faites correspondre la confiance et le résultat
+### Match confidence and result
 
-|Flux de correspondance|Type d'opération|Règle de correspondance|Confiance|Résultat|
+| Match flow | Transaction type | Match rule | Confidence | Result |
 |---|---|---|---:|---|
-| `autoMatchInvoices` |Paiement entrant|Montant exact + devise + date sous 14 jours| 90 |Ensembles`matched_invoice_id`, `match_method`à`amount+date`, facture`payment_status`à`paid`, et facture`status`à`paid` |
-| `autoMatchIncomingInvoices` |Paiement sortant|Montant exact + devise + date sous 14 jours| 85 |Ensembles`matched_incoming_invoice_id`, `match_method`à`amount+date`, et facture entrante`payment_status`à`paid` |
+| `autoMatchInvoices` | Incoming payment | Exact amount + currency + date within 14 days | 90 | Sets `matched_invoice_id`, `match_method` to `amount+date`, invoice `payment_status` to `paid`, and invoice `status` to `paid` |
+| `autoMatchIncomingInvoices` | Outgoing payment | Exact amount + currency + date within 14 days | 85 | Sets `matched_incoming_invoice_id`, `match_method` to `amount+date`, and incoming invoice `payment_status` to `paid` |
 
-### Ce qui correspond automatiquement
+### What gets matched automatically
 
-Une transaction peut être automatiquement rapprochée lorsqu'elle remplit toutes ces conditions :
+A transaction can be auto-matched when it meets all of these conditions:
 
-- le montant correspond exactement
-- la devise correspond exactement
-- la date tombe dans la fenêtre de correspondance de 14 jours
-- la facture est dans un état qui peut encore être rapproché
+- the amount matches exactly
+- the currency matches exactly
+- the date falls within the 14-day matching window
+- the invoice is in a state that can still be reconciled
 
-Pour les factures sortantes,NomadBillcible les factures déjà **envoyées** ou **en retard**. Pour les factures entrantes,NomadBillmarque la facture comme payée sans la modifier dans un état de document différent.
+For outgoing invoices, NomadBill targets invoices that are already **sent** or **overdue**. For incoming invoices, NomadBill marks the invoice as paid without changing it into a different document state.
 
-## Correspondance manuelle
+## Manual matching
 
-La correspondance automatique traite en premier les cas évidents. Lorsqu'une transaction doit être révisée, vous pouvez la faire correspondre manuellement.
+Automatic matching handles the obvious cases first. When a transaction needs review, you can match it manually.
 
-### Suggestions de candidats
+### Candidate suggestions
 
-NomadBillgénère un examen manuel des candidats avec une fenêtre de recherche plus large que le comparateur automatique.
+NomadBill generates manual review candidates with a wider search window than the automatic matcher.
 
-- Il recherche dans une fenêtre de date de **30 jours**
-- Il renvoie jusqu'à **5 candidats** par transaction
-- Il est conçu pour la révision et non pour l'attribution automatique
+- It searches within a **30-day** date window
+- It returns up to **5 candidates** per transaction
+- It is designed for review, not automatic assignment
 
-Cela est utile lorsque la date de paiement diffère plus que prévu de la date de facture ou lorsque vous souhaitez confirmer l'une des nombreuses correspondances probables.
+This helps when the payment date differs from the invoice date more than expected or when you want to confirm one of several likely matches.
 
-### Comportement des liens manuels
+### Manual link behavior
 
-Lorsque vous liez une transaction manuellement,NomadBilll'enregistre comme une correspondance confirmée.
+When you link a transaction manually, NomadBill records it as a confirmed match.
 
-- `match_confidence`est défini sur **100**
-- `match_method`est réglé sur`manual`
+- `match_confidence` is set to **100**
+- `match_method` is set to `manual`
 
-Un lien manuel remplace la nécessité d'une logique de suggestion supplémentaire sur cette transaction et indique clairement que la correspondance a été confirmée par l'utilisateur.
+A manual link overrides the need for further suggestion logic on that transaction and makes it clear that the match was user-confirmed.
 
-## Dissocier et gérer les connexions
+## Unlinking and managing connections
 
-Utilisez la dissociation lorsque la transaction est liée à la mauvaise facture. Supprimez une connexion lorsque vous souhaitez supprimer complètement le flux bancaire.
+Use unlinking when the transaction is connected to the wrong invoice. Delete a connection when you want to remove the bank feed entirely.
 
-### Dissocier une transaction correspondante
+### Unlink a matched transaction
 
-La dissociation supprime la relation entre une transaction et son enregistrement de facture correspondant.
+Unlinking removes the relationship between a transaction and its matched invoice record.
 
-Lorsque vous dissociez une transaction,NomadBill:
+When you unlink a transaction, NomadBill:
 
-- efface tous les champs liés à la correspondance sur la transaction
-- définit la facture sortante liée`payment_status`retour à`unpaid`
-- laisse une facture sortante`status`inchangé s'il était déjà réglé sur`paid`
-- définit la facture entrante liée`payment_status`retour à`unpaid`
+- clears all match-related fields on the transaction
+- sets the linked outgoing invoice `payment_status` back to `unpaid`
+- leaves an outgoing invoice `status` unchanged if it was already set to `paid`
+- sets the linked incoming invoice `payment_status` back to `unpaid`
 
-Utilisez la dissociation avec précaution si vous comptez déjà sur le statut payé pour la révision de la comptabilité, car la dissociation ne fait pas reculer le statut d'une facture sortante de`paid`à`sent`.
+Use unlinking carefully if you already rely on the paid status for bookkeeping review, because unlinking does not move an outgoing invoice status back from `paid` to `sent`.
 
-### Supprimer une connexion bancaire
+### Delete a bank connection
 
-La suppression d'une connexion supprime lePlaidlien et toutes les transactions synchronisées qui lui appartiennent.
+Deleting a connection removes the Plaid link and all synced transactions that belong to it.
 
-Lorsque vous supprimez une connexion,NomadBill:
+When you delete a connection, NomadBill:
 
-- tente de révoquerPlaidaccès pour cet élément
-- continue même si lePlaidl'étape de révocation échoue
-- supprime l'enregistrement de connexion bancaire
-- suppression en cascade de toutes les transactions sous cette connexion
+- attempts to revoke Plaid access for that item
+- continues even if the Plaid revoke step fails
+- deletes the bank connection record
+- cascades deletion to all transactions under that connection
 
-Si vous reconnectez la même banque plus tard,NomadBillcrée un nouvel état de connexion et de synchronisation.
+If you reconnect the same bank later, NomadBill creates a new connection and sync state.
 
 <Columns cols={2}>
-<Carte
-title="Gérer les factures sortantes"
-href="/fr/user-guide/invoicing"
-icon="fichier-texte"
-cta="Ouvrir le guide de facturation"
+  <Card
+    title="Manage outgoing invoices"
+    href="/en/user-guide/invoicing"
+    icon="file-text"
+    cta="Open invoicing guide"
   />
-<Carte
-title="Suivre les factures des fournisseurs"
-href="/fr/user-guide/incoming-invoices"
-icône = "dossier"
-cta="Ouvrir le guide des factures entrantes"
+  <Card
+    title="Track supplier bills"
+    href="/en/user-guide/incoming-invoices"
+    icon="folder"
+    cta="Open incoming invoices guide"
   />
 </Columns>

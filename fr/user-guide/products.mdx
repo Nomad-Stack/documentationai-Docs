@@ -1,90 +1,90 @@
 ---
-title: Produits
-description: Créez un catalogue réutilisable de produits et services pour les factures et les devis.
+title: Products
+description: Create a reusable catalog of products and services for invoices and quotes.
 ---
 
-## Créer un catalogue de produits réutilisable
+## Build a reusable product catalog
 
-Produits dansNomadBillvous permettent de sauvegarder les articles et services que vous vendez une fois, puis de les réutiliser dans les factures et les devis. Votre catalogue de produits se trouve à`/items`, est partagé au niveau de l'entreprise et peut inclure à la fois des champs standard et des champs personnalisés adaptés à votre entreprise.
+Products in NomadBill let you save the items and services you sell once, then reuse them in invoices and quotes. Your product catalog lives at `/items`, is shared at the company level, and can include both standard fields and custom fields that fit your business.
 
 <Callout kind="info">
 
-NomadBillstocke les produits dans le`items`tableau. Le catalogue appartient à votre entreprise et non à un utilisateur individuel. Le tableau utilise donc`company_id`et n'inclut pas`user_id`.
+NomadBill stores products in the `items` table. The catalog belongs to your company, not to an individual user, so the table uses `company_id` and does not include `user_id`.
 
 </Callout>
 
-## Champs de produits
+## Product fields
 
-Chaque produit comprend un petit ensemble de champs standard. Vous pouvez ajouter plus de structure avec des champs personnalisés si vous avez besoin de suivre l'inventaire, les SKU, les certifications ou les détails des prix internes.
+Each product includes a small set of standard fields. You can add more structure with custom fields if you need to track inventory, SKUs, certifications, or internal pricing details.
 
 <ParamField body="name" param-type="string" required="true" show-location="false">
 
-Le nom du produit ou du service.NomadBillrequiert ce champ lorsque vous créez ou modifiez un produit.
+The product or service name. NomadBill requires this field when you create or edit a product.
 
 </ParamField>
 
 <ParamField body="description" param-type="string" required="false" show-location="false">
 
-Une description plus longue affichée dans la boîte de dialogue de création et de modification sous forme de champ de texte multiligne. Utilisez-le pour les détails du service, les spécifications ou les notes internes que vous souhaitez consulter lors de la réutilisation de l'article.
+A longer description shown in the create and edit dialog as a multiline text field. Use it for service details, specifications, or internal notes you want available when reusing the item.
 
 </ParamField>
 
 <ParamField body="price" param-type="numeric" required="false" show-location="false">
 
-Le prix par défaut du produit. Le champ utilise une saisie numérique avec un pas de`0.01`, et les nouveaux produits sont par défaut`0`si vous n'entrez pas de prix.
+The default price for the product. The field uses numeric input with a step of `0.01`, and new products default to `0` if you do not enter a price.
 
 </ParamField>
 
 <ParamField body="company_id" param-type="string" required="true" show-location="false">
 
-L'entreprise qui possède le produit. Les produits sont des enregistrements au niveau de l'entreprise, ce qui signifie que toute personne ayant accès à l'entreprise travaille à partir du même catalogue.
+The company that owns the product. Products are company-level records, which means anyone with access to the company works from the same catalog.
 
 </ParamField>
 
-Dans la vue liste,NomadBillaffiche les colonnes standard pour **nom**, **description** et **prix**. Le prix est formaté à deux décimales afin que les montants restent cohérents dans tout le catalogue.
+In the list view, NomadBill shows the standard columns for **name**, **description**, and **price**. The price is formatted to two decimal places so amounts stay consistent across the catalog.
 
-Si vous marquez les champs de produits personnalisés pour qu'ils apparaissent dans les tableaux,NomadBillajoute également ces colonnes à la vue liste. Les colonnes de champs personnalisés sont affichées uniquement lorsque`show_in_table`est activé et ils apparaissent par ordre alphabétique par nom de champ.
+If you mark custom product fields to appear in tables, NomadBill adds those columns to the list view as well. Custom field columns are shown only when `show_in_table` is enabled, and they appear in alphabetical order by field name.
 
-## Créer un produit
+## Creating a product
 
-Ajouter des produits du`/items`lorsque vous souhaitez une création de document plus rapide et des éléments de campagne plus cohérents. Une fois qu'un produit est dans votre catalogue, vous pouvez le sélectionner à nouveau au lieu de retaper les mêmes détails pour chaque facture ou devis.
+Add products from the `/items` page when you want faster document creation and more consistent line items. Once a product is in your catalog, you can pick it again instead of retyping the same details for every invoice or quote.
 
 <Steps>
 
-<Step title="Ouvrir la page des produits" icon="folder">
+<Step title="Open the products page" icon="folder">
 
-Aller à`/items`à partir de la navigation de l'application.
+Go to `/items` from the app navigation.
 
-Vous devriez voir votre liste de produits actuelle avec des colonnes pour le nom, la description, le prix et tous les champs personnalisés de produit configurés pour s'afficher dans le tableau.
-
-</Step>
-
-<Step title="Démarrer un nouveau produit" icon="plus">
-
-Sélectionnez l'option pour créer un nouveau produit.
-
-NomadBillouvre une boîte de dialogue dans laquelle vous pouvez saisir les détails du produit standard et tous les champs personnalisés attribués à l'entité produit.
+You should see your current product list with columns for name, description, price, and any product custom fields configured to show in the table.
 
 </Step>
 
-<Step title="Entrez les détails requis" icon="edit">
+<Step title="Start a new product" icon="plus">
 
-Remplissez le formulaire produit :
+Select the option to create a new product.
 
-- Entrez un **nom**.
-- Ajoutez une **description** si vous souhaitez plus de détails sur l'élément enregistré.
-- Saisissez un **prix** en utilisant des valeurs décimales telles que`125.00`.
-- Remplissez tous les champs personnalisés du produit qui s'appliquent à cet article.
-
-Si l'enregistrement du formulaire réussit, le nouveau produit apparaît dans la liste sur`/items`.
+NomadBill opens a dialog where you can enter the standard product details and any custom fields assigned to the product entity.
 
 </Step>
 
-<Step title="Vérifier et mettre à jour le produit enregistré" icon="check-circle">
+<Step title="Enter the required details" icon="edit">
 
-Vérifiez la ligne du produit dans la vue liste pour confirmer que le nom, la description, le prix et les valeurs des champs personnalisés visibles semblent corrects.
+Complete the product form:
 
-Si vous devez modifier quelque chose, ouvrez la boîte de dialogue d'édition dans la liste et enregistrez vos mises à jour. Pour supprimer un produit, utilisez l'action de suppression intégrée, qui confirme l'action avant la suppression.
+- Enter a **name**.
+- Add a **description** if you want more detail on the saved item.
+- Enter a **price** using decimal values such as `125.00`.
+- Fill in any product custom fields that apply to this item.
+
+If the form saves successfully, the new product appears in the list on `/items`.
+
+</Step>
+
+<Step title="Review and update the saved product" icon="check-circle">
+
+Check the product row in the list view to confirm the name, description, price, and visible custom field values look correct.
+
+If you need to change anything, open the edit dialog from the list and save your updates. To remove a product, use the built-in delete action, which confirms the action before deletion.
 
 </Step>
 
@@ -92,46 +92,46 @@ Si vous devez modifier quelque chose, ouvrez la boîte de dialogue d'édition da
 
 <Callout kind="tip">
 
-Les actions de suppression utilisent une étape de confirmation. Vérifiez le nom du produit avant de confirmer afin de ne pas supprimer le mauvais élément du catalogue.
+Delete actions use a confirmation step. Review the product name before confirming so you do not remove the wrong catalog item.
 
 </Callout>
 
-## Utiliser des produits dans des documents
+## Using products in documents
 
-Les produits enregistrés sont conçus pour accélérer la création de documents. Lorsque vous établissez une facture ou un devis,NomadBillréutilise les données produit dans les éléments de campagne afin que vous n'ayez pas besoin de saisir à nouveau les mêmes noms, descriptions ou prix à chaque fois.
+Saved products are designed to speed up document creation. When you build an invoice or quote, NomadBill reuses product data in the line items so you do not need to re-enter the same names, descriptions, or pricing each time.
 
-Ceci est particulièrement utile pour les services récurrents, les packages standard et les produits fréquemment vendus. Au lieu de saisir manuellement chaque ligne, vous sélectionnez un produit existant et partez des valeurs enregistrées déjà stockées dans votre catalogue.
+This is most useful for recurring services, standard packages, and frequently sold products. Instead of manually typing each line, you select an existing product and start from the saved values already stored in your catalog.
 
-Étant donné que les produits sont partagés au niveau de l'entreprise, votre équipe travaille à partir de la même liste d'articles dans toutes les factures et devis. Cela permet de conserver une tarification et une dénomination plus cohérentes, en particulier lorsque plusieurs personnes créent des documents.
+Because products are shared at the company level, your team works from the same item list across invoices and quotes. That keeps pricing and naming more consistent, especially when more than one person creates documents.
 
-## Champs personnalisés pour les produits
+## Custom fields for products
 
-Les champs personnalisés vous permettent de transformer le catalogue de produits de base en un inventaire structuré ou un registre de services. DansNomadBill, les champs personnalisés du produit utilisent le type d'entité`product`.
+Custom fields let you turn the basic product catalog into a structured inventory or service register. In NomadBill, product custom fields use the entity type `product`.
 
-Les exemples courants incluent les identifiants internes, les informations sur les stocks, les coûts des fournisseurs, les dates, les URL et les pièces jointes. Les exemples prédéfinis incluent`produkt_nummer`, `sku`, `produktkategorie`, description détaillée,`gewicht_kg`, `einkaufspreis`, `auf_lager`, `produkt_url`, `gueltig_ab`, `zertifizierungen`, `datenblatt`, et`marge_formel`.
+Common examples include internal identifiers, stock information, supplier costs, dates, URLs, and file attachments. Seeded examples include `produkt_nummer`, `sku`, `produktkategorie`, detailed description, `gewicht_kg`, `einkaufspreis`, `auf_lager`, `produkt_url`, `gueltig_ab`, `zertifizierungen`, `datenblatt`, and `marge_formel`.
 
-Différents types de champs prennent en charge différents types de données produit :
+Different field types support different kinds of product data:
 
-- **Identifiants** tels que des numéros automatiques ou des valeurs de texte uniques
-- **Valeurs commerciales** telles que le prix d'achat, le prix de vente ou les formules de marge
-- **Données opérationnelles** telles que l'état des stocks, les catégories et les dates d'effet
-- **Matériel de support** tel que des fiches techniques et des liens vers des produits externes
+- **Identifiers** such as auto numbers or unique text values
+- **Commercial values** such as purchase price, sale price, or margin formulas
+- **Operational data** such as stock status, categories, and effective dates
+- **Supporting material** such as datasheets and external product links
 
-Configurez ces champs dans [Champs personnalisés](/fr/user-guide/custom-fields). Lorsqu'un champ personnalisé de produit est configuré pour s'afficher dans des tableaux, il devient également partie intégrante du champ personnalisé.`/items`vue en liste.
+Configure these fields in [Custom fields](/en/user-guide/custom-fields). When a product custom field is set to show in tables, it also becomes part of the `/items` list view.
 
-## Guides associés
+## Related guides
 
 <Columns cols={2}>
-<Carte
-title="Facturation"
-href="/fr/user-guide/invoicing"
-icon="livre-ouvert"
-cta="Ouvrir le guide"
+  <Card
+    title="Invoicing"
+    href="/en/user-guide/invoicing"
+    icon="book-open"
+    cta="Open guide"
   />
-<Carte
-title="Champs personnalisés"
-href="/fr/user-guide/custom-fields"
-icône = "paramètres"
-cta="Gérer les champs"
+  <Card
+    title="Custom fields"
+    href="/en/user-guide/custom-fields"
+    icon="settings"
+    cta="Manage fields"
   />
 </Columns>

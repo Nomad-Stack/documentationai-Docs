@@ -1,114 +1,114 @@
 ---
-title: Gestion d'équipe
-description: Invitez des coéquipiers, attribuez des rôles d'administrateur, d'éditeur ou de spectateur et gérez l'accès à chaque espace de travail de l'entreprise dansNomadBill.
+title: Team Management
+description: Invite teammates, assign admin, editor, or viewer roles, and manage access across each company workspace in NomadBill.
 ---
 
-## La gestion d'équipe vous permet de contrôler qui peut accéder à chaque espace de travail de l'entreprise
+## Team Management lets you control who can access each company workspace
 
-Utilisez la gestion d'équipe pour inviter des coéquipiers, attribuer le rôle approprié à leur travail et limiter l'accès aux entreprises auxquelles ils appartiennent. Vous pouvez accorder un accès administratif complet aux propriétaires de l'entreprise, un accès en modification aux personnes qui créent des documents et un accès en lecture seule à toute personne ayant uniquement besoin de visibilité.
+Use Team Management to invite teammates, assign the right role for their work, and keep access limited to the companies they belong to. You can give full administrative access to company owners, editing access to people who create documents, and read-only access to anyone who only needs visibility.
 
 <Callout kind="info">
 
-L’accès des équipes est géré par entreprise. Si vous changez d’entreprise, vous gérez une autre équipe.
+Team access is managed per company. If you switch to a different company, you are managing a different team.
 
 </Callout>
 
-## Comment fonctionne l'accès en équipe
+## How team access works
 
-Une équipe dansNomadBillappartient à une seule entreprise. Lorsque vous ajoutez une personne à votre équipe, vous lui donnez accès à l'espace de travail spécifique de cette entreprise, et non à toutes les entreprises de votre compte.
+A team in NomadBill belongs to a single company. When you add someone to your team, you are giving that person access to that specific company workspace, not to every company in your account.
 
-Cela est important si vous travaillez dans plusieurs entreprises. Une même personne peut appartenir à plusieurs entreprises et jouer un rôle différent dans chacune d’elles.
+This matters if you work across multiple companies. The same person can belong to more than one company and have a different role in each one.
 
-NomadBillutilise également des autorisations basées sur les rôles pour contrôler ce que chaque membre de l'équipe peut faire. Le rôle d'un membre détermine s'il peut gérer l'équipe, modifier les paramètres de l'entreprise, modifier des documents ou uniquement afficher les données de l'entreprise.
+NomadBill also uses role-based permissions to control what each team member can do. A member's role determines whether they can manage the team, change company settings, edit documents, or only view company data.
 
 <Callout kind="tip">
 
-Utilisez **viewer** pour les comptables, les clients ou les parties prenantes internes qui ont besoin d'une visibilité sans accès en modification. Utilisez **éditeur** pour les coéquipiers qui créent des factures, des devis ou d'autres documents.
+Use **viewer** for accountants, clients, or internal stakeholders who need visibility without edit access. Use **editor** for teammates who create invoices, quotes, or other documents.
 
 </Callout>
 
-## Rôles de l'équipe
+## Team roles
 
-Choisissez le rôle qui correspond au travail que chaque coéquipier doit effectuer.
+Choose the role that matches the work each teammate needs to do.
 
-|Rôle|Niveau d'accès|Ce que ce rôle peut faire|
+| Role | Access level | What this role can do |
 | --- | --- | --- |
-|**administrateur**|Accès complet|Gérez les paramètres de l'entreprise, invitez et gérez les membres de l'équipe et accédez à tous les documents et données de l'entreprise|
-|**éditeur**|Accès de travail|Créer et modifier des documents tels que des factures et des devis, mais ne peut pas gérer les paramètres de l'entreprise ou de l'équipe|
-|**téléspectateur**|Accès en lecture seule|Afficher les données et les documents de l'entreprise sans apporter de modifications|
+| **admin** | Full access | Manage company settings, invite and manage team members, and access all company documents and data |
+| **editor** | Working access | Create and edit documents such as invoices and quotes, but cannot manage company settings or the team |
+| **viewer** | Read-only access | View company data and documents without making changes |
 
 <Callout kind="alert">
 
-Attribuez **admin** uniquement aux personnes qui doivent être en mesure de gérer l'accès à l'ensemble de l'espace de travail de l'entreprise.
+Only assign **admin** to people who should be able to manage access for the whole company workspace.
 
 </Callout>
 
-## Inviter un membre de l'équipe
+## Inviting a team member
 
-Les administrateurs peuvent inviter de nouveaux membres de l'équipe par e-mail et attribuer un rôle lors de l'invitation.
+Admins can invite new team members by email and assign a role during the invitation.
 
 <Steps>
-  <Step title="Gestion d'équipe ouverte" icon="users">
+  <Step title="Open Team Management" icon="users">
 
-Connectez-vous àNomadBill, accédez à l'entreprise que vous souhaitez gérer et ouvrez la page **Équipe**.
-
-  </Step>
-  <Step title="Démarrer une nouvelle invitation" icon="plus">
-
-Sélectionnez l’option pour inviter un membre de l’équipe.NomadBillouvre un formulaire d'invitation dans lequel vous saisissez l'adresse e-mail du coéquipier et choisissez son rôle.
+  Sign in to NomadBill, switch to the company you want to manage, and open the **Team** page.
 
   </Step>
-  <Step title="Choisissez le bon rôle" icon="shield">
+  <Step title="Start a new invitation" icon="plus">
 
-Sélectionnez **admin**, **editor** ou **viewer** en fonction de l'accès dont la personne a besoin. Le rôle attribué est appliqué lorsqu’ils acceptent l’invitation.
+  Select the option to invite a team member. NomadBill opens an invitation form where you enter the teammate's email address and choose their role.
 
   </Step>
-  <Step title="Envoyez l'invitation" icon="send">
+  <Step title="Choose the right role" icon="shield">
 
-Soumettez l'invitation.NomadBillgénère un jeton d'invitation unique et envoie à l'invité un lien qu'il peut utiliser pour rejoindre l'entreprise.
+  Select **admin**, **editor**, or **viewer** based on the access the person needs. The assigned role is applied when they accept the invitation.
+
+  </Step>
+  <Step title="Send the invitation" icon="send">
+
+  Submit the invitation. NomadBill generates a unique invitation token and sends the invitee a link they can use to join the company.
 
   </Step>
 </Steps>
 
-Une fois l’invitation envoyée, la personne invitée n’est pas encore membre de l’équipe. Ils ne deviennent membres qu’après avoir accepté le lien d’invitation.
+After you send the invitation, the invited person is not yet a team member. They become a member only after they accept the invitation link.
 
-## Accepter une invitation
+## Accepting an invitation
 
-Chaque invitation comprend un lien unique basé sur un jeton. Lorsque l'invité ouvre ce lien,NomadBillles guide tout au long du flux d'acceptation des invitations et les ajoute à l'entreprise avec le rôle attribué.
+Each invitation includes a unique token-based link. When the invitee opens that link, NomadBill takes them through the invitation acceptance flow and adds them to the company with the assigned role.
 
-Si l'invité travaille déjà dansNomadBill, ils doivent encore accepter l'invitation de cette entreprise. L’adhésion à une entreprise est distincte, donc rejoindre une entreprise ne donne pas automatiquement accès à une autre.
+If the invitee already works in NomadBill, they still need to accept the invitation for that company. Company membership is separate, so joining one company does not automatically grant access to another.
 
-Une acceptation réussie ajoute la personne à l'équipe de cette entreprise. Après cela, ils peuvent accéder à l'espace de travail de l'entreprise et utiliserNomadBillen fonction du rôle qui leur est attribué.
+A successful acceptance adds the person to the team for that company. After that, they can switch into the company workspace and use NomadBill based on their assigned role.
 
-## Gestion des membres existants
+## Managing existing members
 
-Une fois qu'une personne a rejoint l'équipe, les administrateurs peuvent gérer cette adhésion à partir de la page Équipe.
+Once someone has joined the team, admins can manage that membership from the Team page.
 
-### Changer le rôle d'un membre
+### Change a member's role
 
-Mettez à jour un rôle lorsque les responsabilités d'une personne changent. Par exemple, promouvez un éditeur au rang d'administrateur s'il doit gérer les paramètres et l'accès de l'équipe, ou déplacez un éditeur au rang de visionneuse s'il n'a plus besoin de créer des documents.
+Update a role when someone's responsibilities change. For example, promote an editor to admin if they need to manage settings and team access, or move an editor to viewer if they no longer need to create documents.
 
-Les changements de rôle s'appliquent uniquement à l'entreprise actuelle. Si la même personne appartient à une autre entreprise, son accès y reste le même.
+Role changes apply to the current company only. If the same person belongs to another company, their access there stays the same.
 
-### Supprimer un membre
+### Remove a member
 
-Supprimez un membre de l’équipe lorsqu’il ne doit plus accéder à l’espace de travail de l’entreprise. La suppression d'un membre révoque son accès aux données, documents et paramètres de cette entreprise.
+Remove a team member when they should no longer access the company workspace. Removing a member revokes their access to that company's data, documents, and settings.
 
-Cela ne supprime pas la personne des autres sociétés auxquelles elle appartient. Cela n'affecte que l'entreprise actuellement sélectionnée.
+This does not remove the person from other companies they belong to. It only affects the currently selected company.
 
 <Callout kind="info">
 
-Si quelqu'un dit qu'il ne peut pas voir les factures, les devis ou les paramètres après son inscription, confirmez d'abord qu'il a accepté l'invitation et que vous travaillez tous les deux dans le même espace de travail de l'entreprise.
+If someone says they cannot see invoices, quotes, or settings after joining, first confirm that they accepted the invitation and that you are both working in the same company workspace.
 
 </Callout>
 
-## Guides associés
+## Related guides
 
 <Columns cols={2}>
-  <Card title="Paramètres" href="/fr/user-guide/settings" icon="settings" cta="Ouvrir le guide">
-Gérez la configuration au niveau de l’entreprise à laquelle les administrateurs peuvent accéder.
+  <Card title="Settings" href="/en/user-guide/settings" icon="settings" cta="Open guide">
+    Manage company-level configuration that admins can access.
   </Card>
-  <Card title="Facturation" href="/fr/user-guide/invoicing" icon="file-text" cta="Ouvrir le guide">
-Découvrez ce que les éditeurs et les administrateurs peuvent créer et gérer dans le cadre de leur travail de facturation quotidien.
+  <Card title="Invoicing" href="/en/user-guide/invoicing" icon="file-text" cta="Open guide">
+    See what editors and admins can create and manage in day-to-day billing work.
   </Card>
 </Columns>

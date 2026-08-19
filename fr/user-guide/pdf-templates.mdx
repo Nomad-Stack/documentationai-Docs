@@ -1,175 +1,175 @@
 ---
-title: PDFModèles
-description: Concevoir sur mesurePDFmises en page pour les factures, les devis et les reçus avec édition par glisser-déposer, modèles réutilisables et couleurs de marque.
+title: PDF Templates
+description: Design custom PDF layouts for invoices, quotes, and receipts with drag-and-drop editing, reusable templates, and brand colors.
 ---
 
-## Concevoir sur mesurePDFmises en page pour vos documents
+## Design custom PDF layouts for your documents
 
-PDFLes modèles vous permettent de contrôler l'apparence des factures, des devis et des documents entrants lorsque vous les prévisualisez, les exportez ou les envoyez. Vous pouvez partir d'une mise en page vierge, choisir une conception prédéfinie ou importer uneJSONmodèle, puis ajustez le résultat dans un éditeur glisser-déposer.
+PDF templates let you control how invoices, quotes, and incoming documents look when you preview, export, or send them. You can start from a blank layout, choose a pre-built design, or import a JSON template, then adjust the result in a drag-and-drop editor.
 
 <Callout kind="info">
 
-Gérez les modèles dans **Paramètres → Modèles**.NomadBillconserve des listes de modèles distinctes pour les factures, les devis et les documents entrants, afin que vous puissiez concevoir chaque type de document indépendamment.
+Manage templates in **Settings → Templates**. NomadBill keeps separate template lists for invoices, quotes, and incoming documents, so you can design each document type independently.
 
 </Callout>
 
-## CommentPDFles modèles fonctionnent
+## How PDF templates work
 
-ChaquePDFLe modèle stocke la mise en page complète pour un type de document. Cela inclut la structure de la page, les blocs de texte, les tableaux, les images et le style utilisés pour générer le résultat final.PDF.
+Each PDF template stores the full layout for one document type. That includes the page structure, text blocks, tables, images, and styling used to generate the final PDF.
 
-Lorsque vous créez ou modifiez une facture, un devis ou un document entrant, vous pouvez utiliser le modèle par défaut pour ce type de document ou choisir un autre modèle enregistré. Cela vous offre un moyen cohérent de conserver les documents quotidiens fidèles à votre marque tout en permettant des mises en page alternatives en cas de besoin.
+When you create or edit an invoice, quote, or incoming document, you can use the default template for that document type or choose a different saved template. This gives you a consistent way to keep everyday documents on-brand while still allowing alternate layouts when needed.
 
-NomadBillprend en charge trois types de documents :
+NomadBill supports three document types:
 
-|Type de document|Utilisé pour|Où vous le sélectionnez|
+| Document type | Used for | Where you select it |
 | --- | --- | --- |
-|Facture|Factures sortantes que vous envoyez aux clients|Formulaire de facture et aperçu|
-|Citation|Devis ou offres que vous envoyez avant la facturation|Formulaire de devis et aperçu|
-|Entrant|Factures entrantes, factures fournisseurs ou reçus|Flux de documents entrants|
+| Invoice | Outgoing invoices you send to customers | Invoice form and preview |
+| Quote | Quotes or offers you send before invoicing | Quote form and preview |
+| Incoming | Incoming invoices, supplier bills, or receipts | Incoming document flows |
 
-## Types de documents
+## Document types
 
-Les modèles sont regroupés par type de document, car chaque type a un objectif différent et peut nécessiter une formulation ou une mise en page différente.
+Templates are grouped by document type because each type has a different purpose and may need different wording or layout emphasis.
 
-|Taper|Titre typique dansPDF |Utilisation courante|
+| Type | Typical title in PDF | Common use |
 | --- | --- | --- |
-| `invoice` |Facture|Facturer un client pour un travail terminé ou des marchandises livrées|
-| `quote` |Citation|Envoi d'une proposition de prix avant le début des travaux|
-| `incoming` |Reçu ou facture entrante|Enregistrement des dépenses des fournisseurs ou des reçus téléchargés|
+| `invoice` | Invoice | Billing a customer for completed work or delivered goods |
+| `quote` | Quote | Sending a price proposal before work starts |
+| `incoming` | Receipt or incoming invoice | Recording supplier expenses or uploaded receipts |
 
 <Callout kind="tip">
 
-Si vous souhaitez différentes mises en page pour le même type de document, créez plusieurs modèles et définissez-en un par défaut. Vous pouvez toujours choisir un autre modèle pour un document spécifique si nécessaire.
+If you want different layouts for the same document type, create multiple templates and set one as the default. You can still pick another template for a specific document when needed.
 
 </Callout>
 
-## Création d'un modèle
+## Creating a template
 
-Vous pouvez créer des modèles de trois manières : démarrer vide, démarrer à partir de la galerie ou importer un modèle existant.JSONdéposer.
+You can create templates in three ways: start blank, start from the gallery, or import an existing JSON file.
 
 <Steps>
-  <Step title="Créer un modèle vierge" icon="plus">
+  <Step title="Create a blank template" icon="plus">
 
-Ouvrez **Paramètres → Modèles**, choisissez l'onglet Type de document, puis créez un nouveau modèle et sélectionnez **Vierge**.
+  Open **Settings → Templates**, choose the document type tab, then create a new template and select **Blank**.
 
-Un modèle vierge commence à partir deNomadBillla mise en page par défaut de pour ce type de document. Il s’agit de l’option la plus rapide lorsque vous souhaitez un contrôle total tout en souhaitant que les champs standard requis soient déjà mappés.
-
-  </Step>
-  <Step title="Commencez par la galerie" icon="book-open">
-
-Ouvrez **Paramètres → Modèles**, choisissez l'onglet Type de document, puis créez un nouveau modèle et sélectionnez **Galerie**.
-
-Choisissez l'un des sept modèles intégrés si vous souhaitez une mise en page finie que vous pouvez adapter. C’est le meilleur point de départ lorsque vous souhaitez une mise en page professionnelle sans créer chaque section à partir de zéro.
+  A blank template starts from NomadBill's default layout for that document type. This is the fastest option when you want full control but still want the required standard fields already mapped.
 
   </Step>
-  <Step title="Importer unJSONmodèle" icon="upload">
+  <Step title="Start from the gallery" icon="book-open">
 
-Ouvrez **Paramètres → Modèles**, choisissez l'onglet Type de document, puis créez un nouveau modèle et sélectionnez **Importer depuisJSON**.
+  Open **Settings → Templates**, choose the document type tab, then create a new template and select **Gallery**.
 
-Téléchargez un`.json`fichier contenant une structure de modèle valide. Utilisez ce chemin si vous disposez déjà d’un fichier modèle compatible et que vous souhaitez le réutiliser dans plusieurs entreprises ou environnements.
+  Pick one of the seven built-in templates if you want a finished layout you can adapt. This is the best starting point when you want a professional layout without building every section from scratch.
+
+  </Step>
+  <Step title="Import a JSON template" icon="upload">
+
+  Open **Settings → Templates**, choose the document type tab, then create a new template and select **Import from JSON**.
+
+  Upload a `.json` file that contains a valid template structure. Use this path if you already have a compatible template file and want to reuse it across companies or environments.
 
   </Step>
 </Steps>
 
-## Galerie de modèles
+## Template gallery
 
-NomadBillcomprend sept modèles prédéfinis que vous pouvez utiliser comme point de départ.
+NomadBill includes seven pre-built templates you can use as a starting point.
 
-|Modèle|Style|Idéal pour|
+| Template | Style | Best for |
 | --- | --- | --- |
-|Classique|Valeur par défaut équilibrée avec un en-tête de couleur de marque|Factures et devis à usage général|
-|Moderne|Barre supérieure colorée avec un titre en gras|Des mises en page avant-gardistes|
-|Minimal|Disposition monochrome sans accents colorés|Documents simples et à faible consommation d'encre|
-|Blanc|Mise en page imprimable propre avec un bloc de mode de paiement|Factures formelles et flux de travail d'impression|
-|Bleu|Accents bleus avec une ligne totale remplie|Totaux très contrastés et sections récapitulatives|
-|Vert|Barre d'accent verte à gauche|Mises en page de marque alternatives|
-|Élégant|Grand titre avec un tableau gris subtil|Documents soignés destinés aux clients|
+| Classic | Balanced default with a brand-color header | General-purpose invoices and quotes |
+| Modern | Coloured top bar with a bold title | Brand-forward layouts |
+| Minimal | Monochrome layout with no colored accents | Simple, low-ink documents |
+| White | Clean printable layout with a payment method block | Formal invoices and print workflows |
+| Blue | Blue accents with a filled total row | High-contrast totals and summary sections |
+| Green | Green left accent bar | Alternative branded layouts |
+| Elegant | Large title with a subtle grey table | Polished client-facing documents |
 
-## Modification d'un modèle
+## Editing a template
 
-L'éditeur de modèles s'ouvre dans un concepteur plein écran afin que vous puissiez créer et ajuster visuellement les mises en page. Vous pouvez faire glisser les champs, les redimensionner, modifier le texte et affiner la structure visuelle sans modifier le sous-jacent.JSONmanuellement.
+The template editor opens in a full-screen designer so you can build and adjust layouts visually. You can drag fields into position, resize them, change text, and refine the visual structure without editing the underlying JSON by hand.
 
-Les types de champs disponibles incluent le texte, le texte à plusieurs variables, les tableaux, les listes, les lignes, les formes, les images, les signatures, les dates, les cases à cocher, les groupes radio, les codes QR et les codes-barres. Cela vous donne suffisamment de flexibilité pour créer des présentations de factures standard ainsi que des conceptions de documents plus personnalisées.
+Available field types include text, multi-variable text, tables, lists, lines, shapes, images, signatures, dates, checkboxes, radio groups, QR codes, and barcodes. This gives you enough flexibility to create standard invoice layouts as well as more customized document designs.
 
-La plupart des utilisateurs passeront leur temps à ajuster les positions, l'espacement, les étiquettes et la présentation des tableaux. Si vous conservez les noms de champs standard intacts,NomadBillcontinue de remplir ces champs automatiquement lorsqu'il génère lePDF.
+Most users will spend their time adjusting positions, spacing, labels, and table presentation. If you keep the standard field names intact, NomadBill continues to fill those fields automatically when it generates the PDF.
 
 <Callout kind="info">
 
-La liste des éléments du document est généralement affichée via le`items`champ du tableau. Si vous supprimez ou renommez ce champ, les éléments de campagne n'apparaîtront plus dans le fichier généré.PDF.
+The document item list is typically rendered through the `items` table field. If you remove or rename that field, line items will no longer appear in the generated PDF.
 
 </Callout>
 
-## Champs standards
+## Standard fields
 
-NomadBillremplit automatiquement les noms de champs spécifiques lorsqu'il restitue unPDF. Conservez ces noms inchangés si vous souhaitez que l'application conserve les données du document de mappage dans le modèle.
+NomadBill fills specific field names automatically when it renders a PDF. Keep these names unchanged if you want the application to keep mapping document data into the template.
 
-|Nom du champ|Contient|
+| Field name | Contains |
 | --- | --- |
-| `company_logo` |Image du logo de votre entreprise|
-| `company_name` |Nom d'affichage de votre entreprise|
-| `company_address` |Adresse de votre entreprise, généralement sur plusieurs lignes|
-| `company_vat` |TonVATou étiquette et valeur d'identification fiscale|
-| `doc_title` |Titre du document tel que facture, devis ou reçu|
-| `doc_number` |Numéro du document|
-| `doc_date` |Étiquette et valeur de la date d'émission|
-| `doc_due_date` |Libellé et valeur de la date d'échéance|
-| `bill_to_label` |Étiquette de la section client|
-| `customer_name` |Nom du client|
-| `customer_address` |Adresse du client|
-| `items` |Tableau des éléments de campagne|
-| `subtotal_label` |Libellé du sous-total|
-| `subtotal` |Montant du sous-total|
-| `vat_label` | VATétiquette|
-| `vat_amount` | VATmontant|
-| `total_label` |Etiquette totale|
-| `total` |Montant total|
-| `bank_label` |Étiquette de la section Détails du paiement|
-| `bank_details` |Instructions bancaires ou de paiement|
-| `signature` |Image signature|
-| `footer` |Texte de pied de page|
+| `company_logo` | Your company logo image |
+| `company_name` | Your company display name |
+| `company_address` | Your company address, usually multi-line |
+| `company_vat` | Your VAT or tax ID label and value |
+| `doc_title` | Document title such as Invoice, Quote, or Receipt |
+| `doc_number` | Document number |
+| `doc_date` | Issue date label and value |
+| `doc_due_date` | Due date label and value |
+| `bill_to_label` | Customer section label |
+| `customer_name` | Customer name |
+| `customer_address` | Customer address |
+| `items` | Table of line items |
+| `subtotal_label` | Subtotal label |
+| `subtotal` | Subtotal amount |
+| `vat_label` | VAT label |
+| `vat_amount` | VAT amount |
+| `total_label` | Total label |
+| `total` | Total amount |
+| `bank_label` | Payment details section label |
+| `bank_details` | Bank or payment instructions |
+| `signature` | Signature image |
+| `footer` | Footer text |
 
-## Couleurs de la marque
+## Brand colors
 
-Les modèles de galerie peuvent appliquer automatiquement les couleurs de la marque de votre entreprise.NomadBilllit vos couleurs primaires et secondaires à partir des paramètres de l'entreprise et les utilise pour recolorer les éléments de modèle pris en charge.
+Gallery templates can apply your company brand colors automatically. NomadBill reads your primary and secondary colors from company settings and uses them to recolor supported template elements.
 
-Cela fonctionne mieux lorsque vous souhaitez une image de marque cohérente sur toutes les factures et devis sans mettre à jour manuellement chaque bloc de texte, en-tête ou élément d'accent. Selon le modèle, la couleur d'accent est généralement appliquée aux en-têtes, aux barres, aux totaux ou aux surbrillances d'arrière-plan.
+This works best when you want consistent branding across all invoices and quotes without manually updating every text block, header, or accent element. Depending on the template, the accent color is usually applied to headers, bars, totals, or background highlights.
 
-Certaines mises en page de marque prennent également en charge le maintien du texte en noir tout en appliquant la palette de votre marque aux zones d'accentuation. Utilisez cette approche si les couleurs de votre marque sont claires ou si la lisibilité est plus importante que le style du texte en couleur.
+Some branded layouts also support keeping text black while still applying your brand palette to accent areas. Use that approach if your brand colors are light or if readability is more important than full-color text styling.
 
-## Modèles multilingues
+## Multi-language templates
 
-Les modèles prennent en charge quatre langues : DE, EN, FR et ES. Les changements de langue mettent à jour les étiquettes intégrées telles que le titre du document, les étiquettes de date, le sous-total,VAT, total et autre texte standard utilisé dans les modèles par défaut.
+Templates support four languages: DE, EN, FR, and ES. Language changes update built-in labels such as the document title, date labels, subtotal, VAT, total, and other standard text used in default templates.
 
-NomadBilltraduit les étiquettes du modèle séparément de la mise en page elle-même. Cela signifie que vous pouvez changer de langue sans perdre les positions, l'espacement, les couleurs ou les autres modifications de conception que vous avez apportées dans l'éditeur.
+NomadBill translates template labels separately from the layout itself. That means you can switch languages without losing positions, spacing, colors, or other design changes you made in the editor.
 
-Si vous travaillez dans plusieurs langues, créez un modèle par langue lorsque vous avez besoin d'un contrôle total sur la formulation et le formatage. Si la mise en page reste la même, vous pouvez réutiliser le même design et vous fier aux étiquettes traduites, le cas échéant.
+If you work in multiple languages, create one template per language when you need complete control over wording and formatting. If the layout stays the same, you can reuse the same design and rely on translated labels where appropriate.
 
-## Champs personnalisés dans les modèles
+## Custom fields in templates
 
-Les champs personnalisés vous permettent d'ajouter des valeurs spécifiques à une entreprise, un client ou un document à vos PDF. Dans les modèles, ces valeurs utilisent des noms de champs au format`cf_{entity}_{key}`.
+Custom fields let you add company, customer, or document-specific values to your PDFs. In templates, these values use field names in the format `cf_{entity}_{key}`.
 
-Par exemple, un champ personnalisé lié à une facture peut être mappé avec un nom de champ tel que`cf_invoice_project_reference`. Un champ personnalisé au niveau du client suit le même modèle avec le segment d'entité client.
+For example, a custom field tied to an invoice can be mapped with a field name such as `cf_invoice_project_reference`. A customer-level custom field follows the same pattern with the customer entity segment.
 
-Lire [Champs personnalisés](/fr/user-guide/custom-fields) avant d'ajouter ces espaces réservés afin que vos clés de champ et les noms de champs de votre modèle restent alignés.
+Read [Custom Fields](/en/user-guide/custom-fields) before adding these placeholders so your field keys and template field names stay aligned.
 
 <Callout kind="tip">
 
-Si un champ personnalisé apparaît vide dans lePDF, vérifiez d'abord que le champ existe, que la clé correspond exactement et que le nom du champ dans le modèle utilise le nom attendu.`cf_{entity}_{key}`modèle.
+If a custom field appears blank in the PDF, first confirm that the field exists, the key matches exactly, and the field name in the template uses the expected `cf_{entity}_{key}` pattern.
 
 </Callout>
 
-## Définition d'un modèle par défaut
+## Setting a default template
 
-Chaque type de document peut avoir un modèle par défaut. Le modèle par défaut est utilisé automatiquement, sauf si vous en choisissez un autre sur le formulaire de document ou sur l'écran d'aperçu.
+Each document type can have one default template. The default template is used automatically unless you choose a different one on the document form or preview screen.
 
-Pour modifier la valeur par défaut, ouvrez **Paramètres → Modèles**, recherchez le modèle dans l'onglet de type de document approprié et utilisez **Définir par défaut**. Le modèle mis à jour devient le nouveau point de départ pour ce type de document dans votre entreprise.
+To change the default, open **Settings → Templates**, find the template in the correct document type tab, and use **Set default**. The updated template becomes the new starting point for that document type across your company.
 
-Ceci est utile lorsque vous déployez une mise en page actualisée. Définissez d'abord le nouveau modèle par défaut, puis conservez les anciens modèles disponibles pour des cas particuliers ou pour la cohérence historique.
+This is useful when you are rolling out a refreshed layout. Set the new template as default first, then keep older templates available for special cases or historical consistency.
 
-## Guides associés
+## Related guides
 
 <Columns cols={3}>
-  <Card title="Facturation" href="/fr/user-guide/invoicing" icon="book-open" cta="Ouvrir le guide" />
-  <Card title="Citations" href="/fr/user-guide/quotes" icon="arrow-right" cta="Voir le guide associé" />
-  <Card title="Champs personnalisés" href="/fr/user-guide/custom-fields" icon="settings" cta="Découvrez comment les champs sont mappés" />
+  <Card title="Invoicing" href="/en/user-guide/invoicing" icon="book-open" cta="Open guide" />
+  <Card title="Quotes" href="/en/user-guide/quotes" icon="arrow-right" cta="View related guide" />
+  <Card title="Custom Fields" href="/en/user-guide/custom-fields" icon="settings" cta="Learn how fields map" />
 </Columns>

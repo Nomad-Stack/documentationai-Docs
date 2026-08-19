@@ -1,128 +1,128 @@
 ---
-title: Clients
-description: Gérez les enregistrements clients avec les coordonnées, les champs personnalisés et réutilisez-les dans les factures et les devis.
+title: Customers
+description: Manage customer records with contact details, custom fields, and reuse across invoices and quotes.
 ---
 
-## Conservez les informations de vos clients au même endroit
+## Keep your customer details in one place
 
-Les clients stockent les informations de contact que vous réutilisez dans votre flux de facturation. Ajoutez chaque client une fois`/customers`, gardez leurs détails à jour et utilisez à nouveau ces enregistrements lorsque vous créez des factures et des devis.
+Customers store the contact information you reuse across your billing workflow. Add each customer once on `/customers`, keep their details up to date, and use those records again when you create invoices and quotes.
 
-Les propriétaires d'entreprise et les membres de l'équipe peuvent gérer les clients dans l'espace de travail de leur entreprise. La liste des clients est triée par nom par ordre alphabétique et le tableau affiche les champs de contact standard ainsi que tous les champs personnalisés configurés pour apparaître dans le tableau.
+Company owners and team members can manage customers in their company workspace. The customer list is sorted alphabetically by name, and the table shows the standard contact fields plus any custom fields configured to appear in the table.
 
-## Champs client
+## Customer fields
 
-Chaque dossier client comprend les principaux champs de contact ci-dessous.
+Every customer record includes the core contact fields below.
 
 <ParamField body="name" param-type="string" required="true" show-location="false">
 
-Le nom d’affichage du client.NomadBillrequiert ce champ et l'utilise comme étiquette principale dans la liste des clients.
+The customer's display name. NomadBill requires this field and uses it as the primary label in the customer list.
 
 </ParamField>
 
 <ParamField body="email" param-type="string" required="false" show-location="false">
 
-L'adresse email du client.
+The customer's email address.
 
 </ParamField>
 
 <ParamField body="phone" param-type="string" required="false" show-location="false">
 
-Le numéro de téléphone du client.
+The customer's phone number.
 
 </ParamField>
 
 <ParamField body="address" param-type="string" required="false" show-location="false">
 
-L'adresse du client. Dans la boîte de dialogue de création et de modification, ce champ utilise une zone de texte multiligne afin que vous puissiez saisir une adresse de facturation complète.
+The customer's address. In the create and edit dialog, this field uses a multiline text area so you can enter a full billing address.
 
 </ParamField>
 
 <Callout kind="info">
 
-La liste des clients affiche **nom**, **e-mail** et **téléphone** par défaut. Il affiche également les champs personnalisés du client dans lesquels la visibilité des tables est activée.
+The customer list shows **name**, **email**, and **phone** by default. It also shows customer custom fields where table visibility is enabled.
 
 </Callout>
 
-## Créer un client
+## Creating a customer
 
-Ajoutez un client depuis la page clients, puis renseignez les coordonnées que vous souhaitez réutiliser ultérieurement.
+Add a customer from the customers page, then fill in the contact details you want to reuse later.
 
 <Steps>
-  <Step title="Ouvrir la page clients" icon="users">
+  <Step title="Open the customers page" icon="users">
 
-Aller à`/customers`dans votre espace de travail.
+  Go to `/customers` in your workspace.
 
-Vous devriez voir un tableau des clients trié par nom. Si vous avez déjà créé des champs personnalisés client avec la visibilité des tables activée, ces colonnes apparaissent également ici.
-
-  </Step>
-  <Step title="Créer un nouveau dossier client" icon="plus">
-
-Créez un nouveau client à partir de l'action de la page.
-
-  NomadBillouvre une boîte de dialogue de création avec les champs client standard et tous les champs personnalisés affectés au`customer`entité.
+  You should see a customer table sorted by name. If you already created customer custom fields with table visibility enabled, those columns also appear here.
 
   </Step>
-  <Step title="Entrez les détails obligatoires et facultatifs" icon="edit">
+  <Step title="Start a new customer record" icon="plus">
 
-Remplissez les informations client :
+  Create a new customer from the page action.
 
-- **Le nom** est requis.
-- **L'e-mail** est facultatif.
-- **Le téléphone** est facultatif.
-- **L'adresse** est facultative et prend en charge le texte multiligne.
-- Les **Champs personnalisés** apparaissent lorsque vous les avez configurés pour les clients.
-
-Les espaces de travail de démonstration peuvent déjà inclure des champs prédéfinis tels que`kundennummer`, `kundenkategorie`, `website`, `kunden_seit`, `notizen_intern`, `praeferierte_sprachen`, et`newsletter`.
+  NomadBill opens a create dialog with the standard customer fields and any custom fields assigned to the `customer` entity.
 
   </Step>
-  <Step title="Enregistrez et vérifiez le résultat" icon="check-circle">
+  <Step title="Enter the required and optional details" icon="edit">
 
-Sauvez le client.
+  Fill in the customer information:
 
-Après l'enregistrement, le client apparaît dans la vue liste sous la position alphabétique correcte. Si un champ personnalisé est configuré pour s'afficher dans les tableaux, sa valeur apparaît également sous forme de colonne dans la ligne.
+  - **Name** is required.
+  - **Email** is optional.
+  - **Phone** is optional.
+  - **Address** is optional and supports multiline text.
+  - **Custom fields** appear when you configured them for customers.
+
+  Demo workspaces may already include seeded fields such as `kundennummer`, `kundenkategorie`, `website`, `kunden_seit`, `notizen_intern`, `praeferierte_sprachen`, and `newsletter`.
+
+  </Step>
+  <Step title="Save and verify the result" icon="check-circle">
+
+  Save the customer.
+
+  After saving, the customer appears in the list view under the correct alphabetical position. If a custom field is configured to show in tables, its value also appears as a column in the row.
 
   </Step>
 </Steps>
 
-## Modification et suppression de clients
+## Editing and deleting customers
 
-Mettez à jour un client à partir de la même boîte de dialogue utilisée pour la création. Vous pouvez modifier les champs de contact standard et tous les champs personnalisés attribués aux clients à tout moment.
+Update a customer from the same dialog used for creation. You can change the standard contact fields and any assigned customer custom fields at any time.
 
-Lorsque vous supprimez un client,NomadBillvous demande de confirmer l'action avant de supprimer l'enregistrement. Utilisez la suppression avec précaution si vous vous fiez à ces informations client dans votre processus de facturation habituel.
+When you delete a customer, NomadBill asks you to confirm the action before removing the record. Use deletion carefully if you rely on that customer information in your regular billing process.
 
-## Utiliser les clients dans les factures
+## Using customers in invoices
 
-Les clients sont conçus pour gagner du temps lorsque vous créez des factures. Au lieu de retaper les coordonnées de chaque document, vous sélectionnez ou réutilisez un enregistrement client existant.
+Customers are designed to save time when you create invoices. Instead of retyping contact details for every document, you select or reuse an existing customer record.
 
-Les factures stockent le nom du client dans le`customer_name`champ. Cela signifie que le dossier client fournit le nom de la source que vous utilisez dans les flux de facturation, tout en gardant votre liste de clients organisée en un seul endroit.
+Invoices store the customer name in the `customer_name` field. That means the customer record provides the source name you use in invoice workflows, while keeping your customer list organized in one place.
 
 <Callout kind="tip">
 
-Configurez vos clients avant de commencer à envoyer des factures régulièrement. Une liste de clients claire accélère la création des factures et réduit les incohérences de dénomination entre les documents.
+Set up customers before you start sending invoices regularly. A clean customer list makes invoice creation faster and reduces naming inconsistencies across documents.
 
 </Callout>
 
-## Champs personnalisés pour les clients
+## Custom fields for customers
 
-Les champs personnalisés des clients vous permettent de suivre des informations au-delà des champs de contact standard.NomadBillattribue ces champs au`customer`type d'entité, ce qui signifie qu'elles apparaissent dans les formulaires client et, une fois configurées, dans la table client.
+Customer custom fields let you track information beyond the standard contact fields. NomadBill assigns these fields to the `customer` entity type, which means they appear in customer forms and, when configured, in the customer table.
 
-Utilisez des champs personnalisés pour des données telles que les numéros de clients internes, les catégories, les sites Web, les dates de début, les préférences linguistiques, les notes ou le statut d'inscription à la newsletter. Les données de démonstration peuvent inclure des champs tels que`kundennummer`comme numéro automatique,`kundenkategorie`sous forme de liste déroulante,`website`sous forme d'URL,`kunden_seit`comme rendez-vous,`notizen_intern`sous forme de texte multiligne,`praeferierte_sprachen`en multisélection, et`newsletter`comme booléen.
+Use custom fields for data such as internal customer numbers, categories, websites, start dates, language preferences, notes, or newsletter opt-in status. Demo data may include fields like `kundennummer` as an autonumber, `kundenkategorie` as a dropdown, `website` as a URL, `kunden_seit` as a date, `notizen_intern` as multiline text, `praeferierte_sprachen` as a multiselect, and `newsletter` as a boolean.
 
-Pour les instructions de configuration et les types de champs, voir [Champs personnalisés](/fr/user-guide/custom-fields).
+For setup instructions and field types, see [Custom fields](/en/user-guide/custom-fields).
 
-## Où aller ensuite
+## Where to go next
 
 <Columns cols={2}>
-<Carte
-title="Facturation"
-href="/fr/user-guide/invoicing"
-icon="livre-ouvert"
-cta="Ouvrir le guide de facturation"
+  <Card
+    title="Invoicing"
+    href="/en/user-guide/invoicing"
+    icon="book-open"
+    cta="Open invoicing guide"
   />
-<Carte
-title="Champs personnalisés"
-href="/fr/user-guide/custom-fields"
-icône = "paramètres"
-cta="Configurer les champs personnalisés"
+  <Card
+    title="Custom fields"
+    href="/en/user-guide/custom-fields"
+    icon="settings"
+    cta="Configure custom fields"
   />
 </Columns>

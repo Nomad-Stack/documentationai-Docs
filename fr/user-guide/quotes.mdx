@@ -1,54 +1,54 @@
 ---
-title: Citations
-description: Créez, envoyez et convertissez des devis en factures avec une prise en charge multidevise etPDFgénération.
+title: Quotes
+description: Create, send, and convert quotes into invoices with multi-currency support and PDF generation.
 ---
 
-## Transformez les estimations de projet en devis prêts à l'emploi
+## Turn project estimates into client-ready quotes
 
-Les devis vous permettent de préparer une offre, de l'envoyer à un client et de la convertir en facture une fois que le client l'accepte. Le workflow de devis utilise les mêmes données de base que les factures, y compris les détails du client, les éléments de ligne,VAT, monnaie, langue,PDFsortie, livraison par e-mail, champs personnalisés,CSVexportation et personnalisationPDFmodèles.
+Quotes let you prepare an offer, send it to a client, and convert it into an invoice once the client accepts. The quote workflow uses the same core data as invoices, including customer details, line items, VAT, currency, language, PDF output, email delivery, custom fields, CSV export, and custom PDF templates.
 
-## Statuts des devis
+## Quote statuses
 
-Chaque devis suit deux états distincts : **statut** et **statut de paiement**. Ensemble, ils vous indiquent où se trouve le devis dans votre processus de vente et si un paiement qui y est lié a été effectué.
+Each quote tracks two separate states: **status** and **payment status**. Together they tell you where the quote is in your sales process and whether any payment connected to it has been completed.
 
-### Statut du devis
+### Quote status
 
-|Statut|Ce que cela signifie|
+| Status | What it means |
 |---|---|
-|**brouillon**|Vous êtes encore en train de préparer le devis. Le devis n'a pas été finalisé ni converti.|
-|**envoyé**|Vous avez envoyé le devis au client par email.|
-|**converti**|Vous avez converti le devis en facture. Un nouvel enregistrement de facture a été créé à partir des données du devis.|
+| **draft** | You are still preparing the quote. The quote has not been finalized or converted. |
+| **sent** | You have sent the quote to the client by email. |
+| **converted** | You converted the quote into an invoice. A new invoice record was created from the quote data. |
 
-### Statut de paiement
+### Payment status
 
-|Statut de paiement|Ce que cela signifie|
+| Payment status | What it means |
 |---|---|
-|**non rémunéré**|Aucun paiement n'a été enregistré.|
-|**en attente**|Un paiement a été initié mais n'est pas encore finalisé.|
-|**payé**|Paiement effectué avec succès.|
-|**échoué**|Une tentative de paiement a été effectuée mais n'a pas abouti.|
+| **unpaid** | No payment has been recorded. |
+| **pending** | A payment has been initiated but not completed yet. |
+| **paid** | Payment completed successfully. |
+| **failed** | A payment attempt was made but did not succeed. |
 
 <Callout kind="info">
 
-Une citation peut être marquée comme`sent`sans être payée, et elle peut être convertie en facture même si son statut de paiement est toujours`unpaid`. Le statut et le statut de paiement sont suivis indépendamment.
+A quote can be marked as `sent` without being paid, and it can be converted into an invoice even if its payment status is still `unpaid`. Status and payment status are tracked independently.
 
 </Callout>
 
-## Création d'un devis
+## Creating a quote
 
-Créez un devis de la même manière que vous créez une facture, puis enregistrez-le en tant qu'offre pour le client.
+Create a quote the same way you build an invoice, then save it as an offer for the client.
 
 <Steps>
-  <Step title="Ajouter le client" icon="users">
+  <Step title="Add the customer" icon="users">
 
-Sélectionnez un client existant ou saisissez les coordonnées du client directement sur le devis. Utilisez les mêmes champs d'informations client que vous utilisez pour les factures, y compris le nom et l'adresse du client.
+  Select an existing customer or enter the customer details directly on the quote. Use the same customer information fields you use for invoices, including the customer name and address.
 
   </Step>
-  <Step title="Définir les détails du devis" icon="settings">
+  <Step title="Set the quote details" icon="settings">
 
-Saisissez la date du devis, la date d'échéance, la devise et la langue. Les devis prennent en charge les mêmes devises et langues que les factures.
+  Enter the quote date, due date, currency, and language. Quotes support the same currencies and languages as invoices.
 
-Devises prises en charge :
+  Supported currencies:
   
   - `EUR`
   - `USD`
@@ -56,7 +56,7 @@ Devises prises en charge :
   - `CHF`
   - `AED`
 
-Langues prises en charge :
+  Supported languages:
   
   - `DE`
   - `EN`
@@ -64,97 +64,97 @@ Langues prises en charge :
   - `ES`
 
   </Step>
-  <Step title="Ajoutez des éléments de campagne etVAT" icon="edit">
+  <Step title="Add line items and VAT" icon="edit">
 
-Ajoutez les produits ou services que vous souhaitez proposer, puis examinez les quantités, les prix etVAT. Le devis stocke les éléments de ligne dans la même structure que celle utilisée par les factures, de sorte que les totaux et les calculs de taxes suivent le même modèle.
+  Add the products or services you want to offer, then review quantities, prices, and VAT. The quote stores line items in the same structure used by invoices, so totals and tax calculations follow the same pattern.
 
-Vérifiez le total avant de sauvegarder. Votre devis devrait maintenant afficher le montant total avec le montant sélectionnéVATpourcentage appliqué.
+  Check the total before saving. Your quote should now show the full amount with the selected VAT percentage applied.
 
   </Step>
-  <Step title="Choisissez un modèle et examinez lePDF" icon="file-text">
+  <Step title="Choose a template and review the PDF" icon="file-text">
 
-Sélectionnez unPDFmodèle si vous utilisez des mises en page de devis ou de facture personnalisées. Puis prévisualisez lePDFpour confirmer que les prix, la marque, la langue et les informations client sont corrects.
+  Select a PDF template if you use custom quote or invoice layouts. Then preview the PDF to confirm that pricing, branding, language, and customer information are correct.
 
-Lorsque l’aperçu semble correct, enregistrez le devis. Le devis est maintenant prêt à être envoyé ou converti ultérieurement.
+  When the preview looks right, save the quote. The quote is now ready to send or convert later.
 
   </Step>
 </Steps>
 
-## Conversion devis en facture
+## Quote-to-invoice conversion
 
-Convertissez un devis lorsque le client accepte votre offre. La conversion change le statut du devis en`converted`et crée une nouvelle facture avec les mêmes données commerciales sous-jacentes.
+Convert a quote when the client accepts your offer. Conversion changes the quote status to `converted` and creates a new invoice with the same underlying business data.
 
-La nouvelle facture copie les détails du client du devis, l'adresse, les dates, la devise, la langue, les éléments de ligne,VATpourcentage, modèle et montant total. Cela vous donne un document de facturation sans ressaisir les mêmes informations.
+The new invoice copies the quote's customer details, address, dates, currency, language, line items, VAT percentage, template, and total amount. This gives you a billing document without re-entering the same information.
 
-### Comment fonctionne la relation
+### How the relationship works
 
-La facture stocke un`quote_id`référence à la citation originale. Cela signifie que la relation est suivie de la facture au devis, et non du devis à la facture.
+The invoice stores a `quote_id` reference back to the original quote. That means the relationship is tracked from the invoice to the quote, not from the quote to the invoice.
 
-Si vous devez confirmer qu'un devis a été transformé en facture, consultez l'enregistrement de facture lié par`quote_id`. Le devis lui-même change de statut en`converted`, mais la relation directe avec la base de données est navigable de la facture au devis.
+If you need to confirm that a quote was turned into an invoice, look at the invoice record linked by `quote_id`. The quote itself changes status to `converted`, but the direct database relationship is navigable from invoice to quote.
 
 <Callout kind="tip">
 
-Utilisez la conversion lorsque les conditions commerciales sont définitives. Il conserve intact l’historique de vos devis et crée un transfert propre des ventes à la facturation.
+Use conversion when the commercial terms are final. It keeps your quote history intact and creates a clean handoff from sales to billing.
 
 </Callout>
 
-## Numérotation des devis
+## Quote numbering
 
-Chaque devis reçoit son propre numéro de document au format`A-00001`. Le`A`le préfixe signifie Angebot.
+Every quote gets its own document number in the format `A-00001`. The `A` prefix stands for Angebot.
 
-Les numéros de devis sont générés par entreprise et attribués de manière atomique. Cela évite les numéros en double lorsque plusieurs personnes créent des documents en même temps et maintient la cohérence de la séquence de devis de chaque entreprise.
+Quote numbers are generated per company and assigned atomically. This prevents duplicate numbers when multiple people create documents at the same time and keeps each company's quote sequence consistent.
 
-Si besoin, vous pouvez modifier le numéro de devis avant d'envoyer le document.
+If needed, you can edit the quote number before sending the document.
 
-## Envoi de devis par email
+## Sending quotes by email
 
-Envoyez des devis par email avec le même flux de livraison que celui utilisé pour les factures.NomadBillgénère l'e-mail récapitulatif du document et l'envoie viaResenden utilisant`noreply@nomadbill.co`.
+Send quotes by email with the same delivery flow used for invoices. NomadBill generates the document summary email and sends it through Resend using `noreply@nomadbill.co`.
 
-Avant d'envoyer, consultez lePDFaperçu et détails du destinataire. Après envoi, le statut du devis passe à`sent`, qui vous aide à distinguer les devis préparés des devis déjà remis au client.
+Before sending, review the PDF preview and recipient details. After sending, the quote status moves to `sent`, which helps you distinguish prepared quotes from quotes already delivered to the client.
 
-Si vous avez besoin de documents de marque, combinez l'envoi d'e-mails avec votre sélectionPDFmodèle afin que le client reçoive la mise en page finale que vous souhaitez qu'il voie.
+If you need branded documents, combine email sending with your selected PDF template so the client receives the final layout you want them to see.
 
-## Dépôts et paiements
+## Deposits and payments
 
-Les devis incluent un flux de paiement, mais celui-ci est lié au processus de paiement des factures. En pratique, l’action de paiement appelle le flux de règlement des factures plutôt qu’un enregistrement de paiement spécifique au devis.
+Quotes include a payment flow, but it is tied to the invoice checkout process. In practice, the payment action calls the invoice checkout flow rather than a quote-specific payment record.
 
-Cela signifie que le traitement des paiements fonctionne correctement une fois le devis converti en facture. À ce stade, la facture peut être utilisée pour les mises à jour de paiement et de paiement.
+That means payment handling works correctly once the quote has been converted into an invoice. At that point, the invoice can be used for checkout and payment updates.
 
 <Callout kind="alert">
 
-Le paiement d’acompte pour un devis ne fonctionne correctement qu’après avoir converti le devis en facture. Le flux de paiement actuel interroge la table des factures, et non la table des devis, de sorte que le traitement des paiements sur devis uniquement est limité.
+Deposit payment for a quote works correctly only after you convert the quote into an invoice. The current payment flow queries the invoices table, not the quotes table, so quote-only payment handling is limited.
 
 </Callout>
 
-Les statuts de paiement apparaissent toujours sur les devis, mais le flux de mise à jour des paiements sous-jacent est basé sur la facture. Si vous avez besoin d'un lien de paiement fiable ouStripe-mises à jour de statut sauvegardées, convertissez d'abord le devis et percevez le paiement sur la facture.
+Payment statuses still appear on quotes, but the underlying payment update flow is invoice-based. If you need a reliable payment link or Stripe-backed status updates, convert the quote first and collect payment from the invoice.
 
-## Ce que vous pouvez faire avec les guillemets
+## What you can do with quotes
 
-Les devis prennent en charge les mêmes fonctionnalités de document que celles disponibles pour les factures :
+Quotes support the same document features available for invoices:
 
-- PDFaperçu avant envoi
-- Envoi d'e-mails
-- Champs personnalisés
-- E-mails liés
-- CSVexporter
-- CoutumePDFmodèles
-- Édition manuelle du numéro de devis
+- PDF preview before sending
+- Email delivery
+- Custom fields
+- Linked emails
+- CSV export
+- Custom PDF templates
+- Manual quote number editing
 
-Ces fonctionnalités partagées facilitent le passage du devis à la facture sans modifier votre flux de documents.
+These shared features make it easier to move from quote to invoice without changing your document workflow.
 
-## Continuer avec les guides associés
+## Continue with related guides
 
 <Columns cols={2}>
-<Carte
-title="Gérer les factures"
-href="/fr/user-guide/invoicing"
-icon="fichier-texte"
-cta="Ouvrir le guide"
+  <Card
+    title="Manage invoices"
+    href="/en/user-guide/invoicing"
+    icon="file-text"
+    cta="Open guide"
   />
-<Carte
-title="PersonnaliserPDFmodèles"
-href="/fr/user-guide/pdf-templates"
-icône = "modifier"
-cta="Ouvrir le guide"
+  <Card
+    title="Customize PDF templates"
+    href="/en/user-guide/pdf-templates"
+    icon="edit"
+    cta="Open guide"
   />
 </Columns>

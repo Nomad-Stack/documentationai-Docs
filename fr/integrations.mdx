@@ -1,83 +1,83 @@
 ---
-title: Intégrations
-description: ConnecterNomadBillàStripepour les paiements,Plaidpour la synchronisation bancaire,Nylaspour l'intelligence des e-mails, etResendpour l'envoi d'e-mails.
+title: Integrations
+description: Connect NomadBill to Stripe for payments, Plaid for bank sync, Nylas for email intelligence, and Resend for email delivery.
 ---
 
-## Services connectés
+## Connected services
 
-NomadBillse connecte à des services externes pour automatiser l'encaissement des paiements, l'importation des transactions bancaires, l'envoi d'e-mails et le traitement des documents. Ces intégrations fonctionnent ensemble pour que les factures, les paiements, les transactions bancaires et les documents fournisseurs restent liés sans saisie manuelle des données.
+NomadBill connects to external services to automate payment collection, bank transaction import, email delivery, and document processing. These integrations work together so that invoices, payments, bank transactions, and supplier documents stay linked without manual data entry.
 
 <Columns cols={2}>
-  <Card title="Stripe" icon="credit-card" href="/fr/user-guide/invoicing">
-Sessions de paiement des factures et facturation des abonnements avec mises à jour de statut basées sur des webhooks.
+  <Card title="Stripe" icon="credit-card" href="/en/user-guide/invoicing">
+    Invoice checkout sessions and subscription billing with webhook-driven status updates.
   </Card>
-  <Card title="Plaid" icon="banknote" href="/fr/user-guide/bank-sync">
-Liaison de comptes bancaires pour les banques américaines et européennes avec jusqu'à 365 jours d'historique des transactions.
+  <Card title="Plaid" icon="banknote" href="/en/user-guide/bank-sync">
+    Bank account linking for US and European banks with up to 365 days of transaction history.
   </Card>
-  <Card title="Nylas" icon="mail" href="/fr/user-guide/email-intelligence">
-Boîte aux lettres électronique de l'agent avec classification des documents et correspondance des entités basées sur l'IA.
+  <Card title="Nylas" icon="mail" href="/en/user-guide/email-intelligence">
+    Agent email mailbox with AI-powered document classification and entity matching.
   </Card>
   <Card title="Resend" icon="send">
-Envoi d'e-mails transactionnels pour les factures, les devis et les invitations d'équipe.
+    Transactional email delivery for invoices, quotes, and team invitations.
   </Card>
-  <Card title="pdfme" icon="layout" href="/fr/user-guide/pdf-templates">
-Glisser-déposerPDFconcepteur de modèles et générateur de documents.
+  <Card title="pdfme" icon="layout" href="/en/user-guide/pdf-templates">
+    Drag-and-drop PDF template designer and document generator.
   </Card>
   <Card title="Supabase" icon="database">
-    PostgreSQLbase de données, authentification et stockage de fichiers avec sécurité au niveau des lignes.
+    PostgreSQL database, authentication, and file storage with row-level security.
   </Card>
 </Columns>
 
-## Traitement des paiements
+## Payment processing
 
-Stripegère deux flux de paiement dansNomadBill:
+Stripe handles two payment flows in NomadBill:
 
-- **Paiements de facture** — Lorsque vous activez le paiement sur une facture,NomadBillcrée unStripeSéance de paiement. Le client paieStripeLa page hébergée de et un webhook met automatiquement à jour le statut de la facture sur payé.
-- **Facturation des abonnements** — Les forfaits Starter et Professionnel sont facturés viaStripeavec un essai de 7 jours. Les mises à jour du statut de l'abonnement reviennent à votre profil via des événements webhook.
+- **Invoice payments** — When you enable payment on an invoice, NomadBill creates a Stripe Checkout Session. The customer pays on Stripe's hosted page, and a webhook updates the invoice status to paid automatically.
+- **Subscription billing** — Starter and Professional plans are billed through Stripe with a 7-day trial. Subscription status updates flow back to your profile via webhook events.
 
-Par entrepriseStripeLes clés de connexion peuvent être configurées dans Paramètres, permettant à chaque entreprise d'utiliser la sienneStripecompte des paiements de factures.
+Per-company Stripe Connect keys can be configured in Settings, allowing each company to use its own Stripe account for invoice payments.
 
-## Synchronisation bancaire
+## Bank sync
 
-Plaidconnecte les comptes bancaires dans deux régions :
+Plaid connects bank accounts in two regions:
 
-- **Banques américaines** — Prend en charge les institutions aux États-Unis et au Canada
-- **Banques de l'UE** — Prend en charge les institutions en Allemagne, en France, en Espagne, aux Pays-Bas, en Irlande et au Royaume-Uni.
+- **US banks** — Supports institutions in the United States and Canada
+- **EU banks** — Supports institutions in Germany, France, Spain, Netherlands, Ireland, and the United Kingdom
 
-Les transactions sont synchronisées à l'aidePlaidLa synchronisation incrémentielle basée sur le curseur de . La première connexion importe jusqu'à 365 jours d'historique. Les synchronisations suivantes récupèrent uniquement les transactions nouvelles, modifiées ou supprimées.
+Transactions are synced using Plaid's cursor-based incremental sync. The first connection imports up to 365 days of history. Subsequent syncs retrieve only new, modified, or removed transactions.
 
-## Intelligence des e-mails
+## Email intelligence
 
-Nylasprévoit une boîte aux lettres d'agent dédiée pour chaque entreprise (par exemple,`yourcompany@agent.nomadbill.co`). Les e-mails entrants sont traités via un pipeline d'IA qui :
+Nylas provisions a dedicated agent mailbox for each company (for example, `yourcompany@agent.nomadbill.co`). Incoming emails are processed through an AI pipeline that:
 
-- Classe les messages en types de documents (facture entrante, reçu, confirmation de paiement, rappel, contrat et autres)
-- Extrait des données structurées telles que les montants,VAT, IBAN, les dates et les éléments de campagne du corps de l'e-mail et des pièces jointes
-- Fait correspondre les e-mails aux factures existantes, aux devis, aux factures entrantes, aux transactions bancaires et aux clients à l'aide d'un moteur de notation
+- Classifies messages into document types (incoming invoice, receipt, payment confirmation, reminder, contract, and others)
+- Extracts structured data such as amounts, VAT, IBAN, dates, and line items from email body and attachments
+- Matches emails to existing invoices, quotes, incoming invoices, bank transactions, and customers using a scoring engine
 
-## Envoi par e-mail
+## Email delivery
 
-Resendenvoie des e-mails transactionnels au nom deNomadBill:
+Resend sends transactional emails on behalf of NomadBill:
 
-- Emails de livraison des factures et devis
-- E-mails d'invitation d'équipe
-- Adresse de l'expéditeur :`noreply@nomadbill.co`
+- Invoice and quote delivery emails
+- Team invitation emails
+- Sender address: `noreply@nomadbill.co`
 
-## PDFgénération
+## PDF generation
 
-Lepdfmela bibliothèque alimente lePDFsystème de modèles. Vous pouvez concevoir des modèles personnalisés pour les factures, les devis et les factures entrantes à l'aide d'un éditeur visuel par glisser-déposer. Les modèles prennent en charge plusieurs langues et peuvent inclure des espaces réservés de champs personnalisés.
+The pdfme library powers the PDF template system. You can design custom templates for invoices, quotes, and incoming invoices using a visual drag-and-drop editor. Templates support multiple languages and can include custom field placeholders.
 
-## Réconciliation automatique
+## Automatic reconciliation
 
-Lorsque les transactions bancaires sont synchronisées,NomadBillles associe automatiquement aux factures existantes et aux factures entrantes :
+When bank transactions are synced, NomadBill automatically matches them to existing invoices and incoming invoices:
 
-|Type de correspondance|Méthode|Indice de confiance|
+| Match type | Method | Confidence score |
 |---|---|---|
-|Facture (paiement entrant)|Montant exact + devise + date sous 14 jours| 90 |
-|Dépense (paiement sortant)|Montant exact + devise + date sous 14 jours| 85 |
-|Lien manuel|Sélectionné par l'utilisateur| 100 |
+| Invoice (incoming payment) | Exact amount + currency + date within 14 days | 90 |
+| Expense (outgoing payment) | Exact amount + currency + date within 14 days | 85 |
+| Manual link | User-selected | 100 |
 
-Les transactions sans correspondance avec des candidats plausibles sont présentées sous forme de suggestions avec une fenêtre de 30 jours plus large pour un examen manuel.
+Unmatched transactions with plausible candidates are surfaced as suggestions with a wider 30-day window for manual review.
 
 <Callout kind="info">
-  NomadBilln'offre pas actuellement de service publicREST APIou des webhooks sortants pour les développeurs externes. LeStripeetNylasles webhooks sont des points de terminaison entrants quiNomadBillreçoit pour traiter les paiements et les événements par courrier électronique.
+  NomadBill does not currently offer a public REST API or outgoing webhooks for external developers. The Stripe and Nylas webhooks are incoming endpoints that NomadBill receives to process payment and email events.
 </Callout>

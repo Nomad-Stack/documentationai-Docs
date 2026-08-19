@@ -9,22 +9,22 @@ servers:
 paths:
   /documents:
     get:
-      summary: Liste des documents
+      summary: List documents
       operationId: listDocuments
       parameters:
         - name: limit
           in: query
-          description: Combien d'articles retourner en même temps (max 100)
+          description: How many items to return at one time (max 100)
           required: false
           schema:
             type: integer
             format: int32
       responses:
         200:
-          description: Une gamme de documents paginés
+          description: An paged array of documents
           headers:
             x-next:
-              description: Un lien vers la page suivante de réponses
+              description: A link to the next page of responses
               schema:
                 type: string
           content:
@@ -32,65 +32,65 @@ paths:
               schema:
                 $ref: '#/components/schemas/Documents'
         default:
-          description: erreur inattendue
+          description: unexpected error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
     post:
-      summary: Créer un document
+      summary: Create document
       operationId: createDocument
       responses:
         201:
-          description: Réponse nulle
+          description: Null response
         default:
-          description: erreur inattendue
+          description: unexpected error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
   /documents/{documentId}:
     get:
-      summary: Obtenir un document
+      summary: Get document
       operationId: showDocumentById
       parameters:
         - name: documentId
           in: path
           required: true
-          description: L'identifiant du document à récupérer
+          description: The id of the document to retrieve
           schema:
             type: string
       responses:
         200:
-          description: Réponse attendue à une demande valide
+          description: Expected response to a valid request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Documents'
         default:
-          description: erreur inattendue
+          description: unexpected error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
   /folders:
     get:
-      summary: Liste des dossiers
+      summary: List folders
       operationId: listFolders
       parameters:
         - name: limit
           in: query
-          description: Combien d'articles retourner en même temps (max 100)
+          description: How many items to return at one time (max 100)
           required: false
           schema:
             type: integer
             format: int32
       responses:
         200:
-          description: Un tableau paginé de dossiers
+          description: An paged array of folders
           headers:
             x-next:
-              description: Un lien vers la page suivante de réponses
+              description: A link to the next page of responses
               schema:
                 type: string
           content:
@@ -98,43 +98,43 @@ paths:
               schema:
                 $ref: '#/components/schemas/Folders'
         default:
-          description: erreur inattendue
+          description: unexpected error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
     post:
-      summary: Créer un dossier
+      summary: Create folder
       operationId: createFolder
       responses:
         201:
-          description: Réponse nulle
+          description: Null response
         default:
-          description: erreur inattendue
+          description: unexpected error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
   /folders/{folderId}:
     get:
-      summary: Obtenir le dossier
+      summary: Get folder
       operationId: showFolderById
       parameters:
         - name: folderId
           in: path
           required: true
-          description: L'identifiant du dossier à récupérer
+          description: The id of the folder to retrieve
           schema:
             type: string
       responses:
         200:
-          description: Réponse attendue à une demande valide
+          description: Expected response to a valid request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Folders'
         default:
-          description: erreur inattendue
+          description: unexpected error
           content:
             application/json:
               schema:
