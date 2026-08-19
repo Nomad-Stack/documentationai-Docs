@@ -1,123 +1,120 @@
 ---
-title: Clientes
-description: Faça a gestão dos registos de clientes com dados de contacto e campos personalizados e reutilize-os em faturas e orçamentos.
----
 
-## Mantenha os dados dos seus clientes num único local
+**Clientes**
 
-Os clientes armazenam as informações de contacto que reutiliza ao longo do fluxo de faturação. Adicione cada cliente uma vez em `/customers`, mantenha os respetivos dados atualizados e volte a utilizar esses registos quando criar faturas e orçamentos.
+Gerencie os registros de clientes com detalhes de contato, campos personalizados e reutilize-os em faturas e orçamentos.
 
-Os proprietários e os membros da equipa da empresa podem gerir clientes no espaço de trabalho da empresa. A lista de clientes está ordenada alfabeticamente por nome e a tabela apresenta os campos de contacto padrão, além de quaisquer campos personalizados configurados para aparecerem na tabela.
+Os proprietários das empresas e membros do time podem gerenciar clientes no espaço de trabalho da empresa. A lista de clientes está ordenada alfabeticamente por nome, e a tabela mostra os campos de contato padrão mais quaisquer campos personalizados configurados para aparecerem na tabela.
 
 ## Campos de cliente
 
-Cada registo de cliente inclui os campos de contacto principais abaixo.
+Cada registro de cliente inclui os campos de contato básicos abaixo.
 
-<ParamField body="name" param-type="string" required="true" show-location="false">
+<ParamField body="nome" param-type="string" required="true" show-location="false">
 
-O nome de apresentação do cliente. O NomadBill exige este campo e utiliza-o como etiqueta principal na lista de clientes.
+O nome exibido do cliente. O NomadBill requer este campo e o usa como rótulo principal na lista de clientes.
 
 </ParamField>
 
 <ParamField body="email" param-type="string" required="false" show-location="false">
 
-O endereço de e-mail do cliente.
+O endereço de email do cliente.
 
 </ParamField>
 
-<ParamField body="phone" param-type="string" required="false" show-location="false">
+<ParamField body="telefone" param-type="string" required="false" show-location="false">
 
 O número de telefone do cliente.
 
 </ParamField>
 
-<ParamField body="address" param-type="string" required="false" show-location="false">
+<ParamField body="endereço" param-type="string" required="false" show-location="false">
 
-A morada do cliente. Na caixa de diálogo de criação e edição, este campo utiliza uma área de texto com várias linhas para poder introduzir uma morada de faturação completa.
+O endereço do cliente. No diálogo de criação e edição, este campo usa um área de texto multilinha para que você possa inserir uma endereço de cobrança completo.
 
 </ParamField>
 
 <Callout kind="info">
 
-Por predefinição, a lista de clientes apresenta **nome**, **e-mail** e **telefone**. Também apresenta os campos personalizados de clientes cuja visibilidade na tabela esteja ativada.
+A lista de clientes mostra **nome**, **email** e **telefone** por padrão. Ela também mostra campos personalizados dos clientes onde a visibilidade da tabela está habilitada.
 
 </Callout>
 
-## Criar um cliente
+## Criando um cliente
 
-Adicione um cliente a partir da página de clientes e, em seguida, preencha os dados de contacto que pretende reutilizar mais tarde.
+Adicione um cliente na página de clientes, então preencha os detalhes de contato que deseja reutilizar posteriormente.
 
 <Steps>
-  <Step title="Abrir a página de clientes" icon="users">
+  <Step title="Abra a página de clientes" icon="users">
 
-  Aceda a `/customers` no seu espaço de trabalho.
+  Vá para `/customers` no seu espaço de trabalho.
 
-  Deverá ver uma tabela de clientes ordenada por nome. Se já tiver criado campos personalizados de clientes com a visibilidade na tabela ativada, essas colunas também aparecem aqui.
-
-  </Step>
-  <Step title="Iniciar um novo registo de cliente" icon="plus">
-
-  Crie um novo cliente a partir da ação da página.
-
-  O NomadBill abre uma caixa de diálogo de criação com os campos padrão de cliente e quaisquer campos personalizados atribuídos à entidade `customer`.
+  Você deve ver uma tabela de clientes ordenada por nome. Se você já criou campos personalizados com visibilidade na tabela habilitada, essas colunas também aparecem aqui.
 
   </Step>
-  <Step title="Introduzir os dados obrigatórios e opcionais" icon="edit">
+  <Step title="Inicie um novo registro de cliente" icon="plus">
+
+  Crie um novo cliente da página de ação.
+
+  O NomadBill abre uma janela de criação com os campos de contato padrão e quaisquer campos personalizados atribuídos ao tipo `cliente`.
+
+  </Step>
+  <Step title="Entre com os detalhes obrigatórios e opcionais" icon="edit">
 
   Preencha as informações do cliente:
 
-  - O **Nome** é obrigatório.
-  - O **E-mail** é opcional.
-  - O **Telefone** é opcional.
-  - A **Morada** é opcional e suporta texto com várias linhas.
-  - Os **Campos personalizados** aparecem quando os tiver configurado para clientes.
+  - **Nome** é obrigatório.
+  - **Email** é opcional.
+  - **Telefone** é opcional.
+  - **Endereço** é opcional e suporta texto multilinha.
+  - **Campos personalizados** aparecem quando você configurou-os para clientes.
 
-  Os espaços de trabalho de demonstração poderão já incluir campos predefinidos, como `kundennummer`, `kundenkategorie`, `website`, `kunden_seit`, `notizen_intern`, `praeferierte_sprachen` e `newsletter`.
+  Espaços de trabalho de demonstração podem já incluir campos pré-seedidos como `kundennummer`, `kundenkategorie`, `website`, `kunden_seit`, `notizen_intern`, `praeferierte_sprachen` e `newsletter`.
 
   </Step>
-  <Step title="Guardar e verificar o resultado" icon="check-circle">
+  <Step title="Salve e verifique o resultado" icon="check-circle">
 
-  Guarde o cliente.
+  Salve o cliente.
 
-  Depois de guardar, o cliente aparece na vista de lista na posição alfabética correta. Se um campo personalizado estiver configurado para aparecer em tabelas, o respetivo valor também aparece como uma coluna na linha.
+  Após salvar, o cliente aparece na lista de visualização sob a posição alfabética correta. Se um campo personalizado estiver configurado para mostrar nas tabelas, seu valor também aparece como uma coluna na linha.
 
   </Step>
 </Steps>
 
-## Editar e eliminar clientes
+## Editando e excluindo clientes
 
-Atualize um cliente a partir da mesma caixa de diálogo utilizada para a criação. Pode alterar os campos de contacto padrão e quaisquer campos personalizados de cliente atribuídos em qualquer altura.
+Atualize um cliente no mesmo diálogo usado para criação. Você pode alterar os campos de contato padrão e quaisquer campos personalizados atribuídos ao cliente a qualquer momento.
 
-Quando elimina um cliente, o NomadBill pede-lhe que confirme a ação antes de remover o registo. Elimine com cuidado se utiliza as informações desse cliente no seu processo de faturação habitual.
+Quando você excluir um cliente, o NomadBill pergunta se você deseja confirmar a ação antes de remover o registro. Use exclusão cuidadosamente se você depender desses detalhes do cliente em seu processo regular de cobrança.
 
-## Utilizar clientes em faturas
+## Usando clientes em faturas
 
-Os clientes foram concebidos para poupar tempo ao criar faturas. Em vez de voltar a introduzir os dados de contacto em cada documento, seleciona ou reutiliza um registo de cliente existente.
+Os clientes estão projetados para economizar tempo ao criar faturas. Em vez de reescrever os detalhes de contato para cada documento, você seleciona ou reutiliza um registro de cliente existente.
 
-As faturas armazenam o nome do cliente no campo `customer_name`. Isto significa que o registo de cliente fornece o nome de origem que utiliza nos fluxos de faturação, mantendo a lista de clientes organizada num único local.
+As faturas armazenam o nome do cliente no campo `customer_name`. Isso que o registro de cliente forneça o nome fonte que você usa em processos de criação de fatura, mantendo assim sua lista de clientes organizada em um único lugar.
 
 <Callout kind="tip">
 
-Configure os clientes antes de começar a enviar faturas regularmente. Uma lista de clientes organizada acelera a criação de faturas e reduz as inconsistências de nomes entre documentos.
+Configure os clientes antes de começar a enviar faturas regularmente. Uma lista limpa de clientes torna a criação de faturas mais rápida e reduz as inconsistências de nomeação entre documentos.
 
 </Callout>
 
 ## Campos personalizados para clientes
 
-Os campos personalizados de clientes permitem-lhe acompanhar informações para além dos campos de contacto padrão. O NomadBill atribui estes campos ao tipo de entidade `customer`, o que significa que aparecem nos formulários de cliente e, quando configurados, na tabela de clientes.
+Campos personalizados dos clientes permitem rastrear informações além dos campos de contato padrão. O NomadBill atribui esses campos ao tipo `cliente` de entidade, o que significa que eles aparecem nos formulários do cliente e, quando configurados, na tabela de clientes.
 
-Utilize campos personalizados para dados como números internos de cliente, categorias, sites, datas de início, preferências de idioma, notas ou estado de adesão à newsletter. Os dados de demonstração poderão incluir campos como `kundennummer` como numeração automática, `kundenkategorie` como lista pendente, `website` como URL, `kunden_seit` como data, `notizen_intern` como texto com várias linhas, `praeferierte_sprachen` como seleção múltipla e `newsletter` como booleano.
+Use campos personalizados para dados como números internos de cliente, categorias, websites, datas de início, preferências de idioma, notas ou status de inscrição em newsletter. Dados de demonstração podem incluir campos como `kundennummer` como um número autonumérico, `kundenkategorie` como uma caixa de seleção, `website` como um URL, `kunden_seit` como uma data, `notizen_intern` como texto multilinha, `praeferierte_sprachen` como um multiselect e `newsletter` como um booleano.
 
-Para obter instruções de configuração e consultar os tipos de campo, veja [Campos personalizados](/pt/user-guide/custom-fields).
+Para instruções de configuração e tipos de campo, veja [Campos personalizados](/pt/user-guide/custom-fields).
 
-## O que fazer em seguida
+## O que fazer a seguir
 
 <Columns cols={2}>
   <Card
-    title="Faturação"
+    title="Faturamento"
     href="/pt/user-guide/invoicing"
     icon="book-open"
-    cta="Abrir guia de faturação"
+    cta="Abrir guia de faturamento"
   />
   <Card
     title="Campos personalizados"
