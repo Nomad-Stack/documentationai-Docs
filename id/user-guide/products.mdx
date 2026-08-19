@@ -1,0 +1,137 @@
+---
+title: Produk
+description: Buat katalog produk dan layanan yang dapat digunakan kembali untuk faktur dan penawaran harga.
+---
+
+## Buat katalog produk yang dapat digunakan kembali
+
+Produk di NomadBill memungkinkan Anda menyimpan barang dan jasa yang pernah Anda jual, lalu menggunakannya kembali dalam faktur dan penawaran harga. Katalog produk Anda ada di `/items`, dibagikan di tingkat perusahaan, dan dapat menyertakan bidang standar dan bidang khusus yang sesuai dengan bisnis Anda.
+
+<Callout kind="info">
+
+NomadBill menyimpan produk di tabel `items`. Katalog milik perusahaan Anda, bukan milik pengguna individu, sehingga tabel menggunakan `company_id` dan tidak menyertakan `user_id`.
+
+</Callout>
+
+## Bidang produk
+
+Setiap produk mencakup sekumpulan kecil bidang standar. Anda dapat menambahkan lebih banyak struktur dengan bidang khusus jika Anda perlu melacak inventaris, SKU, sertifikasi, atau detail harga internal.
+
+<ParamField body="name" param-type="string" required="true" show-location="false">
+
+Nama produk atau layanan. NomadBill memerlukan kolom ini saat Anda membuat atau mengedit produk.
+
+</ParamField>
+
+<ParamField body="description" param-type="string" required="false" show-location="false">
+
+Deskripsi yang lebih panjang ditampilkan dalam dialog buat dan edit sebagai bidang teks multibaris. Gunakan untuk detail layanan, spesifikasi, atau catatan internal yang Anda inginkan tersedia saat menggunakan kembali item tersebut.
+
+</ParamField>
+
+<ParamField body="price" param-type="numeric" required="false" show-location="false">
+
+Harga default untuk produk. Bidang ini menggunakan input numerik dengan langkah `0.01`, dan produk baru secara default adalah `0` jika Anda tidak memasukkan harga.
+
+</ParamField>
+
+<ParamField body="company_id" param-type="string" required="true" show-location="false">
+
+Perusahaan yang memiliki produk tersebut. Produk adalah catatan tingkat perusahaan, artinya siapa pun yang memiliki akses ke perusahaan bekerja dari katalog yang sama.
+
+</ParamField>
+
+Dalam tampilan daftar, NomadBill menampilkan kolom standar untuk **nama**, **deskripsi**, dan **harga**. Harga diformat menjadi dua desimal sehingga jumlahnya tetap konsisten di seluruh katalog.
+
+Jika Anda menandai bidang produk khusus untuk muncul di tabel, NomadBill juga menambahkan kolom tersebut ke tampilan daftar. Kolom bidang khusus hanya ditampilkan ketika `show_in_table` diaktifkan, dan muncul dalam urutan abjad berdasarkan nama bidang.
+
+## Menciptakan produk
+
+Tambahkan produk dari halaman `/items` bila Anda ingin pembuatan dokumen lebih cepat dan item baris lebih konsisten. Setelah suatu produk ada di katalog Anda, Anda dapat mengambilnya lagi alih-alih mengetik ulang detail yang sama untuk setiap faktur atau penawaran.
+
+<Steps>
+
+<Step title="Buka halaman produk" icon="folder">
+
+Buka `/items` dari navigasi aplikasi.
+
+Anda akan melihat daftar produk Anda saat ini dengan kolom untuk nama, deskripsi, harga, dan bidang khusus produk apa pun yang dikonfigurasi untuk ditampilkan di tabel.
+
+</Step>
+
+<Step title="Mulai produk baru" icon="plus">
+
+Pilih opsi untuk membuat produk baru.
+
+NomadBill membuka dialog tempat Anda dapat memasukkan detail produk standar dan bidang khusus apa pun yang ditetapkan ke entitas produk.
+
+</Step>
+
+<Step title="Masukkan detail yang diperlukan" icon="edit">
+
+Lengkapi formulir produk:
+
+- Masukkan **nama**.
+- Tambahkan **deskripsi** jika Anda ingin detail lebih lanjut tentang item yang disimpan.
+- Masukkan **harga** menggunakan nilai desimal seperti `125.00`.
+- Isi bidang khusus produk apa pun yang berlaku untuk item ini.
+
+Jika formulir berhasil disimpan, produk baru akan muncul dalam daftar di `/items`.
+
+</Step>
+
+<Step title="Tinjau dan perbarui produk yang disimpan" icon="check-circle">
+
+Periksa baris produk dalam tampilan daftar untuk mengonfirmasi nama, deskripsi, harga, dan nilai bidang khusus yang terlihat sudah benar.
+
+Jika Anda perlu mengubah apa pun, buka dialog edit dari daftar dan simpan pembaruan Anda. Untuk menghapus produk, gunakan tindakan penghapusan bawaan, yang mengonfirmasi tindakan sebelum penghapusan.
+
+</Step>
+
+</Steps>
+
+<Callout kind="tip">
+
+Tindakan penghapusan menggunakan langkah konfirmasi. Tinjau nama produk sebelum mengonfirmasi agar Anda tidak salah menghapus item katalog.
+
+</Callout>
+
+## Menggunakan produk dalam dokumen
+
+Produk yang disimpan dirancang untuk mempercepat pembuatan dokumen. Saat Anda membuat faktur atau penawaran harga, NomadBill menggunakan kembali data produk di item baris sehingga Anda tidak perlu memasukkan kembali nama, deskripsi, atau harga yang sama setiap saat.
+
+Ini paling berguna untuk layanan berulang, paket standar, dan produk yang sering dijual. Daripada mengetik setiap baris secara manual, Anda memilih produk yang sudah ada dan memulai dari nilai tersimpan yang sudah tersimpan di katalog Anda.
+
+Karena produk dibagikan di tingkat perusahaan, tim Anda bekerja dari daftar item yang sama di seluruh faktur dan penawaran harga. Hal ini membuat penetapan harga dan penamaan lebih konsisten, terutama ketika lebih dari satu orang membuat dokumen.
+
+## Bidang khusus untuk produk
+
+Bidang khusus memungkinkan Anda mengubah katalog produk dasar menjadi inventaris terstruktur atau daftar layanan. Di NomadBill, bidang kustom produk menggunakan tipe entitas `product`.
+
+Contoh umum mencakup pengidentifikasi internal, informasi stok, biaya pemasok, tanggal, URL, dan lampiran file. Contoh unggulan meliputi `produkt_nummer`, `sku`, `produktkategorie`, penjelasan rinci, `gewicht_kg`, `einkaufspreis`, `auf_lager`, `produkt_url`, `gueltig_ab`, `zertifizierungen`, `datenblatt`, dan `marge_formel`.
+
+Jenis bidang yang berbeda mendukung jenis data produk yang berbeda:
+
+- **Pengidentifikasi** seperti nomor otomatis atau nilai teks unik
+- **Nilai komersial** seperti harga beli, harga jual, atau rumus margin
+- **Data operasional** seperti status stok, kategori, dan tanggal efektif
+- **Materi pendukung** seperti lembar data dan link produk eksternal
+
+Konfigurasikan bidang ini di [Bidang khusus](/id/user-guide/custom-fields). Ketika bidang khusus produk diatur untuk ditampilkan dalam tabel, bidang tersebut juga menjadi bagian dari tampilan daftar `/items`.
+
+## Panduan terkait
+
+<Columns cols={2}>
+  <Card
+    title="Faktur"
+    href="/id/user-guide/invoicing"
+    icon="book-open"
+    cta="Buka panduan"
+  />
+  <Card
+    title="Bidang khusus"
+    href="/id/user-guide/custom-fields"
+    icon="settings"
+    cta="Kelola bidang"
+  />
+</Columns>

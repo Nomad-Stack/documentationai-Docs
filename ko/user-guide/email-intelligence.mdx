@@ -1,0 +1,246 @@
+---
+title: 이메일 인텔리전스
+description: 수신 이메일을 자동으로 분류하고, AI로 문서 데이터를 추출하고, 이메일을 인보이스, 견적 및 영수증과 일치시킵니다.
+---
+
+## 공유 사서함을 문서 받은편지함으로 전환
+
+이메일 인텔리전스는 들어오는 메시지를 감시하고, 비즈니스 문서를 식별하고, 주요 데이터를 추출하고, NomadBill의 올바른 레코드에 대한 링크를 제안하는 전용 사서함을 회사에 제공합니다. 프리랜서와 소규모 팀이 이미 작업하는 방식에 맞게 설계되었습니다. 공급업체는 이메일로 인보이스를 보내고 고객은 견적에 응답하며 지불 확인서는 동일한 받은 편지함에 도착합니다.
+
+## 에이전트 메일함
+
+각 회사는 `agent_name@agent.nomadbill.co` 형식으로 하나의 전용 에이전트 사서함을 받습니다. 작업 영역에서 사용자 지정 에이전트 도메인을 사용하는 경우 사서함은 대신 해당 도메인을 사용합니다.
+
+회사 소유자만 사서함을 프로비전할 수 있습니다. 설정 중에 NomadBill은 에이전트 이름을 소문자로 변환하고, 공백을 하이픈으로 바꾸고, 슬러그를 40자로 제한하여 사서함 안전 형식으로 정규화합니다.
+
+프로비저닝이 시작되면 NomadBill은 다음을 수행합니다.
+
+- Nylas를 사용하여 메일 부여를 생성합니다.
+- `company_email_accounts` 레코드에 사서함 연결을 저장합니다.
+- 수신 메일 이벤트에 대한 웹훅을 등록합니다.
+
+웹훅은 다음 이벤트를 수신합니다.
+
+- `message.created`
+- `message.updated`
+- `grant.expired`
+
+NomadBill은 `/api/public/nylas-webhook`에 웹훅을 등록합니다. 초기 웹훅 핸드셰이크 중에 `GET` 핸들러는 수신된 그대로 `challenge` 쿼리 매개변수를 반환합니다.
+
+## 수신 이메일이 처리되는 방식
+
+모든 새 메시지는 동일한 처리 흐름을 따르므로 결과가 일관되게 유지되고 중복 작업이 방지됩니다.
+
+<Steps>
+  <Step title="웹훅 이벤트 수신" icon="zap">
+
+  Nylas는 메시지가 생성되거나 업데이트되거나 승인이 만료될 때 `/api/public/nylas-webhook`에 웹훅 이벤트를 보냅니다.
+
+  NomadBill은 HMAC-SHA256을 사용하여 `x-nylas-signature` 헤더를 확인할 수 있습니다. 서명 확인은 선택 사항이지만 권장되는 프로덕션 설정으로 처리해야 합니다.
+
+  </Step>
+
+  <Step title="전체 이메일 가져오기" icon="download">
+
+  유효한 이벤트가 도착하면 NomadBill은 연결된 사서함에서 전체 이메일 콘텐츠와 메타데이터를 가져옵니다.
+
+  또한 시스템은 중복 처리를 방지합니다. 동일한 이메일이 이미 완료되었거나 건너뛰었거나 5분 이내에 처리 중인 경우 NomadBill은 해당 이메일을 다시 분석하지 않습니다.
+
+  </Step>
+
+  <Step title="분석해서는 안 되는 메시지 건너뛰기" icon="shield">
+
+  NomadBill은 에이전트 사서함 자체에서 보낸 메시지를 건너뜁니다. 이 자체 이메일 가드는 루프를 방지하고 시스템 생성 메일 분석을 방지합니다.
+
+  아웃바운드 또는 관련 없는 메시지가 사용 가능한 비즈니스 문서를 나타내지 않는 경우 분류 중에 제외될 수도 있습니다.
+
+  </Step>
+
+  <Step title="첨부 파일 및 메시지 콘텐츠 다운로드" icon="paperclip">
+
+  프로세서는 문서 분석을 실행하기 전에 이메일 본문과 사용 가능한 첨부 파일을 수집합니다.
+
+  이는 분류자에게 메시지에 인보이스, 영수증, 견적, 확인 또는 다른 문서 유형이 포함되어 있는지 여부를 인식할 수 있는 충분한 컨텍스트를 제공합니다.
+
+  </Step>
+
+  <Step title="AI 분류 및 추출 실행" icon="code">
+
+  NomadBill은 Lovable AI 게이트웨이를 통해 `google/gemini-3.6-flash`를 사용하여 이메일 콘텐츠를 AI 파이프라인으로 보냅니다.
+
+  이 모델은 문서를 분류하고 총계, 날짜, 이름, 참조 번호 등의 구조화된 필드를 추출하므로 데이터를 직접 복사하는 대신 NomadBill 내에서 검토할 수 있습니다.
+
+  </Step>
+
+  <Step title="매칭 제안 계산" icon="check-circle">
+
+  추출 후 일치 엔진은 이메일을 인보이스, 견적, 수신 인보이스, 은행 거래 및 회사 고객과 비교합니다.
+
+  가능한 각 매칭 후보에는 점수가 부여됩니다. NomadBill은 최소 임계값을 충족하는 제안을 유지하고 가장 강력한 후보를 먼저 표시합니다.
+
+  </Step>
+
+  <Step title="결과를 저장하고 결정을 유지하세요" icon="database">
+
+  최종 분석은 추출된 데이터 및 제안된 링크를 포함하여 이메일 기록과 함께 저장됩니다.
+
+  이미 제안을 연결하거나 무시한 경우 NomadBill은 작업을 재설정하는 대신 나중에 재분석할 때 해당 결정을 유지합니다.
+
+  </Step>
+</Steps>
+
+## 문서 분류
+
+이메일 인텔리전스는 분석된 각 메시지를 다음 문서 유형 중 하나로 분류합니다.
+
+- `incoming_invoice`
+- `receipt`
+- `outgoing_invoice`
+- `quote`
+- `payment_confirmation`
+- `reminder`
+- `contract`
+- `other`
+
+분류는 NomadBill이 다음에 제공할 작업을 결정하는 데 도움이 됩니다. 예를 들어, `incoming_invoice` 및 `receipt` 이메일만 수신 인보이스 기록으로 직접 전환될 수 있습니다.
+
+## AI 추출 데이터
+
+분석 결과에는 다음과 같은 추출된 필드가 포함될 수 있습니다.
+
+<ParamField body="doc_type" param-type="string" required="true" show-location="false">
+이메일에 대해 감지된 문서 유형입니다.
+</ParamField>
+
+<ParamField body="confidence" param-type="number" show-location="false">
+분류 결과에 대한 모델 신뢰도 점수입니다.
+</ParamField>
+
+<ParamField body="summary" param-type="string" show-location="false">
+이메일이나 첨부 파일에 포함된 것으로 보이는 내용에 대한 간단한 요약입니다.
+</ParamField>
+
+<ParamField body="document_number" param-type="string" show-location="false">
+문서에서 감지된 주요 인보이스, 영수증, 견적 또는 확인 번호입니다.
+</ParamField>
+
+<ParamField body="reference_numbers" param-type="array" show-location="false">
+이메일이나 첨부 파일에 있는 추가 참조 식별자입니다.
+</ParamField>
+
+<ParamField body="total_amount" param-type="number" show-location="false">
+문서에 대해 감지된 총 총액입니다.
+</ParamField>
+
+<ParamField body="net_amount" param-type="number" show-location="false">
+문서에서 제공하는 VAT 이전의 순 금액입니다.
+</ParamField>
+
+<ParamField body="vat_amount" param-type="number" show-location="false">
+문서에서 추출된 VAT 금액입니다.
+</ParamField>
+
+<ParamField body="vat_percentage" param-type="number" show-location="false">
+VAT 속도는 안정적으로 식별할 수 있는 경우입니다.
+</ParamField>
+
+<ParamField body="currency" param-type="string" show-location="false">
+문서 금액에 대해 감지된 통화 코드입니다.
+</ParamField>
+
+<ParamField body="document_date" param-type="string" show-location="false">
+문서에 표시된 발행 날짜입니다.
+</ParamField>
+
+<ParamField body="due_date" param-type="string" show-location="false">
+지불 기한이 있는 경우.
+</ParamField>
+
+<ParamField body="vendor_name" param-type="string" show-location="false">
+문서와 관련된 공급자 또는 발송인 이름입니다.
+</ParamField>
+
+<ParamField body="customer_name" param-type="string" show-location="false">
+문서에 언급된 고객 이름입니다.
+</ParamField>
+
+<ParamField body="iban" param-type="string" show-location="false">
+이메일이나 문서에서 감지된 은행 계좌 번호입니다.
+</ParamField>
+
+<ParamField body="category" param-type="string" show-location="false">
+분석 중에 할당된 광범위한 카테고리입니다.
+</ParamField>
+
+<ParamField body="ocr_text" param-type="string" show-location="false">
+다운스트림 분류 및 일치에 사용되는 추출된 문서 텍스트입니다.
+</ParamField>
+
+<ParamField body="line_items" param-type="array" show-location="false">
+첨부 파일에 항목별 세부정보가 포함된 경우 문서에서 항목이 감지되었습니다.
+</ParamField>
+
+## 매칭 및 제안
+
+분석 후 NomadBill은 워크스페이스에서 관련 레코드를 찾아 각 후보에 점수를 매깁니다. 제안이 표시되려면 최소 점수 `0.35`에 도달해야 하며 시스템은 이메일당 최대 12개의 제안을 반환합니다.
+
+일치 엔진은 여러 레코드 유형을 평가합니다.
+
+- 인보이스
+- 견적서
+- 수신 인보이스
+- 은행 거래
+- 고객
+
+인보이스의 경우 가장 강력한 신호는 문서 번호, 금액, 수령인 및 고객 신원입니다. 채점 모델은 다음에 대한 점수를 추가합니다.
+
+- 발견된 번호: `+0.55`
+- 약 `±0.5%` 또는 `±0.02` 이내의 금액: `+0.30`
+- 통화 일치: `+0.05`
+- 14일 이내 날짜: `+0.10`
+- `sent_to`에는 보낸 사람 이메일 `+0.25`가 포함되어 있습니다.
+- 고객 이름 일치: `+0.15`
+
+은행 거래의 경우 엔진은 결제 증거와 상대방 신원에 중점을 둡니다. 다음에 대한 포인트가 추가됩니다.
+
+- 금액 일치: `+0.45`
+- 발견된 후보 번호: `+0.35`
+- 상대방 이름 일치: `+0.20`
+- 30일 이내 날짜: `+0.10`
+
+고객의 경우 엔진은 운영 기록을 제안하기 전에 이메일이 누구에게 속하는지 식별하려고 시도합니다. 다음에 대한 포인트가 추가됩니다.
+
+- 정확한 이메일 일치: `+0.80`
+- 동일한 도메인: `+0.50`
+- 이름 일치: `+0.30`
+
+이러한 점수는 가산적이므로 강력한 일치는 일반적으로 하나의 필드에 의존하는 대신 여러 신호를 한 번에 결합합니다.
+
+## 이메일 링크 관리
+
+NomadBill은 각 이메일이 기록과 어떻게 관련되어 있는지 추적합니다. 링크는 다음 세 가지 상태 중 하나일 수 있습니다.
+
+- **suggested** — NomadBill은 일치 가능성이 높은 항목을 찾아 검토를 기다리고 있습니다.
+- **linked** — 이메일이 특정 인보이스, 견적, 영수증, 거래 또는 고객에 속한다는 것을 확인했습니다.
+- **dismissed** — 제안을 거부했으며 이메일이 다시 분석되면 해당 결정이 유지됩니다.
+
+이메일 보기의 Email Intelligence 카드를 사용하면 추출된 필드를 검토하고, 제안 사항을 검사하고, 일치 항목을 확인하거나 무시할 수 있습니다. 이메일이 이미 기록에 연결되어 있으면 연결된 이메일 활동도 인보이스, 견적, 영수증, 거래 및 고객 세부 사항 페이지의 반대편에도 나타납니다.
+
+문서 유형이 `incoming_invoice` 또는 `receipt`인 경우 이메일에서 직접 수신 인보이스를 생성할 수 있습니다. `createReceiptFromEmail` 작업은 추출된 문서 데이터를 사용하여 새 레코드를 미리 채우고 이메일이 이미 처리되었거나 의도적으로 건너뛴 경우 중복 생성을 방지합니다.
+
+<Callout kind="info">
+
+이메일 인텔리전스는 거의 실시간으로 업데이트됩니다. NomadBill은 `company_email_accounts.last_event_at`의 Supabase 실시간을 통해 사서함 활동을 수신하고 필요한 경우 30초 폴링 주기로 폴백합니다.
+
+</Callout>
+
+## 관련 가이드
+
+<Columns cols={2}>
+  <Card title="인보이스 발행" href="/ko/user-guide/invoicing" icon="file-text" cta="가이드 열기">
+    발신 인보이스를 관리하고 연결된 이메일이 후속 조치 및 결제 추적을 지원하는 방법을 이해하세요.
+  </Card>
+  <Card title="수신 인보이스" href="/ko/user-guide/incoming-invoices" icon="folder" cta="가이드 열기">
+    공급업체 청구서를 검토하고, 이메일 분석을 통해 기록을 생성하고, 구매 문서를 체계적으로 정리하세요.
+  </Card>
+</Columns>

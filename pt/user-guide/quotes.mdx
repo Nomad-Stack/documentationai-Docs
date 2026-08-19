@@ -1,0 +1,160 @@
+---
+title: Orçamentos
+description: Crie, envie e converta orçamentos em faturas com suporte para várias moedas e geração de PDF.
+---
+
+## Transforme estimativas de projetos em orçamentos prontos para o cliente
+
+Os orçamentos permitem-lhe preparar uma proposta, enviá-la a um cliente e convertê-la numa fatura quando este a aceitar. O fluxo de orçamentos utiliza os mesmos dados principais das faturas, incluindo dados do cliente, linhas, IVA, moeda, idioma, saída em PDF, envio por e-mail, campos personalizados, exportação para CSV e modelos de PDF personalizados.
+
+## Estados dos orçamentos
+
+Cada orçamento acompanha dois estados distintos: **estado** e **estado do pagamento**. Em conjunto, indicam-lhe em que ponto do processo de venda se encontra o orçamento e se foi concluído algum pagamento associado.
+
+### Estado do orçamento
+
+| Estado | O que significa |
+|---|---|
+| **draft** | Ainda está a preparar o orçamento. O orçamento não foi finalizado nem convertido. |
+| **sent** | Enviou o orçamento ao cliente por e-mail. |
+| **converted** | Converteu o orçamento numa fatura. Foi criado um novo registo de fatura a partir dos dados do orçamento. |
+
+### Estado do pagamento
+
+| Estado do pagamento | O que significa |
+|---|---|
+| **unpaid** | Não foi registado qualquer pagamento. |
+| **pending** | Foi iniciado um pagamento, mas ainda não foi concluído. |
+| **paid** | O pagamento foi concluído com êxito. |
+| **failed** | Foi efetuada uma tentativa de pagamento, mas não teve êxito. |
+
+<Callout kind="info">
+
+Um orçamento pode ser marcado como `sent` sem estar pago e pode ser convertido numa fatura mesmo que o estado do pagamento ainda seja `unpaid`. O estado e o estado do pagamento são acompanhados de forma independente.
+
+</Callout>
+
+## Criar um orçamento
+
+Crie um orçamento da mesma forma que cria uma fatura e, em seguida, guarde-o como uma proposta para o cliente.
+
+<Steps>
+  <Step title="Adicionar o cliente" icon="users">
+
+  Selecione um cliente existente ou introduza os dados do cliente diretamente no orçamento. Utilize os mesmos campos de informações do cliente que utiliza nas faturas, incluindo o nome e a morada do cliente.
+
+  </Step>
+  <Step title="Definir os dados do orçamento" icon="settings">
+
+  Introduza a data do orçamento, a data de vencimento, a moeda e o idioma. Os orçamentos suportam as mesmas moedas e os mesmos idiomas que as faturas.
+
+  Moedas suportadas:
+  
+  - `EUR`
+  - `USD`
+  - `GBP`
+  - `CHF`
+  - `AED`
+
+  Idiomas suportados:
+  
+  - `DE`
+  - `EN`
+  - `FR`
+  - `ES`
+
+  </Step>
+  <Step title="Adicionar linhas e IVA" icon="edit">
+
+  Adicione os produtos ou serviços que pretende propor e, em seguida, reveja as quantidades, os preços e o IVA. O orçamento armazena as linhas na mesma estrutura utilizada pelas faturas, pelo que os totais e os cálculos de impostos seguem o mesmo padrão.
+
+  Verifique o total antes de guardar. O orçamento deverá agora apresentar o valor total com a percentagem de IVA selecionada aplicada.
+
+  </Step>
+  <Step title="Escolher um modelo e rever o PDF" icon="file-text">
+
+  Selecione um modelo de PDF caso utilize esquemas personalizados para orçamentos ou faturas. Em seguida, pré-visualize o PDF para confirmar se os preços, a imagem da marca, o idioma e as informações do cliente estão corretos.
+
+  Quando a pré-visualização estiver correta, guarde o orçamento. O orçamento está agora pronto para ser enviado ou convertido mais tarde.
+
+  </Step>
+</Steps>
+
+## Conversão de orçamento em fatura
+
+Converta um orçamento quando o cliente aceitar a proposta. A conversão altera o estado do orçamento para `converted` e cria uma nova fatura com os mesmos dados comerciais subjacentes.
+
+A nova fatura copia os dados do cliente, a morada, as datas, a moeda, o idioma, as linhas, a percentagem de IVA, o modelo e o valor total do orçamento. Assim, obtém um documento de faturação sem voltar a introduzir as mesmas informações.
+
+### Como funciona a relação
+
+A fatura armazena uma referência `quote_id` ao orçamento original. Isto significa que a relação é acompanhada da fatura para o orçamento, e não do orçamento para a fatura.
+
+Se precisar de confirmar que um orçamento foi transformado numa fatura, consulte o registo da fatura associado através de `quote_id`. O próprio orçamento muda para o estado `converted`, mas a relação direta na base de dados é navegável da fatura para o orçamento.
+
+<Callout kind="tip">
+
+Utilize a conversão quando os termos comerciais forem definitivos. Isto mantém intacto o histórico do orçamento e cria uma transição clara entre as vendas e a faturação.
+
+</Callout>
+
+## Numeração dos orçamentos
+
+Cada orçamento recebe o seu próprio número de documento no formato `A-00001`. O prefixo `A` significa Angebot.
+
+Os números dos orçamentos são gerados por empresa e atribuídos de forma atómica. Isto evita números duplicados quando várias pessoas criam documentos ao mesmo tempo e mantém consistente a sequência de orçamentos de cada empresa.
+
+Se necessário, pode editar o número do orçamento antes de enviar o documento.
+
+## Enviar orçamentos por e-mail
+
+Envie orçamentos por e-mail com o mesmo fluxo de envio utilizado para as faturas. O NomadBill gera o e-mail de resumo do documento e envia-o através do Resend utilizando `noreply@nomadbill.co`.
+
+Antes de enviar, reveja a pré-visualização do PDF e os dados do destinatário. Após o envio, o estado do orçamento muda para `sent`, o que ajuda a distinguir os orçamentos preparados daqueles que já foram enviados ao cliente.
+
+Se precisar de documentos com a sua imagem de marca, combine o envio por e-mail com o modelo de PDF selecionado para que o cliente receba a apresentação final que pretende.
+
+## Adiantamentos e pagamentos
+
+Os orçamentos incluem um fluxo de pagamento, mas este está associado ao processo de checkout das faturas. Na prática, a ação de pagamento chama o fluxo de checkout da fatura, em vez de um registo de pagamento específico do orçamento.
+
+Isto significa que o processamento do pagamento funciona corretamente depois de o orçamento ser convertido numa fatura. Nessa altura, a fatura pode ser utilizada para o checkout e para as atualizações de pagamento.
+
+<Callout kind="alert">
+
+O pagamento de um adiantamento relativo a um orçamento só funciona corretamente depois de converter o orçamento numa fatura. O fluxo de pagamento atual consulta a tabela de faturas, e não a tabela de orçamentos, pelo que o processamento de pagamentos apenas para orçamentos é limitado.
+
+</Callout>
+
+Os estados de pagamento continuam a aparecer nos orçamentos, mas o fluxo de atualização de pagamentos subjacente baseia-se nas faturas. Se precisar de uma ligação de pagamento fiável ou de atualizações de estado suportadas pelo Stripe, converta primeiro o orçamento e receba o pagamento a partir da fatura.
+
+## O que pode fazer com os orçamentos
+
+Os orçamentos suportam as mesmas funcionalidades de documentos disponíveis para as faturas:
+
+- Pré-visualização do PDF antes do envio
+- Envio por e-mail
+- Campos personalizados
+- E-mails associados
+- Exportação para CSV
+- Modelos de PDF personalizados
+- Edição manual do número do orçamento
+
+Estas funcionalidades partilhadas facilitam a passagem de orçamento para fatura sem alterar o fluxo de documentos.
+
+## Continue com os guias relacionados
+
+<Columns cols={2}>
+  <Card
+    title="Gerir faturas"
+    href="/pt/user-guide/invoicing"
+    icon="file-text"
+    cta="Abrir guia"
+  />
+  <Card
+    title="Personalizar modelos de PDF"
+    href="/pt/user-guide/pdf-templates"
+    icon="edit"
+    cta="Abrir guia"
+  />
+</Columns>

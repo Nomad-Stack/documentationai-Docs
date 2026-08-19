@@ -1,0 +1,143 @@
+---
+title: Início rápido
+description: >-
+  Configure a sua conta NomadBill, crie a sua primeira empresa e envie a sua
+  primeira fatura em poucos minutos.
+---
+## Pré-requisitos
+
+Antes de começar, certifique-se de que tem:
+
+- Um endereço de e-mail válido
+- Os dados da sua empresa, incluindo o nome, a morada e o número de IVA, se aplicável
+- O idioma e a moeda predefinidos da sua preferência
+- Os dados da conta bancária, caso pretenda adicionar posteriormente informações de recebimento ou pagamento
+
+<Callout kind="info" collapsed="false">
+  Comece com um período experimental gratuito de 7 dias. Não é necessário um cartão de crédito ao efetuar o registo.
+</Callout>
+
+## Registe-se e configure a sua empresa
+
+Crie a sua conta e, em seguida, configure a empresa a partir da qual irá faturar.
+
+<Steps>
+  <Step title="Crie a sua conta" icon="users" title-type="p">
+    Visite [app.nomadbill.co](https://app.nomadbill.co/) e registe-se com o seu e-mail e palavra-passe ou continue com o Google.
+
+    Depois de confirmar a sua conta, o NomadBill inicia a sessão e encaminha-o para a configuração da empresa.
+  </Step>
+
+  <Step title="Crie a sua primeira empresa" icon="plus" title-type="p">
+    Introduza o nome da empresa e escolha um slug para a empresa. O NomadBill utiliza o slug para identificar o espaço de trabalho da empresa.
+
+    Selecione um idioma predefinido entre `DE`, `EN`, `FR` ou `ES` e, em seguida, escolha a moeda predefinida: `EUR`, `USD`, `GBP`, `CHF` ou `AED`.
+  </Step>
+
+  <Step title="Adicione os dados da empresa nas Definições" icon="settings" title-type="p">
+    Abra [Definições](https://app.nomadbill.co/settings) e complete o perfil da empresa com a denominação legal, a morada, o número de IVA e os dados bancários.
+
+    Também pode configurar a imagem da marca, as predefinições de faturação, os modelos de PDF e os campos personalizados na mesma área.
+  </Step>
+</Steps>
+
+## Visão geral do painel
+
+O painel oferece-lhe imediatamente uma visão operacional da empresa. Apresenta no topo a receita, os custos, o lucro e o valor em dívida, seguidos de gráficos e atividades que o ajudam a compreender o que mudou.
+
+Abaixo dos principais KPI, pode consultar as tendências de receitas, custos e lucros dos últimos seis meses, a antiguidade das contas a receber, a receita por cliente, a atividade recente e a distribuição por moeda.
+
+<Columns cols="3">
+  <Card title="Painel" href="/pt/user-guide/dashboard" icon="bar-chart" horizontal="false">
+    Consulte KPI, tendências, dados de antiguidade e atividade recente da conta.
+  </Card>
+
+  <Card title="Faturação" href="/pt/user-guide/invoicing" icon="file-text" horizontal="false">
+    Crie faturas, faça a gestão de clientes e envie PDFs por e-mail.
+  </Card>
+
+  <Card title="Faturas recebidas" href="/pt/user-guide/incoming-invoices" icon="upload" horizontal="false">
+    Carregue faturas de fornecedores e recibos para acompanhar despesas.
+  </Card>
+</Columns>
+
+## Envie a sua primeira fatura
+
+Crie a sua primeira fatura no editor de faturas e, em seguida, envie-a como PDF por e-mail ou transfira-a para entrega manual.
+
+<Steps>
+  <Step title="Abra uma nova fatura" icon="plus" title-type="p">
+    Aceda a `Invoices` e clique em `New` ou abra diretamente `/invoices/new`.
+
+    O NomadBill cria um rascunho de fatura para a empresa em que está atualmente a trabalhar.
+  </Step>
+
+  <Step title="Defina o cliente, a moeda e o idioma" icon="users" title-type="p">
+    Escolha a moeda da fatura e o idioma do documento e, em seguida, introduza o nome e a morada do cliente.
+
+    Utilize uma das moedas de faturação suportadas: `EUR`, `USD`, `GBP`, `CHF` ou `AED`. Utilize um dos idiomas de faturação suportados: `DE`, `EN`, `FR` ou `ES`.
+  </Step>
+
+  <Step title="Adicione linhas e IVA" icon="edit" title-type="p">
+    Adicione cada linha com um nome, uma quantidade e um preço unitário. Em seguida, defina a percentagem de IVA para a fatura ou para as linhas, consoante as suas necessidades de faturação.
+
+    Uma predefinição comum é `19%` de IVA. Verifique os totais antes de continuar.
+  </Step>
+
+  <Step title="Pré-visualize e envie o PDF" icon="send" title-type="p">
+    Pré-visualize o PDF gerado para confirmar o esquema, os dados do cliente, os totais e o IVA.
+
+    Quando tudo estiver correto, envie a fatura por e-mail ou transfira o PDF e entregue-o pessoalmente. Se a enviar a partir do NomadBill, o e-mail é entregue através do Resend.
+  </Step>
+</Steps>
+
+<Callout kind="tip" collapsed="false">
+  O NomadBill numera automaticamente as faturas por empresa utilizando o formato `R-00001`, pelo que a sua primeira fatura é numerada automaticamente.
+</Callout>
+
+## Registe a sua primeira despesa
+
+Carregue uma fatura recebida ou um recibo para começar a acompanhar os custos de fornecedores.
+
+<Steps>
+  <Step title="Abra Faturas recebidas" icon="upload" title-type="p">
+    Aceda a `Incoming Invoices` ou abra `/incoming`.
+
+    Esta área guarda os ficheiros carregados no seu espaço de trabalho e mantém-nos associados ao registo da despesa.
+  </Step>
+
+  <Step title="Carregue o ficheiro" icon="plus" title-type="p">
+    Carregue uma fatura de fornecedor ou um recibo em formato PDF ou imagem.
+
+    O NomadBill guarda o ficheiro no contentor de armazenamento `incoming-invoices` para que possa voltar a aceder-lhe mais tarde.
+  </Step>
+
+  <Step title="Preencha os dados da despesa" icon="edit" title-type="p">
+    Adicione o nome do fornecedor, o montante, a categoria, a data da fatura e a data de vencimento, se relevante.
+
+    Depois de guardar o registo, a despesa fica disponível para consulta juntamente com o documento original carregado.
+  </Step>
+</Steps>
+
+## Próximos passos
+
+Depois de configurar a sua empresa e de criar os primeiros registos, ligue os fluxos de trabalho que utiliza com mais frequência.
+
+<Columns cols="2">
+  <Card title="Sincronização bancária" href="/pt/user-guide/bank-sync" icon="database" horizontal="false">
+    Ligue bancos suportados dos EUA e da UE através do Plaid e importe até 365 dias de histórico de transações.
+  </Card>
+
+  <Card title="Inteligência de e-mail" href="/pt/user-guide/email-intelligence" icon="zap" horizontal="false">
+    Automatize a receção de documentos e reduza a introdução manual de dados a partir de e-mails de fornecedores.
+  </Card>
+
+  <Card title="Definições" href="/pt/user-guide/settings" icon="settings" horizontal="false">
+    Configure a imagem da marca, as predefinições, os modelos de PDF e os campos personalizados de cada empresa.
+  </Card>
+
+  <Card title="Gestão de equipas" href="/pt/user-guide/team-management" icon="users" horizontal="false">
+    Convide membros da equipa e faça a gestão do acesso em todo o espaço de trabalho da empresa.
+  </Card>
+</Columns>
+

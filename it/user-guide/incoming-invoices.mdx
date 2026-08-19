@@ -1,0 +1,192 @@
+---
+title: Fatture passive
+description: Carica e gestisci fatture, ricevute e spese dei fornitori con il calcolo dell’IVA automatico e la riconciliazione bancaria.
+---
+
+## Tieni traccia delle fatture e delle ricevute dei fornitori in un unico posto
+
+Le fatture passive ti consentono di archiviare fatture, ricevute e altre spese aziendali dei fornitori insieme al resto dei tuoi documenti. Puoi caricare un PDF o un'immagine, inserire i dettagli della fattura, monitorare se è stata pagata e abbinarla a una transazione bancaria quando viene visualizzato il pagamento.
+
+NomadBill conserva il file originale in un archivio sicuro, calcola automaticamente gli importi IVA e mostra le informazioni correlate come e-mail collegate, campi personalizzati e pagamenti bancari corrispondenti nella pagina dei dettagli della fattura.
+
+<Callout kind="info">
+
+I formati di caricamento supportati includono **PDF** e **file immagine**. NomadBill archivia ogni file nel bucket `incoming-invoices` usando, per ciascun utente, il percorso `userId/timestamp-filename`.
+
+</Callout>
+
+## Caricamento delle ricevute
+
+Utilizza l'area fatture passive quando desideri aggiungere manualmente una fattura fornitore da un file.
+
+<Steps>
+  <Step title="Aprire le fatture passive" icon="folder">
+
+Vai alla sezione fatture passive in NomadBill e avvia un nuovo caricamento.
+
+Questa è la soluzione migliore quando hai già la ricevuta o la fattura fornitore salvata sul tuo dispositivo.
+
+  </Step>
+
+  <Step title="Carica il file" icon="upload">
+
+Seleziona un file **PDF** o **image** dal tuo computer o telefono.
+
+NomadBill memorizza il file caricato in un archivio sicuro e mantiene un percorso del file nel record della fattura. Quando apri il file in un secondo momento, NomadBill genera un collegamento di visualizzazione firmato che rimane valido per 60 secondi.
+
+  </Step>
+
+  <Step title="Inserisci i dettagli della fattura" icon="edit">
+
+Aggiungere il fornitore, la fattura, IVA e le informazioni di pagamento per il documento.
+
+Dopo aver salvato la fattura, dovresti vederla nell'elenco delle fatture passive ed essere in grado di aprire la relativa pagina dei dettagli.
+
+  </Step>
+
+  <Step title="Esamina la pagina dei dettagli" icon="check-circle">
+
+Apri la fattura salvata per verificare le informazioni.
+
+La visualizzazione dei dettagli include schede separate per i dettagli del fornitore, i dettagli della fattura, i campi personalizzati, le e-mail collegate e i pagamenti bancari.
+
+  </Step>
+</Steps>
+
+## Dettagli fornitore e fattura
+
+Ogni fattura passiva memorizza sia le informazioni sul fornitore che le informazioni specifiche della fattura. Le categorie sono testo libero, quindi puoi utilizzare la struttura dei nomi adatta al tuo flusso di lavoro di contabilità.
+
+### Campi fornitore
+
+<ParamField body="supplier_name" param-type="string" required="false" show-location="false">
+Nome del fornitore o dell'esercente che ha emesso la fattura o la ricevuta.
+</ParamField>
+
+<ParamField body="supplier_address" param-type="string" required="false" show-location="false">
+Indirizzo postale del fornitore.
+</ParamField>
+
+<ParamField body="supplier_vat_number" param-type="string" required="false" show-location="false">
+Numero di registrazione del fornitore IVA, se presente sul documento.
+</ParamField>
+
+### Campi della fattura
+
+<ParamField body="invoice_number" param-type="string" required="false" show-location="false">
+Il numero della fattura o della ricevuta del fornitore.
+</ParamField>
+
+<ParamField body="invoice_date" param-type="date" required="false" show-location="false">
+Data riportata sulla fattura del fornitore.
+</ParamField>
+
+<ParamField body="due_date" param-type="date" required="false" show-location="false">
+Data di scadenza del pagamento della fattura.
+</ParamField>
+
+<ParamField body="payment_date" param-type="date" required="false" show-location="false">
+Data di pagamento della fattura. La riconciliazione bancaria può aggiornare questo quando un pagamento viene abbinato.
+</ParamField>
+
+<ParamField body="category" param-type="string" required="false" show-location="false">
+Categoria di testo libero per la spesa. NomadBill non impone un elenco di categorie predefinito.
+</ParamField>
+
+<ParamField body="notes" param-type="string" required="false" show-location="false">
+Note interne sulla ricevuta, sul fornitore o sulla spesa.
+</ParamField>
+
+<ParamField body="currency" param-type="string" required="false" enum="EUR,USD,GBP,CHF,AED" show-location="false">
+Valuta utilizzata nella fattura. I valori supportati sono `EUR`, `USD`, `GBP`, `CHF` e `AED`.
+</ParamField>
+
+<ParamField body="payment_status" param-type="string" required="false" enum="unpaid,paid" show-location="false">
+Stato attuale di pagamento della fattura. NomadBill supporta `unpaid` e `paid`.
+</ParamField>
+
+### Campi importo
+
+<ParamField body="net_amount" param-type="number" required="false" show-location="false">
+Importo della fattura prima dell’IVA.
+</ParamField>
+
+<ParamField body="vat_percentage" param-type="number" required="false" show-location="false">
+Tasso IVA applicato all'importo della fattura.
+</ParamField>
+
+<ParamField body="vat_amount" param-type="number" required="false" show-location="false">
+Importo IVA calcolato.
+</ParamField>
+
+<ParamField body="amount" param-type="number" required="false" show-location="false">
+Importo lordo della fattura IVA inclusa.
+</ParamField>
+
+### Archivia e registra i metadati
+
+<ParamField body="file_path" param-type="string" required="false" show-location="false">
+Percorso di archiviazione del file di ricevuta o fattura caricato.
+</ParamField>
+
+<ParamField body="upload_date" param-type="date-time" required="false" show-location="false">
+Data in cui il file è stato caricato in NomadBill.
+</ParamField>
+
+## IVA e calcolo dell'importo
+
+NomadBill ricalcola automaticamente i totali delle fatture, quindi non è necessario aggiornare manualmente ogni campo dell'importo. Ciò riduce gli errori di immissione, soprattutto quando si conosce solo l'importo netto e il aliquota IVA o si dispone solo del totale lordo di una ricevuta.
+
+Se si modifica `net_amount` o `vat_percentage`, NomadBill ricalcola sia `vat_amount` che `amount`. L'importo lordo utilizza questa formula: `gross = net * (1 + pct / 100)`.
+
+Se si modifica `amount`, NomadBill ricalcola `net_amount` e `vat_amount` in base alla percentuale IVA corrente. Ciò aiuta quando la ricevuta mostra solo il totale finale e la aliquota IVA.
+
+<Callout kind="tip">
+
+Controllare i valori ricalcolati prima di salvare quando la ricevuta include sconti, tariffe miste IVA o formattazione del fornitore che non separa chiaramente netto e IVA.
+
+</Callout>
+
+## Stato del pagamento e riconciliazione bancaria
+
+Lo stato del pagamento ti aiuta a tenere traccia di quali fatture fornitore sono ancora aperte e quali sono già state pagate. NomadBill utilizza due stati: `unpaid` e `paid`.
+
+Se colleghi la sincronizzazione bancariaria, NomadBill può abbinare automaticamente le transazioni bancarie in uscita alle fatture passive. La logica di corrispondenza cerca:
+
+- Una **transazione in uscita** con importo inferiore allo zero
+- **esatta stessa quantità**
+- La **stessa valuta**
+- Una data di transazione entro **14 giorni** dalla data della fattura
+
+Quando NomadBill trova una corrispondenza, collega la transazione alla fattura passiva e imposta lo stato del pagamento su `paid`. I pagamenti bancari collegati vengono visualizzati nella scheda dei pagamenti bancari nella pagina dei dettagli della fattura.
+
+Puoi anche gestire la connessione manualmente dall'area di sincronizzazione bancariaria. Se scolleghi una transazione abbinata, NomadBill ripristina lo stato del pagamento in `unpaid`.
+
+Per il flusso di lavoro di corrispondenza completo, vedere [Sincronizzazione bancariaria](/it/user-guide/bank-sync).
+
+## Integrazione della gestione intelligente delle email
+
+NomadBill può anche creare una fattura passiva dai dati e-mail. Quando la gestione intelligente delle email estrae i dettagli della ricevuta o della fattura del fornitore da un messaggio, `createReceiptFromEmail` può creare per te il record della fattura passiva.
+
+Ciò è utile quando i fornitori inviano fatture tramite e-mail e si desidera ridurre l'inserimento manuale. Dopo la creazione, puoi aprire la pagina dei dettagli della fattura, rivedere i campi estratti, aggiungere note o categorie e verificare se il pagamento è già stato abbinato.
+
+La pagina dei dettagli include anche una scheda e-mail collegata, che ti aiuta a ricondurre la fattura al contesto e-mail originale quando necessario.
+
+Per il flusso di lavoro e-mail, vedere [Gestione intelligente delle email](/it/user-guide/email-intelligence).
+
+## Guide correlate
+
+<Columns cols={2}>
+  <Card
+    title="Sincronizzazione bancariaria"
+    href="/it/user-guide/bank-sync"
+    icon="database"
+    cta="Apri guida"
+  />
+  <Card
+    title="Campi personalizzati"
+    href="/it/user-guide/custom-fields"
+    icon="settings"
+    cta="Apri guida"
+  />
+</Columns>

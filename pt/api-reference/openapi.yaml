@@ -1,0 +1,183 @@
+openapi: '3.0.0'
+info:
+  version: 1.0.0
+  title: Nomadbill
+  license:
+    name: MIT
+servers:
+  - url: https://api.nomadbill.com/v1
+paths:
+  /documents:
+    get:
+      summary: Listar documentos
+      operationId: listDocuments
+      parameters:
+        - name: limit
+          in: query
+          description: Número de itens a devolver de cada vez (máximo de 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: Uma lista paginada de documentos
+          headers:
+            x-next:
+              description: Uma ligação para a página seguinte de respostas
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documents'
+        default:
+          description: Erro inesperado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Criar documento
+      operationId: createDocument
+      responses:
+        201:
+          description: Resposta nula
+        default:
+          description: Erro inesperado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /documents/{documentId}:
+    get:
+      summary: Obter documento
+      operationId: showDocumentById
+      parameters:
+        - name: documentId
+          in: path
+          required: true
+          description: O ID do documento a obter
+          schema:
+            type: string
+      responses:
+        200:
+          description: Resposta esperada a um pedido válido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documents'
+        default:
+          description: Erro inesperado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /folders:
+    get:
+      summary: Listar pastas
+      operationId: listFolders
+      parameters:
+        - name: limit
+          in: query
+          description: Número de itens a devolver de cada vez (máximo de 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: Uma lista paginada de pastas
+          headers:
+            x-next:
+              description: Uma ligação para a página seguinte de respostas
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folders'
+        default:
+          description: Erro inesperado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Criar pasta
+      operationId: createFolder
+      responses:
+        201:
+          description: Resposta nula
+        default:
+          description: Erro inesperado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /folders/{folderId}:
+    get:
+      summary: Obter pasta
+      operationId: showFolderById
+      parameters:
+        - name: folderId
+          in: path
+          required: true
+          description: O ID da pasta a obter
+          schema:
+            type: string
+      responses:
+        200:
+          description: Resposta esperada a um pedido válido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folders'
+        default:
+          description: Erro inesperado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Document:
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        tag:
+          type: string
+    Documents:
+      type: array
+      items:
+        $ref: '#/components/schemas/Document'
+    Folder:
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        tag:
+          type: string
+    Folders:
+      type: array
+      items:
+        $ref: '#/components/schemas/Folder'
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

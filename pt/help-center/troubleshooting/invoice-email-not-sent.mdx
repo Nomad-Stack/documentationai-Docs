@@ -1,0 +1,48 @@
+---
+title: E-mail da fatura não enviado
+description: Resolva problemas de entrega de faturas no Nomadbill.
+---
+
+## Resolver problemas de entrega de faturas por e-mail
+Os e-mails de faturas devem atualizar o registo da fatura quando o NomadBill os envia. Se um cliente não tiver recebido uma fatura, confirme primeiro o endereço do destinatário e, em seguida, verifique se a fatura foi realmente marcada como enviada antes de a reenviar.
+
+<Steps>
+  <Step title="Verifique o endereço de e-mail do destinatário">
+
+    Abra a fatura e reveja cuidadosamente o endereço de e-mail do destinatário. Uma gralha, um endereço desatualizado ou o contacto errado na fatura são os motivos mais frequentes para um e-mail nunca chegar.
+
+    Se já tiver enviado a fatura, tenha em atenção que o NomadBill guarda o último destinatário no campo `sent_to`. O formulário de reenvio utiliza o mesmo endereço como destinatário predefinido, pelo que deve corrigi-lo antes de voltar a enviar, se necessário.
+
+  </Step>
+  <Step title="Verifique se a fatura foi marcada como enviada">
+
+    Verifique os campos da fatura que acompanham a atividade de e-mail:
+
+    - `sent_at` mostra quando o NomadBill registou o e-mail como enviado.
+    - `sent_to` mostra o endereço de e-mail que recebeu a mensagem.
+    - `email_status` deve ser `sent` após uma ação de envio bem-sucedida.
+
+    Se estes campos estiverem em branco ou se `email_status` não for `sent`, o NomadBill não concluiu o passo de envio. Nesse caso, o passo seguinte é reenviar a partir da fatura.
+
+  </Step>
+  <Step title="Reenvie o e-mail da fatura">
+
+    Abra a fatura e utilize a ação de envio ou reenvio de e-mail na janela de e-mail. O NomadBill envia um resumo HTML da fatura que inclui o número do documento, o nome do cliente, o montante e qualquer mensagem personalizada que adicionar.
+
+    Depois de o enviar, confirme que a fatura é atualizada com um novo valor `sent_at`, o endereço `sent_to` correto e `email_status` definido como `sent`. Estes campos são a melhor confirmação de que o NomadBill processou o pedido de e-mail.
+
+  </Step>
+  <Step title="Verifique as pastas de spam ou correio indesejado">
+
+    Peça ao cliente que procure nas pastas de spam, correio indesejado, promoções ou mensagens filtradas por mensagens de `noreply@nomadbill.co`.
+
+    Se a fatura apresentar `sent_at`, `sent_to` e `email_status` conforme esperado, mas o cliente continuar sem encontrar a mensagem, o respetivo fornecedor de e-mail poderá tê-la filtrado após a entrega.
+
+  </Step>
+</Steps>
+
+<Callout kind="alert">
+
+Se o envio de e-mails de faturas falhar sistematicamente, a integração com o Resend poderá não estar configurada para o seu espaço de trabalho. Contacte o administrador da sua conta para verificar se o serviço de e-mail está configurado corretamente.
+
+</Callout>

@@ -1,0 +1,78 @@
+---
+title: Come creo una fattura?
+description: Crea, personalizza e invia fatture in NomadBill con supporto multivaluta, calcolo dell’IVA e consegna PDF.
+---
+
+## Crea e invia una fattura
+
+Crea una nuova fattura dalla pagina **Fatture**, inserisci i dettagli del cliente e della fatturazione, esamina l'anteprima PDF, quindi invia o scarica la fattura finale. NomadBill salva le fatture non inviate come bozze, così puoi tornare indietro e completarle prima della consegna.
+
+<Steps>
+  <Step title="Passare a Fatture e creare una nuova fattura" icon="file-text">
+
+Apri **Fatture** nella dashboard e fai clic su **Nuova**. Puoi anche andare direttamente a `/invoices/new` se conosci già il percorso.
+
+All'apertura del modulo, la fattura inizia con lo stato **draft**. Puoi continuare a modificare la bozza finché non la invii.
+
+  </Step>
+
+  <Step title="Seleziona valuta e lingua" icon="settings">
+
+Scegli la fattura **valuta** e **lingua** prima di aggiungere il resto dei dettagli. NomadBill supporta queste valute: **EUR**, **USD**, **GBP**, **CHF** e **AED**.
+
+Per la lingua della fattura, scegliere **DE**, **EN**, **FR** o **ES**. Utilizza il linguaggio che corrisponde a ciò che il tuo cliente si aspetta di ricevere.
+
+  </Step>
+
+  <Step title="Inserisci i dettagli del cliente" icon="users">
+
+Aggiungi **nome** e **indirizzo** esattamente come dovrebbero apparire sulla fattura. Questi dettagli vengono utilizzati nel documento fattura e nell'anteprima PDF.
+
+Ricontrolla l'ortografia e la formattazione qui prima di proseguire. Correggere i dettagli del cliente in questa fase è più veloce che aggiornare successivamente una fattura inviata.
+
+  </Step>
+
+  <Step title="Aggiungi voci" icon="plus">
+
+Aggiungi una o più voci per i beni o i servizi che stai fatturando. Ogni voce include **nome**, **quantità** e **prezzo**.
+
+Se devi modificare l'ordine, trascina gli voci nella sequenza desiderata. Il totale parziale della fattura viene aggiornato man mano che aggiungi o modifichi elementi.
+
+  </Step>
+
+  <Step title="Imposta IVA e rivedi i totali" icon="bar-chart">
+
+Imposta la percentuale **IVA** per la fattura. Per impostazione predefinita NomadBill IVA è **19%**, ma è possibile modificarlo quando necessario.
+
+Il totale è calcolato come `subtotal + (subtotal x VAT%)`. Controlla il totale parziale, l'importo IVA e il totale finale prima di continuare.
+
+  </Step>
+
+  <Step title="Anteprima e invio" icon="send">
+
+Visualizza l'anteprima della fattura come PDF per verificare il layout, i dettagli del cliente, le voci e i totali. Se tutto sembra corretto, invia la fattura via e-mail o scaricala.
+
+Le fatture inviate vengono consegnate tramite Resend da `noreply@nomadbill.co`. Se abiliti il ​​pagamento Stripe sulla fattura, il cliente riceve un collegamento al pagamento come parte del flusso di pagamento.
+
+  </Step>
+</Steps>
+
+<Callout kind="tip">
+
+NomadBill genera automaticamente il numero della fattura nel formato `R-00001`. La numerazione è gestita per azienda, quindi ogni azienda mantiene la propria sequenza di fatture.
+
+</Callout>
+
+<Callout kind="info">
+
+Lo stato della fattura passa da `draft` a `sent`, quindi a `paid` o `overdue`. Lo stato del pagamento viene tracciato separatamente come `unpaid`, `pending`, `paid` o `failed`.
+
+Se il cliente avvia il pagamento Stripe, lo stato del pagamento cambia in `pending`. Quando Stripe conferma il pagamento, lo stato cambia in `paid`. Se il pagamento non viene completato, lo stato cambia in `failed`.
+
+</Callout>
+
+## Cos'altro dovresti sapere?
+
+Le bozze di fattura rimangono modificabili finché non le invii. Ciò rende le bozze il luogo più sicuro in cui modificare i dettagli del cliente, riordinare gli articoli o aggiornare IVA prima della consegna.
+
+NomadBill supporta anche i metadati delle fatture ricorrenti. Puoi impostare il flag ricorrente e scegliere una frequenza di `weekly`, `monthly`, `quarterly` o `yearly`, ma ciò non crea automaticamente fatture in base a una pianificazione.

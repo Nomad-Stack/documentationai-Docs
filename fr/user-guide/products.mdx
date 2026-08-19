@@ -1,0 +1,137 @@
+---
+title: Produits
+description: Créez un catalogue réutilisable de produits et services pour les factures et les devis.
+---
+
+## Créer un catalogue de produits réutilisable
+
+Produits dansNomadBillvous permettent de sauvegarder les articles et services que vous vendez une fois, puis de les réutiliser dans les factures et les devis. Votre catalogue de produits se trouve à`/items`, est partagé au niveau de l'entreprise et peut inclure à la fois des champs standard et des champs personnalisés adaptés à votre entreprise.
+
+<Callout kind="info">
+
+NomadBillstocke les produits dans le`items`tableau. Le catalogue appartient à votre entreprise et non à un utilisateur individuel. Le tableau utilise donc`company_id`et n'inclut pas`user_id`.
+
+</Callout>
+
+## Champs de produits
+
+Chaque produit comprend un petit ensemble de champs standard. Vous pouvez ajouter plus de structure avec des champs personnalisés si vous avez besoin de suivre l'inventaire, les SKU, les certifications ou les détails des prix internes.
+
+<ParamField body="name" param-type="string" required="true" show-location="false">
+
+Le nom du produit ou du service.NomadBillrequiert ce champ lorsque vous créez ou modifiez un produit.
+
+</ParamField>
+
+<ParamField body="description" param-type="string" required="false" show-location="false">
+
+Une description plus longue affichée dans la boîte de dialogue de création et de modification sous forme de champ de texte multiligne. Utilisez-le pour les détails du service, les spécifications ou les notes internes que vous souhaitez consulter lors de la réutilisation de l'article.
+
+</ParamField>
+
+<ParamField body="price" param-type="numeric" required="false" show-location="false">
+
+Le prix par défaut du produit. Le champ utilise une saisie numérique avec un pas de`0.01`, et les nouveaux produits sont par défaut`0`si vous n'entrez pas de prix.
+
+</ParamField>
+
+<ParamField body="company_id" param-type="string" required="true" show-location="false">
+
+L'entreprise qui possède le produit. Les produits sont des enregistrements au niveau de l'entreprise, ce qui signifie que toute personne ayant accès à l'entreprise travaille à partir du même catalogue.
+
+</ParamField>
+
+Dans la vue liste,NomadBillaffiche les colonnes standard pour **nom**, **description** et **prix**. Le prix est formaté à deux décimales afin que les montants restent cohérents dans tout le catalogue.
+
+Si vous marquez les champs de produits personnalisés pour qu'ils apparaissent dans les tableaux,NomadBillajoute également ces colonnes à la vue liste. Les colonnes de champs personnalisés sont affichées uniquement lorsque`show_in_table`est activé et ils apparaissent par ordre alphabétique par nom de champ.
+
+## Créer un produit
+
+Ajouter des produits du`/items`lorsque vous souhaitez une création de document plus rapide et des éléments de campagne plus cohérents. Une fois qu'un produit est dans votre catalogue, vous pouvez le sélectionner à nouveau au lieu de retaper les mêmes détails pour chaque facture ou devis.
+
+<Steps>
+
+<Step title="Ouvrir la page des produits" icon="folder">
+
+Aller à`/items`à partir de la navigation de l'application.
+
+Vous devriez voir votre liste de produits actuelle avec des colonnes pour le nom, la description, le prix et tous les champs personnalisés de produit configurés pour s'afficher dans le tableau.
+
+</Step>
+
+<Step title="Démarrer un nouveau produit" icon="plus">
+
+Sélectionnez l'option pour créer un nouveau produit.
+
+NomadBillouvre une boîte de dialogue dans laquelle vous pouvez saisir les détails du produit standard et tous les champs personnalisés attribués à l'entité produit.
+
+</Step>
+
+<Step title="Entrez les détails requis" icon="edit">
+
+Remplissez le formulaire produit :
+
+- Entrez un **nom**.
+- Ajoutez une **description** si vous souhaitez plus de détails sur l'élément enregistré.
+- Saisissez un **prix** en utilisant des valeurs décimales telles que`125.00`.
+- Remplissez tous les champs personnalisés du produit qui s'appliquent à cet article.
+
+Si l'enregistrement du formulaire réussit, le nouveau produit apparaît dans la liste sur`/items`.
+
+</Step>
+
+<Step title="Vérifier et mettre à jour le produit enregistré" icon="check-circle">
+
+Vérifiez la ligne du produit dans la vue liste pour confirmer que le nom, la description, le prix et les valeurs des champs personnalisés visibles semblent corrects.
+
+Si vous devez modifier quelque chose, ouvrez la boîte de dialogue d'édition dans la liste et enregistrez vos mises à jour. Pour supprimer un produit, utilisez l'action de suppression intégrée, qui confirme l'action avant la suppression.
+
+</Step>
+
+</Steps>
+
+<Callout kind="tip">
+
+Les actions de suppression utilisent une étape de confirmation. Vérifiez le nom du produit avant de confirmer afin de ne pas supprimer le mauvais élément du catalogue.
+
+</Callout>
+
+## Utiliser des produits dans des documents
+
+Les produits enregistrés sont conçus pour accélérer la création de documents. Lorsque vous établissez une facture ou un devis,NomadBillréutilise les données produit dans les éléments de campagne afin que vous n'ayez pas besoin de saisir à nouveau les mêmes noms, descriptions ou prix à chaque fois.
+
+Ceci est particulièrement utile pour les services récurrents, les packages standard et les produits fréquemment vendus. Au lieu de saisir manuellement chaque ligne, vous sélectionnez un produit existant et partez des valeurs enregistrées déjà stockées dans votre catalogue.
+
+Étant donné que les produits sont partagés au niveau de l'entreprise, votre équipe travaille à partir de la même liste d'articles dans toutes les factures et devis. Cela permet de conserver une tarification et une dénomination plus cohérentes, en particulier lorsque plusieurs personnes créent des documents.
+
+## Champs personnalisés pour les produits
+
+Les champs personnalisés vous permettent de transformer le catalogue de produits de base en un inventaire structuré ou un registre de services. DansNomadBill, les champs personnalisés du produit utilisent le type d'entité`product`.
+
+Les exemples courants incluent les identifiants internes, les informations sur les stocks, les coûts des fournisseurs, les dates, les URL et les pièces jointes. Les exemples prédéfinis incluent`produkt_nummer`, `sku`, `produktkategorie`, description détaillée,`gewicht_kg`, `einkaufspreis`, `auf_lager`, `produkt_url`, `gueltig_ab`, `zertifizierungen`, `datenblatt`, et`marge_formel`.
+
+Différents types de champs prennent en charge différents types de données produit :
+
+- **Identifiants** tels que des numéros automatiques ou des valeurs de texte uniques
+- **Valeurs commerciales** telles que le prix d'achat, le prix de vente ou les formules de marge
+- **Données opérationnelles** telles que l'état des stocks, les catégories et les dates d'effet
+- **Matériel de support** tel que des fiches techniques et des liens vers des produits externes
+
+Configurez ces champs dans [Champs personnalisés](/fr/user-guide/custom-fields). Lorsqu'un champ personnalisé de produit est configuré pour s'afficher dans des tableaux, il devient également partie intégrante du champ personnalisé.`/items`vue en liste.
+
+## Guides associés
+
+<Columns cols={2}>
+<Carte
+title="Facturation"
+href="/fr/user-guide/invoicing"
+icon="livre-ouvert"
+cta="Ouvrir le guide"
+  />
+<Carte
+title="Champs personnalisés"
+href="/fr/user-guide/custom-fields"
+icône = "paramètres"
+cta="Gérer les champs"
+  />
+</Columns>

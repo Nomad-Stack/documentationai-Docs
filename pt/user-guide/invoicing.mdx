@@ -1,0 +1,299 @@
+---
+title: Faturação
+description: Crie, envie e acompanhe faturas em várias moedas, com cálculo do IVA, geração de PDF e pagamentos através do Stripe.
+---
+
+## Crie, envie e acompanhe faturas
+
+Utilize a faturação do NomadBill para criar faturas profissionais, calcular o IVA, exportar PDFs com a sua imagem de marca, enviar faturas por e-mail e aceitar pagamentos online através do Stripe. Pode gerir faturas em rascunho e enviadas, acompanhar o progresso dos pagamentos e manter uma numeração de faturas consistente em toda a empresa.
+
+<Callout kind="info">
+
+Se começar a partir de um orçamento aprovado, utilize o fluxo de conversão de orçamento em fatura descrito em [Orçamentos](/pt/user-guide/quotes).
+
+</Callout>
+
+## Estados das faturas
+
+O NomadBill acompanha as faturas através de dois campos distintos: `status` e `payment_status`. O distintivo da fatura dá prioridade às informações de pagamento, pelo que, quando `payment_status` é `paid`, a fatura é apresentada como paga, mesmo que o campo geral `status` indicasse outra coisa.
+
+| Campo | Valores | O que significa |
+| --- | --- | --- |
+| `status` | `draft`, `sent`, `paid`, `overdue` | O estado do ciclo de vida do documento |
+| `payment_status` | `unpaid`, `pending`, `paid`, `failed` | O estado do processamento do pagamento |
+
+Uma forma prática de interpretar estes valores é:
+
+- **`draft`** — ainda está a editar a fatura e não finalizou o envio.
+- **`sent`** — a fatura foi entregue ou marcada como enviada.
+- **`overdue`** — a data de vencimento já passou e a fatura ainda não foi liquidada.
+- **`paid`** — a fatura está liquidada.
+
+Os estados específicos do pagamento acrescentam mais detalhes:
+
+- **`unpaid`** — ainda não foi registado qualquer pagamento.
+- **`pending`** — o pagamento está em curso.
+- **`paid`** — o pagamento foi concluído com êxito.
+- **`failed`** — uma tentativa de pagamento não foi concluída.
+
+<Callout kind="tip">
+
+Se uma fatura apresentar `paid` na interface, esse estado pago tem prioridade sobre o estado geral do documento na apresentação do distintivo.
+
+</Callout>
+
+## Criar uma fatura
+
+Crie uma nova fatura na área **Faturas**, preencha os dados do cliente e da faturação, adicione as linhas e reveja o resultado antes de a enviar. O NomadBill mantém as faturas por concluir como rascunhos, para que possa voltar a elas mais tarde.
+
+<Steps>
+  <Step title="Abrir uma nova fatura" icon="file-text">
+
+  Aceda a **Faturas** e crie uma nova fatura. O NomadBill prepara o documento com o contexto da sua empresa e atribui a numeração quando a fatura é criada.
+
+  Quando a fatura abrir, deverá ver campos de faturação editáveis, linhas, totais e definições do documento.
+
+  </Step>
+
+  <Step title="Adicionar os dados do cliente e da faturação" icon="users">
+
+  Introduza as informações do cliente, a data da fatura, a data de vencimento, a moeda e o idioma. Escolha o idioma da fatura que corresponde ao destinatário, para que as etiquetas no PDF e no e-mail sejam apresentadas corretamente.
+
+  Depois de guardar, a fatura permanece no estado **draft** até a enviar ou alterar o respetivo estado.
+
+  </Step>
+
+  <Step title="Adicionar linhas" icon="plus">
+
+  Adicione cada produto ou serviço como uma linha separada, com nome, quantidade e preço unitário. Inclua uma descrição quando precisar de esclarecer o âmbito, o período de faturação ou os resultados a entregar.
+
+  O subtotal é atualizado à medida que adiciona ou edita artigos.
+
+  </Step>
+
+  <Step title="Rever o IVA e os totais" icon="bar-chart">
+
+  Confirme a percentagem de IVA antes de enviar a fatura. O NomadBill calcula o total a partir do subtotal e da percentagem de IVA, para que possa verificar o valor antes de gerar o PDF ou a ligação de pagamento.
+
+  No final de uma revisão correta, deverá ter um subtotal, um valor de IVA e um total final claros.
+
+  </Step>
+
+  <Step title="Exportar, enviar ou receber o pagamento" icon="arrow-right">
+
+  Quando a fatura estiver correta, gere o PDF, envie-a por e-mail ou ative o checkout do Stripe se pretender que o cliente pague online. Após o envio, o NomadBill pode registar detalhes da entrega, como quem recebeu a fatura e quando foi enviada.
+
+  Nesse momento, a fatura deixa a edição e passa para o acompanhamento ativo.
+
+  </Step>
+</Steps>
+
+## Linhas
+
+Cada linha da fatura armazena uma estrutura pequena e consistente, para que possa manter os encargos claros e previsíveis. Uma linha inclui:
+
+- **`id`** — identificador interno opcional
+- **`name`** — o título da linha
+- **`description`** — texto de detalhe opcional
+- **`quantity`** — o número de unidades que fatura
+- **`price`** — o preço por unidade
+
+Utilize uma linha por serviço, produto ou período de faturação faturável. Isto torna o PDF mais fácil de ler e ajuda o cliente a perceber como foi calculado o total.
+
+O NomadBill também permite reordenar as linhas através de arrastar e largar. Reordene os artigos para corresponderem à sequência que pretende apresentar na fatura, como indicar primeiro os serviços principais e por último as despesas reembolsáveis.
+
+## Cálculo do IVA
+
+O NomadBill calcula os totais das faturas a partir do subtotal e da percentagem de IVA. A fórmula é:
+
+`total = subtotal + (subtotal x vat_percentage / 100)`
+
+A taxa de IVA predefinida é **19%**, correspondente à taxa normal alemã. Pode alterar a percentagem de IVA em cada fatura conforme necessário, desde que o valor permaneça dentro do intervalo permitido de **0 a 100**.
+
+Isto significa que:
+
+- **`0`** é válido para faturas isentas de IVA ou com taxa zero
+- **`19`** é o ponto de partida predefinido
+- **`100`** é o limite máximo permitido
+
+<Callout kind="info">
+
+Verifique a taxa de IVA antes de enviar a fatura, sobretudo se faturar em diferentes jurisdições ou trabalhar com tratamentos fiscais distintos.
+
+</Callout>
+
+## Moedas e idiomas
+
+O NomadBill suporta cinco moedas e quatro idiomas para faturas. Estes valores são impostos, pelo que as faturas utilizam sempre uma das opções suportadas.
+
+### Moedas suportadas
+
+- **EUR**
+- **USD**
+- **GBP**
+- **CHF**
+- **AED**
+
+### Idiomas de fatura suportados
+
+- **DE**
+- **EN**
+- **FR**
+- **ES**
+
+### Como é escolhida a moeda predefinida
+
+O NomadBill determina a moeda da fatura por esta ordem:
+
+1. **Moeda da fatura** — se a fatura já tiver uma moeda, esse valor é utilizado.
+2. **Moeda predefinida da empresa** — se a fatura não tiver uma moeda explícita, o NomadBill consulta a moeda predefinida da empresa.
+3. **Preferência global de moeda** — se nenhuma das duas primeiras existir, o NomadBill recorre à moeda global guardada no armazenamento local do navegador como `nb.currency`.
+
+Esta prioridade mantém estáveis as faturas existentes, proporcionando simultaneamente uma alternativa ao nível da empresa e do utilizador.
+
+## Numeração das faturas
+
+Os números das faturas utilizam o formato `R-00001`. O prefixo `R` identifica o tipo de documento e a parte numérica utiliza cinco algarismos com zeros à esquerda.
+
+O NomadBill gera os números através de uma função da base de dados que atribui atomicamente o número de documento seguinte a cada empresa. Isto é importante quando várias pessoas criam faturas ao mesmo tempo, pois a sequência fica protegida contra condições de corrida.
+
+Dois detalhes são importantes para a utilização diária:
+
+- Os números das faturas são **por empresa**, não sendo partilhados globalmente entre todas as contas.
+- Cada número de fatura tem de ser único na mesma empresa através da combinação de `company_id` e `invoice_number`.
+
+## Geração de PDF
+
+O NomadBill pode exportar faturas como documentos PDF para transferência, partilha ou envio por e-mail. O motor de PDF utiliza os dados padrão da fatura juntamente com a imagem de marca da empresa para produzir um documento final.
+
+O PDF gerado utiliza um esquema de **A4 vertical** com **margens de 15 mm** e pode incluir:
+
+- logótipo da empresa
+- cor da marca
+- tabela de linhas
+- bloco de totais
+- dados bancários
+- rodapé
+
+A saída em PDF também suporta os quatro idiomas das faturas, pelo que as etiquetas aparecem no idioma selecionado na fatura. Se utilizar esquemas de PDF personalizados, o NomadBill também suporta a composição baseada em modelos.
+
+<Columns cols={2}>
+  <Card
+    title="Modelos de PDF"
+    href="/pt/user-guide/pdf-templates"
+    icon="book-open"
+    cta="Abrir guia"
+  />
+  <Card
+    title="Orçamentos"
+    href="/pt/user-guide/quotes"
+    icon="arrow-right"
+    cta="Ver guia relacionado"
+  />
+</Columns>
+
+## Enviar faturas por e-mail
+
+O NomadBill envia os e-mails das faturas através do Resend, utilizando `noreply@nomadbill.co` como endereço do remetente. Pode enviar um e-mail de documento com conteúdo HTML e um anexo PDF opcional ou um e-mail em formato de resumo que regista os detalhes da entrega na base de dados.
+
+Quando envia um e-mail de resumo da fatura, o NomadBill atualiza estes campos de acompanhamento:
+
+- **`sent_at`** — quando a fatura foi enviada
+- **`sent_to`** — que destinatário a recebeu
+- **`email_status`** — definido como `sent`
+
+O conteúdo do e-mail pode incluir:
+
+- o número do documento
+- o nome do cliente
+- uma mensagem personalizada opcional
+- o valor total
+
+Isto proporciona-lhe tanto o envio como um histórico de auditoria básico no registo da fatura.
+
+## Aceitar pagamentos com o Stripe
+
+Ative o Stripe numa fatura quando pretender que o cliente pague através de uma página de checkout alojada. O NomadBill cria uma Stripe Checkout Session para a fatura e encaminha o cliente para o Stripe para concluir o pagamento.
+
+### Como funciona o fluxo do Stripe
+
+<Steps>
+  <Step title="Ativar o Stripe para a fatura" icon="settings">
+
+  Ative o Stripe na fatura para que `stripe_enabled` fique ativo. Isto marca a fatura como elegível para pagamento online.
+
+  Depois de ativada, a fatura pode criar uma sessão de pagamento alojada.
+
+  </Step>
+
+  <Step title="Criar a sessão de checkout" icon="lock">
+
+  O NomadBill cria uma Stripe Checkout Session a partir do total da fatura. O valor enviado para o Stripe é convertido em cêntimos utilizando `Math.round(total_amount * 100)` e o código da moeda é convertido em minúsculas para a API do Stripe.
+
+  Isto garante que o Stripe recebe o valor no formato esperado.
+
+  </Step>
+
+  <Step title="Redirecionar o cliente para o Stripe" icon="external-link">
+
+  O cliente é redirecionado para a página de checkout alojada pelo Stripe para concluir o pagamento em segurança. Não precisa de recolher os dados do cartão diretamente na página da fatura.
+
+  Um redirecionamento bem-sucedido significa que o cliente está agora a concluir o pagamento no Stripe.
+
+  </Step>
+
+  <Step title="Processar o êxito ou o cancelamento" icon="check-circle">
+
+  Após o pagamento, o Stripe encaminha o cliente de volta para uma de duas rotas da fatura:
+
+  - **Êxito:** `/invoices/$id/pay/success`
+  - **Cancelamento:** `/invoices/$id/pay/cancel`
+
+  A página de êxito confirma o pagamento e aciona o acompanhamento da compra. A página de cancelamento permite ao cliente tentar novamente.
+
+  </Step>
+
+  <Step title="Atualizar a fatura após a confirmação do webhook" icon="shield">
+
+  Quando o Stripe envia o evento de webhook `checkout.session.completed`, o NomadBill atualiza a fatura para `payment_status=paid` e `status=paid`.
+
+  Esta atualização do webhook é o que finaliza o estado pago no NomadBill.
+
+  </Step>
+</Steps>
+
+## Faturas recorrentes
+
+As faturas recorrentes permitem-lhe marcar uma fatura como parte de um padrão de faturação repetido. O NomadBill armazena esta informação através do sinalizador `is_recurring` e de um valor `recurring_frequency`.
+
+As frequências de recorrência suportadas são:
+
+- **weekly**
+- **monthly**
+- **quarterly**
+- **yearly**
+
+<Callout kind="alert">
+
+As faturas recorrentes são apenas metadados. O NomadBill não executa uma tarefa cron automática nem gera novas faturas de acordo com um calendário apenas com base neste sinalizador.
+
+</Callout>
+
+Utilize as definições de recorrência para etiquetar e organizar a faturação repetida, mas não dependa delas como um motor de subscrições automatizado.
+
+## O que fazer em seguida
+
+<Columns cols={2}>
+  <Card
+    title="Gerir modelos de PDF"
+    href="/pt/user-guide/pdf-templates"
+    icon="edit"
+    cta="Personalizar esquemas"
+  />
+  <Card
+    title="Trabalhar com orçamentos"
+    href="/pt/user-guide/quotes"
+    icon="folder"
+    cta="Criar faturas a partir de orçamentos"
+  />
+</Columns>

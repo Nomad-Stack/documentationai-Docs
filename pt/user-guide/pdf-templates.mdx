@@ -1,0 +1,175 @@
+---
+title: Modelos PDF
+description: Crie disposições PDF personalizadas para faturas, orçamentos e recibos com edição por arrastar e largar, modelos reutilizáveis e cores da marca.
+---
+
+## Crie disposições PDF personalizadas para os seus documentos
+
+Os modelos PDF permitem controlar o aspeto das faturas, dos orçamentos e dos documentos recebidos ao pré-visualizá-los, exportá-los ou enviá-los. Pode começar com uma disposição em branco, escolher um modelo predefinido ou importar um modelo JSON e, depois, ajustar o resultado num editor de arrastar e largar.
+
+<Callout kind="info">
+
+Gira os modelos em **Definições → Modelos**. O NomadBill mantém listas de modelos separadas para faturas, orçamentos e documentos recebidos, para que possa criar cada tipo de documento de forma independente.
+
+</Callout>
+
+## Como funcionam os modelos PDF
+
+Cada modelo PDF guarda a disposição completa de um tipo de documento. Isto inclui a estrutura da página, os blocos de texto, as tabelas, as imagens e os estilos utilizados para gerar o PDF final.
+
+Ao criar ou editar uma fatura, um orçamento ou um documento recebido, pode utilizar o modelo predefinido desse tipo de documento ou escolher outro modelo guardado. Desta forma, mantém os documentos do dia a dia coerentes com a sua marca, sem deixar de poder utilizar disposições alternativas quando necessário.
+
+O NomadBill permite três tipos de documento:
+
+| Tipo de documento | Utilização | Onde é selecionado |
+| --- | --- | --- |
+| Fatura | Faturas emitidas que envia aos clientes | Formulário e pré-visualização da fatura |
+| Orçamento | Orçamentos ou propostas que envia antes da faturação | Formulário e pré-visualização do orçamento |
+| Recebido | Faturas recebidas, faturas de fornecedores ou recibos | Fluxos de documentos recebidos |
+
+## Tipos de documento
+
+Os modelos são agrupados por tipo de documento, pois cada tipo tem uma finalidade diferente e pode exigir textos ou disposições distintos.
+
+| Tipo | Título habitual no PDF | Utilização comum |
+| --- | --- | --- |
+| `invoice` | Fatura | Faturar a um cliente trabalho concluído ou bens entregues |
+| `quote` | Orçamento | Enviar uma proposta de preço antes do início do trabalho |
+| `incoming` | Recibo ou fatura recebida | Registar despesas de fornecedores ou recibos carregados |
+
+<Callout kind="tip">
+
+Se pretender disposições diferentes para o mesmo tipo de documento, crie vários modelos e defina um deles como predefinido. Pode continuar a escolher outro modelo para um documento específico quando necessário.
+
+</Callout>
+
+## Criar um modelo
+
+Pode criar modelos de três formas: começar em branco, utilizar a galeria ou importar um ficheiro JSON existente.
+
+<Steps>
+  <Step title="Crie um modelo em branco" icon="plus">
+
+  Abra **Definições → Modelos**, escolha o separador do tipo de documento, crie um novo modelo e selecione **Em branco**.
+
+  Um modelo em branco começa com a disposição predefinida do NomadBill para esse tipo de documento. É a opção mais rápida quando pretende ter controlo total, mas quer que os campos padrão obrigatórios já estejam mapeados.
+
+  </Step>
+  <Step title="Comece a partir da galeria" icon="book-open">
+
+  Abra **Definições → Modelos**, escolha o separador do tipo de documento, crie um novo modelo e selecione **Galeria**.
+
+  Escolha um dos sete modelos integrados se pretender uma disposição completa que possa adaptar. É o melhor ponto de partida para obter um resultado profissional sem criar todas as secções de raiz.
+
+  </Step>
+  <Step title="Importe um modelo JSON" icon="upload">
+
+  Abra **Definições → Modelos**, escolha o separador do tipo de documento, crie um novo modelo e selecione **Importar de JSON**.
+
+  Carregue um ficheiro `.json` com uma estrutura de modelo válida. Utilize esta opção se já tiver um ficheiro de modelo compatível e pretender reutilizá-lo entre empresas ou ambientes.
+
+  </Step>
+</Steps>
+
+## Galeria de modelos
+
+O NomadBill inclui sete modelos predefinidos que pode utilizar como ponto de partida.
+
+| Modelo | Estilo | Mais adequado para |
+| --- | --- | --- |
+| Clássico | Modelo equilibrado com um cabeçalho na cor da marca | Faturas e orçamentos de utilização geral |
+| Moderno | Barra superior colorida com um título destacado | Disposições centradas na marca |
+| Minimalista | Disposição monocromática sem elementos coloridos | Documentos simples e com baixo consumo de tinta |
+| Branco | Disposição limpa para impressão com um bloco de método de pagamento | Faturas formais e fluxos de impressão |
+| Azul | Elementos azuis com uma linha de total preenchida | Totais e secções de resumo de alto contraste |
+| Verde | Barra lateral verde de destaque | Disposições alternativas personalizadas |
+| Elegante | Título grande com uma tabela cinzenta discreta | Documentos sofisticados destinados a clientes |
+
+## Editar um modelo
+
+O editor de modelos abre num ambiente de criação em ecrã inteiro para que possa construir e ajustar as disposições visualmente. Pode arrastar campos para a posição pretendida, redimensioná-los, alterar o texto e aperfeiçoar a estrutura visual sem editar manualmente o JSON subjacente.
+
+Os tipos de campos disponíveis incluem texto, texto com várias variáveis, tabelas, listas, linhas, formas, imagens, assinaturas, datas, caixas de verificação, grupos de botões de opção, códigos QR e códigos de barras. Isto proporciona flexibilidade suficiente para criar disposições de faturas padrão e documentos mais personalizados.
+
+A maioria dos utilizadores passará mais tempo a ajustar posições, espaçamento, etiquetas e a apresentação das tabelas. Se mantiver os nomes dos campos padrão, o NomadBill continuará a preenchê-los automaticamente ao gerar o PDF.
+
+<Callout kind="info">
+
+A lista de itens do documento é normalmente apresentada através do campo de tabela `items`. Se remover ou mudar o nome desse campo, os itens deixarão de aparecer no PDF gerado.
+
+</Callout>
+
+## Campos padrão
+
+O NomadBill preenche automaticamente nomes de campos específicos ao criar um PDF. Mantenha estes nomes inalterados para que a aplicação continue a mapear os dados do documento para o modelo.
+
+| Nome do campo | Conteúdo |
+| --- | --- |
+| `company_logo` | Imagem do logótipo da empresa |
+| `company_name` | Nome de apresentação da empresa |
+| `company_address` | Morada da empresa, normalmente em várias linhas |
+| `company_vat` | Etiqueta e valor do NIF-IVA ou número fiscal |
+| `doc_title` | Título do documento, como Fatura, Orçamento ou Recibo |
+| `doc_number` | Número do documento |
+| `doc_date` | Etiqueta e valor da data de emissão |
+| `doc_due_date` | Etiqueta e valor da data de vencimento |
+| `bill_to_label` | Etiqueta da secção do cliente |
+| `customer_name` | Nome do cliente |
+| `customer_address` | Morada do cliente |
+| `items` | Tabela de itens |
+| `subtotal_label` | Etiqueta do subtotal |
+| `subtotal` | Montante do subtotal |
+| `vat_label` | Etiqueta do IVA |
+| `vat_amount` | Montante do IVA |
+| `total_label` | Etiqueta do total |
+| `total` | Montante total |
+| `bank_label` | Etiqueta da secção de dados de pagamento |
+| `bank_details` | Dados bancários ou instruções de pagamento |
+| `signature` | Imagem da assinatura |
+| `footer` | Texto do rodapé |
+
+## Cores da marca
+
+Os modelos da galeria podem aplicar automaticamente as cores da sua marca. O NomadBill obtém as cores principal e secundária nas definições da empresa e utiliza-as para alterar a cor dos elementos compatíveis do modelo.
+
+Esta funcionalidade é particularmente útil para manter uma identidade visual consistente em todas as faturas e orçamentos sem atualizar manualmente cada bloco de texto, cabeçalho ou elemento de destaque. Consoante o modelo, a cor de destaque é normalmente aplicada a cabeçalhos, barras, totais ou realces de fundo.
+
+Algumas disposições personalizadas também permitem manter o texto a preto e aplicar a paleta da marca apenas às áreas de destaque. Utilize esta abordagem se as cores da sua marca forem claras ou se a legibilidade for mais importante do que aplicar cor a todo o texto.
+
+## Modelos multilingues
+
+Os modelos estão disponíveis em quatro idiomas: DE, EN, FR e ES. A alteração do idioma atualiza etiquetas integradas, como o título do documento, as etiquetas de data, o subtotal, o IVA, o total e outros textos padrão utilizados nos modelos predefinidos.
+
+O NomadBill traduz as etiquetas do modelo separadamente da própria disposição. Isto significa que pode mudar de idioma sem perder posições, espaçamento, cores ou outras alterações de design efetuadas no editor.
+
+Se trabalhar em vários idiomas, crie um modelo por idioma quando precisar de controlar totalmente o texto e a formatação. Se a disposição se mantiver, pode reutilizar o mesmo design e recorrer às etiquetas traduzidas quando adequado.
+
+## Campos personalizados nos modelos
+
+Os campos personalizados permitem adicionar valores específicos da empresa, do cliente ou do documento aos seus PDFs. Nos modelos, estes valores utilizam nomes de campo no formato `cf_{entity}_{key}`.
+
+Por exemplo, um campo personalizado associado a uma fatura pode ser mapeado com um nome como `cf_invoice_project_reference`. Um campo personalizado ao nível do cliente segue o mesmo padrão com o segmento da entidade do cliente.
+
+Leia [Campos personalizados](/pt/user-guide/custom-fields) antes de adicionar estes marcadores de posição para manter as chaves e os nomes dos campos do modelo alinhados.
+
+<Callout kind="tip">
+
+Se um campo personalizado aparecer em branco no PDF, confirme primeiro se o campo existe, se a chave corresponde exatamente e se o nome do campo no modelo utiliza o padrão esperado `cf_{entity}_{key}`.
+
+</Callout>
+
+## Definir um modelo predefinido
+
+Cada tipo de documento pode ter um modelo predefinido. Este é utilizado automaticamente, a menos que escolha outro no formulário do documento ou no ecrã de pré-visualização.
+
+Para alterar a predefinição, abra **Definições → Modelos**, encontre o modelo no separador do tipo de documento correto e utilize **Definir como predefinido**. O modelo atualizado passa a ser o novo ponto de partida para esse tipo de documento em toda a empresa.
+
+Isto é útil quando está a implementar uma disposição renovada. Defina primeiro o novo modelo como predefinido e mantenha os modelos anteriores disponíveis para casos especiais ou para preservar a coerência histórica.
+
+## Guias relacionados
+
+<Columns cols={3}>
+  <Card title="Faturação" href="/pt/user-guide/invoicing" icon="book-open" cta="Abrir guia" />
+  <Card title="Orçamentos" href="/pt/user-guide/quotes" icon="arrow-right" cta="Ver guia relacionado" />
+  <Card title="Campos personalizados" href="/pt/user-guide/custom-fields" icon="settings" cta="Saber como os campos são mapeados" />
+</Columns>

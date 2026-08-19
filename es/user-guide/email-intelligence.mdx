@@ -1,0 +1,246 @@
+---
+title: Inteligencia de correo electrónico
+description: clasifique automáticamente los correos electrónicos entrantes, extraiga datos de documentos con IA y relacione los correos electrónicos con facturas, cotizaciones y recibos.
+---
+
+## Convierta su buzón compartido en una bandeja de entrada de documentos
+
+Email Intelligence le brinda a su empresa un buzón de correo dedicado que monitorea los mensajes entrantes, identifica documentos comerciales, extrae datos clave y sugiere enlaces a los registros correctos en NomadBill. Está diseñado para la forma en que ya trabajan los autónomos y los equipos pequeños: los proveedores envían facturas por correo electrónico, los clientes responden a las cotizaciones y las confirmaciones de pago llegan a la misma bandeja de entrada.
+
+## Buzón del agente
+
+Cada empresa recibe un buzón de agente dedicado en el formato `agent_name@agent.nomadbill.co`. Si su espacio de trabajo usa un dominio de agente personalizado, el buzón usa ese dominio.
+
+Sólo el propietario de la empresa puede aprovisionar el buzón. Durante la instalación, NomadBill normaliza el nombre del agente en un formato seguro para el buzón convirtiéndolo a minúsculas, reemplazando espacios con guiones y limitando el slug a 40 caracteres.
+
+Una vez que comienza el aprovisionamiento, NomadBill:
+
+- crea una subvención por correo con Nylas
+- almacena la conexión del buzón en el registro `company_email_accounts`
+- registra un webhook para eventos de correo entrante
+
+El webhook escucha estos eventos:
+
+- `message.created`
+- `message.updated`
+- `grant.expired`
+
+NomadBill registra el webhook en `/api/public/nylas-webhook`. Durante el protocolo de enlace inicial del webhook, el controlador `GET` devuelve el parámetro de consulta `challenge` exactamente como lo recibió.
+
+## Cómo se procesan los correos electrónicos entrantes
+
+Cada mensaje nuevo sigue el mismo flujo de procesamiento para que los resultados sean consistentes y se evite el trabajo duplicado.
+
+<Steps>
+  <Step title="Recibir el evento del webhook" icon="zap">
+
+Nylas envía un evento de webhook a `/api/public/nylas-webhook` cuando se crea o actualiza un mensaje, o cuando expira una concesión.
+
+NomadBill puede verificar el encabezado `x-nylas-signature` con HMAC-SHA256. La verificación de firma es opcional, pero debe tratarla como la configuración de producción recomendada.
+
+  </Step>
+
+  <Step title="Obtenga el correo electrónico completo" icon="download">
+
+Después de que llega un evento válido, NomadBill recupera el contenido completo del correo electrónico y los metadatos del buzón conectado.
+
+El sistema también protege contra procesamiento duplicado. Si el mismo correo electrónico ya se completó, se omitió o aún se está procesando dentro de un período de cinco minutos, NomadBill no lo analiza nuevamente.
+
+  </Step>
+
+  <Step title="Saltar mensajes que no deben analizarse" icon="shield">
+
+NomadBill omite los mensajes enviados desde el propio buzón del agente. Esta protección de correo electrónico automático evita bucles y evita analizar el correo generado por el sistema.
+
+Los mensajes salientes o irrelevantes también pueden excluirse durante la clasificación si no representan un documento comercial utilizable.
+
+  </Step>
+
+  <Step title="Descargar archivos adjuntos y contenido de mensajes" icon="paperclip">
+
+El procesador recopila el cuerpo del correo electrónico y los archivos adjuntos disponibles antes de ejecutar el análisis del documento.
+
+Esto le da al clasificador suficiente contexto para reconocer si el mensaje contiene una factura, recibo, cotización, confirmación u otro tipo de documento.
+
+  </Step>
+
+  <Step title="Ejecutar clasificación y extracción de IA" icon="code">
+
+NomadBill envía el contenido del correo electrónico a la canalización de IA utilizando `google/gemini-3.6-flash` a través de la puerta de enlace de Lovable AI.
+
+El modelo clasifica el documento y extrae campos estructurados como totales, fechas, nombres y números de referencia para que puedas revisarlos dentro de NomadBill en lugar de copiar los datos a mano.
+
+  </Step>
+
+  <Step title="Calcular sugerencias de coincidencia" icon="check-circle">
+
+Después de la extracción, el motor de comparación compara el correo electrónico con facturas, cotizaciones, facturas entrantes, transacciones bancarias y clientes de su empresa.
+
+Cada posible partido obtiene una puntuación. NomadBill guarda las sugerencias que cumplen con el umbral mínimo y muestra primero a los candidatos más fuertes.
+
+  </Step>
+
+  <Step title="Almacena el resultado y preserva tus decisiones." icon="database">
+
+El análisis final se almacena con el registro de correo electrónico, incluidos los datos extraídos y los enlaces sugeridos.
+
+Si ya vinculó o descartó una sugerencia, NomadBill conserva esa decisión en un nuevo análisis posterior en lugar de restablecer su trabajo.
+
+  </Step>
+</Steps>
+
+## Clasificación de documentos
+
+Email Intelligence clasifica cada mensaje analizado en uno de estos tipos de documentos:
+
+- `incoming_invoice`
+- `receipt`
+- `outgoing_invoice`
+- `quote`
+- `payment_confirmation`
+- `reminder`
+- `contract`
+- `other`
+
+La clasificación ayuda a NomadBill a decidir qué acciones ofrecer a continuación. Por ejemplo, solo los correos electrónicos `incoming_invoice` y `receipt` se pueden convertir directamente en un registro de factura entrante.
+
+## Datos extraídos por IA
+
+El resultado del análisis puede incluir los siguientes campos extraídos.
+
+<ParamField body="doc_type" param-type="string" required="true" show-location="false">
+El tipo de documento detectado para el correo electrónico.
+</ParamField>
+
+<ParamField body="confidence" param-type="number" show-location="false">
+La puntuación de confianza del modelo para el resultado de la clasificación.
+</ParamField>
+
+<ParamField body="summary" param-type="string" show-location="false">
+Un breve resumen de lo que parece contener el correo electrónico o el archivo adjunto.
+</ParamField>
+
+<ParamField body="document_number" param-type="string" show-location="false">
+El número principal de factura, recibo, cotización o confirmación detectado en el documento.
+</ParamField>
+
+<ParamField body="reference_numbers" param-type="array" show-location="false">
+Identificadores de referencia adicionales que se encuentran en el correo electrónico o el archivo adjunto.
+</ParamField>
+
+<ParamField body="total_amount" param-type="number" show-location="false">
+El importe bruto total detectado para el documento.
+</ParamField>
+
+<ParamField body="net_amount" param-type="number" show-location="false">
+El importe neto antes de IVA, cuando el documento lo disponga.
+</ParamField>
+
+<ParamField body="vat_amount" param-type="number" show-location="false">
+El importe del IVA extraído del documento.
+</ParamField>
+
+<ParamField body="vat_percentage" param-type="number" show-location="false">
+El tipo del IVA cuando pueda identificarse fehacientemente.
+</ParamField>
+
+<ParamField body="currency" param-type="string" show-location="false">
+El código de moneda detectado para el monto del documento.
+</ParamField>
+
+<ParamField body="document_date" param-type="string" show-location="false">
+La fecha de emisión que se encuentra en el documento.
+</ParamField>
+
+<ParamField body="due_date" param-type="string" show-location="false">
+La fecha de vencimiento del pago, cuando esté presente.
+</ParamField>
+
+<ParamField body="vendor_name" param-type="string" show-location="false">
+El nombre del proveedor o remitente asociado con el documento.
+</ParamField>
+
+<ParamField body="customer_name" param-type="string" show-location="false">
+El nombre del cliente al que se hace referencia en el documento.
+</ParamField>
+
+<ParamField body="iban" param-type="string" show-location="false">
+El número de cuenta bancaria detectado en el correo electrónico o documento.
+</ParamField>
+
+<ParamField body="category" param-type="string" show-location="false">
+Una categoría amplia asignada durante el análisis.
+</ParamField>
+
+<ParamField body="ocr_text" param-type="string" show-location="false">
+El texto del documento extraído utilizado para la clasificación y comparación posteriores.
+</ParamField>
+
+<ParamField body="line_items" param-type="array" show-location="false">
+Elementos de línea detectados del documento, cuando el archivo adjunto contiene detalles detallados.
+</ParamField>
+
+## Coincidencia y sugerencias
+
+Después del análisis, NomadBill busca registros relacionados en su espacio de trabajo y califica a cada candidato. Una sugerencia debe alcanzar una puntuación mínima de `0.35` para aparecer y el sistema devuelve hasta 12 sugerencias por correo electrónico.
+
+El motor de comparación evalúa varios tipos de registros:
+
+- facturas
+- citas
+- facturas entrantes
+- transacciones bancarias
+- clientes
+
+En el caso de las facturas, las señales más potentes son el número de documento, el importe, el destinatario y la identidad del cliente. El modelo de puntuación suma puntos por:
+
+- número encontrado: `+0.55`
+- cantidad dentro de aproximadamente `±0.5%` o `±0.02`: `+0.30`
+- coincidencia de divisas: `+0.05`
+- fecha dentro de los 14 días: `+0.10`
+- `sent_to` contiene el correo electrónico del remitente: `+0.25`
+- coincidencia de nombre de cliente: `+0.15`
+
+Para las transacciones bancarias, el motor se centra en la evidencia de pago y la identidad de la contraparte. Suma puntos por:
+
+- cantidad igualada: `+0.45`
+- número de candidato encontrado: `+0.35`
+- coincidencia de nombre de contraparte: `+0.20`
+- fecha dentro de los 30 días: `+0.10`
+
+Para los clientes, el motor intenta identificar a quién pertenece el correo electrónico antes de sugerir registros operativos. Suma puntos por:
+
+- coincidencia exacta de correo electrónico: `+0.80`
+- mismo dominio: `+0.50`
+- coincidencia de nombre: `+0.30`
+
+Estas puntuaciones son acumulativas, por lo que las coincidencias fuertes suelen combinar varias señales a la vez en lugar de depender de un campo.
+
+## Administrar enlaces de correo electrónico
+
+NomadBill realiza un seguimiento de cómo se relaciona cada correo electrónico con sus registros. Los enlaces pueden estar en uno de tres estados:
+
+- **Sugerido**: NomadBill encontró una coincidencia probable y está esperando su revisión.
+- **Vinculado**: confirmó que el correo electrónico pertenece a una factura, cotización, recibo, transacción o cliente específico.
+- **Descartada**: rechazaste una sugerencia y esa decisión se conserva si el correo electrónico se analiza nuevamente.
+
+Utilice la tarjeta Email Intelligence en la vista de correo electrónico para revisar los campos extraídos, inspeccionar sugerencias y confirmar o descartar coincidencias. Cuando un correo electrónico ya está conectado a un registro, la actividad del correo electrónico vinculado también aparece desde el otro lado en las páginas de factura, cotización, recibo, transacción y detalles del cliente.
+
+Si el tipo de documento es `incoming_invoice` o `receipt`, puede crear una factura entrante directamente desde el correo electrónico. La acción `createReceiptFromEmail` utiliza los datos del documento extraído para completar previamente el nuevo registro y evita la creación de duplicados cuando el correo electrónico ya se procesó o se omitió intencionalmente.
+
+<Callout kind="info">
+
+Actualizaciones de inteligencia de correo electrónico casi en tiempo real. NomadBill escucha la actividad del buzón a través de Supabase Realtime en `company_email_accounts.last_event_at` y recurre a un ciclo de sondeo de 30 segundos cuando es necesario.
+
+</Callout>
+
+## Guías relacionadas
+
+<Columns cols={2}>
+  <Card title="Facturación" href="/es/user-guide/invoicing" icon="file-text" cta="abrir guia">
+Administre las facturas salientes y comprenda cómo los correos electrónicos vinculados respaldan el seguimiento y el seguimiento de los pagos.
+  </Card>
+  <Card title="Facturas entrantes" href="/es/user-guide/incoming-invoices" icon="folder" cta="abrir guia">
+Revise las facturas de los proveedores, cree registros a partir del análisis de correos electrónicos y mantenga organizados los documentos de compra.
+  </Card>
+</Columns>

@@ -1,0 +1,246 @@
+---
+title: Intelijen Email
+description: Klasifikasikan email masuk secara otomatis, ekstrak data dokumen dengan AI, dan cocokkan email dengan faktur, penawaran harga, dan tanda terima.
+---
+
+## Ubah kotak surat bersama Anda menjadi kotak masuk dokumen
+
+Email Intelligence memberi perusahaan Anda kotak surat khusus yang mengawasi pesan masuk, mengidentifikasi dokumen bisnis, mengekstrak data penting, dan menyarankan tautan ke catatan yang tepat di NomadBill. Ini dirancang sesuai dengan cara kerja pekerja lepas dan tim kecil: pemasok mengirim faktur melalui email, klien membalas penawaran, dan konfirmasi pembayaran tiba di kotak masuk yang sama.
+
+## Kotak surat agen
+
+Setiap perusahaan mendapat satu kotak surat agen khusus dalam format `agent_name@agent.nomadbill.co`. Jika ruang kerja Anda menggunakan domain agen kustom, kotak surat akan menggunakan domain tersebut.
+
+Hanya pemilik perusahaan yang dapat menyediakan kotak surat. Selama penyiapan, NomadBill menormalkan nama agen ke dalam format yang aman untuk kotak surat dengan mengonversinya menjadi huruf kecil, mengganti spasi dengan tanda hubung, dan membatasi slug hingga 40 karakter.
+
+Setelah penyediaan dimulai, NomadBill:
+
+- membuat hibah surat dengan Nylas
+- menyimpan koneksi kotak surat dalam catatan `company_email_accounts`
+- mendaftarkan webhook untuk acara email masuk
+
+Webhook mendengarkan peristiwa berikut:
+
+- `message.created`
+- `message.updated`
+- `grant.expired`
+
+NomadBill mendaftarkan webhook di `/api/public/nylas-webhook`. Selama jabat tangan webhook awal, pengendali `GET` mengembalikan parameter kueri `challenge` persis seperti yang diterima.
+
+## Bagaimana email masuk diproses
+
+Setiap pesan baru mengikuti alur pemrosesan yang sama sehingga hasilnya tetap konsisten dan duplikasi pekerjaan dapat dihindari.
+
+<Steps>
+  <Step title="Menerima acara webhook" icon="zap">
+
+  Nylas mengirimkan peristiwa webhook ke `/api/public/nylas-webhook` saat pesan dibuat atau diperbarui, atau saat pemberian izin berakhir.
+
+  NomadBill dapat memverifikasi header `x-nylas-signature` dengan HMAC-SHA256. Verifikasi tanda tangan bersifat opsional, namun Anda harus memperlakukannya sebagai penyiapan produksi yang direkomendasikan.
+
+  </Step>
+
+  <Step title="Ambil email lengkapnya" icon="download">
+
+  Setelah peristiwa valid tiba, NomadBill mengambil konten email lengkap dan metadata dari kotak surat yang terhubung.
+
+  Sistem ini juga melindungi terhadap pemrosesan duplikat. Jika email yang sama sudah selesai, dilewati, atau masih diproses dalam jangka waktu lima menit, NomadBill tidak menganalisisnya lagi.
+
+  </Step>
+
+  <Step title="Lewati pesan yang tidak boleh dianalisis" icon="shield">
+
+  NomadBill melewatkan pesan yang dikirim dari kotak surat agen itu sendiri. Penjaga email mandiri ini mencegah loop dan menghindari analisis email yang dihasilkan sistem.
+
+  Pesan keluar atau tidak relevan juga dapat dikecualikan selama klasifikasi jika pesan tersebut tidak mewakili dokumen bisnis yang dapat digunakan.
+
+  </Step>
+
+  <Step title="Unduh lampiran dan isi pesan" icon="paperclip">
+
+  Pemroses mengumpulkan isi email dan semua lampiran yang tersedia sebelum menjalankan analisis dokumen.
+
+  Hal ini memberikan konteks yang cukup kepada pengklasifikasi untuk mengenali apakah pesan tersebut berisi faktur, tanda terima, penawaran harga, konfirmasi, atau jenis dokumen lainnya.
+
+  </Step>
+
+  <Step title="Jalankan klasifikasi dan ekstraksi AI" icon="code">
+
+  NomadBill mengirimkan konten email ke pipeline AI menggunakan `google/gemini-3.6-flash` melalui gateway Lovable AI.
+
+  Model mengklasifikasikan dokumen dan mengekstrak bidang terstruktur seperti total, tanggal, nama, dan nomor referensi sehingga Anda dapat meninjaunya di dalam NomadBill alih-alih menyalin data secara manual.
+
+  </Step>
+
+  <Step title="Hitung saran yang cocok" icon="check-circle">
+
+  Setelah ekstraksi, mesin pencocokan membandingkan email dengan faktur, penawaran harga, faktur masuk, transaksi bank, dan pelanggan di perusahaan Anda.
+
+  Setiap kemungkinan pertandingan mendapat skor. NomadBill menyimpan saran yang memenuhi ambang batas minimum dan menampilkan kandidat terkuat terlebih dahulu.
+
+  </Step>
+
+  <Step title="Simpan hasilnya dan pertahankan keputusan Anda" icon="database">
+
+  Analisis akhir disimpan dengan catatan email, termasuk data yang diekstraksi dan tautan yang disarankan.
+
+  Jika Anda sudah menautkan atau menolak saran, NomadBill mempertahankan keputusan tersebut untuk analisis ulang nanti, bukannya mengatur ulang pekerjaan Anda.
+
+  </Step>
+</Steps>
+
+## Klasifikasi dokumen
+
+Email Intelligence mengklasifikasikan setiap pesan yang dianalisis ke dalam salah satu jenis dokumen berikut:
+
+- `incoming_invoice`
+- `receipt`
+- `outgoing_invoice`
+- `quote`
+- `payment_confirmation`
+- `reminder`
+- `contract`
+- `other`
+
+Klasifikasi membantu NomadBill memutuskan tindakan apa yang akan ditawarkan selanjutnya. Misalnya, hanya email `incoming_invoice` dan `receipt` yang dapat langsung diubah menjadi catatan faktur masuk.
+
+## Data yang diekstraksi AI
+
+Hasil analisis dapat mencakup bidang yang diekstraksi berikut ini.
+
+<ParamField body="doc_type" param-type="string" required="true" show-location="false">
+Jenis dokumen yang terdeteksi untuk email.
+</ParamField>
+
+<ParamField body="confidence" param-type="number" show-location="false">
+Skor keyakinan model untuk hasil klasifikasi.
+</ParamField>
+
+<ParamField body="summary" param-type="string" show-location="false">
+Ringkasan singkat tentang isi email atau lampiran tersebut.
+</ParamField>
+
+<ParamField body="document_number" param-type="string" show-location="false">
+Nomor faktur, kuitansi, penawaran, atau konfirmasi utama terdeteksi dalam dokumen.
+</ParamField>
+
+<ParamField body="reference_numbers" param-type="array" show-location="false">
+Pengidentifikasi referensi tambahan ditemukan di email atau lampiran.
+</ParamField>
+
+<ParamField body="total_amount" param-type="number" show-location="false">
+Jumlah total kotor yang terdeteksi untuk dokumen tersebut.
+</ParamField>
+
+<ParamField body="net_amount" param-type="number" show-location="false">
+Jumlah bersih sebelum PPN, pada saat dokumen menyediakannya.
+</ParamField>
+
+<ParamField body="vat_amount" param-type="number" show-location="false">
+Jumlah PPN yang diambil dari dokumen.
+</ParamField>
+
+<ParamField body="vat_percentage" param-type="number" show-location="false">
+Tarif PPN bila dapat diidentifikasi secara andal.
+</ParamField>
+
+<ParamField body="currency" param-type="string" show-location="false">
+Kode mata uang yang terdeteksi untuk jumlah dokumen.
+</ParamField>
+
+<ParamField body="document_date" param-type="string" show-location="false">
+Tanggal penerbitan ditemukan dalam dokumen.
+</ParamField>
+
+<ParamField body="due_date" param-type="string" show-location="false">
+Tanggal jatuh tempo pembayaran, bila ada.
+</ParamField>
+
+<ParamField body="vendor_name" param-type="string" show-location="false">
+Nama pemasok atau pengirim yang terkait dengan dokumen.
+</ParamField>
+
+<ParamField body="customer_name" param-type="string" show-location="false">
+Nama pelanggan yang direferensikan dalam dokumen.
+</ParamField>
+
+<ParamField body="iban" param-type="string" show-location="false">
+Nomor rekening bank terdeteksi di email atau dokumen.
+</ParamField>
+
+<ParamField body="category" param-type="string" show-location="false">
+Kategori luas yang ditetapkan selama analisis.
+</ParamField>
+
+<ParamField body="ocr_text" param-type="string" show-location="false">
+Teks dokumen yang diekstraksi digunakan untuk klasifikasi dan pencocokan hilir.
+</ParamField>
+
+<ParamField body="line_items" param-type="array" show-location="false">
+Item baris terdeteksi dari dokumen, ketika lampiran berisi detail yang diperinci.
+</ParamField>
+
+## Pencocokan dan saran
+
+Setelah analisis, NomadBill mencari catatan terkait di ruang kerja Anda dan menilai setiap kandidat. Saran harus mencapai skor minimum `0.35` agar dapat muncul, dan sistem mengembalikan hingga 12 saran per email.
+
+Mesin pencocokan mengevaluasi beberapa jenis catatan:
+
+- faktur
+- penawaran
+- faktur masuk
+- transaksi perbankan
+- pelanggan
+
+Untuk invoice, sinyal terkuatnya adalah nomor dokumen, jumlah, penerima, dan identitas pelanggan. Model penilaian menambahkan poin untuk:
+
+- nomor ditemukan: `+0.55`
+- jumlah dalam sekitar `±0.5%` atau `±0.02`: `+0.30`
+- kecocokan mata uang: `+0.05`
+- tanggal dalam 14 hari: `+0.10`
+- `sent_to` berisi email pengirim: `+0.25`
+- pencocokan nama pelanggan: `+0.15`
+
+Untuk transaksi bank, mesinnya berfokus pada bukti pembayaran dan identitas rekanan. Ini menambahkan poin untuk:
+
+- jumlah yang cocok: `+0.45`
+- nomor calon ditemukan: `+0.35`
+- kecocokan nama rekanan: `+0.20`
+- tanggal dalam 30 hari: `+0.10`
+
+Untuk pelanggan, mesin mencoba mengidentifikasi pemilik email sebelum menyarankan catatan operasional. Ini menambahkan poin untuk:
+
+- email yang sama persis: `+0.80`
+- domain yang sama: `+0.50`
+- nama yang cocok: `+0.30`
+
+Skor ini bersifat tambahan, jadi pencocokan kuat biasanya menggabungkan beberapa sinyal sekaligus alih-alih bergantung pada satu bidang.
+
+## Mengelola tautan email
+
+NomadBill melacak bagaimana setiap email berhubungan dengan catatan Anda. Tautan dapat berada di salah satu dari tiga negara bagian:
+
+- **Disarankan** — NomadBill menemukan kemungkinan kecocokan dan menunggu ulasan Anda.
+- **Tertaut** — Anda mengonfirmasi bahwa email tersebut milik faktur, penawaran harga, tanda terima, transaksi, atau pelanggan tertentu.
+- **Ditolak** — Anda menolak saran, dan keputusan tersebut dipertahankan jika email dianalisis lagi.
+
+Gunakan kartu Intelijen Email pada tampilan email untuk meninjau bidang yang diekstraksi, memeriksa saran, dan mengonfirmasi atau menolak kecocokan. Ketika email sudah terhubung ke catatan, aktivitas email tertaut juga muncul dari sisi lain pada halaman faktur, penawaran harga, tanda terima, transaksi, dan detail pelanggan.
+
+Jika jenis dokumennya `incoming_invoice` atau `receipt`, Anda dapat membuat invoice masuk langsung dari email. Tindakan `createReceiptFromEmail` menggunakan data dokumen yang diekstraksi untuk mengisi catatan baru terlebih dahulu dan menghindari pembuatan duplikat ketika email sudah diproses atau sengaja dilewati.
+
+<Callout kind="info">
+
+Pembaruan Intelijen Email hampir secara real-time. NomadBill mendengarkan aktivitas kotak surat melalui Supabase Realtime di `company_email_accounts.last_event_at` dan kembali ke siklus polling 30 detik bila diperlukan.
+
+</Callout>
+
+## Panduan terkait
+
+<Columns cols={2}>
+  <Card title="Faktur" href="/id/user-guide/invoicing" icon="file-text" cta="Buka panduan">
+    Kelola faktur keluar dan pahami bagaimana email tertaut mendukung tindak lanjut dan pelacakan pembayaran.
+  </Card>
+  <Card title="Faktur masuk" href="/id/user-guide/incoming-invoices" icon="folder" cta="Buka panduan">
+    Tinjau tagihan pemasok, buat catatan dari analisis email, dan atur dokumen pembelian.
+  </Card>
+</Columns>

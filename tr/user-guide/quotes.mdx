@@ -1,0 +1,160 @@
+---
+title: Teklifler
+description: Çoklu para birimi desteği ve PDF oluşturma özelliğiyle teklifleri oluşturun, gönderin ve faturalara dönüştürün.
+---
+
+## Proje tahminlerini müşteriye hazır tekliflere dönüştürün
+
+Teklifler, bir teklif hazırlamanıza, bunu müşteriye göndermenize ve müşteri kabul ettiğinde bunu faturaya dönüştürmenize olanak tanır. Teklif iş akışı, müşteri ayrıntıları, satır öğeleri, VAT, para birimi, dil, PDF çıkışı, e-posta teslimatı, özel alanlar, CSV dışa aktarma ve özel PDF şablonları dahil olmak üzere faturalarla aynı temel verileri kullanır.
+
+## Teklif durumları
+
+Her fiyat teklifi iki ayrı durumu izler: **durum** ve **ödeme durumu**. Birlikte size teklifin satış sürecinizde nerede olduğunu ve bununla bağlantılı herhangi bir ödemenin tamamlanıp tamamlanmadığını söylerler.
+
+### Teklif durumu
+
+| Durum | Ne anlama geliyor |
+|---|---|
+| **taslak** | Hala teklif hazırlıyorsunuz. Teklif henüz kesinleşmedi veya dönüştürülmedi. |
+| **gönderildi** | Teklifi müşteriye e-postayla gönderdiniz. |
+| **dönüştürüldü** | Teklifi faturaya dönüştürdünüz. Teklif verilerinden yeni bir fatura kaydı oluşturuldu. |
+
+### Ödeme durumu
+
+| Ödeme durumu | Ne anlama geliyor |
+|---|---|
+| **ödenmemiş** | Hiçbir ödeme kaydedilmedi. |
+| **beklemede** | Ödeme başlatıldı ancak henüz tamamlanmadı. |
+| **ücretli** | Ödeme başarıyla tamamlandı. |
+| **başarısız oldu** | Ödeme girişiminde bulunuldu ancak başarılı olunamadı. |
+
+<Callout kind="info">
+
+Bir teklif, ödeme yapılmadan `sent` olarak işaretlenebilir ve ödeme durumu hala `unpaid` olsa bile faturaya dönüştürülebilir. Durum ve ödeme durumu bağımsız olarak takip edilir.
+
+</Callout>
+
+## Teklif oluşturma
+
+Fatura oluştururken yaptığınız gibi bir fiyat teklifi oluşturun ve ardından bunu müşteriye yönelik bir teklif olarak kaydedin.
+
+<Steps>
+  <Step title="Müşteriyi ekleyin" icon="users">
+
+  Mevcut bir müşteriyi seçin veya müşteri ayrıntılarını doğrudan teklife girin. Müşteri adı ve adresi de dahil olmak üzere, faturalar için kullandığınız müşteri bilgileri alanlarının aynılarını kullanın.
+
+  </Step>
+  <Step title="Teklif ayrıntılarını ayarlayın" icon="settings">
+
+  Teklif tarihini, son tarihi, para birimini ve dili girin. Fiyat teklifleri, faturalarla aynı para birimlerini ve dilleri destekler.
+
+  Desteklenen para birimleri:
+  
+  - `EUR`
+  - `USD`
+  - `GBP`
+  - `CHF`
+  - `AED`
+
+  Desteklenen diller:
+  
+  - `DE`
+  - `EN`
+  - `FR`
+  - `ES`
+
+  </Step>
+  <Step title="Satır öğeleri ve VAT ekleyin" icon="edit">
+
+  Sunmak istediğiniz ürünleri veya hizmetleri ekleyin, ardından adetleri, fiyatları ve VAT'yi inceleyin. Teklif, satır öğelerini faturalar tarafından kullanılanla aynı yapıda saklar; dolayısıyla toplamlar ve vergi hesaplamaları aynı modeli izler.
+
+  Kaydetmeden önce toplamı kontrol edin. Teklifiniz artık seçilen VAT yüzdesi uygulanarak tutarın tamamını göstermelidir.
+
+  </Step>
+  <Step title="Bir şablon seçin ve PDF'yi inceleyin" icon="file-text">
+
+  Özel teklif veya fatura düzenleri kullanıyorsanız bir PDF şablonu seçin. Ardından fiyatlandırmanın, markalamanın, dilin ve müşteri bilgilerinin doğru olduğunu onaylamak için PDF'yi önizleyin.
+
+  Önizleme doğru göründüğünde teklifi kaydedin. Teklif artık daha sonra gönderilmeye veya dönüştürülmeye hazır.
+
+  </Step>
+</Steps>
+
+## Tekliften faturaya dönüşüm
+
+Müşteri teklifinizi kabul ettiğinde teklifi dönüştürün. Dönüşüm, teklif durumunu `converted` olarak değiştirir ve aynı temel iş verilerine sahip yeni bir fatura oluşturur.
+
+Yeni fatura, teklifin müşteri ayrıntılarını, adresini, tarihlerini, para birimini, dilini, satır öğelerini, VAT yüzdesini, şablonunu ve toplam tutarını kopyalar. Bu size aynı bilgileri tekrar girmeden bir fatura belgesi verir.
+
+### İlişki nasıl yürüyor?
+
+Fatura, orijinal fiyat teklifinin `quote_id` referansını saklar. Bu, ilişkinin tekliften faturaya değil, faturadan teklife kadar izlendiği anlamına gelir.
+
+Bir teklifin faturaya dönüştürüldüğünü doğrulamanız gerekiyorsa `quote_id` ile bağlantısı verilen fatura kaydına bakın. Teklifin kendisi durumu `converted` olarak değiştirir, ancak doğrudan veritabanı ilişkisinde faturadan teklife gezinilebilir.
+
+<Callout kind="tip">
+
+Ticari şartlar kesinleştiğinde dönüştürmeyi kullanın. Teklif geçmişinizi sağlam tutar ve satışlardan faturalandırmaya temiz bir geçiş sağlar.
+
+</Callout>
+
+## Teklif numaralandırma
+
+Her fiyat teklifi `A-00001` formatında kendi belge numarasını alır. `A` öneki Angebot anlamına gelir.
+
+Teklif numaraları şirket bazında oluşturulur ve atomik olarak atanır. Bu, birden fazla kişinin aynı anda belge oluşturması durumunda mükerrer numaraların önlenmesini sağlar ve her şirketin teklif sırasının tutarlı olmasını sağlar.
+
+Gerekirse belgeyi göndermeden önce teklif numarasını düzenleyebilirsiniz.
+
+## Tekliflerin e-postayla gönderilmesi
+
+Faturalar için kullanılan teslimat akışının aynısını kullanarak teklifleri e-postayla gönderin. NomadBill, belge özeti e-postasını oluşturur ve bunu `noreply@nomadbill.co` kullanarak Resend aracılığıyla gönderir.
+
+Göndermeden önce PDF önizlemesini ve alıcı ayrıntılarını gözden geçirin. Gönderdikten sonra teklif durumu `sent`'ye geçer; bu, hazırlanan teklifleri müşteriye önceden teslim edilmiş olan tekliflerden ayırt etmenize yardımcı olur.
+
+Markalı belgelere ihtiyacınız varsa, e-posta gönderimini seçtiğiniz PDF şablonunuzla birleştirin, böylece müşterinin görmesini istediğiniz son düzeni alması sağlanır.
+
+## Mevduat ve ödemeler
+
+Fiyat teklifleri bir ödeme akışı içerir ancak fatura ödeme sürecine bağlıdır. Uygulamada ödeme eylemi, teklife özel bir ödeme kaydı yerine fatura ödeme akışını çağırır.
+
+Bu, teklif faturaya dönüştürüldükten sonra ödeme işleminin doğru şekilde çalışacağı anlamına gelir. Bu noktada fatura, ödeme ve ödeme güncellemeleri için kullanılabilir.
+
+<Callout kind="alert">
+
+Fiyat teklifi için depozito ödemesi, yalnızca teklifi faturaya dönüştürdüğünüzde doğru şekilde çalışır. Geçerli ödeme akışı, teklif tablosunu değil, faturalar tablosunu sorgular; dolayısıyla yalnızca teklif bazlı ödeme işleme sınırlıdır.
+
+</Callout>
+
+Ödeme durumları hâlâ tekliflerde görünüyor ancak temeldeki ödeme güncelleme akışı faturaya dayalı. Güvenilir bir ödeme bağlantısına veya Stripe destekli durum güncellemelerine ihtiyacınız varsa önce teklifi dönüştürün ve ödemeyi faturadan tahsil edin.
+
+## Tırnaklarla neler yapabilirsiniz?
+
+Fiyat teklifleri, faturalar için mevcut olan aynı belge özelliklerini destekler:
+
+- PDF göndermeden önce önizleme
+- E-posta teslimi
+- Özel alanlar
+- Bağlantılı e-postalar
+- CSV dışa aktarma
+- Özel PDF şablonları
+- Manuel teklif numarası düzenleme
+
+Bu paylaşılan özellikler, belge iş akışınızı değiştirmeden tekliften faturaya geçmenizi kolaylaştırır.
+
+## İlgili kılavuzlara devam edin
+
+<Columns cols={2}>
+  <Card
+    title="Faturaları yönet"
+    href="/tr/user-guide/invoicing"
+    icon="file-text"
+    cta="Kılavuzu aç"
+  />
+  <Card
+    title="PDF şablonlarını özelleştirin"
+    href="/tr/user-guide/pdf-templates"
+    icon="edit"
+    cta="Kılavuzu aç"
+  />
+</Columns>

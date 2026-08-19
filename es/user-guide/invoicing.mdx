@@ -1,0 +1,299 @@
+---
+title: Facturación
+description: cree, envíe y realice un seguimiento de facturas en varias monedas con cálculo del IVA, generación de PDF y pagos Stripe.
+---
+
+## Crear, enviar y realizar un seguimiento de facturas
+
+Utilice la facturación de NomadBill para crear facturas profesionales, calcular el IVA, exportar archivos PDF de marca, enviar facturas por correo electrónico y aceptar pagos en línea a través de Stripe. Puede administrar facturas en borrador y enviadas, realizar un seguimiento del progreso de los pagos y mantener los números de factura consistentes en toda su empresa.
+
+<Callout kind="info">
+
+Si comienza a partir de una cotización aprobada, utilice el flujo de cotización a factura descrito en [Cotizaciones](/es/user-guide/quotes).
+
+</Callout>
+
+## Estados de factura
+
+NomadBill realiza un seguimiento de las facturas con dos campos separados: `status` y `payment_status`. La insignia de factura prioriza la información de pago, por lo que cuando `payment_status` es `paid`, la factura se muestra como pagada incluso si el campo general `status` mostraría algo más.
+
+| Campo | Valores | Lo que significa |
+| --- | --- | --- |
+| `status` | `draft`, `sent`, `paid`, `overdue` | El estado del ciclo de vida del documento |
+| `payment_status` | `unpaid`, `pending`, `paid`, `failed` | El estado de procesamiento de pagos |
+
+Una forma práctica de leer esto es:
+
+- **`draft`**: todavía estás editando la factura y no has finalizado su envío.
+- **`sent`**: la factura ha sido entregada o marcada como enviada.
+- **`overdue`**: la fecha de vencimiento ha pasado y la factura aún no se ha liquidado.
+- **`paid`** — la factura se liquida.
+
+Los estados específicos de pago agregan más detalles:
+
+- **`unpaid`**: aún no se ha registrado ningún pago.
+- **`pending`**: el pago está en curso.
+- **`paid`** — pago completado exitosamente.
+- **`failed`**: no se completó un intento de pago.
+
+<Callout kind="tip">
+
+Si una factura muestra `paid` en la interfaz de usuario, ese estado pagado tiene prioridad sobre el estado general del documento para mostrar la credencial.
+
+</Callout>
+
+## Creando una factura
+
+Cree una nueva factura desde el área **Facturas**, complete los detalles del cliente y de facturación, agregue sus líneas de pedido y luego revise el resultado antes de enviarla. NomadBill mantiene las facturas sin terminar como borradores para que puedas volver a consultarlas más tarde.
+
+<Steps>
+  <Step title="Abrir una nueva factura" icon="file-text">
+
+Vaya a **Facturas** y cree una nueva factura. NomadBill prepara el documento con el contexto de su empresa y asigna una numeración cuando se crea la factura.
+
+Cuando se abra la factura, debería ver campos de facturación, artículos de línea, totales y configuraciones de documentos editables.
+
+  </Step>
+
+  <Step title="Agregar detalles de cliente y facturación" icon="users">
+
+Ingrese la información del cliente, fecha de factura, fecha de vencimiento, moneda e idioma. Elija el idioma de la factura que coincida con el destinatario para que las etiquetas en el PDF y el correo electrónico se presenten correctamente.
+
+Después de guardarla, la factura permanece en estado **borrador** hasta que la envíe o la marque de otra manera.
+
+  </Step>
+
+  <Step title="Agregar líneas de pedido" icon="plus">
+
+Agregue cada producto o servicio como una línea separada con un nombre, cantidad y precio unitario. Incluya una descripción cuando necesite aclarar el alcance, el período de facturación o los entregables.
+
+Su subtotal se actualiza a medida que agrega o edita elementos.
+
+  </Step>
+
+  <Step title="Revisar IVA y totales" icon="bar-chart">
+
+Confirma el porcentaje de IVA antes de enviar la factura. NomadBill calcula el total a partir del subtotal y el porcentaje de IVA, para que puedas verificar el monto antes de generar el PDF o el enlace de pago.
+
+Un paso de revisión correcto debería dejarle con un subtotal claro, el monto del IVA y el total final.
+
+  </Step>
+
+  <Step title="Exportar, enviar o cobrar pagos" icon="arrow-right">
+
+Una vez que la factura parezca correcta, genere el PDF, envíelo por correo electrónico o habilite el pago de Stripe si desea que el cliente pague en línea. Después del envío, NomadBill puede registrar los detalles de la entrega, como quién recibió la factura y cuándo se envió.
+
+En ese momento, la factura pasa de la edición al seguimiento activo.
+
+  </Step>
+</Steps>
+
+## Líneas de pedido
+
+Cada línea de pedido de la factura almacena una estructura pequeña y coherente para que pueda mantener los cargos claros y predecibles. Una línea de pedido incluye:
+
+- **`id`** — identificador interno opcional
+- **`name`**: el título de la línea de pedido.
+- **`description`** — texto detallado opcional
+- **`quantity`** — cuántas unidades facturas
+- **`price`** — el precio por unidad
+
+Utilice una línea de pedido por servicio, producto o período de facturación facturable. Esto hace que el PDF sea más fácil de leer y ayuda a su cliente a comprender cómo se generó el total.
+
+NomadBill también admite el reordenamiento de líneas de pedido mediante arrastrar y soltar. Reordene los artículos para que coincidan con la historia que desea que cuente la factura, como enumerar los servicios principales primero y los gastos reembolsables al final.
+
+## Cálculo del IVA
+
+NomadBill calcula los totales de las facturas a partir del subtotal y el porcentaje de IVA. La fórmula es:
+
+`total = subtotal + (subtotal x vat_percentage / 100)`
+
+El tipo de IVA predeterminado es **19%**, que coincide con el tipo estándar alemán. Puedes cambiar el porcentaje de IVA por factura según sea necesario, siempre y cuando el valor se mantenga dentro del rango permitido de **0 a 100**.
+
+Eso significa:
+
+- **`0`** es válido para facturas exentas de IVA o con tasa cero
+- **`19`** es el punto de partida predeterminado
+- **`100`** es el límite superior permitido
+
+<Callout kind="info">
+
+Verifique el tipo de IVA antes de enviar la factura, especialmente si factura entre jurisdicciones o trabaja con tratamientos impositivos mixtos.
+
+</Callout>
+
+## Monedas e idiomas
+
+NomadBill admite cinco monedas de facturación y cuatro idiomas de facturación. Estos valores se aplican, por lo que las facturas siempre utilizan una de las opciones admitidas.
+
+### Monedas admitidas
+
+- **EUR**
+- **DÓLAR ESTADOUNIDENSE**
+- **GBP**
+- **CHF**
+- **DEA**
+
+### Idiomas de factura admitidos
+
+- **ES**
+- **ES**
+- **FR**
+- **ES**
+
+### Cómo se elige la moneda predeterminada
+
+NomadBill resuelve la moneda de la factura en este orden:
+
+1. **Moneda de la factura**: si la factura ya tiene una moneda, se utiliza ese valor.
+2. **Moneda predeterminada de la empresa**: si la factura no tiene una moneda explícita, NomadBill verifica la moneda predeterminada de la empresa.
+3. **Preferencia de moneda global**: si ninguna de las dos primeras existe, NomadBill recurre a la moneda global almacenada en el almacenamiento del navegador local como `nb.currency`.
+
+Esta prioridad mantiene estables las facturas existentes y, al mismo tiempo, le brinda un respaldo para toda la empresa y a nivel de usuario.
+
+## Numeración de facturas
+
+Los números de factura utilizan el formato `R-00001`. El prefijo `R` identifica el tipo de documento y la parte numérica utiliza cinco dígitos con ceros a la izquierda.
+
+NomadBill genera números a través de una función de base de datos que asigna el siguiente número de documento de forma atómica para cada empresa. Eso es importante si varias personas crean facturas al mismo tiempo, porque la secuencia permanece a salvo de las condiciones de carrera.
+
+Dos detalles son importantes para el uso diario:
+
+- Los números de factura son **por empresa** y no se comparten globalmente entre todas las cuentas.
+- Cada número de factura debe ser único dentro de una misma empresa mediante la combinación `company_id` y `invoice_number`.
+
+## Generación de PDF
+
+NomadBill puede exportar facturas como documentos PDF para descargarlos, compartirlos o enviarlos por correo electrónico. El motor PDF utiliza datos de factura estándar junto con la marca de su empresa para producir un documento terminado.
+
+El PDF generado utiliza un diseño **A4 vertical** con **márgenes de 15 mm** y puede incluir:
+
+- logotipo de la empresa
+- color de la marca
+- tabla de líneas de pedido
+- bloque de totales
+- datos bancarios
+- pie de página
+
+La salida en PDF también admite los cuatro idiomas de factura, por lo que las etiquetas aparecen en el idioma seleccionado en la factura. Si utiliza diseños de PDF personalizados, NomadBill también admite la representación basada en plantillas.
+
+<Columns cols={2}>
+  <Card
+    title="Plantillas PDF"
+href="/es/user-guide/pdf-templates"
+icono="libro-abierto"
+    cta="abrir guia"
+  />
+  <Card
+    title="Cotizaciones"
+href="/es/user-guide/quotes"
+icono="flecha-derecha"
+    cta="Ver guía relacionada"
+  />
+</Columns>
+
+## Envío de facturas por correo electrónico
+
+NomadBill envía correos electrónicos de facturas a través de Resend usando `noreply@nomadbill.co` como dirección del remitente. Puede enviar un correo electrónico con un documento con contenido HTML y un archivo adjunto PDF opcional, o un correo electrónico de estilo resumido que registre los detalles de la entrega en la base de datos.
+
+Cuando envía un correo electrónico de resumen de factura, NomadBill actualiza estos campos de seguimiento:
+
+- **`sent_at`** — cuando se envió la factura
+- **`sent_to`** — qué destinatario lo recibió
+- **`email_status`** — establecido en `sent`
+
+El contenido del correo electrónico puede incluir:
+
+- el número de documento
+- el nombre del cliente
+- un mensaje personalizado opcional
+- el importe total
+
+Esto le brinda tanto la entrega saliente como un registro de auditoría básico dentro del registro de la factura.
+
+## Aceptar pagos con Stripe
+
+Habilite Stripe en una factura cuando desee que el cliente pague a través de una página de pago alojada. NomadBill crea una sesión de pago de Stripe para la factura y envía al cliente a Stripe para completar el pago.
+
+### Cómo funciona el flujo de Stripe
+
+<Steps>
+  <Step title="Habilite Stripe para la factura" icon="settings">
+
+Active Stripe para la factura para que `stripe_enabled` esté activo. Esto marca la factura como elegible para el pago en línea.
+
+Una vez habilitada, la factura puede crear una sesión de pago alojada.
+
+  </Step>
+
+  <Step title="Crear la sesión de pago" icon="lock">
+
+NomadBill crea una sesión de pago de Stripe a partir del total de la factura. La cantidad enviada a Stripe se convierte a centavos usando `Math.round(total_amount * 100)` y el código de moneda se convierte a minúsculas para la API de Stripe.
+
+Esto garantiza que Stripe reciba el importe en el formato esperado.
+
+  </Step>
+
+  <Step title="Redirigir al cliente a Stripe" icon="external-link">
+
+El cliente es redirigido a la página de pago alojada en Stripe para completar el pago de forma segura. No es necesario que recopile los datos de la tarjeta directamente dentro de la página de la factura.
+
+Una redirección exitosa significa que el cliente ahora está completando el pago en Stripe.
+
+  </Step>
+
+  <Step title="Gestionar el éxito o la cancelación" icon="check-circle">
+
+Después del pago, Stripe devuelve al cliente a una de dos rutas de facturación:
+
+- **Éxito:** `/invoices/$id/pay/success`
+- **Cancelar:** `/invoices/$id/pay/cancel`
+
+La página de éxito confirma el pago y activa el seguimiento de la compra. La página de cancelación permite al cliente volver a intentarlo.
+
+  </Step>
+
+  <Step title="Actualizar la factura después de la confirmación del webhook" icon="shield">
+
+Cuando Stripe envía el evento de webhook `checkout.session.completed`, NomadBill actualiza la factura a `payment_status=paid` y `status=paid`.
+
+Esta actualización del webhook es lo que finaliza el estado pago dentro de NomadBill.
+
+  </Step>
+</Steps>
+
+## Facturas recurrentes
+
+Las facturas recurrentes le permiten marcar una factura como parte de un patrón de facturación repetido. NomadBill almacena esto con el indicador `is_recurring` y un valor `recurring_frequency`.
+
+Las frecuencias recurrentes admitidas son:
+
+- **semanalmente**
+- **mensual**
+- **trimestral**
+- **anual**
+
+<Callout kind="alert">
+
+Las facturas recurrentes son solo metadatos. NomadBill no ejecuta una tarea cron automática y no genera nuevas facturas según una programación únicamente a partir de este indicador.
+
+</Callout>
+
+Utilice configuraciones recurrentes para etiquetar y organizar la facturación repetida, pero no confíe en ellas como un motor de suscripción automatizado.
+
+## Qué hacer a continuación
+
+<Columns cols={2}>
+  <Card
+    title="Administrar plantillas PDF"
+href="/es/user-guide/pdf-templates"
+icono="editar"
+    cta="Personalizar diseños"
+  />
+  <Card
+    title="Trabajar con comillas"
+href="/es/user-guide/quotes"
+icono="carpeta"
+    cta="Crear facturas basadas en cotizaciones"
+  />
+</Columns>

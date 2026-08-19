@@ -1,0 +1,83 @@
+---
+title: Intégrations
+description: ConnecterNomadBillàStripepour les paiements,Plaidpour la synchronisation bancaire,Nylaspour l'intelligence des e-mails, etResendpour l'envoi d'e-mails.
+---
+
+## Services connectés
+
+NomadBillse connecte à des services externes pour automatiser l'encaissement des paiements, l'importation des transactions bancaires, l'envoi d'e-mails et le traitement des documents. Ces intégrations fonctionnent ensemble pour que les factures, les paiements, les transactions bancaires et les documents fournisseurs restent liés sans saisie manuelle des données.
+
+<Columns cols={2}>
+  <Card title="Stripe" icon="credit-card" href="/fr/user-guide/invoicing">
+Sessions de paiement des factures et facturation des abonnements avec mises à jour de statut basées sur des webhooks.
+  </Card>
+  <Card title="Plaid" icon="banknote" href="/fr/user-guide/bank-sync">
+Liaison de comptes bancaires pour les banques américaines et européennes avec jusqu'à 365 jours d'historique des transactions.
+  </Card>
+  <Card title="Nylas" icon="mail" href="/fr/user-guide/email-intelligence">
+Boîte aux lettres électronique de l'agent avec classification des documents et correspondance des entités basées sur l'IA.
+  </Card>
+  <Card title="Resend" icon="send">
+Envoi d'e-mails transactionnels pour les factures, les devis et les invitations d'équipe.
+  </Card>
+  <Card title="pdfme" icon="layout" href="/fr/user-guide/pdf-templates">
+Glisser-déposerPDFconcepteur de modèles et générateur de documents.
+  </Card>
+  <Card title="Supabase" icon="database">
+    PostgreSQLbase de données, authentification et stockage de fichiers avec sécurité au niveau des lignes.
+  </Card>
+</Columns>
+
+## Traitement des paiements
+
+Stripegère deux flux de paiement dansNomadBill:
+
+- **Paiements de facture** — Lorsque vous activez le paiement sur une facture,NomadBillcrée unStripeSéance de paiement. Le client paieStripeLa page hébergée de et un webhook met automatiquement à jour le statut de la facture sur payé.
+- **Facturation des abonnements** — Les forfaits Starter et Professionnel sont facturés viaStripeavec un essai de 7 jours. Les mises à jour du statut de l'abonnement reviennent à votre profil via des événements webhook.
+
+Par entrepriseStripeLes clés de connexion peuvent être configurées dans Paramètres, permettant à chaque entreprise d'utiliser la sienneStripecompte des paiements de factures.
+
+## Synchronisation bancaire
+
+Plaidconnecte les comptes bancaires dans deux régions :
+
+- **Banques américaines** — Prend en charge les institutions aux États-Unis et au Canada
+- **Banques de l'UE** — Prend en charge les institutions en Allemagne, en France, en Espagne, aux Pays-Bas, en Irlande et au Royaume-Uni.
+
+Les transactions sont synchronisées à l'aidePlaidLa synchronisation incrémentielle basée sur le curseur de . La première connexion importe jusqu'à 365 jours d'historique. Les synchronisations suivantes récupèrent uniquement les transactions nouvelles, modifiées ou supprimées.
+
+## Intelligence des e-mails
+
+Nylasprévoit une boîte aux lettres d'agent dédiée pour chaque entreprise (par exemple,`yourcompany@agent.nomadbill.co`). Les e-mails entrants sont traités via un pipeline d'IA qui :
+
+- Classe les messages en types de documents (facture entrante, reçu, confirmation de paiement, rappel, contrat et autres)
+- Extrait des données structurées telles que les montants,VAT, IBAN, les dates et les éléments de campagne du corps de l'e-mail et des pièces jointes
+- Fait correspondre les e-mails aux factures existantes, aux devis, aux factures entrantes, aux transactions bancaires et aux clients à l'aide d'un moteur de notation
+
+## Envoi par e-mail
+
+Resendenvoie des e-mails transactionnels au nom deNomadBill:
+
+- Emails de livraison des factures et devis
+- E-mails d'invitation d'équipe
+- Adresse de l'expéditeur :`noreply@nomadbill.co`
+
+## PDFgénération
+
+Lepdfmela bibliothèque alimente lePDFsystème de modèles. Vous pouvez concevoir des modèles personnalisés pour les factures, les devis et les factures entrantes à l'aide d'un éditeur visuel par glisser-déposer. Les modèles prennent en charge plusieurs langues et peuvent inclure des espaces réservés de champs personnalisés.
+
+## Réconciliation automatique
+
+Lorsque les transactions bancaires sont synchronisées,NomadBillles associe automatiquement aux factures existantes et aux factures entrantes :
+
+|Type de correspondance|Méthode|Indice de confiance|
+|---|---|---|
+|Facture (paiement entrant)|Montant exact + devise + date sous 14 jours| 90 |
+|Dépense (paiement sortant)|Montant exact + devise + date sous 14 jours| 85 |
+|Lien manuel|Sélectionné par l'utilisateur| 100 |
+
+Les transactions sans correspondance avec des candidats plausibles sont présentées sous forme de suggestions avec une fenêtre de 30 jours plus large pour un examen manuel.
+
+<Callout kind="info">
+  NomadBilln'offre pas actuellement de service publicREST APIou des webhooks sortants pour les développeurs externes. LeStripeetNylasles webhooks sont des points de terminaison entrants quiNomadBillreçoit pour traiter les paiements et les événements par courrier électronique.
+</Callout>

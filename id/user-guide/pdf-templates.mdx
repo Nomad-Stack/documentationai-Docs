@@ -1,0 +1,175 @@
+---
+title: Templat PDF
+description: Rancang tata letak PDF khusus untuk faktur, penawaran harga, dan tanda terima dengan pengeditan seret dan lepas, templat yang dapat digunakan kembali, dan warna merek.
+---
+
+## Rancang tata letak PDF khusus untuk dokumen Anda
+
+Templat PDF memungkinkan Anda mengontrol tampilan faktur, penawaran harga, dan dokumen masuk saat Anda mempratinjau, mengekspor, atau mengirimnya. Anda dapat memulai dari tata letak kosong, memilih desain yang telah dibuat sebelumnya, atau mengimpor templat JSON, lalu menyesuaikan hasilnya di editor seret dan lepas.
+
+<Callout kind="info">
+
+Kelola templat di **Pengaturan → Templat**. NomadBill menyimpan daftar templat terpisah untuk faktur, penawaran harga, dan dokumen masuk, sehingga Anda dapat mendesain setiap jenis dokumen secara mandiri.
+
+</Callout>
+
+## Cara kerja templat PDF
+
+Setiap templat PDF menyimpan tata letak lengkap untuk satu jenis dokumen. Itu termasuk struktur halaman, blok teks, tabel, gambar, dan gaya yang digunakan untuk menghasilkan PDF akhir.
+
+Saat Anda membuat atau mengedit faktur, penawaran harga, atau dokumen masuk, Anda dapat menggunakan templat default untuk jenis dokumen tersebut atau memilih templat tersimpan yang berbeda. Hal ini memberi Anda cara yang konsisten untuk menyimpan dokumen sehari-hari sesuai mereknya sambil tetap mengizinkan tata letak alternatif bila diperlukan.
+
+NomadBill mendukung tiga jenis dokumen:
+
+| Jenis dokumen | Digunakan untuk | Di mana Anda memilihnya |
+| --- | --- | --- |
+| Faktur | Faktur keluar yang Anda kirim ke pelanggan | Formulir faktur dan pratinjau |
+| Penawaran | Penawaran harga yang Anda kirim sebelum membuat faktur | Formulir dan pratinjau penawaran |
+| Masuk | Faktur masuk, tagihan pemasok, atau kuitansi | Alur dokumen masuk |
+
+## Jenis dokumen
+
+Templat dikelompokkan berdasarkan jenis dokumen karena setiap jenis memiliki tujuan berbeda dan mungkin memerlukan penekanan kata atau tata letak yang berbeda.
+
+| Jenis | Judul khas dalam PDF | Penggunaan umum |
+| --- | --- | --- |
+| `invoice` | Faktur | Menagih pelanggan untuk pekerjaan yang telah selesai atau barang yang dikirim |
+| `quote` | Mengutip | Mengirimkan proposal harga sebelum pekerjaan dimulai |
+| `incoming` | Kwitansi atau faktur masuk | Mencatat pengeluaran pemasok atau kwitansi yang diunggah |
+
+<Callout kind="tip">
+
+Jika Anda menginginkan tata letak berbeda untuk tipe dokumen yang sama, buat beberapa templat dan tetapkan satu templat sebagai default. Anda masih dapat memilih templat lain untuk dokumen tertentu bila diperlukan.
+
+</Callout>
+
+## Membuat templat
+
+Anda dapat membuat templat dengan tiga cara: mulai dari kosong, mulai dari galeri, atau mengimpor file JSON yang sudah ada.
+
+<Steps>
+  <Step title="Buat templat kosong" icon="plus">
+
+  Buka **Pengaturan → Templat**, pilih tab jenis dokumen, lalu buat templat baru dan pilih **Kosong**.
+
+  Templat kosong dimulai dari tata letak default NomadBill untuk jenis dokumen tersebut. Ini adalah opsi tercepat ketika Anda menginginkan kontrol penuh namun tetap ingin bidang standar yang diperlukan sudah dipetakan.
+
+  </Step>
+  <Step title="Mulai dari galeri" icon="book-open">
+
+  Buka **Pengaturan → Templat**, pilih tab jenis dokumen, lalu buat templat baru dan pilih **Galeri**.
+
+  Pilih salah satu dari tujuh templat bawaan jika Anda ingin tata letak selesai yang dapat Anda adaptasi. Ini adalah titik awal terbaik ketika Anda menginginkan tata letak profesional tanpa membangun setiap bagian dari awal.
+
+  </Step>
+  <Step title="Impor templat JSON" icon="upload">
+
+  Buka **Pengaturan → Templat**, pilih tab jenis dokumen, lalu buat templat baru dan pilih **Impor dari JSON**.
+
+  Unggah file `.json` yang berisi struktur templat yang valid. Gunakan jalur ini jika Anda sudah memiliki file templat yang kompatibel dan ingin menggunakannya kembali di seluruh perusahaan atau lingkungan.
+
+  </Step>
+</Steps>
+
+## Galeri templat
+
+NomadBill menyertakan tujuh templat siap pakai yang dapat Anda gunakan sebagai titik awal.
+
+| Templat | Gaya | Terbaik untuk |
+| --- | --- | --- |
+| Klasik | Default seimbang dengan header warna merek | Faktur dan penawaran umum |
+| Modern | Bilah atas berwarna dengan judul tebal | Tata letak yang mengedepankan merek |
+| Minimal | Tata letak monokrom tanpa aksen warna | Dokumen sederhana dan sedikit tinta |
+| Putih | Bersihkan tata letak yang dapat dicetak dengan blok metode pembayaran | Faktur formal dan alur kerja cetak |
+| Biru | Aksen biru dengan baris total terisi | Total kontras tinggi dan bagian ringkasan |
+| Hijau | Bilah aksen kiri berwarna hijau | Tata letak bermerek alternatif |
+| Anggun | Judul besar dengan tabel abu-abu halus | Dokumen yang menghadap klien dipoles |
+
+## Mengedit templat
+
+Editor templat terbuka dalam desainer layar penuh sehingga Anda dapat membuat dan menyesuaikan tata letak secara visual. Anda dapat menyeret bidang ke posisinya, mengubah ukurannya, mengubah teks, dan menyempurnakan struktur visual tanpa mengedit JSON yang mendasarinya secara manual.
+
+Jenis bidang yang tersedia mencakup teks, teks multi-variabel, tabel, daftar, garis, bentuk, gambar, tanda tangan, tanggal, kotak centang, grup radio, kode QR, dan kode batang. Ini memberi Anda fleksibilitas yang cukup untuk membuat tata letak faktur standar serta desain dokumen yang lebih disesuaikan.
+
+Sebagian besar pengguna akan menghabiskan waktunya untuk menyesuaikan posisi, jarak, label, dan presentasi tabel. Jika Anda tetap menggunakan nama kolom standar, NomadBill akan terus mengisi kolom tersebut secara otomatis saat PDF dibuat.
+
+<Callout kind="info">
+
+Daftar item dokumen biasanya dirender melalui bidang tabel `items`. Jika Anda menghapus atau mengganti nama bidang tersebut, item baris tidak akan muncul lagi di PDF yang dihasilkan.
+
+</Callout>
+
+## Bidang standar
+
+NomadBill mengisi nama bidang tertentu secara otomatis saat merender PDF. Biarkan nama-nama ini tidak berubah jika Anda ingin aplikasi tetap memetakan data dokumen ke dalam templat.
+
+| Nama bidang | Berisi |
+| --- | --- |
+| `company_logo` | Gambar logo perusahaan Anda |
+| `company_name` | Nama tampilan perusahaan Anda |
+| `company_address` | Alamat perusahaan Anda, biasanya multi-baris |
+| `company_vat` | Label dan nilai PPN atau nomor pajak Anda |
+| `doc_title` | Judul dokumen seperti Faktur, Penawaran, atau Kwitansi |
+| `doc_number` | Nomor dokumen |
+| `doc_date` | Label tanggal penerbitan dan nilainya |
+| `doc_due_date` | Label tanggal jatuh tempo dan nilainya |
+| `bill_to_label` | Label bagian pelanggan |
+| `customer_name` | Nama pelanggan |
+| `customer_address` | Alamat pelanggan |
+| `items` | Tabel item baris |
+| `subtotal_label` | Label subtotal |
+| `subtotal` | Jumlah subtotal |
+| `vat_label` | label PPN |
+| `vat_amount` | jumlah PPN |
+| `total_label` | Label keseluruhan |
+| `total` | Jumlah total |
+| `bank_label` | Label bagian rincian pembayaran |
+| `bank_details` | Instruksi bank atau pembayaran |
+| `signature` | Gambar tanda tangan |
+| `footer` | Teks catatan kaki |
+
+## Warna merek
+
+Templat galeri dapat menerapkan warna merek perusahaan Anda secara otomatis. NomadBill membaca warna primer dan sekunder Anda dari pengaturan perusahaan dan menggunakannya untuk mewarnai ulang elemen templat yang didukung.
+
+Ini berfungsi paling baik bila Anda menginginkan pencitraan merek yang konsisten di seluruh faktur dan penawaran harga tanpa memperbarui setiap blok teks, header, atau elemen aksen secara manual. Tergantung pada templatenya, warna aksen biasanya diterapkan pada header, bar, total, atau highlight latar belakang.
+
+Beberapa tata letak bermerek juga mendukung menjaga teks tetap hitam sambil tetap menerapkan palet merek Anda ke area aksen. Gunakan pendekatan tersebut jika warna merek Anda terang atau jika keterbacaan lebih penting daripada gaya teks penuh warna.
+
+## Templat multi-bahasa
+
+Templat mendukung empat bahasa: DE, EN, FR, dan ES. Perubahan bahasa memperbarui label bawaan seperti judul dokumen, label tanggal, subtotal, PPN, total, dan teks standar lainnya yang digunakan dalam templat default.
+
+NomadBill menerjemahkan label templat secara terpisah dari tata letak itu sendiri. Artinya, Anda dapat mengganti bahasa tanpa kehilangan posisi, spasi, warna, atau perubahan desain lainnya yang Anda buat di editor.
+
+Jika Anda bekerja dalam beberapa bahasa, buatlah satu templat per bahasa saat Anda memerlukan kontrol penuh atas kata-kata dan pemformatan. Jika tata letaknya tetap sama, Anda dapat menggunakan kembali desain yang sama dan mengandalkan label terjemahan jika diperlukan.
+
+## Bidang khusus di templat
+
+Bidang khusus memungkinkan Anda menambahkan nilai khusus perusahaan, pelanggan, atau dokumen ke PDF Anda. Di templat, nilai ini menggunakan nama bidang dalam format `cf_{entity}_{key}`.
+
+Misalnya, bidang khusus yang terkait dengan faktur dapat dipetakan dengan nama bidang seperti `cf_invoice_project_reference`. Bidang kustom tingkat pelanggan mengikuti pola yang sama dengan segmen entitas pelanggan.
+
+Baca [Bidang Khusus](/id/user-guide/custom-fields) sebelum menambahkan placeholder ini sehingga kunci bidang dan nama bidang templat Anda tetap selaras.
+
+<Callout kind="tip">
+
+Jika bidang khusus tampak kosong di PDF, pertama-tama konfirmasikan bahwa bidang tersebut ada, kuncinya sama persis, dan nama bidang dalam templat menggunakan pola `cf_{entity}_{key}` yang diharapkan.
+
+</Callout>
+
+## Menetapkan templat default
+
+Setiap jenis dokumen dapat memiliki satu templat default. Templat default digunakan secara otomatis kecuali Anda memilih templat lain pada formulir dokumen atau layar pratinjau.
+
+Untuk mengubah default, buka **Pengaturan → Templat**, temukan templat di tab jenis dokumen yang benar, dan gunakan **Setel default**. Templat yang diperbarui menjadi titik awal baru untuk jenis dokumen tersebut di seluruh perusahaan Anda.
+
+Ini berguna saat Anda meluncurkan tata letak yang disegarkan. Tetapkan templat baru sebagai default terlebih dahulu, lalu biarkan templat lama tersedia untuk kasus khusus atau konsistensi historis.
+
+## Panduan terkait
+
+<Columns cols={3}>
+  <Card title="Faktur" href="/id/user-guide/invoicing" icon="book-open" cta="Buka panduan" />
+  <Card title="Penawaran" href="/id/user-guide/quotes" icon="arrow-right" cta="Lihat panduan terkait" />
+  <Card title="Bidang Kustom" href="/id/user-guide/custom-fields" icon="settings" cta="Pelajari bagaimana bidang dipetakan" />
+</Columns>

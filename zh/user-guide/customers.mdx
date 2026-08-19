@@ -1,0 +1,128 @@
+---
+title: 顾客
+description: 使用联系人详细信息、自定义字段管理客户记录，并在发票和报价中重复使用。
+---
+
+## 将您的客户详细信息保存在一处
+
+客户存储您在计费工作流程中重复使用的联系信息。在 `/customers` 上添加每个客户一次，保持其详细信息最新，并在创建发票和报价时再次使用这些记录。
+
+公司所有者和团队成员可以在公司工作区管理客户。客户列表按名称字母顺序排序，表格显示标准联系人字段以及配置为显示在表格中的任何自定义字段。
+
+## 客户字段
+
+每条客户记录都包含以下核心联系字段。
+
+<ParamField body="name" param-type="string" required="true" show-location="false">
+
+客户的显示名称。 NomadBill 需要此字段并将其用作客户列表中的主要标签。
+
+</ParamField>
+
+<ParamField body="email" param-type="string" required="false" show-location="false">
+
+客户的邮件地址。
+
+</ParamField>
+
+<ParamField body="phone" param-type="string" required="false" show-location="false">
+
+客户的电话号码。
+
+</ParamField>
+
+<ParamField body="address" param-type="string" required="false" show-location="false">
+
+客户的地址。在创建和编辑对话框中，此字段使用多行文本区域，以便您可以输入完整的账单地址。
+
+</ParamField>
+
+<Callout kind="info">
+
+客户列表默认显示**姓名**、**邮件**和**电话**。它还显示启用表可见性的客户自定义字段。
+
+</Callout>
+
+## 创建客户
+
+从客户页面添加客户，然后填写您想要稍后重复使用的联系方式。
+
+<Steps>
+  <Step title="打开客户页面" icon="users">
+
+转到工作区中的 `/customers`。
+
+您应该看到一个按名称排序的客户表。如果您已创建启用表可见性的客户自定义字段，这些列也会显示在此处。
+
+  </Step>
+  <Step title="开始新的客户记录" icon="plus">
+
+从页面操作创建新客户。
+
+NomadBill 打开一个创建对话框，其中包含标准客户字段以及分配给 `customer` 实体的任何自定义字段。
+
+  </Step>
+  <Step title="输入必填和可选的详细信息" icon="edit">
+
+填写客户信息：
+
+- **姓名** 为必填项。
+- **邮件**是可选的。
+- **电话**是可选的。
+- **地址**是可选的并且支持多行文本。
+- **自定义字段**在您为客户配置时出现。
+
+演示工作区可能已包含种子字段，例如 `kundennummer`、`kundenkategorie`、`website`、`kunden_seit`、`notizen_intern`、`praeferierte_sprachen` 和 `newsletter`。
+
+  </Step>
+  <Step title="保存并验证结果" icon="check-circle">
+
+保存客户。
+
+保存后，客户将显示在列表视图中正确的字母顺序位置下。如果自定义字段配置为在表中显示，则其值也会显示为行中的列。
+
+  </Step>
+</Steps>
+
+## 编辑和删除客户
+
+从用于创建的同一对话框更新客户。您可以随时更改标准联系人字段和任何分配的客户自定义字段。
+
+当您删除客户时，NomadBill 会要求您在删除记录之前确认操作。如果您在常规计费过程中依赖该客户信息，请谨慎使用删除操作。
+
+## 在发票中使用客户
+
+客户旨在节省您创建发票的时间。您无需重新输入每个文档的联系详细信息，而是选择或重复使用现有的客户记录。
+
+发票将客户名称存储在 `customer_name` 字段中。这意味着客户记录提供您在发票工作流程中使用的源名称，同时将您的客户列表组织在一个位置。
+
+<Callout kind="tip">
+
+在开始定期发送发票之前先设置客户。干净的客户列表可以加快发票创建速度，并减少文档之间的命名不一致。
+
+</Callout>
+
+## 客户自定义字段
+
+客户自定义字段使您可以跟踪标准联系人字段之外的信息。 NomadBill 将这些字段分配给 `customer` 实体类型，这意味着它们出现在客户表单中，并且在配置后出现在客户表中。
+
+使用自定义字段来存储数据，例如内部客户编号、类别、网站、开始日期、语言首选项、注释或时事通讯选择加入状态。演示数据可能包括 `kundennummer` 作为自动编号、`kundenkategorie` 作为下拉列表、`website` 作为 URL、`kunden_seit` 作为日期、`notizen_intern` 作为多行文本、`praeferierte_sprachen` 作为多选和 `newsletter` 作为布尔值等字段。
+
+有关设置说明和字段类型，请参阅[自定义字段](/zh/user-guide/custom-fields)。
+
+## 下一步去哪里
+
+<Columns cols={2}>
+  <Card
+    title="开具发票"
+    href="/zh/user-guide/invoicing"
+    icon="book-open"
+    cta="打开发票指南"
+  />
+  <Card
+    title="自定义字段"
+    href="/zh/user-guide/custom-fields"
+    icon="settings"
+    cta="配置自定义字段"
+  />
+</Columns>

@@ -1,0 +1,114 @@
+---
+title: Gestione del team
+description: Invita colleghi, assegna ruoli di amministratore, editor o visualizzatore e gestisci l'accesso a ogni area di lavoro aziendale in NomadBill.
+---
+
+## La gestione del team ti consente di controllare chi può accedere a ciascuno spazio di lavoro aziendale
+
+Utilizza la Gestione del team per invitare i compagni di squadra, assegnare il ruolo giusto per il loro lavoro e mantenere l'accesso limitato alle aziende di appartenenza. Puoi concedere accesso amministrativo completo ai proprietari dell'azienda, accesso in modifica alle persone che creano documenti e accesso di sola lettura a chiunque abbia solo bisogno di visibilità.
+
+<Callout kind="info">
+
+L'accesso del team è gestito per azienda. Se passi a un'altra azienda, stai gestendo un team diverso.
+
+</Callout>
+
+## Come funziona l'accesso al team
+
+Una squadra in NomadBill appartiene a una singola azienda. Quando aggiungi qualcuno al tuo team, gli dai accesso a quello specifico spazio di lavoro aziendale, non a tutte le aziende nel tuo account.
+
+Questo è importante se lavori in più aziende. La stessa persona può appartenere a più aziende e ricoprire in ciascuna un ruolo diverso.
+
+NomadBill utilizza anche autorizzazioni basate sui ruoli per controllare cosa può fare ciascun membro del team. Il ruolo di un membro determina se può gestire il team, modificare le impostazioni dell'azienda, modificare i documenti o solo visualizzare i dati dell'azienda.
+
+<Callout kind="tip">
+
+Utilizza **viewer** per contabili, clienti o stakeholder interni che necessitano di visibilità senza accesso in modifica. Utilizza **editor** per i colleghi che creano fatture, preventivi o altri documenti.
+
+</Callout>
+
+## Ruoli della squadra
+
+Scegli il ruolo che corrisponde al lavoro che ciascun compagno di squadra deve svolgere.
+
+| Ruolo | Livello di accesso | Cosa può fare questo ruolo |
+| --- | --- | --- |
+| **admin** | Accesso completo | Gestisci le impostazioni aziendali, invita e gestisci i membri del team e accedi a tutti i documenti e dati aziendali |
+| **editor** | Accesso funzionante | Crea e modifica documenti come fatture e preventivi, ma non può gestire le impostazioni aziendali o il team |
+| **visualizzatore** | Accesso in sola lettura | Visualizza dati e documenti aziendali senza apportare modifiche |
+
+<Callout kind="alert">
+
+Assegna **admin** solo alle persone che dovrebbero essere in grado di gestire l'accesso per l'intero spazio di lavoro aziendale.
+
+</Callout>
+
+## Invito a un membro del team
+
+Gli amministratori possono invitare nuovi membri del team tramite e-mail e assegnare un ruolo durante l'invito.
+
+<Steps>
+  <Step title="Apri Gestione squadra" icon="users">
+
+Accedi a NomadBill, passa all'azienda che desideri gestire e apri la pagina **Team**.
+
+  </Step>
+  <Step title="Inizia un nuovo invito" icon="plus">
+
+Seleziona l'opzione per invitare un membro del team. NomadBill apre un modulo di invito in cui inserisci l'indirizzo email del compagno di squadra e scegli il suo ruolo.
+
+  </Step>
+  <Step title="Scegli il ruolo giusto" icon="shield">
+
+Seleziona **admin**, **editor** o **viewer** in base all'accesso di cui la persona ha bisogno. Il ruolo assegnato viene applicato quando accettano l'invito.
+
+  </Step>
+  <Step title="Invia l'invito" icon="send">
+
+Invia l'invito. NomadBill genera un token di invito univoco e invia all'invitato un collegamento che può utilizzare per unirsi all'azienda.
+
+  </Step>
+</Steps>
+
+Dopo aver inviato l'invito, la persona invitata non è ancora un membro del team. Diventano membri solo dopo aver accettato il collegamento di invito.
+
+## Accettare un invito
+
+Ogni invito include un collegamento univoco basato su token. Quando l'invitato apre il collegamento, NomadBill lo guida attraverso il flusso di accettazione dell'invito e lo aggiunge all'azienda con il ruolo assegnato.
+
+Se l'invitato lavora già in NomadBill, dovrà comunque accettare l'invito per tale azienda. L'appartenenza a un'azienda è separata, quindi l'adesione a un'azienda non garantisce automaticamente l'accesso a un'altra.
+
+Un'accettazione riuscita aggiunge la persona al team di quell'azienda. Successivamente, possono passare all'area di lavoro aziendale e utilizzare NomadBill in base al ruolo assegnato.
+
+## Gestire i membri esistenti
+
+Una volta che qualcuno si è unito al team, gli amministratori possono gestire tale appartenenza dalla pagina Team.
+
+### Cambia il ruolo di un membro
+
+Aggiorna un ruolo quando cambiano le responsabilità di qualcuno. Ad esempio, promuovi un editor ad amministratore se deve gestire le impostazioni e l'accesso al team oppure sposta un editor a visualizzatore se non ha più bisogno di creare documenti.
+
+I cambiamenti di ruolo si applicano solo alla società attuale. Se la stessa persona appartiene ad un'altra azienda, il suo accesso rimane lo stesso.
+
+### Rimuovi un membro
+
+Rimuovere un membro del team quando non deve più accedere allo spazio di lavoro aziendale. La rimozione di un membro comporta la revoca dell'accesso ai dati, ai documenti e alle impostazioni dell'azienda.
+
+Ciò non rimuove la persona da altre società a cui appartiene. Interessa solo l'azienda attualmente selezionata.
+
+<Callout kind="info">
+
+Se qualcuno dice di non poter vedere fatture, preventivi o impostazioni dopo l'adesione, conferma innanzitutto di aver accettato l'invito e che lavorate entrambi nello stesso spazio di lavoro aziendale.
+
+</Callout>
+
+## Guide correlate
+
+<Columns cols={2}>
+  <Card title="Impostazioni" href="/it/user-guide/settings" icon="settings" cta="Apri la guida">
+Gestisci la configurazione a livello aziendale a cui possono accedere gli amministratori.
+  </Card>
+  <Card title="Fatturazione" href="/it/user-guide/invoicing" icon="file-text" cta="Apri la guida">
+Scopri cosa gli editor e gli amministratori possono creare e gestire nel lavoro quotidiano di fatturazione.
+  </Card>
+</Columns>

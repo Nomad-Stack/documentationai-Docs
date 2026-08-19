@@ -1,0 +1,197 @@
+---
+title: Sinkronisasi Bank
+description: Hubungkan rekening bank AS dan UE, sinkronkan transaksi secara otomatis, dan rekonsiliasi pembayaran dengan faktur.
+---
+
+## Bank Sync membawa transaksi bank Anda ke NomadBill sehingga Anda dapat melacak pembayaran masuk dan keluar terhadap faktur Anda.
+
+Setelah Anda menghubungkan akun, NomadBill menyinkronkan riwayat transaksi hingga 365 hari dan terus memperbarui koneksi dengan sinkronisasi tambahan. Transaksi yang disinkronkan kemudian dapat dicocokkan secara otomatis atau manual dengan invoice keluar dan invoice masuk.
+
+<Callout kind="info">
+
+Pilih wilayah bank yang sesuai dengan institusi yang ingin Anda sambungkan. Halaman Sinkronisasi Bank memiliki tombol koneksi terpisah untuk bank **AS** dan **EU**, dan Anda harus memulai dengan yang benar.
+
+- **AS** mendukung bank di `US` dan `CA`
+- **EU** mendukung bank di `GB`, `FR`, `ES`, `NL`, `IE`, dan `DE`
+
+Jika bank Anda tidak tersedia di satu wilayah, coba di wilayah lain hanya jika institusi tersebut benar-benar beroperasi di sana.
+
+</Callout>
+
+## Menghubungkan rekening bank
+
+Hubungkan setiap rekening bank dari halaman Bank Sync. NomadBill menggunakan Plaid sebagai penyedia koneksi dan menyimpan koneksi di bawah perusahaan Anda.
+
+<Steps>
+  <Step title="Buka halaman Sinkronisasi Bank" icon="folder">
+
+  Masuk ke NomadBill dan buka **Bank Sync** dari area aplikasi yang diautentikasi.
+
+  Anda akan melihat dua opsi koneksi di halaman: satu untuk bank **AS** dan satu lagi untuk bank **UE**.
+
+  </Step>
+
+  <Step title="Pilih wilayah yang benar" icon="globe">
+
+  Pilih tombol untuk wilayah tempat rekening bank Anda disimpan.
+
+  - Gunakan opsi **US** untuk bank di `US` atau `CA`
+  - Gunakan opsi **EU** untuk bank di `GB`, `FR`, `ES`, `NL`, `IE`, atau `DE`
+
+  Setelah Anda memilih wilayah, Plaid membuka aliran koneksi bank yang aman.
+
+  </Step>
+
+  <Step title="Otentikasi dengan bank Anda" icon="lock">
+
+  Selesaikan alur Kotak-kotak dengan memilih institusi Anda dan masuk dengan kredensial bank Anda jika diperlukan.
+
+  Plaid mengembalikan detail koneksi ke NomadBill, termasuk akun tertaut dan nama institusi.
+
+  </Step>
+
+  <Step title="Tunggu sinkronisasi awal" icon="refresh-cw">
+
+  Setelah koneksi dibuat, NomadBill memulai sinkronisasi transaksi pertama.
+
+  Koneksi yang berhasil menyimpan detail seperti penyedia, wilayah, institusi, akun tertaut, status sinkronisasi, dan waktu sinkronisasi terakhir yang berhasil. Setelah sinkronisasi selesai, transaksi Anda muncul di rekening bank yang terhubung.
+
+  </Step>
+</Steps>
+
+## Sinkronisasi transaksi
+
+NomadBill menggunakan sinkronisasi tambahan berbasis kursor untuk menjaga daftar transaksi Anda tetap terkini. Sinkronisasi pertama meminta riwayat hingga 365 hari, dan sinkronisasi selanjutnya dilanjutkan dari kursor terakhir yang disimpan alih-alih menarik kembali riwayat lengkap.
+
+### Apa yang disinkronkan
+
+Setiap koneksi bank menyimpan status sinkronisasinya sendiri, termasuk item Kotak-kotak, akun tertaut, dan kursor sinkronisasi. Transaksi disimpan dengan detail seperti jumlah, mata uang, arah, tanggal pemesanan, informasi rekanan, detail pedagang, kategori, status tertunda, dan muatan transaksi mentah asli.
+
+### Cara kerja sinkronisasi tambahan
+
+NomadBill menyinkronkan transaksi melalui aliran sinkronisasi transaksi tambahan Plaid. Setiap sinkronisasi membaca halaman hasil hingga Plaid tidak memiliki perubahan lagi untuk dikembalikan atau sinkronisasi mencapai batas keamanan.
+
+- Sinkronisasi ini **berbasis kursor**, sehingga setiap proses berlanjut dari titik sinkronisasi terakhir yang berhasil
+- Satu sinkronisasi memproses hingga **20 halaman**
+- Setiap halaman dapat berisi hingga **500 transaksi**
+- Batas efektif per proses sinkronisasi adalah **10.000 transaksi**
+
+NomadBill menyimpan kursor sinkronisasi yang diperbarui **hanya setelah sinkronisasi penuh berhasil diselesaikan**. Jika sinkronisasi gagal di tengah jalan, NomadBill mempertahankan kursor sebelumnya sehingga proses selanjutnya dapat mencoba lagi dengan aman.
+
+### Bagaimana transaksi ditulis
+
+Transaksi yang disinkronkan dimasukkan atau diperbarui dalam kumpulan **200** catatan sekaligus. Hal ini membuat sinkronisasi besar tetap dapat dikelola sambil tetap menangani volume transaksi yang tinggi secara efisien.
+
+Setiap transaksi terikat pada:
+
+- perusahaan Anda
+- koneksi bank asalnya
+- ID transaksi eksternal asli
+- akun sumber di dalam institusi yang terhubung
+
+### Cara kerja jumlah dan arah
+
+Plaid dan NomadBill menggunakan konvensi jumlah yang berlawanan untuk arus kas. Plaid memperlakukan jumlah positif sebagai uang yang keluar dari rekening, sedangkan NomadBill menyimpan jumlah positif sebagai uang yang diterima.
+
+| Tanda kotak-kotak | Artinya dalam Kotak-kotak | Jumlah yang disimpan dalam NomadBill | Arah |
+|---|---|---:|---|
+| Positif | Uang keluar dari rekening | Negatif | `out` |
+| Negatif | Uang masuk ke rekening | Positif | `in` |
+
+Pembalikan tanda ini membuat rekonsiliasi lebih intuitif di dalam NomadBill. Pembayaran pelanggan yang masuk tampak sebagai jumlah positif, dan pembayaran keluar seperti tagihan pemasok tampak sebagai jumlah negatif.
+
+## Pencocokan otomatis
+
+NomadBill secara otomatis mencoba merekonsiliasi transaksi yang disinkronkan dengan faktur. Logika pencocokannya berbeda untuk uang masuk dan uang keluar.
+
+### Cara kerja pencocokan
+
+Uang masuk dibandingkan dengan faktur terkirim dan jatuh tempo. Uang keluar dibandingkan dengan faktur masuk Anda. Dalam kedua kasus tersebut, NomadBill mencari jumlah persis dan mata uang yang cocok, lalu memeriksa apakah tanggal transaksi berada dalam 14 hari sejak jendela tanggal faktur.
+
+Jika ditemukan kecocokan, NomadBill menulis link ke transaksi dan memperbarui status pembayaran faktur secara otomatis.
+
+### Cocokkan kepercayaan diri dan hasil
+
+| Aliran pertandingan | Jenis transaksi | Aturan pertandingan | Kepercayaan diri | Hasil |
+|---|---|---|---:|---|
+| `autoMatchInvoices` | Pembayaran masuk | Jumlah pasti + mata uang + tanggal dalam 14 hari | 90 | Menetapkan `matched_invoice_id`, `match_method` ke `amount+date`, invoice `payment_status` ke `paid`, dan invoice `status` ke `paid` |
+| `autoMatchIncomingInvoices` | Pembayaran keluar | Jumlah pasti + mata uang + tanggal dalam 14 hari | 85 | Tetapkan `matched_incoming_invoice_id`, `match_method` ke `amount+date`, dan faktur masuk `payment_status` ke `paid` |
+
+### Apa yang dicocokkan secara otomatis
+
+Suatu transaksi dapat dicocokkan secara otomatis jika memenuhi semua ketentuan berikut:
+
+- jumlahnya sama persis
+- mata uangnya sama persis
+- tanggalnya termasuk dalam jendela pencocokan 14 hari
+- invoice dalam keadaan masih bisa direkonsiliasi
+
+Untuk invoice keluar, NomadBill menargetkan invoice yang sudah **terkirim** atau **telah jatuh tempo**. Untuk faktur masuk, NomadBill menandai faktur sebagai telah dibayar tanpa mengubahnya menjadi status dokumen lain.
+
+## Pencocokan manual
+
+Pencocokan otomatis menangani kasus yang jelas terlebih dahulu. Ketika suatu transaksi perlu ditinjau, Anda dapat mencocokkannya secara manual.
+
+### Saran kandidat
+
+NomadBill menghasilkan kandidat tinjauan manual dengan jendela pencarian yang lebih luas daripada pencocokan otomatis.
+
+- Pencarian dilakukan dalam jendela tanggal **30 hari**
+- Ini mengembalikan hingga **5 kandidat** per transaksi
+- Ini dirancang untuk ditinjau, bukan penugasan otomatis
+
+Ini membantu ketika tanggal pembayaran berbeda dari tanggal faktur lebih dari yang diharapkan atau ketika Anda ingin mengonfirmasi salah satu dari beberapa kemungkinan kecocokan.
+
+### Perilaku tautan manual
+
+Saat Anda menautkan transaksi secara manual, NomadBill mencatatnya sebagai kecocokan yang dikonfirmasi.
+
+- `match_confidence` disetel ke **100**
+- `match_method` diatur ke `manual`
+
+Tautan manual mengesampingkan kebutuhan logika saran lebih lanjut pada transaksi tersebut dan memperjelas bahwa kecocokan telah dikonfirmasi oleh pengguna.
+
+## Memutuskan tautan dan mengelola koneksi
+
+Gunakan unlinking ketika transaksi terhubung ke invoice yang salah. Hapus koneksi bila Anda ingin menghapus feed bank sepenuhnya.
+
+### Batalkan tautan transaksi yang cocok
+
+Membatalkan tautan akan menghapus hubungan antara transaksi dan catatan faktur yang cocok.
+
+Saat Anda membatalkan tautan transaksi, NomadBill:
+
+- menghapus semua bidang terkait kecocokan pada transaksi
+- menyetel faktur keluar tertaut `payment_status` kembali ke `unpaid`
+- membiarkan faktur keluar `status` tidak berubah jika sudah disetel ke `paid`
+- menyetel faktur masuk tertaut `payment_status` kembali ke `unpaid`
+
+Gunakan pembatalan tautan dengan hati-hati jika Anda sudah mengandalkan status berbayar untuk tinjauan pembukuan, karena pembatalan tautan tidak mengembalikan status faktur keluar dari `paid` ke `sent`.
+
+### Hapus koneksi bank
+
+Menghapus koneksi akan menghapus tautan Plaid dan semua transaksi tersinkronisasi miliknya.
+
+Saat Anda menghapus koneksi, NomadBill:
+
+- mencoba mencabut akses Plaid untuk item itu
+- berlanjut meskipun langkah pencabutan Plaid gagal
+- menghapus catatan koneksi bank
+- penghapusan berjenjang ke semua transaksi dalam koneksi itu
+
+Jika nanti Anda menyambungkan kembali bank yang sama, NomadBill akan membuat status koneksi dan sinkronisasi baru.
+
+<Columns cols={2}>
+  <Card
+    title="Kelola faktur keluar"
+    href="/id/user-guide/invoicing"
+    icon="file-text"
+    cta="Buka panduan faktur"
+  />
+  <Card
+    title="Pemasok Lacak Tagihan"
+    href="/id/user-guide/incoming-invoices"
+    icon="folder"
+    cta="Buka panduan faktur masuk"
+  />
+</Columns>

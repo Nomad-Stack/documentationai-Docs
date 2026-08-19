@@ -1,0 +1,143 @@
+---
+title: 빠른 시작
+description: >-
+  NomadBill 계정을 설정하고 첫 회사를 만든 다음 몇 분 안에 첫
+  인보이스를 전송하세요.
+---
+## 사전 준비 사항
+
+시작하기 전에 다음을 준비하세요.
+
+- 유효한 이메일 주소
+- 회사명, 주소, 해당하는 경우 VAT 번호를 포함한 사업자 정보
+- 원하는 기본 언어 및 통화
+- 나중에 지급 또는 결제 정보를 추가할 예정이라면 은행 계좌 정보
+
+<Callout kind="info" collapsed="false">
+  7일 무료 체험으로 시작할 수 있습니다. 가입할 때 신용카드는 필요하지 않습니다.
+</Callout>
+
+## 가입 및 회사 설정
+
+계정을 만든 다음 인보이스를 발행할 회사를 구성하세요.
+
+<Steps>
+  <Step title="계정 만들기" icon="users" title-type="p">
+    [app.nomadbill.co](https://app.nomadbill.co/)에서 이메일과 비밀번호로 가입하거나 Google로 계속하세요.
+
+    계정을 확인하면 NomadBill이 로그인한 뒤 회사 설정 화면으로 안내합니다.
+  </Step>
+
+  <Step title="첫 회사 만들기" icon="plus" title-type="p">
+    회사명을 입력하고 회사 슬러그를 선택하세요. NomadBill은 슬러그를 사용해 회사 워크스페이스를 식별합니다.
+
+    `DE`, `EN`, `FR`, `ES` 중에서 기본 언어를 선택한 다음 `EUR`, `USD`, `GBP`, `CHF`, `AED` 중에서 기본 통화를 선택하세요.
+  </Step>
+
+  <Step title="설정에서 회사 정보 추가" icon="settings" title-type="p">
+    [설정](https://app.nomadbill.co/settings)을 열고 법적 회사명, 주소, VAT 번호, 은행 정보로 회사 프로필을 완성하세요.
+
+    같은 영역에서 브랜딩, 인보이스 기본값, PDF 템플릿, 사용자 지정 필드도 구성할 수 있습니다.
+  </Step>
+</Steps>
+
+## 대시보드 개요
+
+대시보드에서는 비즈니스 현황을 바로 파악할 수 있습니다. 상단에 매출, 비용, 이익, 미수금이 표시되며, 그 아래의 차트와 활동 내역을 통해 변동 사항을 이해할 수 있습니다.
+
+주요 KPI 아래에서 최근 6개월간의 매출, 비용, 이익 추이와 매출채권 연령 분석, 고객별 매출, 최근 활동, 통화 구성을 확인할 수 있습니다.
+
+<Columns cols="3">
+  <Card title="대시보드" href="/ko/user-guide/dashboard" icon="bar-chart" horizontal="false">
+    KPI, 추이, 연령 분석 데이터, 최근 계정 활동을 확인합니다.
+  </Card>
+
+  <Card title="인보이스 발행" href="/ko/user-guide/invoicing" icon="file-text" horizontal="false">
+    인보이스를 작성하고 고객을 관리하며 PDF를 이메일로 전송합니다.
+  </Card>
+
+  <Card title="수신 인보이스" href="/ko/user-guide/incoming-invoices" icon="upload" horizontal="false">
+    비용 추적을 위해 공급업체 인보이스와 영수증을 업로드합니다.
+  </Card>
+</Columns>
+
+## 첫 인보이스 전송
+
+인보이스 편집기에서 첫 인보이스를 작성한 다음 이메일로 PDF를 전송하거나 다운로드하여 직접 전달하세요.
+
+<Steps>
+  <Step title="새 인보이스 열기" icon="plus" title-type="p">
+    `Invoices`로 이동해 `New`를 클릭하거나 `/invoices/new`를 직접 여세요.
+
+    NomadBill이 현재 작업 중인 회사에 대한 인보이스 초안을 만듭니다.
+  </Step>
+
+  <Step title="고객, 통화, 언어 설정" icon="users" title-type="p">
+    인보이스 통화와 문서 언어를 선택한 다음 고객명과 주소를 입력하세요.
+
+    지원되는 인보이스 통화 `EUR`, `USD`, `GBP`, `CHF`, `AED` 중 하나를 사용하세요. 지원되는 인보이스 언어 `DE`, `EN`, `FR`, `ES` 중 하나를 사용하세요.
+  </Step>
+
+  <Step title="항목 및 VAT 추가" icon="edit" title-type="p">
+    각 항목에 이름, 수량, 단가를 입력하세요. 그런 다음 청구 요구 사항에 따라 인보이스 또는 항목별 VAT 비율을 설정하세요.
+
+    일반적인 기본값은 VAT `19%`입니다. 다음 단계로 넘어가기 전에 합계를 확인하세요.
+  </Step>
+
+  <Step title="PDF 미리보기 및 전송" icon="send" title-type="p">
+    생성된 PDF를 미리 보고 레이아웃, 고객 정보, 합계, VAT가 올바른지 확인하세요.
+
+    모두 올바르면 인보이스를 이메일로 전송하거나 PDF를 다운로드해 직접 전달하세요. NomadBill에서 전송하면 이메일은 Resend를 통해 전달됩니다.
+  </Step>
+</Steps>
+
+<Callout kind="tip" collapsed="false">
+  NomadBill은 회사별로 `R-00001` 형식을 사용해 인보이스 번호를 자동으로 지정하므로 첫 인보이스 번호가 자동으로 생성됩니다.
+</Callout>
+
+## 첫 비용 기록
+
+공급업체 비용 추적을 시작하려면 수신 인보이스 또는 영수증을 업로드하세요.
+
+<Steps>
+  <Step title="수신 인보이스 열기" icon="upload" title-type="p">
+    `Incoming Invoices`로 이동하거나 `/incoming`을 여세요.
+
+    이 영역은 업로드된 파일을 워크스페이스에 저장하고 비용 기록에 첨부된 상태로 유지합니다.
+  </Step>
+
+  <Step title="파일 업로드" icon="plus" title-type="p">
+    공급업체 인보이스 또는 영수증을 PDF나 이미지로 업로드하세요.
+
+    NomadBill은 나중에 다시 접근할 수 있도록 파일을 `incoming-invoices` 스토리지 버킷에 저장합니다.
+  </Step>
+
+  <Step title="비용 정보 완성" icon="edit" title-type="p">
+    공급업체명, 금액, 카테고리, 인보이스 날짜와 필요한 경우 만기일을 추가하세요.
+
+    기록을 저장하면 원본 업로드 문서와 함께 비용을 검토할 수 있습니다.
+  </Step>
+</Steps>
+
+## 다음 단계
+
+회사 설정과 첫 기록 입력을 마치면 가장 자주 사용하는 워크플로를 연결하세요.
+
+<Columns cols="2">
+  <Card title="은행 동기화" href="/ko/user-guide/bank-sync" icon="database" horizontal="false">
+    Plaid를 통해 지원되는 미국 및 유럽 은행을 연결하고 최대 365일의 거래 내역을 가져옵니다.
+  </Card>
+
+  <Card title="이메일 인텔리전스" href="/ko/user-guide/email-intelligence" icon="zap" horizontal="false">
+    문서 수집을 자동화하고 공급업체 이메일의 수동 데이터 입력을 줄입니다.
+  </Card>
+
+  <Card title="설정" href="/ko/user-guide/settings" icon="settings" horizontal="false">
+    회사별 브랜딩, 기본값, PDF 템플릿, 사용자 지정 필드를 구성합니다.
+  </Card>
+
+  <Card title="팀 관리" href="/ko/user-guide/team-management" icon="users" horizontal="false">
+    팀원을 초대하고 회사 워크스페이스의 액세스를 관리합니다.
+  </Card>
+</Columns>
+

@@ -1,0 +1,225 @@
+---
+title: Bidang Kustom
+description: Tambahkan metadata terstruktur ke pelanggan, produk, faktur, penawaran harga, dan tagihan dengan 19 jenis bidang khusus dan aturan tampilan fleksibel.
+---
+
+## Bidang khusus memungkinkan Anda menangkap detail yang dibutuhkan bisnis Anda
+
+Tambahkan bidang Anda sendiri ke pelanggan, produk, faktur, penawaran harga, dan faktur masuk sehingga setiap catatan cocok dengan cara Anda bekerja. Gunakan bidang khusus untuk catatan internal, nomor referensi, kategori, tautan, perhitungan, lampiran, dan teks yang dihasilkan AI tanpa mengubah alur kerja standar Anda.
+
+<Callout kind="info">
+
+Bidang khusus bersifat khusus untuk perusahaan. Bidang yang Anda buat hanya tersedia di dalam akun perusahaan Anda dan hanya untuk jenis entitas yang Anda tetapkan.
+
+</Callout>
+
+## Cara kerja bidang khusus
+
+Bidang khusus dibuat dari dua bagian: **definisi bidang** dan **nilai bidang**. Definisi mengontrol di mana bidang muncul, jenis masukan apa yang diterima, dan apakah bidang tersebut dapat digunakan dalam tabel, formulir, atau templat PDF. Nilainya adalah data aktual yang disimpan pada setiap record.
+
+Anda membuat bidang per jenis entitas, lalu mengisinya saat Anda membuat atau mengedit rekaman. Misalnya, Anda dapat menambahkan bidang kategori pelanggan untuk pelanggan, bidang SKU untuk produk, atau bidang referensi proyek untuk faktur.
+
+### Tipe entitas
+
+| Tipe entitas | Digunakan untuk |
+|---|---|
+| `customer` | Simpan detail tambahan tentang pelanggan, seperti nomor pelanggan, situs web, tanggal orientasi, atau catatan internal. |
+| `product` | Tambahkan metadata khusus produk seperti SKU, kategori, berat, harga pembelian, atau sertifikasi. |
+| `invoice` | Tangkap detail faktur seperti referensi proyek, catatan pengiriman, status persetujuan, atau nilai terhitung. |
+| `quote` | Lacak informasi spesifik penawaran seperti nomor revisi, catatan validitas, atau tahapan penjualan. |
+| `incoming_invoice` | Simpan metadata tagihan pemasok seperti referensi tanda terima, kolom persetujuan, atau dokumen pendukung terlampir. |
+
+<Callout kind="tip">
+
+Pertahankan nama bidang yang spesifik untuk jenis rekaman. Bidang seperti `sku` masuk akal pada produk, sedangkan `project_reference` lebih mudah dikelola pada faktur.
+
+</Callout>
+
+## Jenis bidang
+
+Pilih jenis bidang berdasarkan jenis data yang Anda ingin agar dimasukkan atau dihasilkan pengguna.
+
+| Jenis bidang | Keterangan |
+|---|---|
+| `text` | Masukan teks satu baris. |
+| `multiline` | Area teks multi-baris untuk catatan yang lebih panjang. |
+| `email` | Masukan alamat email. |
+| `url` | Masukan situs web atau tautan. |
+| `phone` | Masukan nomor telepon. |
+| `number` | Masukan bilangan bulat. |
+| `decimal` | Masukan angka desimal. |
+| `amount` | Masukan jumlah mata uang. |
+| `percent` | Input numerik ditampilkan sebagai persentase. |
+| `date` | Pemilih tanggal. |
+| `datetime` | Pemilih tanggal dan waktu. |
+| `boolean` | Kotak centang dengan status ya atau tidak. |
+| `dropdown` | Bidang pilihan tunggal dengan pilihan yang telah ditentukan sebelumnya. |
+| `multiselect` | Bidang multi-pilih dengan pilihan yang telah ditentukan sebelumnya. |
+| `autonumber` | Nomor urut ditetapkan secara otomatis. |
+| `lookup` | Tautan ke entitas lain. |
+| `formula` | Bidang terhitung berdasarkan ekspresi. |
+| `attachment` | Bidang unggah file. |
+| `ai` | Bidang teks yang dihasilkan AI berdasarkan perintah yang disimpan. |
+
+## Konfigurasi lapangan
+
+Pengaturan bidang mengontrol validasi, visibilitas, dan pengurutan. Konfigurasikan opsi ini saat Anda membuat bidang, lalu perbarui nanti jika alur kerja Anda berubah.
+
+<ParamField body="is_required" param-type="boolean" required="false" show-location="false">
+
+Menjadikan bidang ini wajib ketika pengguna mengisi formulir catatan.
+
+</ParamField>
+
+<ParamField body="is_unique" param-type="boolean" required="false" show-location="false">
+
+Mencegah nilai duplikat untuk bidang tersebut di seluruh rekaman dengan tipe entitas yang sama.
+
+</ParamField>
+
+<ParamField body="show_in_table" param-type="boolean" required="false" show-location="false">
+
+Menampilkan bidang sebagai kolom dalam tampilan daftar untuk tipe entitas tersebut.
+
+</ParamField>
+
+<ParamField body="show_in_form" param-type="boolean" required="false" show-location="false">
+
+Menampilkan bidang dalam membuat dan mengedit formulir. Pengaturan ini diaktifkan secara default.
+
+</ParamField>
+
+<ParamField body="available_in_pdf" param-type="boolean" required="false" show-location="false">
+
+Membuat bidang tersedia untuk templat PDF. Pengaturan ini diaktifkan secara default.
+
+</ParamField>
+
+<ParamField body="sort_order" param-type="integer" required="false" show-location="false">
+
+Mengontrol urutan bidang khusus dalam jenis entitas yang dipilih.
+
+</ParamField>
+
+## Membuat bidang khusus
+
+Buat bidang dari manajer bidang khusus di pengaturan. Jalur tercepat adalah menentukan label dan mengetik terlebih dahulu, lalu aktifkan opsi yang Anda perlukan saja.
+
+<Steps>
+  <Step title="Buka Bidang Kustom" icon="settings">
+
+  Masuk ke NomadBill dan buka area bidang khusus di pengaturan Anda.
+
+  Pilih jenis entitas yang ingin Anda perluas, seperti pelanggan, produk, faktur, kuotasi, atau faktur masuk.
+
+  </Step>
+  <Step title="Buat definisi bidang" icon="plus">
+
+  Tambahkan bidang baru dan masukkan **label** yang akan dikenali oleh orang-orang di tim Anda. NomadBill juga membuat **kunci** untuk bidang dari label tersebut.
+
+  Pilih **jenis kolom** yang cocok dengan data yang ingin Anda kumpulkan. Jika Anda memilih `dropdown` atau `multiselect`, tambahkan pilihan yang Anda ingin pengguna pilih.
+
+  </Step>
+  <Step title="Konfigurasikan visibilitas dan validasi" icon="edit">
+
+  Aktifkan opsi yang Anda perlukan untuk bidang tersebut, seperti wajib diisi, unik, terlihat di formulir, terlihat di tabel, atau tersedia di templat PDF.
+
+  Jika Anda ingin bidang tersebut muncul lebih awal atau lebih lambat dari yang lain, sesuaikan urutannya sebelum menyimpannya.
+
+  </Step>
+  <Step title="Simpan dan uji lapangan" icon="check-circle">
+
+  Simpan bidang, lalu buka rekaman dengan jenis entitas yang sama dan konfirmasikan bahwa input muncul di tempat yang Anda harapkan.
+
+  Sukses terlihat seperti bidang yang ditampilkan dalam tampilan formulir atau tabel berdasarkan opsi yang Anda aktifkan.
+
+  </Step>
+</Steps>
+
+<Callout kind="alert">
+
+Anda tidak dapat mengubah jenis bidang setelah dibuat. Jika Anda memerlukan tipe yang berbeda, buat bidang baru dan pindahkan alur kerja Anda ke bidang baru tersebut.
+
+</Callout>
+
+## Menggunakan bidang khusus dalam catatan
+
+Setelah Anda membuat bidang, NomadBill memperlihatkannya pada rekaman jenis entitas tersebut ketika `show_in_form` diaktifkan. Pengguna dapat memasukkan nilai saat membuat rekaman baru atau memperbaruinya nanti dari tampilan edit.
+
+Nilai bidang khusus disimpan per catatan. Bidang tingkat produk hanya berlaku untuk produk, dan bidang tingkat faktur hanya berlaku untuk faktur. Jika bidang juga ditandai `show_in_table`, nilainya dapat muncul dalam tampilan daftar untuk membantu Anda memindai dan memfilter rekaman dengan lebih cepat.
+
+Bidang khusus juga mendukung pola pengeditan halaman detail. Hal ini membuatnya berguna untuk informasi yang tidak selalu Anda masukkan terlebih dahulu, seperti catatan internal, tanggal tindak lanjut, atau lampiran pendukung.
+
+## Bidang nomor otomatis
+
+Gunakan bidang nomor otomatis saat Anda memerlukan ID berurutan yang NomadBill berikan secara otomatis. Ini berfungsi baik untuk nomor pelanggan, nomor produk, referensi internal, atau ID terstruktur lainnya yang tidak boleh dimasukkan secara manual.
+
+<Callout kind="info">
+
+Bidang nomor otomatis mendukung tiga opsi pengaturan:
+
+- **Awalan** menambahkan teks sebelum nomor, seperti `K-` atau `P-`.
+- **Padding** menambahkan angka nol di depan untuk mencapai lebar tetap.
+- **Mulai** menyetel angka pertama dalam urutan.
+
+Nomor pelanggan mungkin dimulai dengan `K-1000`, sedangkan nomor produk mungkin menggunakan `P-00001`.
+
+</Callout>
+
+Setiap kali rekaman baru dibuat, NomadBill memberikan nomor berikutnya dalam urutan untuk bidang tersebut. Hal ini mengurangi penomoran duplikat dan menjaga konsistensi catatan.
+
+## Bidang rumus
+
+Gunakan kolom rumus ketika suatu nilai harus dihitung, bukan dimasukkan secara manual. Bidang rumus berguna untuk total, markup, nilai berbasis persentase, atau penghitungan spesifik data yang bergantung pada bidang lain.
+
+Ekspresi rumus dapat mereferensikan nilai numerik dan bidang khusus bawaan. Variabel yang tersedia meliputi:
+
+- `subtotal`
+- `vat_percentage`
+- `total`
+- `unit_price`
+- `custom.KEY`
+
+Misalnya, Anda dapat menggunakan `custom.discount_rate * subtotal / 100` untuk menghitung jumlah diskon ketika `discount_rate` disimpan di bidang khusus lainnya. Nilai rumus dihitung secara otomatis ketika NomadBill menyimpan nilai bidang khusus.
+
+<Callout kind="tip">
+
+Jaga agar kunci kolom rumus tetap sederhana dan dapat diprediksi sehingga ekspresi lebih mudah dibaca. Kunci seperti `discount_rate` lebih mudah digunakan di `custom.discount_rate` dibandingkan gaya penamaan yang panjang atau tidak konsisten.
+
+</Callout>
+
+## Bidang yang dihasilkan AI
+
+Gunakan kolom yang dihasilkan AI saat Anda ingin NomadBill menulis teks untuk Anda berdasarkan perintah yang disimpan. Hal ini berguna untuk ringkasan internal, deskripsi draf, catatan tindak lanjut, atau teks standar yang harus dihasilkan dari data rekaman.
+
+Sebelum Anda dapat menggunakan bidang AI, buat perintah AI di pengelola bidang khusus. Kemudian sambungkan perintah itu ke bidang saat Anda membuat definisi bidang. Pada rekaman, pengguna dapat membuat atau membuat ulang teks langsung dari input kolom.
+
+NomadBill mendukung model AI berikut untuk perintahnya:
+
+- `google/gemini-3-flash-preview`
+- `google/gemini-2.5-flash`
+- `google/gemini-2.5-pro`
+- `openai/gpt-5-mini`
+- `openai/gpt-5`
+
+<Callout kind="info">
+
+Bidang yang dihasilkan AI menyimpan keluaran teks. Tinjau konten yang dihasilkan sebelum menggunakannya dalam dokumen yang berhubungan dengan pelanggan.
+
+</Callout>
+
+## Bidang khusus dalam templat PDF
+
+Jadikan bidang tersedia dalam keluaran PDF dengan mengaktifkan `available_in_pdf` pada definisi bidang. Setelah itu, Anda bisa menempatkan bidang tersebut di templat dokumen Anda dan menggunakan nilai khusus saat membuat faktur, penawaran, atau PDF lainnya.
+
+Jika Anda berencana untuk menyertakan bidang khusus dalam dokumen cetak, siapkan bidang tersebut sebelum menyelesaikan templat Anda. Itu menjaga struktur templat Anda tetap stabil dan menghindari pengerjaan ulang di kemudian hari.
+
+Baca [PDF Templates](/id/user-guide/pdf-templates) untuk pengaturan template dan opsi tata letak dokumen.
+
+## Panduan terkait
+
+<Columns cols={3}>
+  <Card title="Kelola faktur" href="/id/user-guide/invoicing" icon="folder" cta="Buka panduan faktur" />
+  <Card title="Kelola produk" href="/id/user-guide/products" icon="package" cta="Buka panduan produk" />
+  <Card title="Desain templat PDF" href="/id/user-guide/pdf-templates" icon="book-open" cta="Buka panduan templat PDF" />
+</Columns>

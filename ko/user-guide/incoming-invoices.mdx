@@ -1,0 +1,192 @@
+---
+title: 수신 인보이스
+description: 자동 VAT 계산 및 은행 조정을 통해 공급업체 청구서, 영수증 및 비용을 업로드하고 관리합니다.
+---
+
+## 공급업체 청구서 및 영수증을 한 곳에서 추적
+
+수신 인보이스를 사용하면 나머지 기록과 함께 공급업체 청구서, 영수증 및 기타 비즈니스 비용을 저장할 수 있습니다. PDF 또는 이미지를 업로드하고, 인보이스 세부정보를 입력하고, 결제 여부를 추적하고, 결제가 표시되면 은행 거래와 일치시킬 수 있습니다.
+
+NomadBill은 원본 파일을 안전한 저장소에 보관하고 VAT 금액을 자동으로 계산하며 연결된 이메일, 사용자 정의 필드 및 일치하는 은행 지불과 같은 관련 정보를 인보이스 세부 사항 페이지에 표시합니다.
+
+<Callout kind="info">
+
+지원되는 업로드 파일에는 **PDF** 및 **이미지 파일**이 포함됩니다. NomadBill은 `incoming-invoices` 스토리지 버킷에 `userId/timestamp-filename` 사용자별 경로 패턴으로 각 파일을 저장합니다.
+
+</Callout>
+
+## 영수증 업로드
+
+파일에서 공급업체 청구서를 수동으로 추가하려면 수신 인보이스 영역을 사용하십시오.
+
+<Steps>
+  <Step title="수신 인보이스 열기" icon="folder">
+
+  NomadBill의 수신 청구서 섹션으로 이동하여 새 업로드를 시작하세요.
+
+  영수증이나 공급자 청구서가 이미 기기에 저장되어 있는 경우 가장 좋은 옵션입니다.
+
+  </Step>
+
+  <Step title="파일 업로드" icon="upload">
+
+  컴퓨터나 휴대폰에서 **PDF** 또는 **이미지** 파일을 선택합니다.
+
+  NomadBill은 업로드된 파일을 보안 저장소에 저장하고 인보이스 기록에 파일 경로를 유지합니다. 나중에 파일을 열면 NomadBill은 60초 동안 유효한 서명된 보기 링크를 생성합니다.
+
+  </Step>
+
+  <Step title="인보이스 정보 입력" icon="edit">
+
+  문서에 대한 공급자, 인보이스, VAT 및 지불 정보를 추가합니다.
+
+  인보이스를 저장한 후에는 수신 인보이스 목록에 해당 내용이 표시되고 세부 정보 페이지를 열 수 있습니다.
+
+  </Step>
+
+  <Step title="세부정보 페이지 검토" icon="check-circle">
+
+  저장된 청구서를 열어 정보를 확인하세요.
+
+  세부정보 보기에는 공급업체 세부정보, 인보이스 세부정보, 사용자 정의 필드, 연결된 이메일 및 은행 결제에 대한 별도의 카드가 포함됩니다.
+
+  </Step>
+</Steps>
+
+## 공급업체 및 인보이스 세부정보
+
+각 수신 인보이스는 공급업체 정보와 인보이스별 정보를 모두 저장합니다. 카테고리는 자유 텍스트이므로 장부 워크플로에 맞는 명명 구조를 사용할 수 있습니다.
+
+### 공급업체 필드
+
+<ParamField body="supplier_name" param-type="string" required="false" show-location="false">
+청구서 또는 영수증을 발행한 공급업체 또는 판매자의 이름입니다.
+</ParamField>
+
+<ParamField body="supplier_address" param-type="string" required="false" show-location="false">
+공급자의 우편 주소.
+</ParamField>
+
+<ParamField body="supplier_vat_number" param-type="string" required="false" show-location="false">
+공급업체 VAT 등록 번호(문서에 있는 경우)
+</ParamField>
+
+### 인보이스 필드
+
+<ParamField body="invoice_number" param-type="string" required="false" show-location="false">
+공급자의 인보이스 또는 영수증 번호입니다.
+</ParamField>
+
+<ParamField body="invoice_date" param-type="date" required="false" show-location="false">
+공급업체 인보이스에 표시된 날짜입니다.
+</ParamField>
+
+<ParamField body="due_date" param-type="date" required="false" show-location="false">
+청구서의 지불 기한입니다.
+</ParamField>
+
+<ParamField body="payment_date" param-type="date" required="false" show-location="false">
+청구서가 지불된 날짜입니다. 은행 조정에서는 결제 금액이 일치하면 이를 업데이트할 수 있습니다.
+</ParamField>
+
+<ParamField body="category" param-type="string" required="false" show-location="false">
+비용에 대한 자유 텍스트 카테고리입니다. NomadBill은 사전 정의된 카테고리 목록을 적용하지 않습니다.
+</ParamField>
+
+<ParamField body="notes" param-type="string" required="false" show-location="false">
+영수증, 공급업체 또는 비용에 대한 내부 메모입니다.
+</ParamField>
+
+<ParamField body="currency" param-type="string" required="false" enum="EUR,USD,GBP,CHF,AED" show-location="false">
+인보이스에 사용된 통화입니다. 지원되는 값은 `EUR`, `USD`, `GBP`, `CHF` 및 `AED`입니다.
+</ParamField>
+
+<ParamField body="payment_status" param-type="string" required="false" enum="unpaid,paid" show-location="false">
+인보이스의 현재 결제 상태입니다. NomadBill은 `unpaid` 및 `paid`를 지원합니다.
+</ParamField>
+
+### 금액 필드
+
+<ParamField body="net_amount" param-type="number" required="false" show-location="false">
+VAT 이전의 인보이스 금액입니다.
+</ParamField>
+
+<ParamField body="vat_percentage" param-type="number" required="false" show-location="false">
+인보이스 금액에 VAT 요율이 적용됩니다.
+</ParamField>
+
+<ParamField body="vat_amount" param-type="number" required="false" show-location="false">
+계산된 VAT 금액입니다.
+</ParamField>
+
+<ParamField body="amount" param-type="number" required="false" show-location="false">
+VAT를 포함한 총 인보이스 금액입니다.
+</ParamField>
+
+### 파일 및 레코드 메타데이터
+
+<ParamField body="file_path" param-type="string" required="false" show-location="false">
+업로드된 영수증 또는 인보이스 파일의 저장 경로입니다.
+</ParamField>
+
+<ParamField body="upload_date" param-type="date-time" required="false" show-location="false">
+파일이 NomadBill에 업로드된 날짜입니다.
+</ParamField>
+
+## VAT 및 금액 계산
+
+NomadBill은 인보이스 총액을 자동으로 다시 계산하므로 모든 금액 필드를 수동으로 업데이트할 필요가 없습니다. 이렇게 하면 특히 순 금액과 VAT 세율만 알고 있거나 영수증의 총액만 알고 있는 경우 입력 실수가 줄어듭니다.
+
+`net_amount` 또는 `vat_percentage`를 변경하면 NomadBill은 `vat_amount` 및 `amount`를 모두 다시 계산합니다. 총액은 `gross = net * (1 + pct / 100)` 공식을 사용합니다.
+
+`amount`를 변경하면 NomadBill은 현재 VAT 백분율을 기준으로 `net_amount` 및 `vat_amount`를 다시 계산합니다. 이는 영수증에 최종 총액과 VAT 세율만 표시되는 경우에 도움이 됩니다.
+
+<Callout kind="tip">
+
+영수증에 할인, 혼합 VAT 요율 또는 순액과 VAT를 명확하게 구분하지 않는 공급업체 형식이 포함된 경우 저장하기 전에 다시 계산된 값을 확인하세요.
+
+</Callout>
+
+## 결제 상태 및 은행 조정
+
+결제 상태를 통해 아직 미결제된 공급업체 인보이스와 이미 결제된 인보이스를 추적할 수 있습니다. NomadBill은 `unpaid` 및 `paid`의 두 가지 상태를 사용합니다.
+
+은행 동기화를 연결하면 NomadBill은 나가는 은행 거래를 수신 인보이스와 자동으로 일치시킬 수 있습니다. 일치 논리는 다음을 찾습니다.
+
+- 금액이 0보다 작은 **출금 거래**
+- **정확히 같은 금액**
+- **동일한 통화**
+- 청구서 날짜로부터 **14일** 이내의 거래 날짜
+
+NomadBill이 일치하는 항목을 찾으면 거래를 수신 인보이스에 연결하고 결제 상태를 `paid`로 설정합니다. 연결된 은행 결제는 인보이스 세부정보 페이지의 은행 결제 카드에 표시됩니다.
+
+은행 동기화 영역에서 수동으로 연결을 관리할 수도 있습니다. 일치하는 거래의 연결을 해제하면 NomadBill이 결제 상태를 다시 `unpaid`로 변경합니다.
+
+전체 매칭 워크플로은 [은행 동기화](/ko/user-guide/bank-sync)를 참조하세요.
+
+## 이메일 인텔리전스 통합
+
+NomadBill은 이메일 데이터에서 수신 인보이스를 생성할 수도 있습니다. 이메일 인텔리전스가 메시지에서 영수증 또는 공급업체 청구서 세부정보를 추출하면 `createReceiptFromEmail`가 수신 인보이스 기록을 생성할 수 있습니다.
+
+이는 공급업체가 이메일로 인보이스를 보내고 수동 입력을 줄이려는 경우에 유용합니다. 생성 후 인보이스 세부정보 페이지를 열고, 추출된 필드를 검토하고, 메모나 카테고리를 추가하고, 결제가 이미 일치했는지 확인할 수 있습니다.
+
+세부 정보 페이지에는 연결된 이메일 카드도 포함되어 있어 필요할 때 원래 이메일 컨텍스트로 인보이스를 다시 추적하는 데 도움이 됩니다.
+
+이메일 워크플로는 [이메일 인텔리전스](/ko/user-guide/email-intelligence)를 참조하세요.
+
+## 관련 가이드
+
+<Columns cols={2}>
+  <Card
+    title="은행 동기화"
+    href="/ko/user-guide/bank-sync"
+    icon="database"
+    cta="가이드 열기"
+  />
+  <Card
+    title="사용자 정의 필드"
+    href="/ko/user-guide/custom-fields"
+    icon="settings"
+    cta="가이드 열기"
+  />
+</Columns>

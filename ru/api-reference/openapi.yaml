@@ -1,0 +1,183 @@
+openapi: '3.0.0'
+info:
+  version: 1.0.0
+  title: NomadBill
+  license:
+    name: MIT
+servers:
+  - url: https://api.nomadbill.com/v1
+paths:
+  /documents:
+    get:
+      summary: Список документов
+      operationId: listDocuments
+      parameters:
+        - name: limit
+          in: query
+          description: Сколько элементов нужно вернуть за один раз (максимум 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: Постраничный массив документов
+          headers:
+            x-next:
+              description: Ссылка на следующую страницу ответов
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documents'
+        default:
+          description: неожиданная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Создать документ
+      operationId: createDocument
+      responses:
+        201:
+          description: Пустой ответ
+        default:
+          description: неожиданная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /documents/{documentId}:
+    get:
+      summary: Получить документ
+      operationId: showDocumentById
+      parameters:
+        - name: documentId
+          in: path
+          required: true
+          description: Идентификатор документа, который нужно получить
+          schema:
+            type: string
+      responses:
+        200:
+          description: Ожидаемый ответ на действительный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documents'
+        default:
+          description: неожиданная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /folders:
+    get:
+      summary: Список папок
+      operationId: listFolders
+      parameters:
+        - name: limit
+          in: query
+          description: Сколько элементов нужно вернуть за один раз (максимум 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: Постраничный массив папок
+          headers:
+            x-next:
+              description: Ссылка на следующую страницу ответов
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folders'
+        default:
+          description: неожиданная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Создать папку
+      operationId: createFolder
+      responses:
+        201:
+          description: Пустой ответ
+        default:
+          description: неожиданная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /folders/{folderId}:
+    get:
+      summary: Получить папку
+      operationId: showFolderById
+      parameters:
+        - name: folderId
+          in: path
+          required: true
+          description: Идентификатор папки для получения
+          schema:
+            type: string
+      responses:
+        200:
+          description: Ожидаемый ответ на действительный запрос
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folders'
+        default:
+          description: неожиданная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Document:
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        tag:
+          type: string
+    Documents:
+      type: array
+      items:
+        $ref: '#/components/schemas/Document'
+    Folder:
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        tag:
+          type: string
+    Folders:
+      type: array
+      items:
+        $ref: '#/components/schemas/Folder'
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

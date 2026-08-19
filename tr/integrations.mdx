@@ -1,0 +1,83 @@
+---
+title: Entegrasyonlar
+description: Ödemeler için NomadBill'i Stripe'a, banka senkronizasyonu için Plaid'e, akıllı e-posta için Nylas'a ve e-posta teslimatı için Resend'e bağlayın.
+---
+
+## Bağlantılı hizmetler
+
+NomadBill, ödeme tahsilatını, banka işlemlerini içe aktarmayı, e-posta teslimini ve belge işlemeyi otomatikleştirmek için harici hizmetlere bağlanır. Bu entegrasyonlar birlikte çalışarak faturaların, ödemelerin, banka işlemlerinin ve tedarikçi belgelerinin manuel veri girişi olmadan bağlantılı kalmasını sağlar.
+
+<Columns cols={2}>
+  <Card title="Stripe" icon="credit-card" href="/tr/user-guide/invoicing">
+    Webhook odaklı durum güncellemeleriyle fatura ödeme oturumları ve abonelik faturalandırması.
+  </Card>
+  <Card title="Plaid" icon="banknote" href="/tr/user-guide/bank-sync">
+    US ve Avrupa bankaları için 365 güne kadar işlem geçmişine sahip banka hesabı bağlantısı.
+  </Card>
+  <Card title="Nylas" icon="mail" href="/tr/user-guide/email-intelligence">
+    Yapay zeka destekli belge sınıflandırma ve varlık eşleştirme özelliğine sahip aracı e-posta kutusu.
+  </Card>
+  <Card title="Resend" icon="send">
+    Faturalar, fiyat teklifleri ve ekip davetleri için işlemsel e-posta teslimatı.
+  </Card>
+  <Card title="pdfme" icon="layout" href="/tr/user-guide/pdf-templates">
+    Sürükle ve bırak PDF şablon tasarımcısı ve belge oluşturucu.
+  </Card>
+  <Card title="Supabase" icon="database">
+    PostgreSQL veritabanı, kimlik doğrulama ve satır düzeyinde güvenlikle dosya depolama.
+  </Card>
+</Columns>
+
+## Ödeme işleme
+
+Stripe, NomadBill'de iki ödeme akışını yönetir:
+
+- **Fatura ödemeleri** — Bir faturada ödemeyi etkinleştirdiğinizde NomadBill, bir Stripe Ödeme Oturumu oluşturur. Müşteri, Stripe'nin barındırılan sayfasında ödeme yapar ve bir web kancası, fatura durumunu otomatik olarak ödenecek şekilde günceller.
+- **Abonelik faturalandırması** — Başlangıç ​​ve Profesyonel planlar, 7 günlük deneme süresiyle Stripe aracılığıyla faturalandırılır. Abonelik durumu güncellemeleri, webhook etkinlikleri aracılığıyla profilinize geri döner.
+
+Şirket başına Stripe Bağlantı anahtarları Ayarlar'da yapılandırılarak her şirketin fatura ödemeleri için kendi Stripe hesabını kullanmasına olanak sağlanır.
+
+## Banka senkronizasyonu
+
+Plaid iki bölgedeki banka hesaplarını birbirine bağlar:
+
+- **US bankalar** — Amerika Birleşik Devletleri ve Kanada'daki kurumları destekler
+- **EU bankalar** — Almanya, Fransa, İspanya, Hollanda, İrlanda ve Birleşik Krallık'taki kurumları destekler
+
+İşlemler, Plaid'nin imleç tabanlı artımlı senkronizasyonu kullanılarak senkronize edilir. İlk bağlantı, 365 günlük geçmişe kadar içe aktarılır. Sonraki senkronizasyonlar yalnızca yeni, değiştirilmiş veya kaldırılmış işlemleri alır.
+
+## E-posta istihbaratı
+
+Nylas, her şirket için özel bir temsilci posta kutusu sağlar (örneğin, `yourcompany@agent.nomadbill.co`). Gelen e-postalar, aşağıdakileri gerçekleştiren bir yapay zeka hattı aracılığıyla işlenir:
+
+- Mesajları belge türlerine göre sınıflandırır (gelen fatura, makbuz, ödeme onayı, hatırlatma, sözleşme ve diğerleri)
+- Tutarlar, VAT, IBAN, tarihler ve satır öğeleri gibi yapılandırılmış verileri e-posta gövdesinden ve eklerinden çıkarır
+- Bir puanlama motoru kullanarak e-postaları mevcut faturalar, fiyat teklifleri, gelen faturalar, banka işlemleri ve müşterilerle eşleştirir
+
+## E-posta teslimi
+
+Resend, NomadBill adına işlem e-postaları gönderir:
+
+- Fatura ve teklif teslim e-postaları
+- Ekip daveti e-postaları
+- Gönderen adresi: `noreply@nomadbill.co`
+
+## PDF nesli
+
+pdfme kitaplığı, PDF şablon sistemine güç sağlar. Görsel bir sürükle ve bırak düzenleyiciyi kullanarak faturalar, fiyat teklifleri ve gelen faturalar için özel şablonlar tasarlayabilirsiniz. Şablonlar birden çok dili destekler ve özel alan yer tutucuları içerebilir.
+
+## Otomatik mutabakat
+
+Banka işlemleri senkronize edildiğinde NomadBill bunları otomatik olarak mevcut faturalarla ve gelen faturalarla eşleştirir:
+
+| Eşleme türü | Yöntem | Güven puanı |
+|---|---|---|
+| Fatura (gelen ödeme) | Tam tutar + para birimi + 14 gün içindeki tarih | 90 |
+| Gider (yapılan ödeme) | Tam tutar + para birimi + 14 gün içindeki tarih | 85 |
+| Manuel bağlantı | Kullanıcı tarafından seçilen | 100 |
+
+Mantıklı adaylarla eşleşmeyen işlemler, manuel inceleme için daha geniş bir 30 günlük pencere ile öneri olarak ortaya çıkar.
+
+<Callout kind="info">
+  NomadBill şu anda harici geliştiriciler için genel bir REST API veya giden web kancaları sunmamaktadır. Stripe ve Nylas web kancaları, NomadBill'in ödeme ve e-posta olaylarını işlemek için aldığı gelen uç noktalardır.
+</Callout>

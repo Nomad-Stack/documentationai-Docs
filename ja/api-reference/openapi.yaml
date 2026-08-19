@@ -1,0 +1,183 @@
+openapi: '3.0.0'
+info:
+  version: 1.0.0
+  title: NomadBill
+  license:
+    name: MIT
+servers:
+  - url: https://api.nomadbill.com/v1
+paths:
+  /documents:
+    get:
+      summary: 文書をリストする
+      operationId: listDocuments
+      parameters:
+        - name: limit
+          in: query
+          description: 一度に返品するアイテムの数 (最大 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: ページ化されたドキュメントの配列
+          headers:
+            x-next:
+              description: 回答の次のページへのリンク
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documents'
+        default:
+          description: 予期せぬエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: 文書の作成
+      operationId: createDocument
+      responses:
+        201:
+          description: ヌル応答
+        default:
+          description: 予期せぬエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /documents/{documentId}:
+    get:
+      summary: ドキュメントの取得
+      operationId: showDocumentById
+      parameters:
+        - name: documentId
+          in: path
+          required: true
+          description: 取得するドキュメントのID
+          schema:
+            type: string
+      responses:
+        200:
+          description: 有効なリクエストに対する予期される応答
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documents'
+        default:
+          description: 予期せぬエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /folders:
+    get:
+      summary: フォルダーの一覧表示
+      operationId: listFolders
+      parameters:
+        - name: limit
+          in: query
+          description: 一度に返品するアイテムの数 (最大 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: フォルダーのページ化された配列
+          headers:
+            x-next:
+              description: 回答の次のページへのリンク
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folders'
+        default:
+          description: 予期せぬエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: フォルダーの作成
+      operationId: createFolder
+      responses:
+        201:
+          description: ヌル応答
+        default:
+          description: 予期せぬエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /folders/{folderId}:
+    get:
+      summary: フォルダーの取得
+      operationId: showFolderById
+      parameters:
+        - name: folderId
+          in: path
+          required: true
+          description: 取得するフォルダーのID
+          schema:
+            type: string
+      responses:
+        200:
+          description: 有効なリクエストに対する予期される応答
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folders'
+        default:
+          description: 予期せぬエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Document:
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        tag:
+          type: string
+    Documents:
+      type: array
+      items:
+        $ref: '#/components/schemas/Document'
+    Folder:
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        tag:
+          type: string
+    Folders:
+      type: array
+      items:
+        $ref: '#/components/schemas/Folder'
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

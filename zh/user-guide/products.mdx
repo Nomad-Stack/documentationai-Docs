@@ -1,0 +1,137 @@
+---
+title: 产品
+description: 为发票和报价创建可重复使用的产品和服务目录。
+---
+
+## 构建可重用的产品目录
+
+NomadBill 中的产品可让您保存曾经销售过的商品和服务，然后在发票和报价中重复使用它们。您的产品目录位于 `/items`，在公司级别共享，并且可以包括适合您业务的标准字段和自定义字段。
+
+<Callout kind="info">
+
+NomadBill 将产品存储在 `items` 表中。该目录属于您的公司，而不是个人用户，因此该表使用 `company_id`，但不包括 `user_id`。
+
+</Callout>
+
+## 产品领域
+
+每个产品都包含一小组标准字段。如果您需要跟踪库存、SKU、认证或内部定价详细信息，您可以使用自定义字段添加更多结构。
+
+<ParamField body="name" param-type="string" required="true" show-location="false">
+
+产品或服务名称。当您创建或编辑产品时，NomadBill 需要此字段。
+
+</ParamField>
+
+<ParamField body="description" param-type="string" required="false" show-location="false">
+
+在创建和编辑对话框中显示为多行文本字段的较长描述。将其用于您希望在重复使用该项目时可用的服务详细信息、规格或内部注释。
+
+</ParamField>
+
+<ParamField body="price" param-type="numeric" required="false" show-location="false">
+
+产品的默认价格。该字段使用数字输入，步长为`0.01`，如果不输入价格，新产品默认为`0`。
+
+</ParamField>
+
+<ParamField body="company_id" param-type="string" required="true" show-location="false">
+
+拥有该产品的公司。产品是公司级记录，这意味着有权访问该公司的任何人都可以使用同一目录进行工作。
+
+</ParamField>
+
+在列表视图中，NomadBill 显示**名称**、**描述**和**价格**的标准列。价格的格式为小数点后两位，因此整个目录中的金额保持一致。
+
+如果您将自定义产品字段标记为显示在表中，NomadBill 也会将这些列添加到列表视图中。仅当启用 `show_in_table` 时，才会显示自定义字段列，并且它们按字段名称的字母顺序显示。
+
+## 创建产品
+
+当您需要更快的文档创建和更一致的明细项时，从 `/items` 页面添加产品。产品进入目录后，您可以再次选择它，而不必为每张发票或报价重新输入相同的详细信息。
+
+<Steps>
+
+<Step title="打开产品页面" icon="folder">
+
+从应用程序导航转到 `/items`。
+
+您应该会看到当前的产品列表，其中包含名称、描述、价格以及配置为在表中显示的任何产品自定义字段的列。
+
+</Step>
+
+<Step title="开始一个新产品" icon="plus">
+
+选择创建新产品的选项。
+
+NomadBill 打开一个对话框，您可以在其中输入标准产品详细信息以及分配给产品实体的任何自定义字段。
+
+</Step>
+
+<Step title="输入所需的详细信息" icon="edit">
+
+填写产品表格：
+
+- 输入**名称**。
+- 如果您想了解有关已保存项目的更多详细信息，请添加**描述**。
+- 使用十进制值输入 **价格**，例如 `125.00`。
+- 填写适用于该商品的任何产品自定义字段。
+
+如果表单保存成功，新产品将出现在 `/items` 的列表中。
+
+</Step>
+
+<Step title="查看并更新已保存的产品" icon="check-circle">
+
+检查列表视图中的产品行，以确认名称、描述、价格和可见的自定义字段值看起来正确。
+
+如果您需要更改任何内容，请从列表中打开编辑对话框并保存更新。要删除产品，请使用内置删除操作，该操作会在删除之前确认操作。
+
+</Step>
+
+</Steps>
+
+<Callout kind="tip">
+
+删除操作使用确认步骤。确认前请检查产品名称，以免删除错误的目录项。
+
+</Callout>
+
+## 在文档中使用产品
+
+保存的产品旨在加快文档创建速度。当您创建发票或报价时，NomadBill 会重复使用明细项中的产品数据，因此您无需每次都重新输入相同的名称、描述或定价。
+
+这对于经常性服务、标准套餐和经常销售的产品最有用。您无需手动键入每一行，而是选择现有产品并从目录中已存储的保存值开始。
+
+由于产品在公司级别共享，因此您的团队可以跨发票和报价使用同一项目列表进行工作。这使得定价和命名更加一致，尤其是当多个人创建文档时。
+
+## 产品的自定义字段
+
+自定义字段可让您将基本产品目录转变为结构化库存或服务登记册。在 NomadBill 中，产品自定义字段使用实体类型 `product`。
+
+常见示例包括内部标识符、库存信息、供应商成本、日期、URL 和文件附件。种子示例包括 `produkt_nummer`、`sku`、`produktkategorie`、详细说明、`gewicht_kg`、`einkaufspreis`、`auf_lager`、`produkt_url`、`gueltig_ab`、`zertifizierungen`、`datenblatt` 和`marge_formel`。
+
+不同的字段类型支持不同类型的产品数据：
+
+- **标识符**，例如自动编号或唯一文本值
+- **商业价值**，例如购买价、销售价或保证金公式
+- **运营数据**，例如库存状态、类别和生效日期
+- **支持材料**，例如数据表和外部产品链接
+
+在[自定义字段](/zh/user-guide/custom-fields) 中配置这些字段。当产品自定义字段设置为在表中显示时，它也会成为 `/items` 列表视图的一部分。
+
+## 相关指南
+
+<Columns cols={2}>
+  <Card
+    title="开具发票"
+    href="/zh/user-guide/invoicing"
+    icon="book-open"
+    cta="打开指南"
+  />
+  <Card
+    title="自定义字段"
+    href="/zh/user-guide/custom-fields"
+    icon="settings"
+    cta="管理字段"
+  />
+</Columns>

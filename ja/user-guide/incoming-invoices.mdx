@@ -1,0 +1,192 @@
+---
+title: 請求書の受信
+description: 自動 VAT 計算と銀行照合機能を使用して、サプライヤーの請求書、領収書、経費をアップロードして管理します。
+---
+
+## サプライヤーの請求書と領収書を 1 か所で追跡
+
+受信した請求書を使用すると、サプライヤーの請求書、領収書、その他のビジネス経費を残りの記録と一緒に保存できます。 PDF または画像をアップロードし、請求書の詳細を入力し、支払われたかどうかを追跡し、支払いが表示されたときに銀行取引と照合することができます。
+
+NomadBill は、元のファイルを安全なストレージに保存し、VAT の金額を自動的に計算し、リンクされた電子メール、カスタム フィールド、照合された銀行支払いなどの関連情報を請求書の詳細ページに表示します。
+
+<Callout kind="info">
+
+サポートされているアップロード ファイルには、**PDF** と **画像ファイル** が含まれます。 NomadBill は、`userId/timestamp-filename` のユーザーごとのパス パターンを使用して、各ファイルを `incoming-invoices` ストレージ バケットに保存します。
+
+</Callout>
+
+## 領収書のアップロード
+
+ファイルからサプライヤー請求書を手動で追加する場合は、受信請求書領域を使用します。
+
+<Steps>
+  <Step title="受信した請求書を開く" icon="folder">
+
+NomadBill の受信請求書セクションに移動し、新しいアップロードを開始します。
+
+これは、領収書またはサプライヤーの請求書がすでにデバイスに保存されている場合に最適なオプションです。
+
+  </Step>
+
+  <Step title="ファイルをアップロードする" icon="upload">
+
+コンピューターまたは携帯電話から **PDF** または **画像** ファイルを選択します。
+
+NomadBill は、アップロードされたファイルを安全なストレージに保存し、請求書レコードにファイル パスを保持します。後でファイルを開くと、NomadBill は 60 秒間有効な署名付き表示リンクを生成します。
+
+  </Step>
+
+  <Step title="請求書の詳細を入力します" icon="edit">
+
+ドキュメントのサプライヤー、請求書、VAT、および支払い情報を追加します。
+
+請求書を保存すると、受信請求書リストに請求書が表示され、詳細ページを開くことができるようになります。
+
+  </Step>
+
+  <Step title="詳細ページを確認する" icon="check-circle">
+
+保存した請求書を開いて情報を確認します。
+
+詳細ビューには、サプライヤーの詳細、請求書の詳細、カスタム フィールド、リンクされた電子メール、および銀行支払い用の個別のカードが含まれています。
+
+  </Step>
+</Steps>
+
+## サプライヤーと請求書の詳細
+
+受信した各請求書には、サプライヤー情報と請求書固有の情報の両方が保存されます。カテゴリはフリーテキストなので、簿記のワークフローに合った名前付け構造を使用できます。
+
+### サプライヤーフィールド
+
+<ParamField body="supplier_name" param-type="string" required="false" show-location="false">
+請求書または領収書を発行したサプライヤーまたは販売者の名前。
+</ParamField>
+
+<ParamField body="supplier_address" param-type="string" required="false" show-location="false">
+サプライヤーの住所。
+</ParamField>
+
+<ParamField body="supplier_vat_number" param-type="string" required="false" show-location="false">
+サプライヤーの登録番号 VAT (文書に記載されている場合)。
+</ParamField>
+
+### 請求書のフィールド
+
+<ParamField body="invoice_number" param-type="string" required="false" show-location="false">
+サプライヤー自身の請求書または受領書番号。
+</ParamField>
+
+<ParamField body="invoice_date" param-type="date" required="false" show-location="false">
+サプライヤーの請求書に記載される日付。
+</ParamField>
+
+<ParamField body="due_date" param-type="date" required="false" show-location="false">
+請求書の支払い期限。
+</ParamField>
+
+<ParamField body="payment_date" param-type="date" required="false" show-location="false">
+請求書が支払われた日付。支払いが一致すると、銀行調整によってこれが更新されることがあります。
+</ParamField>
+
+<ParamField body="category" param-type="string" required="false" show-location="false">
+経費の自由記述カテゴリ。 NomadBill は、事前定義されたカテゴリ リストを強制しません。
+</ParamField>
+
+<ParamField body="notes" param-type="string" required="false" show-location="false">
+領収書、サプライヤー、または経費に関する内部メモ。
+</ParamField>
+
+<ParamField body="currency" param-type="string" required="false" enum="EUR,USD,GBP,CHF,AED" show-location="false">
+請求書に使用される通貨。サポートされている値は、`EUR`、`USD`、`GBP`、`CHF`、および `AED` です。
+</ParamField>
+
+<ParamField body="payment_status" param-type="string" required="false" enum="unpaid,paid" show-location="false">
+請求書の現在の支払い状態。 NomadBill は、`unpaid` および `paid` をサポートします。
+</ParamField>
+
+### 金額フィールド
+
+<ParamField body="net_amount" param-type="number" required="false" show-location="false">
+VAT より前の請求額。
+</ParamField>
+
+<ParamField body="vat_percentage" param-type="number" required="false" show-location="false">
+請求額に適用される VAT レート。
+</ParamField>
+
+<ParamField body="vat_amount" param-type="number" required="false" show-location="false">
+VAT の金額を計算しました。
+</ParamField>
+
+<ParamField body="amount" param-type="number" required="false" show-location="false">
+VATを含む請求総額。
+</ParamField>
+
+### ファイルとレコードのメタデータ
+
+<ParamField body="file_path" param-type="string" required="false" show-location="false">
+アップロードされた領収書または請求書ファイルのストレージ パス。
+</ParamField>
+
+<ParamField body="upload_date" param-type="date-time" required="false" show-location="false">
+ファイルが NomadBill にアップロードされた日付。
+</ParamField>
+
+## VATと金額計算
+
+NomadBill は請求書の合計を自動的に再計算するため、すべての金額フィールドを手動で更新する必要はありません。これにより、特に正味金額と VAT レートしかわからない場合、またはレシートの総額しかわからない場合に、入力ミスが軽減されます。
+
+`net_amount` または `vat_percentage` を変更すると、NomadBill は `vat_amount` と `amount` の両方を再計算します。総額には次の式が使用されます: `gross = net * (1 + pct / 100)`。
+
+`amount` を変更すると、NomadBill は現在の VAT パーセンテージに基づいて `net_amount` と `vat_amount` を再計算します。これは、領収書に最終合計と VAT レートのみが表示される場合に役立ちます。
+
+<Callout kind="tip">
+
+レシートに割引、VAT レートの混合、または正味と VAT を明確に分けていないサプライヤー形式が含まれている場合は、保存する前に再計算された値を確認してください。
+
+</Callout>
+
+## 支払い状況と銀行照合
+
+支払いステータスは、どのサプライヤー請求書が未処理で、どの請求書がすでに支払われているかを追跡するのに役立ちます。 NomadBill は、`unpaid` と `paid` の 2 つのステータスを使用します。
+
+銀行同期を接続すると、NomadBill は送信銀行取引と受信請求書を自動的に照合できます。マッチング ロジックでは次のものが検索されます。
+
+- 金額がゼロ未満の **送信トランザクション**
+- **まったく同じ金額**
+- **同じ通貨**
+- 請求日から **14 日**以内の取引日
+
+NomadBill が一致を見つけると、トランザクションを受信請求書にリンクし、支払いステータスを `paid` に設定します。リンクされた銀行支払いは、請求書の詳細ページの銀行支払いカードに表示されます。
+
+バンク同期領域から接続を手動で管理することもできます。一致したトランザクションのリンクを解除すると、NomadBill は支払いステータスを `unpaid` に戻します。
+
+照合ワークフロー全体については、[銀行同期](/ja/user-guide/bank-sync)をご覧ください。
+
+## 電子メールインテリジェンスの統合
+
+NomadBill は、電子メール データから受信請求書を作成することもできます。電子メール インテリジェンスがメッセージから領収書またはサプライヤー請求書の詳細を抽出すると、`createReceiptFromEmail` は受信請求書レコードを作成できます。
+
+これは、サプライヤーが請求書を電子メールで送信し、手入力を減らしたい場合に便利です。作成後、請求書の詳細ページを開いて、抽出されたフィールドを確認し、メモやカテゴリを追加して、支払いがすでに照合されているかどうかを確認できます。
+
+詳細ページには、リンクされた電子メール カードも含まれており、必要に応じて請求書を元の電子メール コンテキストまで追跡するのに役立ちます。
+
+メールのワークフローについては、[メールインテリジェンス](/ja/user-guide/email-intelligence)をご覧ください。
+
+## 関連ガイド
+
+<Columns cols={2}>
+  <Card
+title="バンク同期"
+href="/ja/user-guide/bank-sync"
+アイコン="データベース"
+cta="ガイドを開く"
+  />
+  <Card
+title="カスタムフィールド"
+href="/ja/user-guide/custom-fields"
+アイコン=「設定」
+cta="ガイドを開く"
+  />
+</Columns>

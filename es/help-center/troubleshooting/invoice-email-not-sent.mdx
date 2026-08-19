@@ -1,0 +1,48 @@
+---
+title: Correo electrónico de factura no enviado
+description: Solucionar problemas de entrega de facturas en NomadBill.
+---
+
+## Solucionar problemas de entrega de correo electrónico de facturas
+Los correos electrónicos de facturas deben actualizar el registro de la factura cuando NomadBill los envía. Si un cliente no recibió una factura, primero confirme la dirección del destinatario y luego verifique si la factura realmente se marcó como enviada antes de reenviarla.
+
+<Steps>
+  <Step title="Verifique la dirección de correo electrónico del destinatario">
+
+Abra la factura y revise atentamente la dirección de correo electrónico del destinatario. Un error tipográfico, una dirección desactualizada o el contacto incorrecto en la factura son las razones más comunes por las que un correo electrónico nunca llega.
+
+Si envió la factura antes, tenga en cuenta que NomadBill almacena el último destinatario en el campo `sent_to`. El formulario de reenvío utiliza la misma dirección que el destinatario predeterminado, así que corríjalo antes de volver a enviarlo si es necesario.
+
+  </Step>
+  <Step title="Verificar que la factura haya sido marcada como enviada">
+
+Verifique los campos de la factura que rastrean la actividad del correo electrónico:
+
+- `sent_at` muestra cuándo NomadBill registró el correo electrónico como enviado.
+- `sent_to` muestra qué dirección de correo electrónico recibió el mensaje.
+- `email_status` debería ser `sent` después de una acción de envío exitosa.
+
+Si estos campos están en blanco o `email_status` no es `sent`, NomadBill no finalizó el paso de envío. En ese caso, el reenvío de la factura es el siguiente control.
+
+  </Step>
+  <Step title="Reenviar el correo electrónico de la factura">
+
+Abra la factura y utilice la acción enviar o reenviar correo electrónico en el modo de correo electrónico. NomadBill envía un resumen de factura HTML que incluye el número de documento, el nombre del cliente, el monto y cualquier mensaje personalizado que agregue.
+
+Después de enviarla, confirme que la factura se actualice con un nuevo valor `sent_at`, la dirección `sent_to` correcta y `email_status` configurado en `sent`. Esos campos son su mejor confirmación de que NomadBill procesó la solicitud de correo electrónico.
+
+  </Step>
+  <Step title="Revisar carpetas de spam o basura">
+
+Pídale a su cliente que busque mensajes de `noreply@nomadbill.co` en spam, basura, promociones o carpetas filtradas.
+
+Si la factura muestra `sent_at`, `sent_to` y `email_status` como se esperaba pero el cliente aún no puede encontrar el mensaje, es posible que su proveedor de correo lo haya filtrado después de la entrega.
+
+  </Step>
+</Steps>
+
+<Callout kind="alert">
+
+Si los correos electrónicos de facturas no se envían constantemente, es posible que la integración de reenvío no esté configurada para su espacio de trabajo. Comuníquese con el administrador de su cuenta para verificar que el servicio de correo electrónico esté configurado correctamente.
+
+</Callout>

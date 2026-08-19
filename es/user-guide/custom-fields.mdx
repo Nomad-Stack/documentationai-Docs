@@ -1,0 +1,225 @@
+---
+title: Campos personalizados
+description: agregue metadatos estructurados a clientes, productos, facturas, cotizaciones y facturas con 19 tipos de campos personalizados y reglas de visualización flexibles.
+---
+
+## Los campos personalizados le permiten capturar los detalles que su empresa necesita
+
+Agregue sus propios campos a clientes, productos, facturas, cotizaciones y facturas entrantes para que cada registro coincida con su forma de trabajar. Utilice campos personalizados para notas internas, números de referencia, categorías, enlaces, cálculos, archivos adjuntos y texto generado por IA sin cambiar su flujo de trabajo estándar.
+
+<Callout kind="info">
+
+Los campos personalizados son específicos de la empresa. Un campo que usted crea está disponible solo dentro de la cuenta de su empresa y solo para el tipo de entidad al que lo asigna.
+
+</Callout>
+
+## Cómo funcionan los campos personalizados
+
+Los campos personalizados se crean a partir de dos partes: una **definición de campo** y un **valor de campo**. La definición controla dónde aparece el campo, qué tipo de entrada acepta y si se puede utilizar en tablas, formularios o plantillas PDF. El valor son los datos reales guardados en cada registro.
+
+Usted crea campos por tipo de entidad y luego los completa cuando crea o edita un registro. Por ejemplo, puede agregar un campo de categoría de cliente para clientes, un campo SKU para productos o un campo de referencia de proyecto para facturas.
+
+### Tipos de entidad
+
+| Tipo de entidad | Utilizado para |
+|---|---|
+| `customer` | Almacene detalles adicionales sobre los clientes, como el número de cliente, el sitio web, la fecha de incorporación o notas internas. |
+| `product` | Agregue metadatos específicos del producto, como SKU, categoría, peso, precio de compra o certificaciones. |
+| `invoice` | Capture detalles de facturas como referencias de proyectos, notas de entrega, estado de aprobación o valores calculados. |
+| `quote` | Realice un seguimiento de información específica de la cotización, como números de revisión, notas de validez o etapas de ventas. |
+| `incoming_invoice` | Guarde los metadatos de la factura del proveedor, como referencias de recibos, campos de aprobación o documentos de respaldo adjuntos. |
+
+<Callout kind="tip">
+
+Mantenga los nombres de los campos específicos del tipo de registro. Un campo como `sku` tiene sentido en productos, mientras que `project_reference` es más fácil de mantener en facturas.
+
+</Callout>
+
+## Tipos de campo
+
+Elija un tipo de campo según el tipo de datos que desea que los usuarios ingresen o generen.
+
+| Tipo de campo | Descripción |
+|---|---|
+| `text` | Entrada de texto de una sola línea. |
+| `multiline` | Área de texto de varias líneas para notas más largas. |
+| `email` | Entrada de dirección de correo electrónico. |
+| `url` | Entrada de sitio web o enlace. |
+| `phone` | Entrada de número de teléfono. |
+| `number` | Entrada de números enteros. |
+| `decimal` | Entrada de números decimales. |
+| `amount` | Entrada del importe de la moneda. |
+| `percent` | Entrada numérica mostrada como porcentaje. |
+| `date` | Selector de fechas. |
+| `datetime` | Selector de fecha y hora. |
+| `boolean` | Casilla de verificación con estado de sí o no. |
+| `dropdown` | Campo de selección única con opciones predefinidas. |
+| `multiselect` | Campo de selección múltiple con opciones predefinidas. |
+| `autonumber` | Número secuencial asignado automáticamente. |
+| `lookup` | Enlace a otra entidad. |
+| `formula` | Campo calculado basado en una expresión. |
+| `attachment` | Campo de carga de archivos. |
+| `ai` | Campo de texto generado por IA basado en un mensaje guardado. |
+
+## Configuración de campo
+
+La configuración de campo controla la validación, la visibilidad y el pedido. Configure estas opciones cuando cree un campo y luego actualícelas más tarde si su flujo de trabajo cambia.
+
+<ParamField body="is_required" param-type="boolean" required="false" show-location="false">
+
+Hace que el campo sea obligatorio cuando los usuarios completan un formulario de registro.
+
+</ParamField>
+
+<ParamField body="is_unique" param-type="boolean" required="false" show-location="false">
+
+Evita valores duplicados para ese campo en registros del mismo tipo de entidad.
+
+</ParamField>
+
+<ParamField body="show_in_table" param-type="boolean" required="false" show-location="false">
+
+Muestra el campo como una columna en vistas de lista para ese tipo de entidad.
+
+</ParamField>
+
+<ParamField body="show_in_form" param-type="boolean" required="false" show-location="false">
+
+Muestra el campo en formularios de creación y edición. Esta configuración está habilitada de forma predeterminada.
+
+</ParamField>
+
+<ParamField body="available_in_pdf" param-type="boolean" required="false" show-location="false">
+
+Hace que el campo esté disponible para plantillas PDF. Esta configuración está habilitada de forma predeterminada.
+
+</ParamField>
+
+<ParamField body="sort_order" param-type="integer" required="false" show-location="false">
+
+Controla el orden de los campos personalizados dentro del tipo de entidad seleccionado.
+
+</ParamField>
+
+## Creando un campo personalizado
+
+Cree campos desde el administrador de campos personalizados en la configuración. La ruta más rápida es definir primero la etiqueta y el tipo, luego activar solo las opciones que necesita.
+
+<Steps>
+  <Step title="Abrir campos personalizados" icon="settings">
+
+Inicie sesión en NomadBill y abra el área de campos personalizados en su configuración.
+
+Elija el tipo de entidad que desea ampliar, como clientes, productos, facturas, cotizaciones o facturas entrantes.
+
+  </Step>
+  <Step title="Crear la definición de campo" icon="plus">
+
+Agrega un nuevo campo e ingresa una **etiqueta** que las personas de tu equipo reconocerán. NomadBill también crea una **clave** para el campo de esa etiqueta.
+
+Seleccione el **tipo de campo** que coincida con los datos que desea recopilar. Si elige `dropdown` o `multiselect`, agregue las opciones que desea que los usuarios elijan.
+
+  </Step>
+  <Step title="Configurar visibilidad y validación" icon="edit">
+
+Active las opciones que necesita para ese campo, como obligatorio, único, visible en formularios, visible en tablas o disponible en plantillas PDF.
+
+Si desea que el campo aparezca antes o después que otros, ajuste su orden de clasificación antes de guardar.
+
+  </Step>
+  <Step title="Guarde y pruebe el campo" icon="check-circle">
+
+Guarde el campo, luego abra un registro del mismo tipo de entidad y confirme que la entrada aparece donde espera.
+
+El éxito se parece al campo que se muestra en el formulario o en la vista de tabla según las opciones que habilitó.
+
+  </Step>
+</Steps>
+
+<Callout kind="alert">
+
+No puede cambiar el tipo de un campo una vez creado. Si necesita un tipo diferente, cree un nuevo campo y mueva su flujo de trabajo a ese nuevo campo.
+
+</Callout>
+
+## Usar campos personalizados en registros
+
+Después de crear un campo, NomadBill lo muestra en los registros de ese tipo de entidad cuando `show_in_form` está habilitado. Los usuarios pueden ingresar valores mientras crean un nuevo registro o actualizarlos más tarde desde la vista de edición.
+
+Los valores de los campos personalizados se guardan por registro. Un campo a nivel de producto se aplica solo a productos y un campo a nivel de factura se aplica solo a facturas. Si un campo también está marcado como `show_in_table`, el valor puede aparecer en las vistas de lista para ayudarle a escanear y filtrar registros más rápidamente.
+
+Los campos personalizados también admiten patrones de edición de páginas de detalles. Eso los hace útiles para información que no siempre se ingresa por adelantado, como notas internas, fechas de seguimiento o archivos adjuntos de respaldo.
+
+## Campos de numeración automática
+
+Utilice campos de numeración automática cuando necesite ID secuenciales que NomadBill asigna automáticamente. Esto funciona bien para números de clientes, números de productos, referencias internas u otras identificaciones estructuradas que no deben ingresarse manualmente.
+
+<Callout kind="info">
+
+Los campos de numeración automática admiten tres opciones de configuración:
+
+- **Prefijo** agrega texto antes del número, como `K-` o `P-`.
+- **Relleno** agrega ceros a la izquierda para alcanzar un ancho fijo.
+- **Inicio** establece el primer número de la secuencia.
+
+Un número de cliente puede comenzar en `K-1000`, mientras que un número de producto puede usar `P-00001`.
+
+</Callout>
+
+Cada vez que se crea un nuevo registro, NomadBill asigna el siguiente número en la secuencia para ese campo. Esto reduce la numeración duplicada y mantiene los registros consistentes.
+
+## Campos de fórmula
+
+Utilice campos de fórmula cuando deba calcularse un valor en lugar de ingresarlo manualmente. Los campos de fórmula son útiles para totales, márgenes, valores basados ​​en porcentajes o cálculos específicos de registros que dependen de otros campos.
+
+Una expresión de fórmula puede hacer referencia a valores numéricos integrados y campos personalizados. Las variables disponibles incluyen:
+
+- `subtotal`
+- `vat_percentage`
+- `total`
+- `unit_price`
+- `custom.KEY`
+
+Por ejemplo, puede usar `custom.discount_rate * subtotal / 100` para calcular un monto de descuento cuando `discount_rate` se almacena en otro campo personalizado. Los valores de las fórmulas se calculan automáticamente cuando NomadBill guarda los valores de los campos personalizados.
+
+<Callout kind="tip">
+
+Mantenga las claves de los campos de fórmula simples y predecibles para que las expresiones sean más fáciles de leer. Una clave como `discount_rate` es más fácil de usar en `custom.discount_rate` que un estilo de nombre largo o inconsistente.
+
+</Callout>
+
+## Campos generados por IA
+
+Utilice campos generados por IA cuando desee que NomadBill escriba texto por usted en función de un mensaje guardado. Esto es útil para resúmenes internos, descripciones preliminares, notas de seguimiento o texto estandarizado que deben generarse a partir de datos de registros.
+
+Antes de poder utilizar un campo AI, cree un mensaje AI en el administrador de campos personalizados. Luego conecte ese mensaje al campo cuando cree la definición del campo. En los registros, los usuarios pueden generar o volver a generar el texto directamente desde la entrada del campo.
+
+NomadBill admite estos modelos de IA para indicaciones:
+
+- `google/gemini-3-flash-preview`
+- `google/gemini-2.5-flash`
+- `google/gemini-2.5-pro`
+- `openai/gpt-5-mini`
+- `openai/gpt-5`
+
+<Callout kind="info">
+
+Los campos generados por IA almacenan la salida de texto. Revise el contenido generado antes de usarlo en documentos dirigidos al cliente.
+
+</Callout>
+
+## Campos personalizados en plantillas PDF
+
+Haga que un campo esté disponible en la salida PDF habilitando `available_in_pdf` en la definición del campo. Después de eso, puede colocar el campo en sus plantillas de documentos y usar el valor personalizado al generar facturas, cotizaciones u otros archivos PDF.
+
+Si planea incluir campos personalizados en documentos impresos, configure el campo antes de finalizar su plantilla. Eso mantiene estable la estructura de su plantilla y evita tener que volver a trabajarla más adelante.
+
+Lea [Plantillas PDF](/es/user-guide/pdf-templates) para conocer las opciones de configuración de plantillas y diseño de documentos.
+
+## Guías relacionadas
+
+<Columns cols={3}>
+  <Card title="Gestionar facturas" href="/es/user-guide/invoicing" icon="folder" cta="Guía de facturación abierta" />
+  <Card title="Administrar productos" href="/es/user-guide/products" icon="package" cta="Abrir guía de productos" />
+  <Card title="Diseñar plantillas PDF" href="/es/user-guide/pdf-templates" icon="book-open" cta="Abrir guía de plantillas PDF" />
+</Columns>

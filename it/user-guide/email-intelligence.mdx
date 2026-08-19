@@ -1,0 +1,246 @@
+---
+title: Gestione intelligente delle email
+description: Classifica automaticamente le e-mail in arrivo, estrai i dati dei documenti con l'intelligenza artificiale e abbina le e-mail a fatture, preventivi e ricevute.
+---
+
+## Trasforma la tua casella di posta condivisa in una casella di posta per documenti
+
+Gestione intelligente delle email offre alla tua azienda una casella di posta dedicata che controlla i messaggi in arrivo, identifica i documenti aziendali, estrae i dati chiave e suggerisce collegamenti ai record corretti in NomadBill. È progettato per il modo in cui già lavorano freelance e piccoli team: i fornitori inviano fatture via e-mail, i clienti rispondono ai preventivi e le conferme di pagamento arrivano nella stessa casella di posta.
+
+## Casella di posta dell'agente
+
+Ogni azienda riceve una casella di posta dedicata per l'agente nel formato `agent_name@agent.nomadbill.co`. Se l'area di lavoro utilizza un dominio dell'agente personalizzato, la casella di posta utilizza invece quel dominio.
+
+Solo il proprietario dell'azienda può fornire la casella di posta. Durante la configurazione, NomadBill normalizza il nome dell'agente in un formato sicuro per la casella di posta convertendolo in lettere minuscole, sostituendo gli spazi con trattini e limitando lo slug a 40 caratteri.
+
+Una volta avviato il provisioning, NomadBill:
+
+- crea un’autorizzazione alla casella di posta con Nylas
+- memorizza la connessione alla casella di posta nel record `company_email_accounts`
+- registra un webhook per gli eventi di posta in entrata
+
+Il webhook ascolta questi eventi:
+
+-`message.created`
+-`message.updated`
+-`grant.expired`
+
+NomadBill registra il webhook su `/api/public/nylas-webhook`. Durante l'handshake iniziale del webhook, il gestore `GET` restituisce il parametro di query `challenge` esattamente come ricevuto.
+
+## Come vengono elaborate le email in arrivo
+
+Ogni nuovo messaggio segue lo stesso flusso di elaborazione in modo che i risultati rimangano coerenti e si evitino lavori duplicati.
+
+<Steps>
+  <Step title="Ricevi l'evento webhook" icon="zap">
+
+Nylas invia un evento webhook a `/api/public/nylas-webhook` quando un messaggio viene creato o aggiornato o quando scade una concessione.
+
+NomadBill può verificare l'intestazione `x-nylas-signature` con HMAC-SHA256. La verifica della firma è facoltativa, ma dovresti trattarla come la configurazione di produzione consigliata.
+
+  </Step>
+
+  <Step title="Recupera l'e-mail completa" icon="download">
+
+Dopo l'arrivo di un evento valido, NomadBill recupera l'intero contenuto dell'e-mail e i metadati dalla casella di posta connessa.
+
+Il sistema protegge inoltre da elaborazioni doppie. Se la stessa email è già stata completata, già saltata o è ancora in fase di elaborazione entro un intervallo di cinque minuti, NomadBill non la analizza nuovamente.
+
+  </Step>
+
+  <Step title="Salta i messaggi che non devono essere analizzati" icon="shield">
+
+NomadBill ignora i messaggi inviati dalla casella di posta dell'agente stesso. Questa protezione automatica della posta elettronica previene i loop ed evita l'analisi della posta generata dal sistema.
+
+Anche i messaggi in uscita o irrilevanti possono essere esclusi dalla classificazione se non rappresentano un documento commerciale utilizzabile.
+
+  </Step>
+
+  <Step title="Scarica allegati e contenuto dei messaggi" icon="paperclip">
+
+Il processore raccoglie il corpo dell'e-mail e tutti gli allegati disponibili prima di eseguire l'analisi del documento.
+
+Ciò fornisce al classificatore un contesto sufficiente per riconoscere se il messaggio contiene una fattura, una ricevuta, un preventivo, una conferma o un altro tipo di documento.
+
+  </Step>
+
+  <Step title="Esegui la classificazione e l'estrazione dell'intelligenza artificiale" icon="code">
+
+NomadBill invia il contenuto dell'e-mail alla pipeline AI utilizzando `google/gemini-3.6-flash` tramite il gateway AI Lovable.
+
+Il modello classifica il documento ed estrae campi strutturati come totali, date, nomi e numeri di riferimento in modo da poterli rivedere all'interno di NomadBill invece di copiare i dati manualmente.
+
+  </Step>
+
+  <Step title="Calcola i suggerimenti di corrispondenza" icon="check-circle">
+
+Dopo l'estrazione, il motore di corrispondenza confronta l'e-mail con fatture, preventivi, fatture passive, transazioni bancarie e clienti della tua azienda.
+
+Ogni possibile corrispondenza ottiene un punteggio. NomadBill conserva i suggerimenti che soddisfano la soglia minima e mostra per primi i candidati più forti.
+
+  </Step>
+
+  <Step title="Memorizza il risultato e preserva le tue decisioni" icon="database">
+
+L'analisi finale viene archiviata insieme al record dell'e-mail, inclusi i dati estratti e i collegamenti suggeriti.
+
+Se hai già collegato o rifiutato un suggerimento, NomadBill conserva tale decisione in una successiva rianalisi invece di reimpostare il tuo lavoro.
+
+  </Step>
+</Steps>
+
+## Classificazione dei documenti
+
+Gestione intelligente delle email classifica ciascun messaggio analizzato in uno di questi tipi di documenti:
+
+-`incoming_invoice`
+-`receipt`
+-`outgoing_invoice`
+-`quote`
+-`payment_confirmation`
+-`reminder`
+-`contract`
+-`other`
+
+La classificazione aiuta NomadBill a decidere quali azioni offrire successivamente. Ad esempio, solo le e-mail `incoming_invoice` e `receipt` possono essere trasformate direttamente in un record di fatture passive.
+
+## Dati estratti dall'intelligenza artificiale
+
+Il risultato dell'analisi può includere i seguenti campi estratti.
+
+<ParamField body="doc_type" param-type="string" required="true" show-location="false">
+Il tipo di documento rilevato per l'e-mail.
+</ParamField>
+
+<ParamField body="confidence" param-type="number" show-location="false">
+Il punteggio di confidenza del modello per il risultato della classificazione.
+</ParamField>
+
+<ParamField body="summary" param-type="string" show-location="false">
+Un breve riepilogo di ciò che sembra contenere l'e-mail o l'allegato.
+</ParamField>
+
+<ParamField body="document_number" param-type="string" show-location="false">
+Il numero principale della fattura, ricevuta, preventivo o conferma rilevato nel documento.
+</ParamField>
+
+<ParamField body="reference_numbers" param-type="array" show-location="false">
+Identificatori di riferimento aggiuntivi trovati nell'e-mail o nell'allegato.
+</ParamField>
+
+<ParamField body="total_amount" param-type="number" show-location="false">
+L'importo lordo totale rilevato per il documento.
+</ParamField>
+
+<ParamField body="net_amount" param-type="number" show-location="false">
+L'importo netto prima dell’IVA, quando il documento lo prevede.
+</ParamField>
+
+<ParamField body="vat_amount" param-type="number" show-location="false">
+L'importo IVA estratto dal documento.
+</ParamField>
+
+<ParamField body="vat_percentage" param-type="number" show-location="false">
+La aliquota IVA quando può essere identificata in modo affidabile.
+</ParamField>
+
+<ParamField body="currency" param-type="string" show-location="false">
+Il codice valuta rilevato per l'importo del documento.
+</ParamField>
+
+<ParamField body="document_date" param-type="string" show-location="false">
+La data di emissione trovata nel documento.
+</ParamField>
+
+<ParamField body="due_date" param-type="string" show-location="false">
+La data di scadenza del pagamento, se presente.
+</ParamField>
+
+<ParamField body="vendor_name" param-type="string" show-location="false">
+Il nome del fornitore o del mittente associato al documento.
+</ParamField>
+
+<ParamField body="customer_name" param-type="string" show-location="false">
+Il nome del cliente a cui si fa riferimento nel documento.
+</ParamField>
+
+<ParamField body="iban" param-type="string" show-location="false">
+Il numero di conto bancario rilevato nell'e-mail o nel documento.
+</ParamField>
+
+<ParamField body="category" param-type="string" show-location="false">
+Una categoria ampia assegnata durante l'analisi.
+</ParamField>
+
+<ParamField body="ocr_text" param-type="string" show-location="false">
+Il testo del documento estratto utilizzato per la classificazione e la corrispondenza a valle.
+</ParamField>
+
+<ParamField body="line_items" param-type="array" show-location="false">
+Elementi riga rilevati dal documento, quando l'allegato contiene dettagli dettagliati.
+</ParamField>
+
+## Abbinamento e suggerimenti
+
+Dopo l'analisi, NomadBill cerca i record correlati nell'area di lavoro e assegna un punteggio a ciascun candidato. Per essere visualizzato, un suggerimento deve raggiungere un punteggio minimo di `0.35` e il sistema restituisce fino a 12 suggerimenti per email.
+
+Il motore di corrispondenza valuta diversi tipi di record:
+
+- fatture
+- citazioni
+- fatture passive
+- operazioni bancarie
+- clienti
+
+Per le fatture, i segnali più forti sono il numero del documento, l’importo, il destinatario e l’identità del cliente. Il modello di punteggio aggiunge punti per:
+
+- numero trovato: `+0.55`
+- importo compreso tra `±0.5%` o `±0.02`: `+0.30`
+- corrispondenza valutaria: `+0.05`
+- data entro 14 giorni: `+0.10`
+- `sent_to` contiene l'e-mail del mittente: `+0.25`
+- corrispondenza del nome del cliente: `+0.15`
+
+Per le transazioni bancarie, il motore si concentra sulle prove di pagamento e sull'identità della controparte. Aggiunge punti per:
+
+- corrispondenza importo: `+0.45`
+- numero candidato trovato: `+0.35`
+- corrispondenza del nome della controparte: `+0.20`
+- data entro 30 giorni: `+0.10`
+
+Per i clienti, il motore tenta di identificare a chi appartiene l'e-mail prima di suggerire record operativi. Aggiunge punti per:
+
+- corrispondenza esatta dell'e-mail: `+0.80`
+- stesso dominio: `+0.50`
+- corrispondenza del nome: `+0.30`
+
+Questi punteggi sono additivi, quindi le corrispondenze forti solitamente combinano più segnali contemporaneamente invece di dipendere da un campo.
+
+## Gestione dei collegamenti e-mail
+
+NomadBill tiene traccia di come ogni email si collega ai tuoi record. I collegamenti possono trovarsi in uno dei tre stati:
+
+- **Suggested** — NomadBill ha trovato una corrispondenza probabile ed è in attesa della tua revisione.
+- **Linked**: hai confermato che l'e-mail appartiene a una fattura, preventivo, ricevuta, transazione o cliente specifico.
+- **Dismissed**: hai rifiutato un suggerimento e la decisione viene mantenuta se l'e-mail viene analizzata nuovamente.
+
+Utilizza la scheda Gestione intelligente delle email nella visualizzazione email per rivedere i campi estratti, esaminare i suggerimenti e confermare o ignorare le corrispondenze. Quando un'e-mail è già connessa a un record, l'attività e-mail collegata viene visualizzata anche dall'altro lato nelle pagine delle fatture, dei preventivi, delle ricevute, delle transazioni e dei dettagli del cliente.
+
+Se il tipo di documento è `incoming_invoice` o `receipt`, puoi creare una fattura passiva direttamente dall'e-mail. L'azione `createReceiptFromEmail` utilizza i dati del documento estratto per precompilare il nuovo record ed evita di creare duplicati quando l'e-mail è già stata elaborata o ignorata intenzionalmente.
+
+<Callout kind="info">
+
+Aggiornamenti di Gestione intelligente delle email quasi in tempo reale. NomadBill ascolta l'attività della casella di posta tramite Supabase Realtime su `company_email_accounts.last_event_at` e torna a un ciclo di polling di 30 secondi quando necessario.
+
+</Callout>
+
+## Guide correlate
+
+<Columns cols={2}>
+  <Card title="Fatturazione" href="/it/user-guide/invoicing" icon="file-text" cta="Apri la guida">
+Gestisci le fatture in uscita e scopri come le e-mail collegate supportano il follow-up e il monitoraggio dei pagamenti.
+  </Card>
+  <Card title="Fatture passive" href="/it/user-guide/incoming-invoices" icon="folder" cta="Apri la guida">
+Esamina le fatture dei fornitori, crea record dall'analisi della posta elettronica e mantieni organizzati i documenti di acquisto.
+  </Card>
+</Columns>

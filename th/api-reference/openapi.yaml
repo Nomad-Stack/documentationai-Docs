@@ -1,0 +1,183 @@
+openapi: '3.0.0'
+info:
+  version: 1.0.0
+  title: NomadBill
+  license:
+    name: MIT
+servers:
+  - url: https://api.nomadbill.com/v1
+paths:
+  /documents:
+    get:
+      summary: รายการเอกสาร
+      operationId: listDocuments
+      parameters:
+        - name: limit
+          in: query
+          description: จำนวนรายการที่จะส่งคืนต่อครั้ง (สูงสุด 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: อาร์เรย์เอกสารแบบแบ่งหน้า
+          headers:
+            x-next:
+              description: ลิงค์ไปยังหน้าถัดไปของการตอบกลับ
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documents'
+        default:
+          description: ข้อผิดพลาดที่ไม่คาดคิด
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: สร้างเอกสาร
+      operationId: createDocument
+      responses:
+        201:
+          description: ไม่มีเนื้อหาในการตอบกลับ
+        default:
+          description: ข้อผิดพลาดที่ไม่คาดคิด
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /documents/{documentId}:
+    get:
+      summary: รับเอกสาร
+      operationId: showDocumentById
+      parameters:
+        - name: documentId
+          in: path
+          required: true
+          description: รหัสของเอกสารที่จะดึงข้อมูล
+          schema:
+            type: string
+      responses:
+        200:
+          description: คาดว่าจะตอบสนองต่อคำขอที่ถูกต้อง
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documents'
+        default:
+          description: ข้อผิดพลาดที่ไม่คาดคิด
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /folders:
+    get:
+      summary: รายการโฟลเดอร์
+      operationId: listFolders
+      parameters:
+        - name: limit
+          in: query
+          description: จำนวนรายการที่จะส่งคืนต่อครั้ง (สูงสุด 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: อาร์เรย์โฟลเดอร์แบบแบ่งหน้า
+          headers:
+            x-next:
+              description: ลิงค์ไปยังหน้าถัดไปของการตอบกลับ
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folders'
+        default:
+          description: ข้อผิดพลาดที่ไม่คาดคิด
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: สร้างโฟลเดอร์
+      operationId: createFolder
+      responses:
+        201:
+          description: ไม่มีเนื้อหาในการตอบกลับ
+        default:
+          description: ข้อผิดพลาดที่ไม่คาดคิด
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /folders/{folderId}:
+    get:
+      summary: รับโฟลเดอร์
+      operationId: showFolderById
+      parameters:
+        - name: folderId
+          in: path
+          required: true
+          description: ID ของโฟลเดอร์ที่จะดึงข้อมูล
+          schema:
+            type: string
+      responses:
+        200:
+          description: คาดว่าจะตอบสนองต่อคำขอที่ถูกต้อง
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folders'
+        default:
+          description: ข้อผิดพลาดที่ไม่คาดคิด
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Document:
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        tag:
+          type: string
+    Documents:
+      type: array
+      items:
+        $ref: '#/components/schemas/Document'
+    Folder:
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        tag:
+          type: string
+    Folders:
+      type: array
+      items:
+        $ref: '#/components/schemas/Folder'
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

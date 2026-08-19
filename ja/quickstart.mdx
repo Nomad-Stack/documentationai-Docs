@@ -1,0 +1,143 @@
+---
+title: クイックスタート
+description: >-
+NomadBill アカウントを設定し、最初の会社を作成し、最初の会社を送信します。
+数分で請求書が発行されます。
+---
+## 前提条件
+
+始める前に、次のものが揃っていることを確認してください。
+
+- 有効なメールアドレス
+- 会社名、住所、該当する場合は VAT 番号などのビジネスの詳細
+- 好みのデフォルト言語と通貨
+- 後で支払いまたは支払い情報を追加する予定がある場合は、銀行口座の詳細
+
+<Callout kind="info" collapsed="false">
+7 日間の無料トライアルから始めてください。サインアップ時にクレジット カードは必要ありません。
+</Callout>
+
+## サインアップして会社を設立する
+
+アカウントを作成し、請求書の発行元となる会社を設定します。
+
+<Steps>
+  <Step title="アカウントを作成する" icon="users" title-type="p">
+    [app.nomadbill.co](https://app.nomadbill.co/) にアクセスし、メールアドレスとパスワードでサインアップするか、Google で続行してください。
+
+アカウントを確認すると、NomadBill によってサインインされ、会社の設定が表示されます。
+  </Step>
+
+  <Step title="最初の会社を設立する" icon="plus" title-type="p">
+会社名を入力し、会社名を選択します。 NomadBill は、スラッグを使用して会社のワークスペースを識別します。
+
+`DE`、`EN`、`FR`、または `ES` からデフォルトの言語を選択し、デフォルトの通貨を次から選択します: `EUR`、`USD`、`GBP`、`CHF`、または `AED`。
+  </Step>
+
+  <Step title="設定に会社の詳細を追加する" icon="settings" title-type="p">
+    [設定](https://app.nomadbill.co/settings)を開き、正式な会社名、住所、VAT 番号、銀行情報を入力して会社プロフィールを完成させます。
+
+同じ領域からブランド、請求書のデフォルト、PDF テンプレート、カスタム フィールドを構成することもできます。
+  </Step>
+</Steps>
+
+## ダッシュボードの概要
+
+ダッシュボードには、ビジネスの作業ビューがすぐに表示されます。一番上に収益、コスト、利益、未払いの現金が表示され、その後に何が変化したかを理解するのに役立つグラフとアクティビティが続きます。
+
+主要な KPI の下では、過去 6 か月間の収益、コスト、利益の傾向、売掛金の経年変化、クライアント別の収益、最近のアクティビティ、通貨ミックスを確認できます。
+
+<Columns cols="3">
+  <Card title="ダッシュボード" href="/ja/user-guide/dashboard" icon="bar-chart" horizontal="false">
+KPI、トレンド、古いデータ、最近のアカウントアクティビティを確認します。
+  </Card>
+
+  <Card title="請求書発行" href="/ja/user-guide/invoicing" icon="file-text" horizontal="false">
+請求書を作成し、顧客を管理し、PDF を電子メールで送信します。
+  </Card>
+
+  <Card title="請求書の受信" href="/ja/user-guide/incoming-invoices" icon="upload" horizontal="false">
+経費追跡のためにサプライヤーの請求書と領収書をアップロードします。
+  </Card>
+</Columns>
+
+## 最初の請求書を送信する
+
+請求書エディターから最初の請求書を作成し、PDF として電子メールで送信するか、ダウンロードして手動配信します。
+
+<Steps>
+  <Step title="新しい請求書を開く" icon="plus" title-type="p">
+`Invoices` に移動して `New` をクリックするか、`/invoices/new` を直接開きます。
+
+NomadBill は、現在勤務している会社の請求書草案を作成します。
+  </Step>
+
+  <Step title="顧客、通貨、言語を設定する" icon="users" title-type="p">
+請求書の通貨と文書の言語を選択し、顧客の名前と住所を入力します。
+
+サポートされている請求書通貨のいずれかを使用します: `EUR`、`USD`、`GBP`、`CHF`、または `AED`。サポートされている請求書言語のいずれかを使用します: `DE`、`EN`、`FR`、または `ES`。
+  </Step>
+
+  <Step title="品目と VAT を追加します" icon="edit" title-type="p">
+各明細項目に名前、数量、単価を追加します。次に、請求ニーズに基づいて請求書または品目の VAT パーセンテージを設定します。
+
+一般的なデフォルトは `19%` VAT です。次に進む前に合計を確認してください。
+  </Step>
+
+  <Step title="PDF をプレビューして送信します" icon="send" title-type="p">
+生成された PDF をプレビューして、レイアウト、顧客の詳細、合計、および VAT を確認します。
+
+すべてが正しいと思われる場合は、請求書を電子メールで送信するか、PDF をダウンロードしてご自身で送付してください。 NomadBill から送信した場合、メールは再送信で届きます。
+  </Step>
+</Steps>
+
+<Callout kind="tip" collapsed="false">
+NomadBill は、`R-00001` 形式を使用して会社ごとに請求書に自動番号を付けるため、最初の請求書には自動的に番号が付けられます。
+</Callout>
+
+## 初めての出費を記録する
+
+受信した請求書または領収書をアップロードして、サプライヤーコストの追跡を開始します。
+
+<Steps>
+  <Step title="受信した請求書を開く" icon="upload" title-type="p">
+`Incoming Invoices` に移動するか、`/incoming` を開きます。
+
+この領域には、アップロードされたファイルがワークスペースに保存され、経費記録に添付されたままになります。
+  </Step>
+
+  <Step title="ファイルをアップロードする" icon="plus" title-type="p">
+サプライヤーの請求書または領収書を PDF または画像としてアップロードします。
+
+NomadBill は、後で再度アクセスできるように、ファイルを `incoming-invoices` ストレージ バケットに保存します。
+  </Step>
+
+  <Step title="経費の詳細を入力します" icon="edit" title-type="p">
+必要に応じて、サプライヤー名、金額、カテゴリ、請求日、および期日を追加します。
+
+記録を保存すると、アップロードされた元の文書と一緒に経費を確認できるようになります。
+  </Step>
+</Steps>
+
+## 次のステップ
+
+会社を設立し、最初のレコードを配置したら、最も頻繁に使用するワークフローを接続します。
+
+<Columns cols="2">
+  <Card title="バンク同期" href="/ja/user-guide/bank-sync" icon="database" horizontal="false">
+Plaid を通じてサポートされている US および EU 銀行に接続し、最大 365 日分の取引履歴をインポートします。
+  </Card>
+
+  <Card title="電子メールインテリジェンス" href="/ja/user-guide/email-intelligence" icon="zap" horizontal="false">
+文書の取り込みを自動化し、サプライヤーの電子メールからの手動データ入力を削減します。
+  </Card>
+
+  <Card title="設定" href="/ja/user-guide/settings" icon="settings" horizontal="false">
+各企業のブランド、デフォルト、PDF テンプレート、およびカスタム フィールドを構成します。
+  </Card>
+
+  <Card title="チームマネジメント" href="/ja/user-guide/team-management" icon="users" horizontal="false">
+チームメイトを招待し、会社のワークスペース全体へのアクセスを管理します。
+  </Card>
+</Columns>
+

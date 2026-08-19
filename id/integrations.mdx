@@ -1,0 +1,83 @@
+---
+title: Integrasi
+description: Hubungkan NomadBill ke Stripe untuk pembayaran, Plaid untuk sinkronisasi bank, Nylas untuk kecerdasan email, dan Resend untuk pengiriman email.
+---
+
+## Layanan yang terhubung
+
+NomadBill terhubung ke layanan eksternal untuk mengotomatiskan pengumpulan pembayaran, impor transaksi bank, pengiriman email, dan pemrosesan dokumen. Integrasi ini bekerja sama sehingga faktur, pembayaran, transaksi bank, dan dokumen pemasok tetap terhubung tanpa entri data manual.
+
+<Columns cols={2}>
+  <Card title="Garis" icon="credit-card" href="/id/user-guide/invoicing">
+    Sesi pembayaran faktur dan penagihan berlangganan dengan pembaruan status berbasis webhook.
+  </Card>
+  <Card title="kotak-kotak" icon="banknote" href="/id/user-guide/bank-sync">
+    Tautan rekening bank untuk bank AS dan Eropa dengan riwayat transaksi hingga 365 hari.
+  </Card>
+  <Card title="Nylas" icon="mail" href="/id/user-guide/email-intelligence">
+    Kotak surat email agen dengan klasifikasi dokumen dan pencocokan entitas yang didukung AI.
+  </Card>
+  <Card title="Kirim ulang" icon="send">
+    Pengiriman email transaksional untuk faktur, penawaran harga, dan undangan tim.
+  </Card>
+  <Card title="pdfme" icon="layout" href="/id/user-guide/pdf-templates">
+    Perancang template PDF dan pembuat dokumen seret dan lepas.
+  </Card>
+  <Card title="Supabase" icon="database">
+    Basis data PostgreSQL, autentikasi, dan penyimpanan file dengan keamanan tingkat baris.
+  </Card>
+</Columns>
+
+## Pemrosesan pembayaran
+
+Stripe menangani dua alur pembayaran di NomadBill:
+
+- **Pembayaran faktur** — Saat Anda mengaktifkan pembayaran pada faktur, NomadBill membuat Sesi Stripe Checkout. Pelanggan membayar di halaman yang dihosting Stripe, dan webhook memperbarui status faktur menjadi dibayar secara otomatis.
+- **Tagihan langganan** — Paket Starter dan Professional ditagih melalui Stripe dengan uji coba 7 hari. Pembaruan status langganan mengalir kembali ke profil Anda melalui acara webhook.
+
+Kunci Stripe Connect per perusahaan dapat dikonfigurasikan di Pengaturan, memungkinkan setiap perusahaan menggunakan akun Stripe mereka sendiri untuk pembayaran faktur.
+
+## Sinkronisasi bank
+
+Plaid menghubungkan rekening bank di dua wilayah:
+
+- **Bank-bank AS** — Mendukung institusi di Amerika Serikat dan Kanada
+- **Bank UE** — Mendukung institusi di Jerman, Prancis, Spanyol, Belanda, Irlandia, dan Inggris
+
+Transaksi disinkronkan menggunakan sinkronisasi inkremental berbasis kursor Plaid. Koneksi pertama mengimpor riwayat hingga 365 hari. Sinkronisasi selanjutnya hanya mengambil transaksi baru, diubah, atau dihapus.
+
+## Kecerdasan email
+
+Nylas menyediakan kotak surat agen khusus untuk setiap perusahaan (misalnya, `yourcompany@agent.nomadbill.co`). Email masuk diproses melalui saluran AI yang:
+
+- Mengklasifikasikan pesan ke dalam jenis dokumen (faktur masuk, kwitansi, konfirmasi pembayaran, pengingat, kontrak, dan lain-lain)
+- Mengekstrak data terstruktur seperti jumlah, PPN, IBAN, tanggal, dan item baris dari badan email dan lampiran
+- Mencocokkan email dengan faktur yang ada, penawaran harga, faktur masuk, transaksi bank, dan pelanggan menggunakan mesin penilaian
+
+## Pengiriman email
+
+Kirim ulang mengirimkan email transaksional atas nama NomadBill:
+
+- Email pengiriman faktur dan penawaran
+- Email undangan tim
+- Alamat pengirim: `noreply@nomadbill.co`
+
+## generasi PDF
+
+Pustaka pdfme mendukung sistem templat PDF. Anda dapat mendesain templat khusus untuk faktur, penawaran harga, dan faktur masuk menggunakan editor seret dan lepas visual. Templat mendukung berbagai bahasa dan dapat menyertakan placeholder bidang khusus.
+
+## Rekonsiliasi otomatis
+
+Ketika transaksi bank disinkronkan, NomadBill secara otomatis mencocokkannya dengan faktur yang ada dan faktur masuk:
+
+| Jenis kecocokan | Metode | Skor kepercayaan diri |
+|---|---|---|
+| Faktur (pembayaran masuk) | Jumlah pasti + mata uang + tanggal dalam 14 hari | 90 |
+| Biaya (pembayaran keluar) | Jumlah pasti + mata uang + tanggal dalam 14 hari | 85 |
+| Tautan manual | Dipilih pengguna | 100 |
+
+Transaksi yang tidak cocok dengan kandidat yang masuk akal akan muncul sebagai saran dengan jangka waktu 30 hari yang lebih luas untuk peninjauan manual.
+
+<Callout kind="info">
+  NomadBill saat ini tidak menawarkan REST API publik atau webhook keluar untuk pengembang eksternal. Webhook Stripe dan Nylas adalah titik akhir masuk yang diterima NomadBill untuk memproses pembayaran dan peristiwa email.
+</Callout>

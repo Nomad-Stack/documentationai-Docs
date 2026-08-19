@@ -1,0 +1,78 @@
+---
+title: Bagaimana cara membuat faktur?
+description: Buat, sesuaikan, dan kirim faktur dalam NomadBill dengan dukungan multi-mata uang, perhitungan PPN, dan pengiriman PDF.
+---
+
+## Buat dan kirim faktur
+
+Buat faktur baru dari halaman **Faktur**, isi detail pelanggan dan penagihan, tinjau pratinjau PDF, lalu kirim atau unduh faktur akhir. NomadBill menyimpan faktur yang belum terkirim sebagai konsep, sehingga Anda dapat kembali dan menyelesaikannya sebelum pengiriman.
+
+<Steps>
+  <Step title="Navigasikan ke Faktur dan buat faktur baru" icon="file-text">
+
+  Buka **Faktur** di dasbor Anda dan klik **Baru**. Anda juga bisa langsung menuju `/invoices/new` jika sudah mengetahui rutenya.
+
+  Saat formulir terbuka, faktur dimulai dalam status **draft**. Anda dapat terus mengedit draf hingga Anda mengirimkannya.
+
+  </Step>
+
+  <Step title="Pilih mata uang dan bahasa" icon="settings">
+
+  Pilih faktur **mata uang** dan **bahasa** sebelum Anda menambahkan detail lainnya. NomadBill mendukung mata uang berikut: **EUR**, **USD**, **GBP**, **CHF**, dan **AED**.
+
+  Untuk bahasa faktur, pilih **DE**, **EN**, **FR**, atau **ES**. Gunakan bahasa yang sesuai dengan harapan pelanggan Anda.
+
+  </Step>
+
+  <Step title="Masukkan detail pelanggan" icon="users">
+
+  Tambahkan **nama** dan **alamat** pelanggan persis seperti yang tercantum di faktur. Detail ini digunakan dalam dokumen faktur dan pratinjau PDF.
+
+  Periksa kembali ejaan dan format di sini sebelum melanjutkan. Memperbaiki detail pelanggan pada tahap ini lebih cepat daripada memperbarui faktur yang dikirim nanti.
+
+  </Step>
+
+  <Step title="Tambahkan item baris" icon="plus">
+
+  Tambahkan satu atau beberapa item baris untuk barang atau jasa yang Anda tagih. Setiap item baris menyertakan **nama**, **kuantitas**, dan **harga**.
+
+  Jika Anda perlu mengubah urutan, seret item baris ke dalam urutan yang Anda inginkan. Subtotal faktur diperbarui saat Anda menambahkan atau mengedit item.
+
+  </Step>
+
+  <Step title="Tetapkan PPN dan tinjau totalnya" icon="bar-chart">
+
+  Tetapkan **persentase PPN** untuk faktur. NomadBill menetapkan PPN secara default ke **19%**, namun Anda dapat mengubahnya bila diperlukan.
+
+  Totalnya dihitung sebagai `subtotal + (subtotal x VAT%)`. Tinjau subtotal, jumlah PPN, dan total akhir sebelum Anda melanjutkan.
+
+  </Step>
+
+  <Step title="Pratinjau dan kirim" icon="send">
+
+  Pratinjau faktur sebagai PDF untuk mengonfirmasi tata letak, detail pelanggan, item baris, dan total. Jika semuanya sudah benar, kirimkan faktur melalui email atau unduh.
+
+  Faktur yang terkirim dikirimkan melalui Resend dari `noreply@nomadbill.co`. Jika Anda mengaktifkan pembayaran Stripe pada faktur, pelanggan menerima tautan checkout sebagai bagian dari alur pembayaran.
+
+  </Step>
+</Steps>
+
+<Callout kind="tip">
+
+NomadBill menghasilkan nomor faktur secara otomatis dalam format `R-00001`. Penomoran dikelola per perusahaan, sehingga setiap perusahaan menyimpan urutan fakturnya sendiri.
+
+</Callout>
+
+<Callout kind="info">
+
+Status faktur berpindah dari `draft` ke `sent`, lalu ke `paid` atau `overdue`. Status pembayaran dilacak secara terpisah sebagai `unpaid`, `pending`, `paid`, atau `failed`.
+
+Jika pelanggan memulai checkout Stripe, status pembayaran berubah menjadi `pending`. Saat Stripe mengonfirmasi pembayaran, statusnya berubah menjadi `paid`. Jika pembayaran tidak selesai maka statusnya berubah menjadi `failed`.
+
+</Callout>
+
+## Apa lagi yang perlu Anda ketahui?
+
+Draf faktur tetap dapat diedit sampai Anda mengirimkannya. Hal ini menjadikan draft sebagai tempat teraman untuk menyesuaikan detail pelanggan, menyusun ulang item, atau memperbarui PPN sebelum pengiriman.
+
+NomadBill juga mendukung metadata faktur berulang. Anda dapat mengatur tanda berulang dan memilih frekuensi `weekly`, `monthly`, `quarterly`, atau `yearly`, namun ini tidak membuat faktur secara otomatis sesuai jadwal.

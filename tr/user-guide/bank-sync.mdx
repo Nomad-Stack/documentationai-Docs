@@ -1,0 +1,197 @@
+---
+title: Banka Senkronizasyonu
+description: US ve EU banka hesaplarını bağlayın, işlemleri otomatik olarak senkronize edin ve ödemelerle faturalar arasında mutabakat sağlayın.
+---
+
+## Bank Sync, banka işlemlerinizi NomadBill'e getirir, böylece gelen ve yapılan ödemeleri faturalarınıza göre takip edebilirsiniz.
+
+Bir hesaba bağlandığınızda, NomadBill, 365 güne kadar işlem geçmişini senkronize eder ve artımlı senkronizasyonlarla bağlantıyı güncel tutar. Senkronize edilen işlemler daha sonra otomatik veya manuel olarak giden faturalarla ve gelen faturalarla eşleştirilebilir.
+
+<Callout kind="info">
+
+Bağlanmak istediğiniz kuruma uygun banka bölgesini seçin. Banka Senkronizasyonu sayfasında **US** ve **EU** bankaları için ayrı bağlantı düğmeleri bulunur ve doğru olanla başlamalısınız.
+
+- **US** `US` ve `CA`'deki bankaları destekler
+- **EU** `GB`, `FR`, `ES`, `NL`, `IE` ve `DE`'deki bankaları destekler
+
+Bankanız bir bölgede bulunmuyorsa, yalnızca kurum gerçekten orada faaliyet gösteriyorsa diğerini deneyin.
+
+</Callout>
+
+## Bir banka hesabını bağlama
+
+Her banka hesabını Banka Senkronizasyonu sayfasından bağlayın. NomadBill, bağlantı sağlayıcı olarak Plaid'yi kullanır ve bağlantıyı şirketinizin altında saklar.
+
+<Steps>
+  <Step title="Banka Senkronizasyonu sayfasını açın" icon="folder">
+
+  NomadBill'de oturum açın ve uygulamanın kimliği doğrulanmış alanından **Banka Senkronizasyonu**'nu açın.
+
+  Sayfada iki bağlantı seçeneği görmelisiniz: biri **US** bankaları için ve diğeri **EU** bankaları için.
+
+  </Step>
+
+  <Step title="Doğru bölgeyi seçin" icon="globe">
+
+  Banka hesabınızın bulunduğu bölgeye ait düğmeyi seçin.
+
+  - `US` veya `CA`'deki bankalar için **US** seçeneğini kullanın
+  - `GB`, `FR`, `ES`, `NL`, `IE` veya `DE`'deki bankalar için **EU** seçeneğini kullanın
+
+  Bir bölge seçtikten sonra Plaid güvenli bir banka bağlantı akışı açar.
+
+  </Step>
+
+  <Step title="Bankanızla kimlik doğrulaması yapın" icon="lock">
+
+  Kurumunuzu seçip gerekirse banka kimlik bilgilerinizle oturum açarak Plaid akışını tamamlayın.
+
+  Plaid, bağlı hesaplar ve kurum adı da dahil olmak üzere bağlantı ayrıntılarını NomadBill'e döndürür.
+
+  </Step>
+
+  <Step title="İlk senkronizasyonu bekleyin" icon="refresh-cw">
+
+  Bağlantı oluşturulduktan sonra NomadBill ilk işlem senkronizasyonunu başlatır.
+
+  Başarılı bir bağlantı, sağlayıcı, bölge, kurum, bağlı hesaplar, senkronizasyon durumu ve son başarılı senkronizasyon zamanı gibi ayrıntıları saklar. Senkronizasyon tamamlandıktan sonra işlemleriniz bağlı banka hesabında görünür.
+
+  </Step>
+</Steps>
+
+## İşlem senkronizasyonu
+
+NomadBill, işlem listenizi güncel tutmak için imleç tabanlı artımlı senkronizasyon kullanır. İlk senkronizasyon, 365 güne kadar geçmiş ister ve daha sonraki senkronizasyonlar, tüm geçmişi tekrar çekmek yerine son kaydedilen imleçten devam eder.
+
+### Neler senkronize edilir
+
+Her banka bağlantısı, Plaid öğesi, bağlantılı hesaplar ve senkronizasyon imleci dahil olmak üzere kendi senkronizasyon durumunu saklar. İşlemler; tutar, para birimi, yön, rezervasyon tarihi, karşı taraf bilgileri, satıcı ayrıntıları, kategoriler, bekleme durumu ve orijinal ham işlem yükü gibi ayrıntılarla birlikte kaydedilir.
+
+### Artımlı senkronizasyon nasıl çalışır?
+
+NomadBill, Plaid'nin artımlı işlem senkronizasyon akışı aracılığıyla işlemleri senkronize eder. Her senkronizasyon, Plaid'de geri dönecek değişiklik kalmayıncaya veya senkronizasyon güvenlik sınırına ulaşana kadar sonuç sayfalarını okur.
+
+- Senkronizasyon **imleç tabanlı** olduğundan, her çalıştırma son başarılı senkronizasyon noktasından itibaren devam eder
+- Tek bir senkronizasyon, **20 sayfaya** kadar işlem yapar
+- Her sayfada en fazla **500 işlem** bulunabilir
+- Senkronizasyon çalıştırması başına etkin sınır **10,000 işlemleridir**
+
+NomadBill, güncellenen senkronizasyon imlecini **yalnızca tam senkronizasyon başarıyla tamamlandıktan sonra** kaydeder. Bir senkronizasyon yarı yolda başarısız olursa, NomadBill önceki imleci korur, böylece bir sonraki çalıştırma güvenli bir şekilde yeniden deneyebilir.
+
+### İşlemler nasıl yazılır?
+
+Senkronize edilen işlemler aynı anda **200** kayıt grupları halinde eklenir veya güncellenir. Bu, yüksek işlem hacmini verimli bir şekilde yönetirken büyük senkronizasyonların da yönetilebilir olmasını sağlar.
+
+Her işlem şunlara bağlıdır:
+
+- senin şirketin
+- geldiği banka bağlantısı
+- orijinal harici işlem kimliği
+- bağlı kurum içindeki kaynak hesap
+
+### Tutarlar ve talimatlar nasıl çalışır?
+
+Plaid ve NomadBill, nakit akışı için zıt tutar kurallarını kullanır. Plaid pozitif tutarları hesaptan çıkan para olarak değerlendirirken, NomadBill pozitif tutarları alınan para olarak saklar.
+
+| Plaid işareti | Plaid'nin anlamı | NomadBill cinsinden depolanan miktar | Yön |
+|---|---|---:|---|
+| Olumlu | Hesaptan para çıkıyor | Negatif | `out` |
+| Negatif | Hesaba para girişi | Olumlu | `in` |
+
+Bu işaret çevirme, NomadBill içinde uzlaşmayı daha sezgisel hale getirir. Gelen müşteri ödemeleri pozitif tutarlar olarak görünürken, tedarikçi faturaları gibi yapılan ödemeler negatif tutarlar olarak görünür.
+
+## Otomatik eşleştirme
+
+NomadBill, senkronize edilmiş işlemlerin faturalarla mutabakatını otomatik olarak yapmaya çalışır. Eşleştirme mantığı, gelen para ve çıkan para için farklıdır.
+
+### Eşleştirme nasıl çalışır?
+
+Gelen para, gönderilmiş ve vadesi geçmiş faturalarınızla karşılaştırılır. Giden para, gelen faturalarınızla karşılaştırılır. Her iki durumda da NomadBill, kesin tutar ve para birimi eşleşmesini arar ve ardından işlem tarihinin, fatura tarihi penceresinden 14 gün içerisinde olup olmadığını kontrol eder.
+
+Bir eşleşme bulunursa NomadBill işlemin bağlantısını yazar ve fatura ödeme durumunu otomatik olarak günceller.
+
+### Güven ve sonucu eşleştirin
+
+| Maç akışı | İşlem türü | Maç kuralı | Güven | Sonuç |
+|---|---|---|---:|---|
+| `autoMatchInvoices` | Gelen ödeme | 14 gün içindeki kesin tutar + para birimi + tarih | 90 | `matched_invoice_id`, `match_method`'yi `amount+date`'ye ayarlar, `payment_status`'yi `paid`'ye fatura eder ve `status`'yi `paid`'ye fatura eder |
+| `autoMatchIncomingInvoices` | Yapılan ödeme | 14 gün içindeki kesin tutar + para birimi + tarih | 85 | `matched_incoming_invoice_id`, `match_method`'yi `amount+date` olarak ve gelen fatura `payment_status`'yi `paid` olarak ayarlar |
+
+### Neler otomatik olarak eşleştirilir?
+
+Bir işlem aşağıdaki koşulların tümünü karşıladığında otomatik olarak eşleştirilebilir:
+
+- miktar tam olarak eşleşiyor
+- para birimi tam olarak eşleşiyor
+- tarih 14 günlük eşleştirme penceresi dahilindedir
+- faturanın hâlâ mutabakata varılabilecek durumda olması
+
+Giden faturalar için NomadBill, zaten **gönderilmiş** veya **gecikmiş** faturaları hedefler. Gelen faturalar için NomadBill, faturayı farklı bir belge durumuna değiştirmeden ödenmiş olarak işaretler.
+
+## Manuel eşleştirme
+
+Otomatik eşleştirme öncelikle bariz durumları ele alır. Bir işlemin incelenmesi gerektiğinde bunu manuel olarak eşleştirebilirsiniz.
+
+### Aday önerileri
+
+NomadBill, otomatik eşleştiriciden daha geniş bir arama penceresine sahip manuel inceleme adayları oluşturur.
+
+- **30-gün** tarih aralığında arama yapar
+- İşlem başına en fazla **5 adayı** döndürür
+- Otomatik atama için değil, inceleme için tasarlanmıştır
+
+Bu, ödeme tarihinin fatura tarihinden beklenenden fazla farklı olması durumunda veya birkaç olası eşleşmeden birini onaylamak istediğinizde yardımcı olur.
+
+### Manuel bağlantı davranışı
+
+Bir işlemi manuel olarak bağladığınızda, NomadBill bunu onaylanmış bir eşleşme olarak kaydeder.
+
+- `match_confidence`, **100** olarak ayarlandı
+- `match_method`, `manual` olarak ayarlandı
+
+Manuel bağlantı, söz konusu işlemle ilgili daha fazla öneri mantığı ihtiyacını geçersiz kılar ve eşleşmenin kullanıcı tarafından onaylandığını açıkça ortaya koyar.
+
+## Bağlantıları kaldırma ve bağlantıları yönetme
+
+İşlem yanlış faturaya bağlandığında bağlantıyı kaldırmayı kullanın. Banka özet akışını tamamen kaldırmak istediğinizde bağlantıyı silin.
+
+### Eşleşen bir işlemin bağlantısını kaldır
+
+Bağlantının kaldırılması, bir işlem ile eşleşen fatura kaydı arasındaki ilişkiyi kaldırır.
+
+Bir işlemin bağlantısını kaldırdığınızda NomadBill:
+
+- işlemdeki eşleşmeyle ilgili tüm alanları temizler
+- bağlantılı giden fatura `payment_status`'yi tekrar `unpaid` olarak ayarlar
+- `status` giden fatura zaten `paid` olarak ayarlanmışsa değişmeden kalır
+- bağlantılı gelen fatura `payment_status`'yi tekrar `unpaid` olarak ayarlar
+
+Defter tutma incelemesi için zaten ücretli durumuna güveniyorsanız, bağlantıyı kaldırma işlemini dikkatli bir şekilde kullanın; çünkü bağlantının kaldırılması giden fatura durumunu `paid`'den `sent`'ye geri taşımaz.
+
+### Banka bağlantısını silme
+
+Bir bağlantının silinmesi, Plaid bağlantısını ve ona ait tüm senkronize edilmiş işlemleri kaldırır.
+
+Bir bağlantıyı sildiğinizde NomadBill:
+
+- bu öğe için Plaid erişimini iptal etmeye çalışır
+- Plaid iptal adımı başarısız olsa bile devam eder
+- banka bağlantı kaydını siler
+- silme işlemini bu bağlantı altındaki tüm işlemlere basamaklar
+
+Aynı bankayı daha sonra yeniden bağlarsanız NomadBill yeni bir bağlantı ve senkronizasyon durumu oluşturur.
+
+<Columns cols={2}>
+  <Card
+    title="Giden faturaları yönetin"
+    href="/tr/user-guide/invoicing"
+    icon="file-text"
+    cta="Faturalandırma kılavuzunu aç"
+  />
+  <Card
+    title="Tedarikçi faturalarını takip edin"
+    href="/tr/user-guide/incoming-invoices"
+    icon="folder"
+    cta="Gelen faturalar kılavuzunu aç"
+  />
+</Columns>

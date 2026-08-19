@@ -1,0 +1,183 @@
+openapi: '3.0.0'
+info:
+  version: 1.0.0
+  title: Nomadbill
+  license:
+    name: MIT
+servers:
+  - url: https://api.nomadbill.com/v1
+paths:
+  /documents:
+    get:
+      summary: 列出文件
+      operationId: listDocuments
+      parameters:
+        - name: limit
+          in: query
+          description: 一次返回多少个项目（最多 100 个）
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: 文档分页数组
+          headers:
+            x-next:
+              description: 指向下一页响应的链接
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documents'
+        default:
+          description: 意外错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: 创建文档
+      operationId: createDocument
+      responses:
+        201:
+          description: 空响应
+        default:
+          description: 意外错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /documents/{documentId}:
+    get:
+      summary: 获取文件
+      operationId: showDocumentById
+      parameters:
+        - name: documentId
+          in: path
+          required: true
+          description: 要检索的文档的 ID
+          schema:
+            type: string
+      responses:
+        200:
+          description: 对有效请求的预期响应
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documents'
+        default:
+          description: 意外错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /folders:
+    get:
+      summary: 列出文件夹
+      operationId: listFolders
+      parameters:
+        - name: limit
+          in: query
+          description: 一次返回多少个项目（最多 100 个）
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: 文件夹分页数组
+          headers:
+            x-next:
+              description: 指向下一页响应的链接
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folders'
+        default:
+          description: 意外错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: 创建文件夹
+      operationId: createFolder
+      responses:
+        201:
+          description: 空响应
+        default:
+          description: 意外错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /folders/{folderId}:
+    get:
+      summary: 获取文件夹
+      operationId: showFolderById
+      parameters:
+        - name: folderId
+          in: path
+          required: true
+          description: 要检索的文件夹的 ID
+          schema:
+            type: string
+      responses:
+        200:
+          description: 对有效请求的预期响应
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folders'
+        default:
+          description: 意外错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Document:
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        tag:
+          type: string
+    Documents:
+      type: array
+      items:
+        $ref: '#/components/schemas/Document'
+    Folder:
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        tag:
+          type: string
+    Folders:
+      type: array
+      items:
+        $ref: '#/components/schemas/Folder'
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

@@ -1,0 +1,175 @@
+---
+title: Modelli PDF
+description: Progetta layout PDF personalizzati per fatture, preventivi e ricevute con funzionalità di modifica drag-and-drop, modelli riutilizzabili e colori del marchio.
+---
+
+## Progetta layout PDF personalizzati per i tuoi documenti
+
+I modelli PDF ti consentono di controllare l'aspetto di fatture, preventivi e documenti in entrata quando li visualizzi in anteprima, li esporti o li invii. Puoi iniziare da un layout vuoto, scegliere un design predefinito o importare un modello JSON, quindi modificare il risultato in un editor drag-and-drop.
+
+<Callout kind="info">
+
+Gestisci i modelli in **Impostazioni → Modelli**. NomadBill mantiene elenchi di modelli separati per fatture, preventivi e documenti in entrata, in modo da poter progettare ciascun tipo di documento in modo indipendente.
+
+</Callout>
+
+## Come funzionano i modelli PDF
+
+Ciascun model PDF memorizza il layout completo per un tipo di documento. Ciò include la struttura della pagina, i blocchi di testo, le tabelle, le immagini e lo stile utilizzati per generare il PDF finale.
+
+Quando crei o modifichi una fattura, un preventivo o un documento in entrata, puoi utilizzare il modello predefinito per quel tipo di documento o scegliere un modello salvato diverso. Ciò ti offre un modo coerente per mantenere i documenti di tutti i giorni in linea con il marchio, consentendo comunque layout alternativi quando necessario.
+
+NomadBill supporta tre tipi di documenti:
+
+| Tipo documento | Utilizzato per | Dove lo selezioni |
+| --- | --- | --- |
+| Fattura | Fatture in uscita inviate ai clienti | Modulo fattura e anteprima |
+| Citazione | Preventivi o offerte inviati prima della fatturazione | Modulo preventivo e anteprima |
+| In arrivo | Fatture passive, fatture fornitore o ricevute | Flussi di documenti in entrata |
+
+## Tipi di documenti
+
+I modelli sono raggruppati per tipo di documento perché ogni tipo ha uno scopo diverso e potrebbe richiedere una formulazione o un'enfasi sul layout diversa.
+
+| Digitare | Titolo tipico in PDF | Uso comune |
+| --- | --- | --- |
+| `invoice` | Fattura | Fatturazione al cliente per il lavoro completato o per la merce consegnata |
+| `quote` | Preventivo | Invio di una proposta di prezzo prima dell'inizio dei lavori |
+| `incoming` | Ricevuta o fattura passiva | Registrazione delle spese dei fornitori o delle ricevute caricate |
+
+<Callout kind="tip">
+
+Se desideri layout diversi per lo stesso tipo di documento, crea più modelli e impostane uno come predefinito. Puoi comunque scegliere un altro modello per un documento specifico quando necessario.
+
+</Callout>
+
+## Creazione di un modello
+
+Puoi creare modelli in tre modi: iniziare da zero, iniziare dalla galleria o importare un file JSON esistente.
+
+<Steps>
+  <Step title="Crea un modello vuoto" icon="plus">
+
+Apri **Impostazioni → Modelli**, scegli la scheda del tipo di documento, quindi crea un nuovo modello e seleziona **Vuoto**.
+
+Un modello vuoto inizia dal layout predefinito di NomadBill per quel tipo di documento. Questa è l'opzione più veloce quando desideri il controllo completo ma desideri comunque che i campi standard richiesti siano già mappati.
+
+  </Step>
+  <Step title="Inizia dalla Galleria" icon="book-open">
+
+Apri **Impostazioni → Modelli**, scegli la scheda del tipo di documento, quindi crea un nuovo modello e seleziona **Galleria**.
+
+Scegli uno dei sette modelli integrati se desideri un layout finito che puoi adattare. Questo è il miglior punto di partenza quando desideri un layout professionale senza costruire ogni sezione da zero.
+
+  </Step>
+  <Step title="Importa un modello JSON" icon="upload">
+
+Apri **Impostazioni → Modelli**, scegli la scheda del tipo di documento, quindi crea un nuovo modello e seleziona **Importa da JSON**.
+
+Carica un file `.json` che contenga una struttura modello valida. Utilizza questo percorso se disponi già di un file modello compatibile e desideri riutilizzarlo in altre aziende o ambienti.
+
+  </Step>
+</Steps>
+
+## Galleria di modelli
+
+NomadBill include sette modelli predefiniti che puoi utilizzare come punto di partenza.
+
+| Modello | Stile | Ideale per |
+| --- | --- | --- |
+| Classico | Impostazione predefinita bilanciata con un'intestazione del colore del marchio | Fatture e preventivi di carattere generale |
+| Moderno | Barra superiore colorata con titolo in grassetto | Layout innovativi per il marchio |
+| Minimo | Layout monocromatico senza accenti colorati | Documenti semplici e con poco inchiostro |
+| Bianco | Layout stampabile pulito con un blocco del metodo di pagamento | Fatture formali e flussi di lavoro di stampa |
+| Blu | Accenti blu con una riga totale piena | Totali ad alto contrasto e sezioni di riepilogo |
+| Verde | Barra d'accento verde sinistra | Layout alternativi del marchio |
+| Elegante | Titolo grande con una sottile tavola grigia | Documenti rifiniti rivolti al cliente |
+
+## Modifica di un modello
+
+L'editor dei modelli si apre in una finestra di progettazione a schermo intero in modo da poter creare e modificare visivamente i layout. Puoi trascinare i campi in posizione, ridimensionarli, modificare il testo e perfezionare la struttura visiva senza modificare manualmente il JSON sottostante.
+
+I tipi di campo disponibili includono testo, testo multivariabile, tabelle, elenchi, linee, forme, immagini, firme, date, caselle di controllo, gruppi radio, codici QR e codici a barre. Ciò ti offre la flessibilità sufficiente per creare layout di fattura standard e progetti di documenti più personalizzati.
+
+La maggior parte degli utenti trascorrerà il proprio tempo a modificare posizioni, spaziatura, etichette e presentazione della tabella. Se mantieni intatti i nomi dei campi standard, NomadBill continua a compilare automaticamente tali campi quando genera PDF.
+
+<Callout kind="info">
+
+L'elenco degli elementi del documento viene generalmente visualizzato tramite il campo della tabella `items`. Se rimuovi o rinomini il campo, gli voci non verranno più visualizzati nel campo PDF generato.
+
+</Callout>
+
+## Campi standard
+
+NomadBill riempie automaticamente nomi di campi specifici quando esegue il rendering di un PDF. Mantieni questi nomi invariati se desideri che l'applicazione continui a mappare i dati del documento nel modello.
+
+| Nome del campo | Contiene |
+| --- | --- |
+| `company_logo` | Immagine del logo della tua azienda |
+| `company_name` | Nome visualizzato della tua azienda |
+| `company_address` | L'indirizzo della tua azienda, solitamente su più righe |
+| `company_vat` | Il tuo IVA o l'etichetta e il valore del codice fiscale |
+| `doc_title` | Titolo del documento come Fattura, Preventivo o Ricevuta |
+| `doc_number` | Numero del documento |
+| `doc_date` | Etichetta e valore della data di emissione |
+| `doc_due_date` | Etichetta e valore della data di scadenza |
+| `bill_to_label` | Etichetta sezione cliente |
+| `customer_name` | Nome del cliente |
+| `customer_address` | Indirizzo del cliente |
+| `items` | Tabella delle voci |
+| `subtotal_label` | Etichetta subtotale |
+| `subtotal` | Importo subtotale |
+| `vat_label` | Etichetta IVA |
+| `vat_amount` | IVA importo |
+| `total_label` | Etichetta totale |
+| `total` | Importo totale |
+| `bank_label` | Etichetta sezione dettagli pagamento |
+| `bank_details` | Istruzioni bancarie o di pagamento |
+| `signature` | Immagine della firma |
+| `footer` | Testo piè di pagina |
+
+## Colori del marchio
+
+I modelli di galleria possono applicare automaticamente i colori del marchio della tua azienda. NomadBill legge i colori primari e secondari dalle impostazioni aziendali e li utilizza per ricolorare gli elementi del modello supportati.
+
+Funziona meglio quando desideri un marchio coerente su tutte le fatture e i preventivi senza aggiornare manualmente ogni blocco di testo, intestazione o elemento di accento. A seconda del modello, il colore principale viene solitamente applicato a intestazioni, barre, totali o evidenziazioni dello sfondo.
+
+Alcuni layout con marchio supportano anche il mantenimento del testo nero pur continuando ad applicare la tavolozza del marchio alle aree in risalto. Utilizza questo approccio se i colori del tuo marchio sono chiari o se la leggibilità è più importante dello stile del testo a colori.
+
+## Modelli multilingue
+
+I modelli supportano quattro lingue: DE, EN, FR e ES. Le modifiche alla lingua aggiornano le etichette integrate come titolo del documento, etichette della data, totale parziale, IVA, totale e altro testo standard utilizzato nei modelli predefiniti.
+
+NomadBill traduce le etichette dei modelli separatamente dal layout stesso. Ciò significa che puoi cambiare lingua senza perdere posizioni, spaziatura, colori o altre modifiche al design apportate nell'editor.
+
+Se lavori in più lingue, crea un modello per lingua quando hai bisogno del controllo completo su testo e formattazione. Se il layout rimane lo stesso, puoi riutilizzare lo stesso design e fare affidamento sulle etichette tradotte, ove appropriato.
+
+## Campi personalizzati nei modelli
+
+I campi personalizzati ti consentono di aggiungere ai tuoi PDF valori specifici dell'azienda, del cliente o del documento. Nei modelli, questi valori utilizzano nomi di campo nel formato `cf_{entity}_{key}`.
+
+Ad esempio, un campo personalizzato legato a una fattura può essere mappato con un nome di campo come `cf_invoice_project_reference`. Un campo personalizzato a livello di cliente segue lo stesso modello con il segmento dell'entità cliente.
+
+Leggi [Campi personalizzati](/it/user-guide/custom-fields) prima di aggiungere questi segnaposto in modo che le chiavi dei campi e i nomi dei campi del modello rimangano allineati.
+
+<Callout kind="tip">
+
+Se un campo personalizzato appare vuoto in PDF, conferma innanzitutto che il campo esiste, che la chiave corrisponde esattamente e che il nome del campo nel modello utilizza il modello `cf_{entity}_{key}` previsto.
+
+</Callout>
+
+## Impostazione di un modello predefinito
+
+Ogni tipo di documento può avere un modello predefinito. Il modello predefinito viene utilizzato automaticamente a meno che non ne venga scelto uno diverso nel modulo del documento o nella schermata di anteprima.
+
+Per modificare l'impostazione predefinita, apri **Impostazioni → Modelli**, trova il modello nella scheda del tipo di documento corretto e utilizza **Imposta predefinito**. Il modello aggiornato diventa il nuovo punto di partenza per quel tipo di documento in tutta l'azienda.
+
+Ciò è utile quando stai implementando un layout aggiornato. Imposta prima il nuovo modello come predefinito, quindi mantieni disponibili i modelli più vecchi per casi speciali o coerenza storica.
+
+## Guide correlate
+
+<Columns cols={3}>
+  <Card title="Fatturazione" href="/it/user-guide/invoicing" icon="book-open" cta="Apri la guida" />
+  <Card title="Preventivi" href="/it/user-guide/quotes" icon="arrow-right" cta="Vedi la guida correlata" />
+  <Card title="Campi personalizzati" href="/it/user-guide/custom-fields" icon="settings" cta="Scopri come mappare i campi" />
+</Columns>

@@ -1,0 +1,128 @@
+---
+title: Müşteriler
+description: İletişim bilgileri ve özel alanlarla müşteri kayıtlarını yönetin ve faturalar ile fiyat tekliflerinde yeniden kullanın.
+---
+
+## Müşteri bilgilerinizi tek bir yerde saklayın
+
+Müşteriler, yeniden kullandığınız iletişim bilgilerini faturalandırma iş akışınızda saklar. Her müşteriyi `/customers`'ye bir kez ekleyin, ayrıntılarını güncel tutun ve fatura ve fiyat teklifi oluştururken bu kayıtları tekrar kullanın.
+
+Şirket sahipleri ve ekip üyeleri, şirketlerinin çalışma alanlarındaki müşterileri yönetebilir. Müşteri listesi ada göre alfabetik olarak sıralanır ve tabloda standart ilgili kişi alanlarının yanı sıra tabloda görünecek şekilde yapılandırılmış özel alanlar da gösterilir.
+
+## Müşteri alanları
+
+Her müşteri kaydı aşağıdaki temel iletişim alanlarını içerir.
+
+<ParamField body="name" param-type="string" required="true" show-location="false">
+
+Müşterinin görünen adı. NomadBill bu alanı gerektirir ve bunu müşteri listesinde birincil etiket olarak kullanır.
+
+</ParamField>
+
+<ParamField body="email" param-type="string" required="false" show-location="false">
+
+Müşterinin e-posta adresi.
+
+</ParamField>
+
+<ParamField body="phone" param-type="string" required="false" show-location="false">
+
+Müşterinin telefon numarası.
+
+</ParamField>
+
+<ParamField body="address" param-type="string" required="false" show-location="false">
+
+Müşterinin adresi. Oluşturma ve düzenleme iletişim kutusunda bu alan, tam fatura adresini girebilmeniz için çok satırlı bir metin alanı kullanır.
+
+</ParamField>
+
+<Callout kind="info">
+
+Müşteri listesinde varsayılan olarak **ad**, **e-posta** ve **telefon** gösterilir. Ayrıca tablo görünürlüğünün etkinleştirildiği müşteriye özel alanları da gösterir.
+
+</Callout>
+
+## Müşteri oluşturmak
+
+Müşteriler sayfasından bir müşteri ekleyin ve daha sonra yeniden kullanmak istediğiniz iletişim bilgilerini girin.
+
+<Steps>
+  <Step title="Müşteriler sayfasını açın" icon="users">
+
+  Çalışma alanınızda `/customers`'ye gidin.
+
+  Ada göre sıralanmış bir müşteri tablosu görmelisiniz. Tablo görünürlüğünün etkin olduğu müşteriye özel alanlar oluşturduysanız bu sütunlar da burada görünür.
+
+  </Step>
+  <Step title="Yeni bir müşteri kaydı başlatın" icon="plus">
+
+  Sayfa işleminden yeni bir müşteri oluşturun.
+
+  NomadBill, standart müşteri alanları ve `customer` varlığına atanan tüm özel alanlarla birlikte bir oluşturma iletişim kutusu açar.
+
+  </Step>
+  <Step title="Gerekli ve isteğe bağlı ayrıntıları girin" icon="edit">
+
+  Müşteri bilgilerini doldurun:
+
+  - **Ad** gereklidir.
+  - **E-posta** isteğe bağlıdır.
+  - **Telefon** isteğe bağlıdır.
+  - **Adres** isteğe bağlıdır ve çok satırlı metni destekler.
+  - **Özel alanlar**, bunları müşteriler için yapılandırdığınızda görünür.
+
+  Demo çalışma alanları halihazırda `kundennummer`, `kundenkategorie`, `website`, `kunden_seit`, `notizen_intern`, `praeferierte_sprachen` ve `newsletter` gibi tohumlanmış alanları içerebilir.
+
+  </Step>
+  <Step title="Sonucu kaydedin ve doğrulayın" icon="check-circle">
+
+  Müşteriyi kurtarın.
+
+  Kaydettikten sonra müşteri liste görünümünde doğru alfabetik konumda görünür. Özel bir alan tablolarda gösterilecek şekilde yapılandırılmışsa değeri de satırda bir sütun olarak görünür.
+
+  </Step>
+</Steps>
+
+## Müşterileri düzenleme ve silme
+
+Bir müşteriyi, oluşturma için kullanılan aynı iletişim kutusundan güncelleyin. Standart iletişim alanlarını ve atanmış müşteri özel alanlarını istediğiniz zaman değiştirebilirsiniz.
+
+Bir müşteriyi sildiğinizde NomadBill, kaydı kaldırmadan önce işlemi onaylamanızı ister. Normal faturalandırma sürecinizde bu müşteri bilgilerine güveniyorsanız silme işlemini dikkatli bir şekilde yapın.
+
+## Müşterileri faturalarda kullanma
+
+Müşteriler fatura oluştururken zamandan tasarruf edecek şekilde tasarlanmıştır. Her belge için iletişim ayrıntılarını yeniden yazmak yerine mevcut bir müşteri kaydını seçer veya yeniden kullanırsınız.
+
+Faturalar müşteri adını `customer_name` alanında saklar. Bu, müşteri kaydının fatura iş akışlarında kullandığınız kaynak adını sağladığı ve müşteri listenizi tek bir yerde düzenli tuttuğu anlamına gelir.
+
+<Callout kind="tip">
+
+Düzenli olarak fatura göndermeye başlamadan önce müşterileri ayarlayın. Temiz bir müşteri listesi, fatura oluşturmayı hızlandırır ve belgeler arasındaki adlandırma tutarsızlıklarını azaltır.
+
+</Callout>
+
+## Müşteriler için özel alanlar
+
+Müşteriye özel alanlar, standart iletişim alanlarının ötesindeki bilgileri izlemenize olanak tanır. NomadBill, bu alanları `customer` varlık türüne atar; bu, bunların müşteri formlarında ve yapılandırıldığında müşteri tablosunda görüneceği anlamına gelir.
+
+Dahili müşteri numaraları, kategoriler, web siteleri, başlangıç ​​tarihleri, dil tercihleri, notlar veya bültene katılım durumu gibi veriler için özel alanlar kullanın. Demo verileri otomatik sayı olarak `kundennummer`, açılır menü olarak `kundenkategorie`, URL olarak `website`, tarih olarak `kunden_seit`, çok satırlı metin olarak `notizen_intern`, çoklu seçim olarak `praeferierte_sprachen` ve boole olarak `newsletter` gibi alanları içerebilir.
+
+Kurulum talimatları ve alan türleri için bkz. [Özel alanlar](/tr/user-guide/custom-fields).
+
+## Bundan sonra nereye gitmeli
+
+<Columns cols={2}>
+  <Card
+    title="Faturalama"
+    href="/tr/user-guide/invoicing"
+    icon="book-open"
+    cta="Faturalandırma kılavuzunu aç"
+  />
+  <Card
+    title="Özel alanlar"
+    href="/tr/user-guide/custom-fields"
+    icon="settings"
+    cta="Özel alanların kurulumu"
+  />
+</Columns>

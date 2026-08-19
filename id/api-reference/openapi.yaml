@@ -1,0 +1,183 @@
+openapi: '3.0.0'
+info:
+  version: 1.0.0
+  title: Nomadbill
+  license:
+    name: MIT
+servers:
+  - url: https://api.nomadbill.com/v1
+paths:
+  /documents:
+    get:
+      summary: Daftar dokumen
+      operationId: listDocuments
+      parameters:
+        - name: limit
+          in: query
+          description: Berapa banyak item yang harus dikembalikan sekaligus (maks 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: Serangkaian halaman dokumen
+          headers:
+            x-next:
+              description: Tautan ke halaman tanggapan berikutnya
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documents'
+        default:
+          description: kesalahan yang tidak terduga
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Buat dokumen
+      operationId: createDocument
+      responses:
+        201:
+          description: Tanggapan nol
+        default:
+          description: kesalahan yang tidak terduga
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /documents/{documentId}:
+    get:
+      summary: Dapatkan dokumen
+      operationId: showDocumentById
+      parameters:
+        - name: documentId
+          in: path
+          required: true
+          description: Id dokumen yang akan diambil
+          schema:
+            type: string
+      responses:
+        200:
+          description: Respons yang diharapkan terhadap permintaan yang valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documents'
+        default:
+          description: kesalahan yang tidak terduga
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /folders:
+    get:
+      summary: Daftar folder
+      operationId: listFolders
+      parameters:
+        - name: limit
+          in: query
+          description: Berapa banyak item yang harus dikembalikan sekaligus (maks 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: Serangkaian folder berhalaman
+          headers:
+            x-next:
+              description: Tautan ke halaman tanggapan berikutnya
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folders'
+        default:
+          description: kesalahan yang tidak terduga
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Buat folder
+      operationId: createFolder
+      responses:
+        201:
+          description: Tanggapan nol
+        default:
+          description: kesalahan yang tidak terduga
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /folders/{folderId}:
+    get:
+      summary: Dapatkan folder
+      operationId: showFolderById
+      parameters:
+        - name: folderId
+          in: path
+          required: true
+          description: Id folder yang akan diambil
+          schema:
+            type: string
+      responses:
+        200:
+          description: Respons yang diharapkan terhadap permintaan yang valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folders'
+        default:
+          description: kesalahan yang tidak terduga
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Document:
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        tag:
+          type: string
+    Documents:
+      type: array
+      items:
+        $ref: '#/components/schemas/Document'
+    Folder:
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        tag:
+          type: string
+    Folders:
+      type: array
+      items:
+        $ref: '#/components/schemas/Folder'
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

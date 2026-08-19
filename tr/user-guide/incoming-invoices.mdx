@@ -1,0 +1,192 @@
+---
+title: Gelen Faturalar
+description: Otomatik VAT hesaplama ve banka mutabakatı ile tedarikçi faturalarını, makbuzlarını ve giderlerini yükleyin ve yönetin.
+---
+
+## Tedarikçi faturalarını ve makbuzlarını tek yerden takip edin
+
+Gelen faturalar, tedarikçi faturalarını, makbuzlarını ve diğer işletme giderlerini diğer kayıtlarınızla birlikte saklamanıza olanak tanır. Bir PDF veya resim yükleyebilir, fatura ayrıntılarını doldurabilir, ödenip ödenmediğini takip edebilir ve ödeme göründüğünde bunu bir banka işlemiyle eşleştirebilirsiniz.
+
+NomadBill, orijinal dosyayı güvenli bir depolama alanında tutar, VAT tutarlarını otomatik olarak hesaplar ve bağlantılı e-postalar, özel alanlar ve eşleşen banka ödemeleri gibi ilgili bilgileri fatura ayrıntıları sayfasında gösterir.
+
+<Callout kind="info">
+
+Desteklenen yükleme dosyaları arasında **PDF'ler** ve **resim dosyaları** yer alır. NomadBill, `userId/timestamp-filename` kullanıcı başına yol modelini kullanarak her dosyayı `incoming-invoices` depolama bölmesinde saklar.
+
+</Callout>
+
+## Makbuzları yükleme
+
+Bir dosyadan manuel olarak tedarikçi faturası eklemek istediğinizde gelen faturalar alanını kullanın.
+
+<Steps>
+  <Step title="Gelen faturaları aç" icon="folder">
+
+  NomadBill'de gelen faturalar bölümüne gidin ve yeni bir yükleme başlatın.
+
+  Cihazınızda makbuz veya tedarikçi faturası zaten kayıtlı olduğunda bu en iyi seçenektir.
+
+  </Step>
+
+  <Step title="Dosyayı yükle" icon="upload">
+
+  Bilgisayarınızdan veya telefonunuzdan bir **PDF** veya **görüntü** dosyası seçin.
+
+  NomadBill, yüklenen dosyayı güvenli bir depolama alanında saklar ve fatura kaydında bir dosya yolu tutar. Dosyayı daha sonra açtığınızda NomadBill, 60 saniye boyunca geçerli kalan imzalı bir görüntüleme bağlantısı oluşturur.
+
+  </Step>
+
+  <Step title="Fatura ayrıntılarını girin" icon="edit">
+
+  Belgeye ilişkin tedarikçiyi, faturayı, VAT ve ödeme bilgilerini ekleyin.
+
+  Faturayı kaydettikten sonra gelen faturalar listenizde görmeniz ve detay sayfasını açabilmeniz gerekir.
+
+  </Step>
+
+  <Step title="Ayrıntı sayfasını inceleyin" icon="check-circle">
+
+  Bilgileri doğrulamak için kayıtlı faturayı açın.
+
+  Ayrıntılı görünüm, tedarikçi ayrıntıları, fatura ayrıntıları, özel alanlar, bağlantılı e-postalar ve banka ödemeleri için ayrı kartlar içerir.
+
+  </Step>
+</Steps>
+
+## Tedarikçi ve fatura ayrıntıları
+
+Gelen her faturada hem tedarikçi bilgileri hem de faturaya özel bilgiler depolanır. Kategoriler serbest metindir, dolayısıyla muhasebe iş akışınıza uygun adlandırma yapısını kullanabilirsiniz.
+
+### Tedarikçi alanları
+
+<ParamField body="supplier_name" param-type="string" required="false" show-location="false">
+Faturayı veya makbuzu düzenleyen tedarikçinin veya satıcının adı.
+</ParamField>
+
+<ParamField body="supplier_address" param-type="string" required="false" show-location="false">
+Tedarikçinin posta adresi.
+</ParamField>
+
+<ParamField body="supplier_vat_number" param-type="string" required="false" show-location="false">
+Belgede mevcutsa tedarikçi VAT kayıt numarası.
+</ParamField>
+
+### Fatura alanları
+
+<ParamField body="invoice_number" param-type="string" required="false" show-location="false">
+Tedarikçinin kendi faturası veya makbuz numarası.
+</ParamField>
+
+<ParamField body="invoice_date" param-type="date" required="false" show-location="false">
+Tedarikçi faturasında gösterilen tarih.
+</ParamField>
+
+<ParamField body="due_date" param-type="date" required="false" show-location="false">
+Faturanın son ödeme tarihi.
+</ParamField>
+
+<ParamField body="payment_date" param-type="date" required="false" show-location="false">
+Faturanın ödendiği tarih. Bir ödeme eşleştirildiğinde banka mutabakatı bunu güncelleyebilir.
+</ParamField>
+
+<ParamField body="category" param-type="string" required="false" show-location="false">
+Gider için serbest metin kategorisi. NomadBill önceden tanımlanmış bir kategori listesini zorunlu kılmaz.
+</ParamField>
+
+<ParamField body="notes" param-type="string" required="false" show-location="false">
+Makbuz, tedarikçi veya giderle ilgili dahili notlar.
+</ParamField>
+
+<ParamField body="currency" param-type="string" required="false" enum="EUR,USD,GBP,CHF,AED" show-location="false">
+Faturada kullanılan para birimi. Desteklenen değerler `EUR`, `USD`, `GBP`, `CHF` ve `AED`'dir.
+</ParamField>
+
+<ParamField body="payment_status" param-type="string" required="false" enum="unpaid,paid" show-location="false">
+Faturanın güncel ödeme durumu. NomadBill, `unpaid` ve `paid`'yi destekler.
+</ParamField>
+
+### Tutar alanları
+
+<ParamField body="net_amount" param-type="number" required="false" show-location="false">
+VAT'den önceki fatura tutarı.
+</ParamField>
+
+<ParamField body="vat_percentage" param-type="number" required="false" show-location="false">
+Fatura tutarına uygulanan VAT oranı.
+</ParamField>
+
+<ParamField body="vat_amount" param-type="number" required="false" show-location="false">
+Hesaplanan VAT tutarı.
+</ParamField>
+
+<ParamField body="amount" param-type="number" required="false" show-location="false">
+VAT dahil brüt fatura tutarı.
+</ParamField>
+
+### Meta verileri dosyalayın ve kaydedin
+
+<ParamField body="file_path" param-type="string" required="false" show-location="false">
+Yüklenen makbuz veya fatura dosyasının saklama yolu.
+</ParamField>
+
+<ParamField body="upload_date" param-type="date-time" required="false" show-location="false">
+Dosyanın NomadBill'e yüklendiği tarih.
+</ParamField>
+
+## VAT ve tutar hesaplaması
+
+NomadBill fatura toplamlarını otomatik olarak yeniden hesaplar, böylece her tutar alanını elle güncellemenize gerek kalmaz. Bu, özellikle yalnızca net tutarı ve VAT kurunu bildiğinizde veya yalnızca makbuzdan brüt toplamı aldığınızda, giriş hatalarını azaltır.
+
+`net_amount` veya `vat_percentage`'yi değiştirirseniz NomadBill, hem `vat_amount` hem de `amount`'yi yeniden hesaplar. Brüt tutar şu formülü kullanır: `gross = net * (1 + pct / 100)`.
+
+`amount`'yi değiştirirseniz NomadBill, geçerli VAT yüzdesine dayalı olarak `net_amount` ve `vat_amount`'yi yeniden hesaplar. Bu, makbuzun yalnızca nihai toplamı ve VAT kurunu göstermesi durumunda yardımcı olur.
+
+<Callout kind="tip">
+
+Makbuz indirimler, karışık VAT oranları veya net ile VAT'yi açıkça ayırmayan tedarikçi formatı içerdiğinde, kaydetmeden önce yeniden hesaplanan değerleri kontrol edin.
+
+</Callout>
+
+## Ödeme durumu ve banka mutabakatı
+
+Ödeme durumu, hangi tedarikçi faturalarının hâlâ açık olduğunu, hangilerinin zaten ödenmiş olduğunu takip etmenize yardımcı olur. NomadBill iki durum kullanır: `unpaid` ve `paid`.
+
+Banka senkronizasyonunu bağlarsanız NomadBill, giden banka işlemlerini gelen faturalarla otomatik olarak eşleştirebilir. Eşleştirme mantığı şunu arar:
+
+- Tutarı sıfırın altında olan **giden işlem**
+- **tamamen aynı miktarda**
+- **aynı para birimi**
+- Fatura tarihinden itibaren **14 gün** içinde olan bir işlem tarihi
+
+NomadBill bir eşleşme bulduğunda, işlemi gelen faturaya bağlar ve ödeme durumunu `paid` olarak ayarlar. Bağlantılı banka ödemeleri, fatura ayrıntıları sayfasındaki banka ödemeleri kartında görünür.
+
+Bağlantıyı banka senkronizasyon alanından manuel olarak da yönetebilirsiniz. Eşleşen bir işlemin bağlantısını kaldırırsanız NomadBill, ödeme durumunu tekrar `unpaid` olarak değiştirir.
+
+Eşleştirme iş akışının tamamı için bkz. [Bank senkronizasyonu](/tr/user-guide/bank-sync).
+
+## E-posta istihbaratı entegrasyonu
+
+NomadBill ayrıca e-posta verilerinden gelen bir fatura da oluşturabilir. E-posta istihbaratı bir mesajdan makbuz veya tedarikçi faturası ayrıntılarını çıkardığında, `createReceiptFromEmail` sizin için gelen fatura kaydını oluşturabilir.
+
+Bu, tedarikçiler faturaları e-postayla gönderdiğinde ve manuel girişi azaltmak istediğinizde kullanışlıdır. Oluşturduktan sonra fatura detay sayfasını açabilir, çıkarılan alanları inceleyebilir, not veya kategori ekleyebilir ve ödemenin zaten eşleşip eşleşmediğini onaylayabilirsiniz.
+
+Ayrıntı sayfası ayrıca gerektiğinde faturayı orijinal e-posta içeriğine kadar izlemenize yardımcı olan bağlantılı bir e-posta kartı içerir.
+
+E-posta iş akışı için bkz. [E-posta bilgileri](/tr/user-guide/email-intelligence).
+
+## İlgili kılavuzlar
+
+<Columns cols={2}>
+  <Card
+    title="Banka Senkronizasyonu"
+    href="/tr/user-guide/bank-sync"
+    icon="database"
+    cta="Kılavuzu aç"
+  />
+  <Card
+    title="Özel alanlar"
+    href="/tr/user-guide/custom-fields"
+    icon="settings"
+    cta="Kılavuzu aç"
+  />
+</Columns>

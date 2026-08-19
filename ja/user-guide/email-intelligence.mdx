@@ -1,0 +1,246 @@
+---
+title: 電子メールインテリジェンス
+description: 受信メールを自動的に分類し、AI で文書データを抽出し、メールを請求書、見積書、領収書と照合します。
+---
+
+## 共有メールボックスをドキュメント受信ボックスに変える
+
+Email Intelligence は、受信メッセージを監視し、ビジネス文書を識別し、重要なデータを抽出し、NomadBill 内の適切なレコードへのリンクを提案する専用のメールボックスを会社に提供します。これは、フリーランサーや小規模チームの既存の作業方法に合わせて設計されています。サプライヤーは請求書を電子メールで送信し、クライアントは見積書に返信し、支払い確認は同じ受信箱に届きます。
+
+## エージェントのメールボックス
+
+各企業は、`agent_name@agent.nomadbill.co` 形式の専用エージェント メールボックスを 1 つ取得します。ワークスペースがカスタム エージェント ドメインを使用している場合、メールボックスは代わりにそのドメインを使用します。
+
+会社の所有者のみがメールボックスをプロビジョニングできます。セットアップ中に、NomadBill は、エージェント名を小文字に変換し、スペースをハイフンに置き換え、スラッグを 40 文字に制限することにより、エージェント名をメールボックス セーフな形式に正規化します。
+
+プロビジョニングが開始されたら、NomadBill:
+
+- Nylas でメール許可を作成します
+- メールボックス接続を `company_email_accounts` レコードに保存します
+- 受信メールイベントの Webhook を登録します
+
+Webhook は次のイベントをリッスンします。
+
+- `message.created`
+- `message.updated`
+- `grant.expired`
+
+NomadBill は、Webhook を `/api/public/nylas-webhook` に登録します。最初の Webhook ハンドシェイク中に、`GET` ハンドラーは、受け取ったとおりの `challenge` クエリ パラメーターを返します。
+
+## 受信メールの処理方法
+
+すべての新しいメッセージは同じ処理フローに従うため、結果の一貫性が保たれ、重複した作業が回避されます。
+
+<Steps>
+  <Step title="Webhook イベントを受信する" icon="zap">
+
+Nylas は、メッセージが作成または更新されるとき、または許可の有効期限が切れるときに、Webhook イベントを `/api/public/nylas-webhook` に送信します。
+
+NomadBill は、`x-nylas-signature` ヘッダーを HMAC-SHA256 で検証できます。署名検証はオプションですが、推奨される実稼働セットアップとして扱う必要があります。
+
+  </Step>
+
+  <Step title="メール全体を取得する" icon="download">
+
+有効なイベントが到着すると、NomadBill は接続されたメールボックスから完全な電子メールのコンテンツとメタデータを取得します。
+
+このシステムは、重複した処理も防止します。同じ電子メールがすでに完了している場合、すでにスキップされている場合、または 5 分間以内にまだ処理中の場合、NomadBill はその電子メールを再度分析しません。
+
+  </Step>
+
+  <Step title="分析すべきではないメッセージをスキップする" icon="shield">
+
+NomadBill は、エージェント メールボックス自体から送信されたメッセージをスキップします。このセルフメール ガードはループを防止し、システム生成メールの分析を回避します。
+
+アウトバウンドまたは無関係なメッセージは、使用可能なビジネス文書を表さない場合、分類時に除外することもできます。
+
+  </Step>
+
+  <Step title="添付ファイルとメッセージのコンテンツをダウンロードする" icon="paperclip">
+
+プロセッサは、ドキュメント分析を実行する前に、電子メールの本文と利用可能な添付ファイルを収集します。
+
+これにより、メッセージに請求書、領収書、見積書、確認書、または別の種類の文書が含まれているかどうかを認識するのに十分なコンテキストが分類子に与えられます。
+
+  </Step>
+
+  <Step title="AI 分類と抽出を実行する" icon="code">
+
+NomadBill は、`google/gemini-3.6-flash` を使用して、Lovable AI ゲートウェイ経由で電子メールのコンテンツを AI パイプラインに送信します。
+
+このモデルはドキュメントを分類し、合計、日付、名前、参照番号などの構造化フィールドを抽出するため、データを手動でコピーする代わりに、NomadBill 内でそれらを確認できます。
+
+  </Step>
+
+  <Step title="一致する提案を計算する" icon="check-circle">
+
+抽出後、照合エンジンは電子メールを請求書、見積書、受信請求書、銀行取引、社内の顧客と比較します。
+
+考えられる一致ごとにスコアが得られます。 NomadBill は、最小しきい値を満たす提案を保持し、最も強力な候補を最初に表示します。
+
+  </Step>
+
+  <Step title="結果を保存し、決定を保存します" icon="database">
+
+最終分析は、抽出されたデータと推奨リンクを含む電子メール記録とともに保存されます。
+
+すでに提案をリンクまたは却下した場合、NomadBill は作業をリセットするのではなく、後の再分析でその決定を保持します。
+
+  </Step>
+</Steps>
+
+## 文書の分類
+
+Email Intelligence は、分析された各メッセージを次のドキュメント タイプのいずれかに分類します。
+
+- `incoming_invoice`
+- `receipt`
+- `outgoing_invoice`
+- `quote`
+- `payment_confirmation`
+- `reminder`
+- `contract`
+- `other`
+
+この分類は、NomadBill が次にどのようなアクションを提供するかを決定するのに役立ちます。たとえば、受信請求書レコードに直接変換できるのは、`incoming_invoice` メールと `receipt` メールのみです。
+
+## AI で抽出されたデータ
+
+分析結果には、次の抽出フィールドが含まれる場合があります。
+
+<ParamField body="doc_type" param-type="string" required="true" show-location="false">
+検出された電子メールのドキュメント タイプ。
+</ParamField>
+
+<ParamField body="confidence" param-type="number" show-location="false">
+分類結果のモデル信頼スコア。
+</ParamField>
+
+<ParamField body="summary" param-type="string" show-location="false">
+電子メールまたは添付ファイルに含まれていると思われる内容の短い概要。
+</ParamField>
+
+<ParamField body="document_number" param-type="string" show-location="false">
+文書内で検出されたメインの請求書、領収書、見積書、または確認番号。
+</ParamField>
+
+<ParamField body="reference_numbers" param-type="array" show-location="false">
+電子メールまたは添付ファイルで見つかった追加の参照識別子。
+</ParamField>
+
+<ParamField body="total_amount" param-type="number" show-location="false">
+ドキュメントに対して検出された合計総額。
+</ParamField>
+
+<ParamField body="net_amount" param-type="number" show-location="false">
+ドキュメントに記載されている場合の、VAT より前の正味金額。
+</ParamField>
+
+<ParamField body="vat_amount" param-type="number" show-location="false">
+ドキュメントから抽出された VAT の金額。
+</ParamField>
+
+<ParamField body="vat_percentage" param-type="number" show-location="false">
+確実に識別できる場合の VAT レート。
+</ParamField>
+
+<ParamField body="currency" param-type="string" show-location="false">
+検出された文書金額の通貨コード。
+</ParamField>
+
+<ParamField body="document_date" param-type="string" show-location="false">
+文書に記載されている発行日。
+</ParamField>
+
+<ParamField body="due_date" param-type="string" show-location="false">
+支払い期限 (存在する場合)。
+</ParamField>
+
+<ParamField body="vendor_name" param-type="string" show-location="false">
+ドキュメントに関連付けられたサプライヤーまたは送信者の名前。
+</ParamField>
+
+<ParamField body="customer_name" param-type="string" show-location="false">
+文書内で参照されている顧客名。
+</ParamField>
+
+<ParamField body="iban" param-type="string" show-location="false">
+電子メールまたは文書で検出された銀行口座番号。
+</ParamField>
+
+<ParamField body="category" param-type="string" show-location="false">
+分析中に割り当てられる広範なカテゴリ。
+</ParamField>
+
+<ParamField body="ocr_text" param-type="string" show-location="false">
+抽出されたドキュメント テキストは、下流の分類と照合に使用されます。
+</ParamField>
+
+<ParamField body="line_items" param-type="array" show-location="false">
+添付ファイルに項目別の詳細が含まれている場合に、ドキュメントから検出された明細項目。
+</ParamField>
+
+## マッチングと提案
+
+分析後、NomadBill はワークスペース内の関連レコードを検索し、各候補にスコアを付けます。提案が表示されるには、最低スコア `0.35` に達する必要があり、システムは電子メールごとに最大 12 件の提案を返します。
+
+マッチング エンジンは、いくつかのレコード タイプを評価します。
+
+- 請求書
+- 引用
+- 受信した請求書
+- 銀行取引
+- 顧客
+
+請求書の場合、最も強力なシグナルは文書番号、金額、受取人、顧客 ID です。スコアリング モデルでは、次のポイントが追加されます。
+
+- 見つかった番号: `+0.55`
+- 約 `±0.5%` または `±0.02` 以内の金額: `+0.30`
+- 通貨一致: `+0.05`
+- 14 日以内の日付: `+0.10`
+- `sent_to` には送信者の電子メールが含まれます: `+0.25`
+- 顧客名の一致: `+0.15`
+
+銀行取引の場合、エンジンは支払い証拠と取引相手の身元に焦点を当てます。以下のポイントが追加されます。
+
+- 金額一致: `+0.45`
+- 見つかった候補者番号: `+0.35`
+- 対応する名前の一致: `+0.20`
+- 30 日以内の日付: `+0.10`
+
+顧客に対して、エンジンは操作記録を提案する前に、電子メールが誰のものかを特定しようとします。以下のポイントが追加されます。
+
+- 電子メールの完全一致: `+0.80`
+- 同じドメイン: `+0.50`
+- 名前の一致: `+0.30`
+
+これらのスコアは加算的なものであるため、強力な一致は通常、1 つのフィールドに依存するのではなく、複数の信号を一度に組み合わせます。
+
+## 電子メールリンクの管理
+
+NomadBill は、各メールとレコードの関連付けを追跡します。リンクは次の 3 つの状態のいずれかになります。
+
+- **提案** — NomadBill が一致する可能性の高いものを見つけて、あなたのレビューを待っています。
+- **リンク済み** — 電子メールが特定の請求書、見積書、領収書、取引、または顧客に属していることを確認しました。
+- **却下** — 提案を拒否しました。電子メールが再度分析される場合、その決定は保持されます。
+
+電子メール ビューの電子メール インテリジェンス カードを使用して、抽出されたフィールドを確認し、提案を検査し、一致を確認または却下します。電子メールがすでにレコードに接続されている場合、リンクされた電子メール アクティビティは、請求書、見積書、領収書、トランザクション、および顧客詳細ページの反対側からも表示されます。
+
+ドキュメント タイプが `incoming_invoice` または `receipt` の場合、電子メールから直接請求書を作成できます。 `createReceiptFromEmail` アクションは、抽出されたドキュメント データを使用して新しいレコードを事前入力し、電子メールがすでに処理されている場合や意図的にスキップされた場合に重複が作成されることを回避します。
+
+<Callout kind="info">
+
+Email Intelligence はほぼリアルタイムで更新されます。 NomadBill は、`company_email_accounts.last_event_at` 上の Supabase Realtime を通じてメールボックス アクティビティをリッスンし、必要に応じて 30 秒のポーリング サイクルに戻ります。
+
+</Callout>
+
+## 関連ガイド
+
+<Columns cols={2}>
+  <Card title="請求書発行" href="/ja/user-guide/invoicing" icon="file-text" cta="オープンガイド">
+送信される請求書を管理し、リンクされた電子メールがフォローアップと支払い追跡をどのようにサポートするかを理解します。
+  </Card>
+  <Card title="請求書の受信" href="/ja/user-guide/incoming-invoices" icon="folder" cta="オープンガイド">
+サプライヤーの請求書を確認し、電子メール分析から記録を作成し、購入書類を整理します。
+  </Card>
+</Columns>

@@ -1,0 +1,48 @@
+---
+title: Fatura E-postası Gönderilemedi
+description: NomadBill'de fatura teslimatı sorunlarını giderin.
+---
+
+## Fatura e-posta teslimi sorunlarını giderme
+Fatura e-postaları, NomadBill gönderildiğinde fatura kaydını güncellemelidir. Müşteri bir fatura almamışsa, önce alıcı adresini doğrulayın, ardından yeniden göndermeden önce faturanın gerçekten gönderilmiş olarak işaretlenip işaretlenmediğini doğrulayın.
+
+<Steps>
+  <Step title="Alıcı e-posta adresini kontrol edin">
+
+    Faturayı açın ve alıcının e-posta adresini dikkatlice inceleyin. Bir e-postanın asla ulaşmamasının en yaygın nedeni, bir yazım hatası, güncel olmayan adres veya faturadaki yanlış kişidir.
+
+    Faturayı daha önce gönderdiyseniz NomadBill'in son alıcıyı `sent_to` alanına sakladığını unutmayın. Yeniden gönderme formu, varsayılan alıcıyla aynı adresi kullandığından, gerekirse yeniden göndermeden önce bu adresi düzeltin.
+
+  </Step>
+  <Step title="Faturanın gönderildi olarak işaretlendiğini doğrulayın">
+
+    E-posta etkinliğini izleyen fatura alanlarını kontrol edin:
+
+    - `sent_at`, NomadBill'in e-postayı gönderildiği gibi ne zaman kaydettiğini gösterir.
+    - `sent_to`, mesajın hangi e-posta adresini aldığını gösterir.
+    - Başarılı bir gönderme işleminden sonra `email_status`, `sent` olmalıdır.
+
+    Bu alanlar boşsa veya `email_status`, `sent` değilse NomadBill gönderme adımını tamamlamamıştır. Bu durumda bir sonraki kontrol faturadan yeniden göndermek olacaktır.
+
+  </Step>
+  <Step title="Fatura e-postasını yeniden gönderin">
+
+    Faturayı açın ve e-posta modunda e-posta gönder veya yeniden gönder eylemini kullanın. NomadBill, belge numarasını, müşteri adını, tutarı ve eklediğiniz herhangi bir özel mesajı içeren bir HTML fatura özeti gönderir.
+
+    Gönderdikten sonra faturanın yeni bir `sent_at` değeriyle, doğru `sent_to` adresiyle ve `email_status`'nin `sent` olarak ayarlanmış şekilde güncellendiğini onaylayın. Bu alanlar, NomadBill'in e-posta isteğini işlediğine dair en iyi onaydır.
+
+  </Step>
+  <Step title="Spam veya önemsiz klasörleri kontrol edin">
+
+    Müşterinizden `noreply@nomadbill.co`'den gelen iletileri spam, önemsiz, promosyonlar veya filtrelenmiş klasörlerinde aramasını isteyin.
+
+    Fatura beklendiği gibi `sent_at`, `sent_to` ve `email_status` gösteriyorsa ancak müşteri iletiyi hâlâ bulamıyorsa, posta sağlayıcısı iletiyi teslimattan sonra filtrelemiş olabilir.
+
+  </Step>
+</Steps>
+
+<Callout kind="alert">
+
+Fatura e-postaları sürekli olarak gönderilemiyorsa Resend entegrasyonu çalışma alanınız için yapılandırılmamış olabilir. E-posta hizmetinin doğru şekilde kurulduğunu doğrulamak için hesap yöneticinizle iletişime geçin.
+
+</Callout>

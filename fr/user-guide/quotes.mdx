@@ -1,0 +1,160 @@
+---
+title: Citations
+description: Créez, envoyez et convertissez des devis en factures avec une prise en charge multidevise etPDFgénération.
+---
+
+## Transformez les estimations de projet en devis prêts à l'emploi
+
+Les devis vous permettent de préparer une offre, de l'envoyer à un client et de la convertir en facture une fois que le client l'accepte. Le workflow de devis utilise les mêmes données de base que les factures, y compris les détails du client, les éléments de ligne,VAT, monnaie, langue,PDFsortie, livraison par e-mail, champs personnalisés,CSVexportation et personnalisationPDFmodèles.
+
+## Statuts des devis
+
+Chaque devis suit deux états distincts : **statut** et **statut de paiement**. Ensemble, ils vous indiquent où se trouve le devis dans votre processus de vente et si un paiement qui y est lié a été effectué.
+
+### Statut du devis
+
+|Statut|Ce que cela signifie|
+|---|---|
+|**brouillon**|Vous êtes encore en train de préparer le devis. Le devis n'a pas été finalisé ni converti.|
+|**envoyé**|Vous avez envoyé le devis au client par email.|
+|**converti**|Vous avez converti le devis en facture. Un nouvel enregistrement de facture a été créé à partir des données du devis.|
+
+### Statut de paiement
+
+|Statut de paiement|Ce que cela signifie|
+|---|---|
+|**non rémunéré**|Aucun paiement n'a été enregistré.|
+|**en attente**|Un paiement a été initié mais n'est pas encore finalisé.|
+|**payé**|Paiement effectué avec succès.|
+|**échoué**|Une tentative de paiement a été effectuée mais n'a pas abouti.|
+
+<Callout kind="info">
+
+Une citation peut être marquée comme`sent`sans être payée, et elle peut être convertie en facture même si son statut de paiement est toujours`unpaid`. Le statut et le statut de paiement sont suivis indépendamment.
+
+</Callout>
+
+## Création d'un devis
+
+Créez un devis de la même manière que vous créez une facture, puis enregistrez-le en tant qu'offre pour le client.
+
+<Steps>
+  <Step title="Ajouter le client" icon="users">
+
+Sélectionnez un client existant ou saisissez les coordonnées du client directement sur le devis. Utilisez les mêmes champs d'informations client que vous utilisez pour les factures, y compris le nom et l'adresse du client.
+
+  </Step>
+  <Step title="Définir les détails du devis" icon="settings">
+
+Saisissez la date du devis, la date d'échéance, la devise et la langue. Les devis prennent en charge les mêmes devises et langues que les factures.
+
+Devises prises en charge :
+  
+  - `EUR`
+  - `USD`
+  - `GBP`
+  - `CHF`
+  - `AED`
+
+Langues prises en charge :
+  
+  - `DE`
+  - `EN`
+  - `FR`
+  - `ES`
+
+  </Step>
+  <Step title="Ajoutez des éléments de campagne etVAT" icon="edit">
+
+Ajoutez les produits ou services que vous souhaitez proposer, puis examinez les quantités, les prix etVAT. Le devis stocke les éléments de ligne dans la même structure que celle utilisée par les factures, de sorte que les totaux et les calculs de taxes suivent le même modèle.
+
+Vérifiez le total avant de sauvegarder. Votre devis devrait maintenant afficher le montant total avec le montant sélectionnéVATpourcentage appliqué.
+
+  </Step>
+  <Step title="Choisissez un modèle et examinez lePDF" icon="file-text">
+
+Sélectionnez unPDFmodèle si vous utilisez des mises en page de devis ou de facture personnalisées. Puis prévisualisez lePDFpour confirmer que les prix, la marque, la langue et les informations client sont corrects.
+
+Lorsque l’aperçu semble correct, enregistrez le devis. Le devis est maintenant prêt à être envoyé ou converti ultérieurement.
+
+  </Step>
+</Steps>
+
+## Conversion devis en facture
+
+Convertissez un devis lorsque le client accepte votre offre. La conversion change le statut du devis en`converted`et crée une nouvelle facture avec les mêmes données commerciales sous-jacentes.
+
+La nouvelle facture copie les détails du client du devis, l'adresse, les dates, la devise, la langue, les éléments de ligne,VATpourcentage, modèle et montant total. Cela vous donne un document de facturation sans ressaisir les mêmes informations.
+
+### Comment fonctionne la relation
+
+La facture stocke un`quote_id`référence à la citation originale. Cela signifie que la relation est suivie de la facture au devis, et non du devis à la facture.
+
+Si vous devez confirmer qu'un devis a été transformé en facture, consultez l'enregistrement de facture lié par`quote_id`. Le devis lui-même change de statut en`converted`, mais la relation directe avec la base de données est navigable de la facture au devis.
+
+<Callout kind="tip">
+
+Utilisez la conversion lorsque les conditions commerciales sont définitives. Il conserve intact l’historique de vos devis et crée un transfert propre des ventes à la facturation.
+
+</Callout>
+
+## Numérotation des devis
+
+Chaque devis reçoit son propre numéro de document au format`A-00001`. Le`A`le préfixe signifie Angebot.
+
+Les numéros de devis sont générés par entreprise et attribués de manière atomique. Cela évite les numéros en double lorsque plusieurs personnes créent des documents en même temps et maintient la cohérence de la séquence de devis de chaque entreprise.
+
+Si besoin, vous pouvez modifier le numéro de devis avant d'envoyer le document.
+
+## Envoi de devis par email
+
+Envoyez des devis par email avec le même flux de livraison que celui utilisé pour les factures.NomadBillgénère l'e-mail récapitulatif du document et l'envoie viaResenden utilisant`noreply@nomadbill.co`.
+
+Avant d'envoyer, consultez lePDFaperçu et détails du destinataire. Après envoi, le statut du devis passe à`sent`, qui vous aide à distinguer les devis préparés des devis déjà remis au client.
+
+Si vous avez besoin de documents de marque, combinez l'envoi d'e-mails avec votre sélectionPDFmodèle afin que le client reçoive la mise en page finale que vous souhaitez qu'il voie.
+
+## Dépôts et paiements
+
+Les devis incluent un flux de paiement, mais celui-ci est lié au processus de paiement des factures. En pratique, l’action de paiement appelle le flux de règlement des factures plutôt qu’un enregistrement de paiement spécifique au devis.
+
+Cela signifie que le traitement des paiements fonctionne correctement une fois le devis converti en facture. À ce stade, la facture peut être utilisée pour les mises à jour de paiement et de paiement.
+
+<Callout kind="alert">
+
+Le paiement d’acompte pour un devis ne fonctionne correctement qu’après avoir converti le devis en facture. Le flux de paiement actuel interroge la table des factures, et non la table des devis, de sorte que le traitement des paiements sur devis uniquement est limité.
+
+</Callout>
+
+Les statuts de paiement apparaissent toujours sur les devis, mais le flux de mise à jour des paiements sous-jacent est basé sur la facture. Si vous avez besoin d'un lien de paiement fiable ouStripe-mises à jour de statut sauvegardées, convertissez d'abord le devis et percevez le paiement sur la facture.
+
+## Ce que vous pouvez faire avec les guillemets
+
+Les devis prennent en charge les mêmes fonctionnalités de document que celles disponibles pour les factures :
+
+- PDFaperçu avant envoi
+- Envoi d'e-mails
+- Champs personnalisés
+- E-mails liés
+- CSVexporter
+- CoutumePDFmodèles
+- Édition manuelle du numéro de devis
+
+Ces fonctionnalités partagées facilitent le passage du devis à la facture sans modifier votre flux de documents.
+
+## Continuer avec les guides associés
+
+<Columns cols={2}>
+<Carte
+title="Gérer les factures"
+href="/fr/user-guide/invoicing"
+icon="fichier-texte"
+cta="Ouvrir le guide"
+  />
+<Carte
+title="PersonnaliserPDFmodèles"
+href="/fr/user-guide/pdf-templates"
+icône = "modifier"
+cta="Ouvrir le guide"
+  />
+</Columns>

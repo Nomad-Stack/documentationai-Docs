@@ -1,0 +1,160 @@
+---
+title: Preventivi
+description: Crea, invia e converti preventivi in fatture con supporto multivaluta e generazione PDF.
+---
+
+## Trasforma le stime dei progetti in preventivi pronti per il cliente
+
+I preventivi ti consentono di preparare un'offerta, inviarla a un cliente e convertirla in una fattura una volta che il cliente accetta. Il flusso di lavoro del preventivo utilizza gli stessi dati principali delle fatture, inclusi dettagli cliente, voci, IVA, valuta, lingua, documenti PDF, consegna e-mail, campi personalizzati, esportazione CSV e modelli PDF personalizzati.
+
+## Stati dei preventivi
+
+Ogni preventivo tiene traccia di due stati separati: **stato** e **stato del pagamento**. Insieme ti dicono a che punto del processo di vendita si trova il preventivo e se eventuali pagamenti ad esso collegati sono stati completati.
+
+### Stato del preventivo
+
+| Stato | Cosa significa |
+|---|---|
+| **draft** | Stai ancora preparando il preventivo. Il preventivo non è stato finalizzato o convertito. |
+| **sent** | Hai inviato il preventivo al cliente tramite e-mail. |
+| **converted** | Hai convertito il preventivo in una fattura. È stato creato un nuovo record fattura dai dati del preventivo. |
+
+### Stato del pagamento
+
+| Stato del pagamento | Cosa significa |
+|---|---|
+| **unpaid** | Nessun pagamento è stato registrato. |
+| **pending** | Un pagamento è stato avviato ma non ancora completato. |
+| **paid** | Pagamento completato con successo. |
+| **failed** | È stato effettuato un tentativo di pagamento ma non è andato a buon fine. |
+
+<Callout kind="info">
+
+Un preventivo può essere contrassegnato come `sent` senza essere pagato e può essere convertito in fattura anche se il suo stato di pagamento è ancora `unpaid`. Lo stato e lo stato del pagamento vengono monitorati in modo indipendente.
+
+</Callout>
+
+## Creazione di un preventivo
+
+Crea un preventivo nello stesso modo in cui crei una fattura, quindi salvalo come offerta per il cliente.
+
+<Steps>
+  <Step title="Aggiungi il cliente" icon="users">
+
+Seleziona un cliente esistente o inserisci i dati del cliente direttamente sul preventivo. Utilizza gli stessi campi delle informazioni sul cliente che utilizzi per le fatture, inclusi il nome e l'indirizzo del cliente.
+
+  </Step>
+  <Step title="Imposta i dettagli del preventivo" icon="settings">
+
+Inserisci la data del preventivo, la data di scadenza, la valuta e la lingua. I preventivi supportano le stesse valute e lingue delle fatture.
+
+Valute supportate:
+  
+-`EUR`
+-`USD`
+-`GBP`
+-`CHF`
+-`AED`
+
+Lingue supportate:
+  
+-`DE`
+-`EN`
+-`FR`
+-`ES`
+
+  </Step>
+  <Step title="Aggiungi voci e IVA" icon="edit">
+
+Aggiungi i prodotti o i servizi che desideri offrire, quindi controlla quantità, prezzi e IVA. Il preventivo memorizza le voci nella stessa struttura utilizzata dalle fatture, quindi i totali e i calcoli delle imposte seguono lo stesso schema.
+
+Controlla il totale prima di salvare. Il tuo preventivo ora dovrebbe mostrare l'intero importo con applicata la percentuale IVA selezionata.
+
+  </Step>
+  <Step title="Scegli un modello e rivedi PDF" icon="file-text">
+
+Seleziona un model PDF se utilizzi layout di preventivo o fattura personalizzati. Quindi visualizza l'anteprima di PDF per verificare che prezzi, marchio, lingua e informazioni sul cliente siano corretti.
+
+Quando l'anteprima sembra corretta, salva il preventivo. Il preventivo è ora pronto per essere inviato o convertito in seguito.
+
+  </Step>
+</Steps>
+
+## Conversione da preventivo a fattura
+
+Converti un preventivo quando il cliente accetta la tua offerta. La conversione modifica lo stato del preventivo in `converted` e crea una nuova fattura con gli stessi dati aziendali sottostanti.
+
+La nuova fattura copia i dettagli del cliente, l'indirizzo, le date, la valuta, la lingua, le voci, la percentuale IVA, il modello e l'importo totale del preventivo. Questo ti dà un documento di fatturazione senza reinserire le stesse informazioni.
+
+### Come funziona la relazione
+
+La fattura memorizza un riferimento `quote_id` al preventivo originale. Ciò significa che la relazione viene tracciata dalla fattura al preventivo, non dal preventivo alla fattura.
+
+Se devi confermare che un preventivo è stato trasformato in una fattura, guarda il record della fattura collegato da `quote_id`. Il preventivo stesso cambia stato in `converted`, ma la relazione diretta con il database è navigabile dalla fattura al preventivo.
+
+<Callout kind="tip">
+
+Utilizza la conversione quando i termini commerciali sono definitivi. Mantiene intatta la cronologia dei preventivi e crea un passaggio pulito dalle vendite alla fatturazione.
+
+</Callout>
+
+## Numerazione delle citazioni
+
+Ad ogni preventivo viene assegnato un numero di documento nel formato `A-00001`. Il prefisso `A` sta per Angebot.
+
+I numeri dei preventivi vengono generati per azienda e assegnati atomicamente. Ciò impedisce la duplicazione dei numeri quando più persone creano documenti contemporaneamente e mantiene coerente la sequenza dei preventivi di ciascuna azienda.
+
+Se necessario, puoi modificare il numero del preventivo prima di inviare il documento.
+
+## Invio preventivi via e-mail
+
+Invia preventivi via email con lo stesso flusso di consegna utilizzato per le fatture. NomadBill genera l'e-mail di riepilogo del documento e la invia tramite Resend utilizzando `noreply@nomadbill.co`.
+
+Prima dell'invio, controlla l'anteprima PDF e i dettagli del destinatario. Dopo l'invio, lo stato del preventivo passa a `sent`, che aiuta a distinguere i preventivi preparati dai preventivi già consegnati al cliente.
+
+Se hai bisogno di documenti brandizzati, combina l'invio via email con il model PDF selezionato in modo che il cliente riceva il layout finale che desideri che veda.
+
+## Depositi e pagamenti
+
+I preventivi includono un flusso di pagamento, ma è legato al processo di pagamento della fattura. In pratica, l'azione di pagamento richiama il flusso di pagamento della fattura anziché un record di pagamento specifico del preventivo.
+
+Ciò significa che la gestione dei pagamenti funziona correttamente una volta che il preventivo è stato convertito in fattura. A quel punto, la fattura può essere utilizzata per il checkout e gli aggiornamenti sui pagamenti.
+
+<Callout kind="alert">
+
+Il pagamento dell'acconto per un preventivo funziona correttamente solo dopo aver convertito il preventivo in fattura. Il flusso di pagamento corrente interroga la tabella delle fatture, non la tabella dei preventivi, quindi la gestione dei pagamenti relativi ai soli preventivi è limitata.
+
+</Callout>
+
+Gli stati dei pagamenti vengono ancora visualizzati sui preventivi, ma il flusso di aggiornamento dei pagamenti sottostanti è basato sulla fattura. Se hai bisogno di un collegamento di pagamento affidabile o di aggiornamenti di stato supportati da Stripe, converti prima il preventivo e riscuoti il ​​pagamento dalla fattura.
+
+## Cosa puoi fare con le virgolette
+
+I preventivi supportano le stesse funzionalità dei documenti disponibili per le fatture:
+
+- Anteprima PDF prima dell'invio
+- Consegna della posta elettronica
+- Campi personalizzati
+- E-mail collegate
+- Esportazione CSV
+- Modelli PDF personalizzati
+- Modifica manuale del numero di preventivo
+
+Queste funzionalità condivise semplificano il passaggio dal preventivo alla fattura senza modificare il flusso di lavoro dei documenti.
+
+## Continua con le guide correlate
+
+<Columns cols={2}>
+  <Card
+    title="Gestisci fatture"
+    href="/it/user-guide/invoicing"
+    icon="file-text"
+    cta="Apri guida"
+  />
+  <Card
+    title="Personalizza modelli PDF"
+    href="/it/user-guide/pdf-templates"
+    icon="edit"
+    cta="Apri guida"
+  />
+</Columns>

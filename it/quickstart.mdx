@@ -1,0 +1,143 @@
+---
+title: Avvio rapido
+description: >-
+  Configura il tuo account NomadBill, crea la tua prima azienda e invia la tua prima
+  fattura in pochi minuti.
+---
+## Prerequisiti
+
+Prima di iniziare, assicurati di avere:
+
+- Un indirizzo email valido
+- I dettagli della tua attività, inclusi nome dell'azienda, indirizzo e partita IVA, se applicabile
+- La tua lingua e valuta predefinite preferite
+- Dettagli del conto bancario se prevedi di aggiungere informazioni sul pagamento o sul pagamento in un secondo momento
+
+<Callout kind="info" collapsed="false">
+Inizia con una prova gratuita di 7 giorni. Non è richiesta alcuna carta di credito al momento dell'iscrizione.
+</Callout>
+
+## Iscriviti e crea la tua azienda
+
+Crea il tuo account, quindi configura l'azienda da cui fatturerai.
+
+<Steps>
+  <Step title="Crea il tuo account" icon="users" title-type="p">
+Visita [app.nomadbill.co](https://app.nomadbill.co/) e registrati con la tua email e password oppure continua con Google.
+
+Dopo aver confermato il tuo account, NomadBill ti accede e ti porta alla configurazione dell'azienda.
+  </Step>
+
+  <Step title="Crea la tua prima azienda" icon="plus" title-type="p">
+Inserisci il nome della tua azienda e scegli uno slug aziendale. NomadBill utilizza lo slug per identificare l'area di lavoro della tua azienda.
+
+Seleziona una lingua predefinita tra `DE`, `EN`, `FR` o `ES`, quindi scegli la valuta predefinita: `EUR`, `USD`, `GBP`, `CHF` o `AED`.
+  </Step>
+
+  <Step title="Aggiungi i dettagli dell'azienda in Impostazioni" icon="settings" title-type="p">
+Apri [Impostazioni](https://app.nomadbill.co/settings) e completa il profilo della tua azienda con il nome, l'indirizzo, il partita IVA e le coordinate bancarie della tua società legale.
+
+Puoi anche configurare il branding, le impostazioni predefinite delle fatture, i modelli PDF e i campi personalizzati dalla stessa area.
+  </Step>
+</Steps>
+
+## Panoramica del dashboard
+
+La tua dashboard ti offre subito una visione operativa dell'attività. Mostra ricavi, costi, profitti e liquidità in sospeso nella parte superiore, seguiti da grafici e attività che ti aiutano a capire cosa è cambiato.
+
+Sotto i principali KPI, puoi esaminare le tendenze di entrate, costi e profitti negli ultimi sei mesi, l'invecchiamento dei conti clienti, le entrate per cliente, l'attività recente e il tuo mix di valute.
+
+<Columns cols="3">
+  <Card title="Cruscotto" href="/it/user-guide/dashboard" icon="bar-chart" horizontal="false">
+Esamina KPI, tendenze, dati sull'invecchiamento e attività recente dell'account.
+  </Card>
+
+  <Card title="Fatturazione" href="/it/user-guide/invoicing" icon="file-text" horizontal="false">
+Crea fatture, gestisci i clienti e invia PDF tramite e-mail.
+  </Card>
+
+  <Card title="Fatture passive" href="/it/user-guide/incoming-invoices" icon="upload" horizontal="false">
+Carica fatture e ricevute dei fornitori per il monitoraggio delle spese.
+  </Card>
+</Columns>
+
+## Invia la tua prima fattura
+
+Crea la tua prima fattura dall'editor di fatture, quindi inviala come PDF via e-mail o scaricala per la consegna manuale.
+
+<Steps>
+  <Step title="Apri una nuova fattura" icon="plus" title-type="p">
+Vai a `Invoices` e fai clic su `New` oppure apri direttamente `/invoices/new`.
+
+NomadBill crea una bozza di fattura per l'azienda in cui lavori attualmente.
+  </Step>
+
+  <Step title="Imposta il cliente, la valuta e la lingua" icon="users" title-type="p">
+Scegli la valuta della fattura e la lingua del documento, quindi inserisci il nome e l'indirizzo del cliente.
+
+Utilizza una delle valute di fatturazione supportate: `EUR`, `USD`, `GBP`, `CHF` o `AED`. Utilizza una delle lingue di fatturazione supportate: `DE`, `EN`, `FR` o `ES`.
+  </Step>
+
+  <Step title="Aggiungi voci e IVA" icon="edit" title-type="p">
+Aggiungi ogni voce con un nome, una quantità e un prezzo unitario. Quindi imposta la percentuale IVA per la fattura o le voci in base alle tue esigenze di fatturazione.
+
+Un valore predefinito comune è `19%` IVA. Controlla i totali prima di proseguire.
+  </Step>
+
+  <Step title="Visualizza in anteprima e invia PDF" icon="send" title-type="p">
+Visualizza l'anteprima del PDF generato per confermare il layout, i dettagli del cliente, i totali e IVA.
+
+Quando tutto sembra corretto, invia la fattura via e-mail o scarica PDF e consegnalo tu stesso. Se lo invii da NomadBill, l'e-mail verrà recapitata tramite Resend.
+  </Step>
+</Steps>
+
+<Callout kind="tip" collapsed="false">
+NomadBill numera automaticamente le fatture per azienda utilizzando il formato `R-00001`, quindi la tua prima fattura viene numerata automaticamente.
+</Callout>
+
+## Registra la tua prima spesa
+
+Carica una fattura o una ricevuta in entrata per iniziare a monitorare i costi dei fornitori.
+
+<Steps>
+  <Step title="Apri fatture passive" icon="upload" title-type="p">
+Vai a `Incoming Invoices` o apri `/incoming`.
+
+Quest'area memorizza i file caricati nel tuo spazio di lavoro e li tiene allegati al registro delle spese.
+  </Step>
+
+  <Step title="Carica il file" icon="plus" title-type="p">
+Carica una fattura o una ricevuta del fornitore come PDF o immagine.
+
+NomadBill memorizza il file nel bucket di archiviazione `incoming-invoices` in modo da potervi accedere nuovamente in seguito.
+  </Step>
+
+  <Step title="Completa i dettagli della spesa" icon="edit" title-type="p">
+Aggiungi il nome del fornitore, l'importo, la categoria, la data della fattura e la data di scadenza, se pertinente.
+
+Dopo aver salvato il record, la spesa sarà disponibile per la revisione insieme al documento originale caricato.
+  </Step>
+</Steps>
+
+## Passaggi successivi
+
+Una volta creata la tua azienda e predisposti i primi record, collega i flussi di lavoro che utilizzi più spesso.
+
+<Columns cols="2">
+  <Card title="Sincronizzazione bancariaria" href="/it/user-guide/bank-sync" icon="database" horizontal="false">
+Connect ha supportato le banche degli Stati Uniti e dell'UE tramite Plaid e importa fino a 365 giorni di cronologia delle transazioni.
+  </Card>
+
+  <Card title="Gestione intelligente delle email" href="/it/user-guide/email-intelligence" icon="zap" horizontal="false">
+Automatizza l'acquisizione dei documenti e riduci l'immissione manuale dei dati dalle e-mail dei fornitori.
+  </Card>
+
+  <Card title="Impostazioni" href="/it/user-guide/settings" icon="settings" horizontal="false">
+Configura branding, impostazioni predefinite, modelli PDF e campi personalizzati per ciascuna azienda.
+  </Card>
+
+  <Card title="Gestione del team" href="/it/user-guide/team-management" icon="users" horizontal="false">
+Invita i colleghi e gestisci l'accesso allo spazio di lavoro della tua azienda.
+  </Card>
+</Columns>
+

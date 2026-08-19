@@ -1,0 +1,299 @@
+---
+title: Faturalama
+description: VAT hesaplaması, PDF oluşturma ve Stripe ödemeleri ile birden fazla para biriminde faturalar oluşturun, gönderin ve takip edin.
+---
+
+## Fatura oluşturma, gönderme ve takip etme
+
+Profesyonel faturalar oluşturmak, VAT'yi hesaplamak, markalı PDF'leri dışa aktarmak, faturaları e-postayla göndermek ve Stripe aracılığıyla çevrimiçi ödemeleri kabul etmek için NomadBill faturalandırmayı kullanın. Taslak ve gönderilen faturaları yönetebilir, ödeme sürecini takip edebilir ve fatura numaralarının şirketiniz genelinde tutarlı olmasını sağlayabilirsiniz.
+
+<Callout kind="info">
+
+Onaylanmış bir fiyat teklifiyle başlarsanız, [Fiyat Teklifleri](/tr/user-guide/quotes) bölümünde açıklanan fiyat teklifinden faturaya akışını kullanın.
+
+</Callout>
+
+## Fatura durumları
+
+NomadBill, faturaları iki ayrı alanla takip eder: `status` ve `payment_status`. Fatura etiketi ödeme bilgilerine öncelik verir; dolayısıyla `payment_status`, `paid` olduğunda genel `status` alanı başka bir şeyi gösterse bile fatura ödenmiş olarak görüntülenir.
+
+| Alan | Değerler | Ne anlama geliyor |
+| --- | --- | --- |
+| `status` | `draft`, `sent`, `paid`, `overdue` | Belge yaşam döngüsü durumu |
+| `payment_status` | `unpaid`, `pending`, `paid`, `failed` | Ödeme işleme durumu |
+
+Bunu okumanın pratik bir yolu şudur:
+
+- **`draft`** — hâlâ faturayı düzenliyorsunuz ve göndermeyi tamamlamadınız.
+- **`sent`** — fatura teslim edildi veya gönderildi olarak işaretlendi.
+- **`overdue`** — vade tarihi geçti ve fatura hâlâ ödenmedi.
+- **`paid`** — fatura ödendi.
+
+Ödemeye özel durumlar daha fazla ayrıntı ekler:
+
+- **`unpaid`** — henüz herhangi bir ödeme kaydedilmedi.
+- **`pending`** — ödeme devam ediyor.
+- **`paid`** — ödeme başarıyla tamamlandı.
+- **`failed`** — ödeme girişimi tamamlanmadı.
+
+<Callout kind="tip">
+
+Bir faturanın kullanıcı arayüzünde `paid` görünmesi durumunda, bu ücretli durum, rozet görüntüleme açısından genel belge durumuna göre önceliklidir.
+
+</Callout>
+
+## Fatura oluşturma
+
+**Faturalar** alanından yeni bir fatura oluşturun, müşteri ve fatura ayrıntılarını tamamlayın, satır öğelerinizi ekleyin ve göndermeden önce sonucu inceleyin. NomadBill, daha sonra geri dönebilmeniz için tamamlanmamış faturaları taslak olarak saklar.
+
+<Steps>
+  <Step title="Yeni bir fatura aç" icon="file-text">
+
+  **Faturalar**'a gidin ve yeni bir fatura oluşturun. NomadBill, belgeyi şirketinizin bağlamına göre hazırlar ve fatura oluşturulduğunda numaralandırmayı atar.
+
+  Fatura açıldığında düzenlenebilir faturalama alanlarını, satır öğelerini, toplamları ve belge ayarlarını görmelisiniz.
+
+  </Step>
+
+  <Step title="Müşteri ve fatura ayrıntılarını ekleyin" icon="users">
+
+  Müşteri bilgilerini, fatura tarihini, son tarihi, para birimini ve dili girin. PDF ve e-postadaki etiketlerin doğru şekilde sunulması için alıcıyla eşleşen fatura dilini seçin.
+
+  Kaydettikten sonra fatura, siz gönderene veya başka şekilde işaretleyene kadar **taslak** durumunda kalır.
+
+  </Step>
+
+  <Step title="Satır öğeleri ekleyin" icon="plus">
+
+  Her ürün veya hizmeti ad, miktar ve birim fiyatla birlikte ayrı bir satır öğesi olarak ekleyin. Kapsamı, fatura dönemini veya teslimatları netleştirmeniz gerektiğinde bir açıklama ekleyin.
+
+  Öğe ekledikçe veya düzenledikçe alt toplamınız güncellenir.
+
+  </Step>
+
+  <Step title="VAT ve toplamları inceleyin" icon="bar-chart">
+
+  Faturayı göndermeden önce VAT yüzdesini onaylayın. NomadBill, alt toplamdan ve VAT yüzdesinden toplamı hesaplar; böylece PDF'yi veya ödeme bağlantısını oluşturmadan önce tutarı doğrulayabilirsiniz.
+
+  Doğru bir inceleme adımında size net bir alt toplam, VAT tutarı ve nihai toplam bırakılmalıdır.
+
+  </Step>
+
+  <Step title="Ödemeyi dışa aktarın, gönderin veya toplayın" icon="arrow-right">
+
+  Fatura doğru göründüğünde PDF'yi oluşturun, e-postayla gönderin veya müşterinin çevrimiçi ödeme yapmasını istiyorsanız Stripe ödeme işlemini etkinleştirin. NomadBill, gönderdikten sonra faturayı kimin aldığı ve ne zaman gönderildiği gibi teslimat ayrıntılarını kaydedebilir.
+
+  Bu noktada fatura, düzenleme aşamasından aktif takibe geçer.
+
+  </Step>
+</Steps>
+
+## Satır öğeleri
+
+Her fatura satır öğesi, ücretleri net ve öngörülebilir tutabilmeniz için küçük ve tutarlı bir yapıyı saklar. Bir satır öğesi şunları içerir:
+
+- **`id`** — isteğe bağlı dahili tanımlayıcı
+- **`name`** — satır öğesi başlığı
+- **`description`** — isteğe bağlı ayrıntılı metin
+- **`quantity`** — kaç birim faturalandırıyorsunuz
+- **`price`** — birim başına fiyat
+
+Faturalandırılabilir hizmet, ürün veya fatura dönemi başına bir satır öğesi kullanın. Bu, PDF'nin okunmasını kolaylaştırır ve müşterinizin toplamın nasıl oluşturulduğunu anlamasına yardımcı olur.
+
+NomadBill ayrıca satır öğeleri için sürükleyip bırakarak yeniden sıralamayı da destekler. Öğeleri, faturanın anlatmasını istediğiniz hikayeyle eşleşecek şekilde yeniden sıralayın (örneğin, temel hizmetlerin ilk önce ve geri ödenebilir giderlerin en son listelenmesi gibi).
+
+## VAT hesaplaması
+
+NomadBill, fatura toplamlarını alt toplamdan ve VAT yüzdesinden hesaplar. Formül:
+
+`total = subtotal + (subtotal x vat_percentage / 100)`
+
+Varsayılan VAT kuru, standart Almanya kuruyla eşleşen **19%**'dir. Değer izin verilen **0 ila 100** aralığında kaldığı sürece fatura başına VAT yüzdesini gerektiği gibi değiştirebilirsiniz.
+
+Bu şu anlama gelir:
+
+- **`0`** VAT'den muaf veya sıfır oranlı faturalar için geçerlidir
+- **`19`** varsayılan başlangıç ​​noktasıdır
+- **`100`** izin verilen üst sınırdır
+
+<Callout kind="info">
+
+Özellikle farklı bölgelerde fatura kesiyorsanız veya karma vergi uygulamalarıyla çalışıyorsanız, faturayı göndermeden önce VAT ücretini kontrol edin.
+
+</Callout>
+
+## Para birimleri ve diller
+
+NomadBill beş fatura para birimini ve dört fatura dilini destekler. Bu değerler zorunlu kılındığından faturalarda her zaman desteklenen seçeneklerden biri kullanılır.
+
+### Desteklenen para birimleri
+
+- **EUR**
+- **USD**
+- **GBP**
+- **CHF**
+- **AED**
+
+### Desteklenen fatura dilleri
+
+- **DE**
+- **EN**
+- **FR**
+- **ES**
+
+### Varsayılan para birimi nasıl seçilir?
+
+NomadBill, fatura para birimini şu sırayla çözer:
+
+1. **Fatura para birimi** — Faturada zaten bir para birimi varsa bu değer kullanılır.
+2. **Şirketin varsayılan para birimi** — Faturada açık bir para birimi yoksa NomadBill şirketin varsayılan para birimini kontrol eder.
+3. **Küresel para birimi tercihi** — İlk ikisinden hiçbiri mevcut değilse NomadBill, yerel tarayıcı deposunda `nb.currency` olarak depolanan küresel para birimine geri döner.
+
+Bu öncelik, size şirket çapında ve kullanıcı düzeyinde bir geri dönüş sağlarken mevcut faturalarınızı sabit tutar.
+
+## Fatura numaralandırma
+
+Fatura numaraları `R-00001` biçimini kullanır. `R` öneki belge türünü tanımlar ve sayısal kısımda, başında sıfır bulunan beş rakam kullanılır.
+
+NomadBill, her şirket için bir sonraki belge numarasını atomik olarak atayan bir veritabanı işlevi aracılığıyla sayılar üretir. Birden fazla kişinin aynı anda fatura oluşturması durumunda bu önemlidir, çünkü sıra yarış koşullarından korunmaktadır.
+
+Günlük kullanım için iki ayrıntı önemlidir:
+
+- Fatura numaraları **şirket başına** olup, tüm hesaplarda küresel olarak paylaşılmaz.
+- Her fatura numarası, `company_id` ve `invoice_number` kombinasyonu aracılığıyla aynı şirket içinde benzersiz olmalıdır.
+
+## PDF nesli
+
+NomadBill, indirme, paylaşma veya e-postayla teslim için faturaları PDF belgeleri olarak dışa aktarabilir. PDF motoru, tamamlanmış bir belge oluşturmak için standart fatura verilerini şirketinizin markasıyla birlikte kullanır.
+
+Oluşturulan PDF, **15 mm kenar boşluklarına** sahip bir **A4 dikey** düzeni kullanır ve şunları içerebilir:
+
+- şirket logosu
+- marka rengi
+- satır öğeleri tablosu
+- toplamlar bloğu
+- banka bilgileri
+- altbilgi
+
+PDF çıkışı aynı zamanda dört fatura dilinin tümünü de destekler, böylece etiketler faturada seçilen dilde görünür. Özel PDF düzenleri kullanıyorsanız NomadBill şablon tabanlı oluşturmayı da destekler.
+
+<Columns cols={2}>
+  <Card
+    title="PDF şablonları"
+    href="/tr/user-guide/pdf-templates"
+    icon="book-open"
+    cta="Kılavuzu aç"
+  />
+  <Card
+    title="Teklifler"
+    href="/tr/user-guide/quotes"
+    icon="arrow-right"
+    cta="İlgili kılavuzu aç"
+  />
+</Columns>
+
+## Faturaların e-postayla gönderilmesi
+
+NomadBill, gönderen adresi olarak `noreply@nomadbill.co`'yi kullanarak Resend aracılığıyla fatura e-postalarını gönderir. HTML içeriği ve isteğe bağlı PDF eki içeren bir belge e-postası veya teslimat ayrıntılarını veritabanına kaydeden özet tarzı bir e-posta gönderebilirsiniz.
+
+Fatura özeti e-postası gönderdiğinizde NomadBill şu izleme alanlarını günceller:
+
+- **`sent_at`** — faturanın gönderildiği zaman
+- **`sent_to`** — bunu hangi alıcı aldı?
+- **`email_status`** — `sent` olarak ayarlandı
+
+E-posta içeriği şunları içerebilir:
+
+- belge numarası
+- müşteri adı
+- isteğe bağlı özel bir mesaj
+- toplam tutar
+
+Bu size hem giden teslimatı hem de fatura kaydında temel bir denetim takibi sağlar.
+
+## Stripe ile ödeme kabul ediliyor
+
+Müşterinin barındırılan bir ödeme sayfası üzerinden ödeme yapmasını istiyorsanız faturada Stripe'ı etkinleştirin. NomadBill, fatura için bir Stripe Ödeme Oturumu oluşturur ve ödemeyi tamamlaması için müşteriyi Stripe'a gönderir.
+
+### Stripe akışı nasıl çalışır?
+
+<Steps>
+  <Step title="Fatura için Stripe'ı etkinleştirin" icon="settings">
+
+  `stripe_enabled`'nin etkin olması için fatura için Stripe'ı açın. Bu, faturanın çevrimiçi ödemeye uygun olduğunu işaretler.
+
+  Etkinleştirildiğinde fatura, barındırılan bir ödeme oturumu oluşturabilir.
+
+  </Step>
+
+  <Step title="Ödeme oturumunu oluşturun" icon="lock">
+
+  NomadBill, fatura toplamından bir Stripe Ödeme Oturumu oluşturur. Stripe'a gönderilen tutar, `Math.round(total_amount * 100)` kullanılarak sente dönüştürülür ve Stripe API için para birimi kodu küçük harfe dönüştürülür.
+
+  Bu, Stripe'nin miktarı beklediği biçimde almasını sağlar.
+
+  </Step>
+
+  <Step title="Müşteriyi Stripe'a yönlendirin" icon="external-link">
+
+  Müşteri, ödemeyi güvenli bir şekilde tamamlamak için Stripe tarafından barındırılan ödeme sayfasına yönlendirilir. Kart bilgilerinizi doğrudan fatura sayfasında toplamanıza gerek yoktur.
+
+  Başarılı bir yönlendirme, müşterinin artık Stripe ödemesini tamamladığı anlamına gelir.
+
+  </Step>
+
+  <Step title="Başarıyı veya iptali ele alın" icon="check-circle">
+
+  Ödeme yapıldıktan sonra Stripe, müşteriyi iki fatura yolundan birine geri gönderir:
+
+  - **Başarı:** `/invoices/$id/pay/success`
+  - **İptal:** `/invoices/$id/pay/cancel`
+
+  Başarı sayfası ödemeyi onaylar ve satın alma takibini tetikler. İptal sayfası müşterinin tekrar denemesine olanak tanır.
+
+  </Step>
+
+  <Step title="Webhook onayından sonra faturayı güncelleyin" icon="shield">
+
+  Stripe, `checkout.session.completed` webhook olayını gönderdiğinde, NomadBill, faturayı `payment_status=paid` ve `status=paid` olarak günceller.
+
+  Bu web kancası güncellemesi, NomadBill içindeki ücretli durumu sonlandıran şeydir.
+
+  </Step>
+</Steps>
+
+## Yinelenen faturalar
+
+Yinelenen faturalar, bir faturayı yinelenen faturalandırma modelinin parçası olarak işaretlemenize olanak tanır. NomadBill bunu `is_recurring` bayrağı ve bir `recurring_frequency` değeriyle saklar.
+
+Desteklenen yinelenen frekanslar şunlardır:
+
+- **haftalık**
+- **aylık**
+- **üç ayda bir**
+- **yıllık**
+
+<Callout kind="alert">
+
+Yinelenen faturalar yalnızca meta verilerdir. NomadBill, otomatik bir cron işi çalıştırmaz ve yalnızca bu işarete göre bir zamanlamaya göre yeni faturalar oluşturmaz.
+
+</Callout>
+
+Tekrarlanan faturalandırmayı etiketlemek ve düzenlemek için yinelenen ayarları kullanın, ancak otomatik abonelik motoru olarak bunlara güvenmeyin.
+
+## Bundan sonra ne yapmalı
+
+<Columns cols={2}>
+  <Card
+    title="PDF şablonlarını yönetin"
+    href="/tr/user-guide/pdf-templates"
+    icon="edit"
+    cta="düzenlemeyi özelleştirin"
+  />
+  <Card
+    title="Tekliflerle birlikte"
+    href="/tr/user-guide/quotes"
+    icon="folder"
+    cta="Teklif tabanlı faturalar birleştirir"
+  />
+</Columns>

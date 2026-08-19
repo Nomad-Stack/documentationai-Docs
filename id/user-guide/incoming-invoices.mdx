@@ -1,0 +1,192 @@
+---
+title: Faktur Masuk
+description: Unggah dan kelola tagihan, kuitansi, dan pengeluaran pemasok dengan penghitungan PPN otomatis dan rekonsiliasi bank.
+---
+
+## Lacak tagihan dan kuitansi pemasok di satu tempat
+
+Faktur masuk memungkinkan Anda menyimpan tagihan pemasok, kwitansi, dan pengeluaran bisnis lainnya di samping catatan Anda yang lain. Anda dapat mengunggah PDF atau gambar, mengisi detail faktur, melacak apakah sudah dibayar, dan mencocokkannya dengan transaksi bank saat pembayaran muncul.
+
+NomadBill menyimpan file asli di penyimpanan yang aman, menghitung jumlah PPN secara otomatis, dan menampilkan informasi terkait seperti email tertaut, bidang khusus, dan pembayaran bank yang cocok pada halaman detail faktur.
+
+<Callout kind="info">
+
+File unggahan yang didukung mencakup **PDF** dan **file gambar**. NomadBill menyimpan setiap file di bucket penyimpanan `incoming-invoices` menggunakan pola jalur per pengguna `userId/timestamp-filename`.
+
+</Callout>
+
+## Mengunggah tanda terima
+
+Gunakan area faktur masuk ketika Anda ingin menambahkan tagihan pemasok secara manual dari sebuah file.
+
+<Steps>
+  <Step title="Buka faktur masuk" icon="folder">
+
+  Buka bagian faktur masuk di NomadBill dan mulai unggahan baru.
+
+  Ini adalah pilihan terbaik ketika Anda sudah menyimpan tanda terima atau tagihan pemasok di perangkat Anda.
+
+  </Step>
+
+  <Step title="Unggah berkasnya" icon="upload">
+
+  Pilih file **PDF** atau **gambar** dari komputer atau ponsel Anda.
+
+  NomadBill menyimpan file yang diunggah dalam penyimpanan aman dan menyimpan jalur file dalam catatan faktur. Saat Anda membuka file nanti, NomadBill menghasilkan tautan tampilan bertanda tangan yang tetap valid selama 60 detik.
+
+  </Step>
+
+  <Step title="Masukkan detail faktur" icon="edit">
+
+  Tambahkan informasi pemasok, faktur, PPN, dan pembayaran untuk dokumen tersebut.
+
+  Setelah Anda menyimpan invoice, Anda akan melihatnya di daftar invoice masuk dan dapat membuka halaman detailnya.
+
+  </Step>
+
+  <Step title="Tinjau halaman detailnya" icon="check-circle">
+
+  Buka faktur yang disimpan untuk memverifikasi informasi.
+
+  Tampilan detail mencakup kartu terpisah untuk detail pemasok, detail faktur, bidang khusus, email tertaut, dan pembayaran bank.
+
+  </Step>
+</Steps>
+
+## Detail pemasok dan faktur
+
+Setiap faktur masuk menyimpan informasi pemasok dan informasi spesifik faktur. Kategori adalah teks bebas, sehingga Anda dapat menggunakan struktur penamaan yang sesuai dengan alur kerja pembukuan Anda.
+
+### Bidang pemasok
+
+<ParamField body="supplier_name" param-type="string" required="false" show-location="false">
+Nama pemasok atau pedagang yang menerbitkan tagihan atau kwitansi.
+</ParamField>
+
+<ParamField body="supplier_address" param-type="string" required="false" show-location="false">
+Alamat pos pemasok.
+</ParamField>
+
+<ParamField body="supplier_vat_number" param-type="string" required="false" show-location="false">
+Nomor registrasi PPN pemasok, jika tersedia pada dokumen.
+</ParamField>
+
+### Bidang faktur
+
+<ParamField body="invoice_number" param-type="string" required="false" show-location="false">
+Faktur atau nomor tanda terima milik pemasok.
+</ParamField>
+
+<ParamField body="invoice_date" param-type="date" required="false" show-location="false">
+Tanggal tertera pada faktur pemasok.
+</ParamField>
+
+<ParamField body="due_date" param-type="date" required="false" show-location="false">
+Tanggal jatuh tempo pembayaran untuk faktur.
+</ParamField>
+
+<ParamField body="payment_date" param-type="date" required="false" show-location="false">
+Tanggal faktur dibayar. Rekonsiliasi bank dapat memperbarui informasi ini ketika pembayaran telah sesuai.
+</ParamField>
+
+<ParamField body="category" param-type="string" required="false" show-location="false">
+Kategori teks bebas untuk pengeluaran. NomadBill tidak menerapkan daftar kategori yang telah ditentukan sebelumnya.
+</ParamField>
+
+<ParamField body="notes" param-type="string" required="false" show-location="false">
+Catatan internal tentang tanda terima, pemasok, atau pengeluaran.
+</ParamField>
+
+<ParamField body="currency" param-type="string" required="false" enum="EUR,USD,GBP,CHF,AED" show-location="false">
+Mata uang yang digunakan pada faktur. Nilai yang didukung adalah `EUR`, `USD`, `GBP`, `CHF`, dan `AED`.
+</ParamField>
+
+<ParamField body="payment_status" param-type="string" required="false" enum="unpaid,paid" show-location="false">
+Status pembayaran faktur saat ini. NomadBill mendukung `unpaid` dan `paid`.
+</ParamField>
+
+### Bidang jumlah
+
+<ParamField body="net_amount" param-type="number" required="false" show-location="false">
+Jumlah faktur sebelum PPN.
+</ParamField>
+
+<ParamField body="vat_percentage" param-type="number" required="false" show-location="false">
+Tarif PPN diterapkan pada jumlah faktur.
+</ParamField>
+
+<ParamField body="vat_amount" param-type="number" required="false" show-location="false">
+Jumlah PPN yang dihitung.
+</ParamField>
+
+<ParamField body="amount" param-type="number" required="false" show-location="false">
+Jumlah faktur kotor termasuk PPN.
+</ParamField>
+
+### File dan rekam metadata
+
+<ParamField body="file_path" param-type="string" required="false" show-location="false">
+Jalur penyimpanan file tanda terima atau faktur yang diunggah.
+</ParamField>
+
+<ParamField body="upload_date" param-type="date-time" required="false" show-location="false">
+Tanggal file diunggah ke NomadBill.
+</ParamField>
+
+## Perhitungan PPN dan jumlah
+
+NomadBill menghitung ulang total faktur secara otomatis sehingga Anda tidak perlu memperbarui setiap kolom jumlah secara manual. Hal ini mengurangi kesalahan pencatatan, terutama ketika Anda hanya mengetahui jumlah bersih dan tarif PPN atau hanya mengetahui total kotor dari kwitansi.
+
+Jika Anda mengubah `net_amount` atau `vat_percentage`, NomadBill akan menghitung ulang `vat_amount` dan `amount`. Jumlah kotornya menggunakan rumus ini: `gross = net * (1 + pct / 100)`.
+
+Jika Anda mengubah `amount`, NomadBill menghitung ulang `net_amount` dan `vat_amount` berdasarkan persentase PPN saat ini. Ini membantu ketika tanda terima hanya menunjukkan total akhir dan tarif PPN.
+
+<Callout kind="tip">
+
+Periksa nilai yang dihitung ulang sebelum disimpan jika tanda terima menyertakan diskon, tarif PPN campuran, atau format pemasok yang tidak memisahkan bersih dan PPN dengan jelas.
+
+</Callout>
+
+## Status pembayaran dan rekonsiliasi bank
+
+Status pembayaran membantu Anda melacak invoice supplier mana yang masih terbuka dan mana yang sudah dibayar. NomadBill menggunakan dua status: `unpaid` dan `paid`.
+
+Jika Anda menghubungkan sinkronisasi bank, NomadBill dapat mencocokkan transaksi bank keluar dengan faktur masuk secara otomatis. Logika yang cocok mencari:
+
+- **Transaksi keluar** dengan jumlah di bawah nol
+- **Jumlah yang sama persis**
+- **Mata uang yang sama**
+- Tanggal transaksi dalam **14 hari** sejak tanggal faktur
+
+Ketika NomadBill menemukan kecocokan, ia menghubungkan transaksi ke faktur masuk dan menetapkan status pembayaran ke `paid`. Pembayaran bank tertaut muncul di kartu pembayaran bank di halaman detail faktur.
+
+Anda juga dapat mengatur koneksi secara manual dari area sinkronisasi bank. Jika Anda membatalkan tautan transaksi yang cocok, NomadBill mengubah status pembayaran kembali menjadi `unpaid`.
+
+Untuk alur kerja pencocokan selengkapnya, lihat [Sinkronisasi bank](/id/user-guide/bank-sync).
+
+## Integrasi intelijen email
+
+NomadBill juga dapat membuat invoice masuk dari data email. Saat kecerdasan email mengekstrak rincian tanda terima atau tagihan pemasok dari sebuah pesan, `createReceiptFromEmail` dapat membuat catatan faktur masuk untuk Anda.
+
+Ini berguna ketika pemasok mengirimkan faktur melalui email dan Anda ingin mengurangi entri manual. Setelah pembuatan, Anda dapat membuka halaman detail faktur, meninjau bidang yang diekstraksi, menambahkan catatan atau kategori, dan mengonfirmasi apakah pembayaran sudah cocok.
+
+Halaman detail juga menyertakan kartu email tertaut, yang membantu Anda melacak faktur kembali ke konteks email asli bila diperlukan.
+
+Untuk alur kerja email, lihat [Email Intelligence](/id/user-guide/email-intelligence).
+
+## Panduan terkait
+
+<Columns cols={2}>
+  <Card
+    title="Sinkronisasi bank"
+    href="/id/user-guide/bank-sync"
+    icon="database"
+    cta="Buka panduan"
+  />
+  <Card
+    title="Bidang khusus"
+    href="/id/user-guide/custom-fields"
+    icon="settings"
+    cta="Buka panduan"
+  />
+</Columns>

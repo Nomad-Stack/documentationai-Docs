@@ -1,0 +1,114 @@
+---
+title: Gestão da equipa
+description: Convide colegas, atribua funções de admin, editor ou viewer e gira o acesso a cada espaço de trabalho de empresa no NomadBill.
+---
+
+## A Gestão da equipa permite-lhe controlar quem pode aceder ao espaço de trabalho de cada empresa
+
+Utilize a Gestão da equipa para convidar colegas, atribuir a função adequada ao respetivo trabalho e limitar o acesso às empresas a que pertencem. Pode conceder acesso administrativo completo aos proprietários da empresa, acesso de edição às pessoas que criam documentos e acesso só de leitura a quem apenas precisa de consultar informações.
+
+<Callout kind="info">
+
+O acesso da equipa é gerido por empresa. Se mudar para outra empresa, estará a gerir uma equipa diferente.
+
+</Callout>
+
+## Como funciona o acesso da equipa
+
+No NomadBill, cada equipa pertence a uma única empresa. Quando adiciona alguém à equipa, está a conceder a essa pessoa acesso ao espaço de trabalho dessa empresa específica, e não a todas as empresas da sua conta.
+
+Isto é importante se trabalhar com várias empresas. A mesma pessoa pode pertencer a mais do que uma empresa e ter uma função diferente em cada uma.
+
+O NomadBill também utiliza permissões baseadas em funções para controlar o que cada membro da equipa pode fazer. A função de um membro determina se pode gerir a equipa, alterar as definições da empresa, editar documentos ou apenas consultar os dados da empresa.
+
+<Callout kind="tip">
+
+Utilize **viewer** para contabilistas, clientes ou intervenientes internos que precisam de consultar informações sem acesso de edição. Utilize **editor** para colegas que criam faturas, orçamentos ou outros documentos.
+
+</Callout>
+
+## Funções da equipa
+
+Escolha a função correspondente ao trabalho que cada colega precisa de realizar.
+
+| Função | Nível de acesso | O que esta função permite fazer |
+| --- | --- | --- |
+| **admin** | Acesso total | Gerir as definições da empresa, convidar e gerir membros da equipa e aceder a todos os documentos e dados da empresa |
+| **editor** | Acesso de trabalho | Criar e editar documentos, como faturas e orçamentos, mas sem poder gerir as definições da empresa ou a equipa |
+| **viewer** | Acesso só de leitura | Consultar os dados e documentos da empresa sem fazer alterações |
+
+<Callout kind="alert">
+
+Atribua a função **admin** apenas a pessoas que devam poder gerir o acesso a todo o espaço de trabalho da empresa.
+
+</Callout>
+
+## Convidar um membro da equipa
+
+Os administradores podem convidar novos membros da equipa por e-mail e atribuir-lhes uma função durante o convite.
+
+<Steps>
+  <Step title="Abra a Gestão da equipa" icon="users">
+
+  Inicie sessão no NomadBill, mude para a empresa que pretende gerir e abra a página **Equipa**.
+
+  </Step>
+  <Step title="Inicie um novo convite" icon="plus">
+
+  Selecione a opção para convidar um membro da equipa. O NomadBill abre um formulário de convite onde introduz o endereço de e-mail do colega e escolhe a respetiva função.
+
+  </Step>
+  <Step title="Escolha a função adequada" icon="shield">
+
+  Selecione **admin**, **editor** ou **viewer**, consoante o acesso de que a pessoa precisa. A função atribuída é aplicada quando a pessoa aceita o convite.
+
+  </Step>
+  <Step title="Envie o convite" icon="send">
+
+  Submeta o convite. O NomadBill gera um token de convite único e envia ao destinatário uma ligação que pode utilizar para aderir à empresa.
+
+  </Step>
+</Steps>
+
+Depois de enviar o convite, a pessoa convidada ainda não é membro da equipa. Só passa a sê-lo depois de aceitar a ligação do convite.
+
+## Aceitar um convite
+
+Cada convite inclui uma ligação única baseada num token. Quando o destinatário abre essa ligação, o NomadBill orienta-o pelo processo de aceitação do convite e adiciona-o à empresa com a função atribuída.
+
+Mesmo que o destinatário já utilize o NomadBill, tem de aceitar o convite para essa empresa. A associação a empresas é independente, pelo que aderir a uma empresa não concede automaticamente acesso a outra.
+
+Quando o convite é aceite com êxito, a pessoa é adicionada à equipa dessa empresa. A partir daí, pode mudar para o espaço de trabalho da empresa e utilizar o NomadBill de acordo com a função que lhe foi atribuída.
+
+## Gerir membros existentes
+
+Depois de alguém aderir à equipa, os administradores podem gerir essa associação na página Equipa.
+
+### Alterar a função de um membro
+
+Atualize uma função quando as responsabilidades de alguém mudarem. Por exemplo, promova um editor a admin se essa pessoa precisar de gerir as definições e o acesso da equipa, ou altere um editor para viewer se já não precisar de criar documentos.
+
+As alterações de função aplicam-se apenas à empresa atual. Se a mesma pessoa pertencer a outra empresa, o respetivo acesso nessa empresa mantém-se inalterado.
+
+### Remover um membro
+
+Remova um membro da equipa quando este deixar de dever aceder ao espaço de trabalho da empresa. A remoção de um membro revoga o acesso aos dados, documentos e definições dessa empresa.
+
+Isto não remove a pessoa das outras empresas a que pertence. Afeta apenas a empresa atualmente selecionada.
+
+<Callout kind="info">
+
+Se alguém indicar que não consegue ver faturas, orçamentos ou definições depois de aderir, confirme primeiro se aceitou o convite e se ambos estão a trabalhar no espaço de trabalho da mesma empresa.
+
+</Callout>
+
+## Guias relacionados
+
+<Columns cols={2}>
+  <Card title="Definições" href="/pt/user-guide/settings" icon="settings" cta="Abrir guia">
+    Gira a configuração ao nível da empresa a que os administradores podem aceder.
+  </Card>
+  <Card title="Faturação" href="/pt/user-guide/invoicing" icon="file-text" cta="Abrir guia">
+    Veja o que os editores e administradores podem criar e gerir no trabalho diário de faturação.
+  </Card>
+</Columns>

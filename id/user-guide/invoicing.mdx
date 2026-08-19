@@ -1,0 +1,299 @@
+---
+title: Faktur
+description: Buat, kirim, dan lacak faktur dalam berbagai mata uang dengan penghitungan PPN, pembuatan PDF, dan pembayaran Stripe.
+---
+
+## Buat, kirim, dan lacak faktur
+
+Gunakan faktur NomadBill untuk membuat faktur profesional, menghitung PPN, mengekspor PDF bermerek, mengirim faktur melalui email, dan menerima pembayaran online melalui Stripe. Anda dapat mengelola draf dan faktur terkirim, melacak kemajuan pembayaran, dan menjaga konsistensi nomor faktur di seluruh perusahaan Anda.
+
+<Callout kind="info">
+
+Jika Anda memulai dari penawaran harga yang disetujui, gunakan alur penawaran harga ke faktur yang dijelaskan di [Quotes](/id/user-guide/quotes).
+
+</Callout>
+
+## Status faktur
+
+NomadBill melacak faktur dengan dua bidang terpisah: `status` dan `payment_status`. Lencana faktur memprioritaskan informasi pembayaran, jadi ketika `payment_status` adalah `paid`, faktur ditampilkan sebagai dibayar meskipun bidang `status` umum akan menampilkan sesuatu yang lain.
+
+| Bidang | Nilai-nilai | Apa artinya |
+| --- | --- | --- |
+| `status` | `draft`, `sent`, `paid`, `overdue` | Status siklus hidup dokumen |
+| `payment_status` | `unpaid`, `pending`, `paid`, `failed` | Status pemrosesan pembayaran |
+
+Cara praktis untuk membacanya adalah:
+
+- **`draft`** — Anda masih mengedit invoice dan belum menyelesaikan pengirimannya.
+- **`sent`** — faktur telah terkirim atau ditandai sebagai terkirim.
+- **`overdue`** — tanggal jatuh tempo telah lewat dan invoice masih belum lunas.
+- **`paid`** — faktur telah diselesaikan.
+
+Status khusus pembayaran memberikan detail tambahan:
+
+- **`unpaid`** — belum ada pembayaran yang dicatat.
+- **`pending`** — pembayaran sedang diproses.
+- **`paid`** — pembayaran berhasil diselesaikan.
+- **`failed`** — upaya pembayaran tidak selesai.
+
+<Callout kind="tip">
+
+Jika faktur menampilkan `paid` di UI, status berbayar tersebut akan diprioritaskan dibandingkan status dokumen umum untuk tampilan lencana.
+
+</Callout>
+
+## Membuat faktur
+
+Buat faktur baru dari area **Faktur**, lengkapi detail pelanggan dan penagihan, tambahkan item baris Anda, lalu tinjau hasilnya sebelum mengirimkannya. NomadBill menyimpan faktur yang belum selesai sebagai konsep sehingga Anda dapat kembali lagi nanti.
+
+<Steps>
+  <Step title="Buka faktur baru" icon="file-text">
+
+  Buka **Faktur** dan buat faktur baru. NomadBill menyiapkan dokumen dengan konteks perusahaan Anda dan memberikan penomoran saat faktur dibuat.
+
+  Saat faktur terbuka, Anda akan melihat bidang penagihan, item baris, total, dan pengaturan dokumen yang dapat diedit.
+
+  </Step>
+
+  <Step title="Tambahkan detail pelanggan dan penagihan" icon="users">
+
+  Masukkan informasi pelanggan, tanggal faktur, tanggal jatuh tempo, mata uang, dan bahasa. Pilih bahasa faktur yang cocok dengan penerima sehingga label di PDF dan email disajikan dengan benar.
+
+  Setelah disimpan, faktur tetap berstatus **draft** hingga Anda mengirimkannya atau menandainya sebaliknya.
+
+  </Step>
+
+  <Step title="Tambahkan item baris" icon="plus">
+
+  Tambahkan setiap produk atau layanan sebagai item baris terpisah dengan nama, jumlah, dan harga satuan. Sertakan deskripsi ketika Anda perlu memperjelas cakupan, periode penagihan, atau hasil kerja.
+
+  Subtotal Anda diperbarui saat Anda menambahkan atau mengedit item.
+
+  </Step>
+
+  <Step title="Tinjau PPN dan totalnya" icon="bar-chart">
+
+  Konfirmasikan persentase PPN sebelum mengirim faktur. NomadBill menghitung total dari subtotal dan persentase PPN, sehingga Anda dapat memverifikasi jumlahnya sebelum membuat PDF atau tautan pembayaran.
+
+  Langkah peninjauan yang benar akan memberi Anda subtotal, jumlah PPN, dan total akhir yang jelas.
+
+  </Step>
+
+  <Step title="Ekspor, kirim, atau kumpulkan pembayaran" icon="arrow-right">
+
+  Setelah faktur terlihat benar, buat PDF, kirimkan melalui email, atau aktifkan pembayaran Stripe jika Anda ingin pelanggan membayar secara online. Setelah dikirim, NomadBill dapat mencatat detail pengiriman seperti siapa yang menerima invoice dan kapan dikirimkan.
+
+  Pada saat itu, faktur berpindah dari pengeditan ke pelacakan aktif.
+
+  </Step>
+</Steps>
+
+## Item baris
+
+Setiap item baris faktur menyimpan struktur kecil dan konsisten sehingga Anda dapat menjaga tagihan tetap jelas dan dapat diprediksi. Item baris mencakup:
+
+- **`id`** — pengenal internal opsional
+- **`name`** — judul item baris
+- **`description`** — teks detail opsional
+- **`quantity`** — berapa unit yang Anda tagih
+- **`price`** — harga per unit
+
+Gunakan satu item baris per layanan, produk, atau periode penagihan yang dapat ditagih. Hal ini membuat PDF lebih mudah dibaca dan membantu pelanggan Anda memahami bagaimana totalnya dibuat.
+
+NomadBill juga mendukung penyusunan ulang drag-and-drop untuk item baris. Susun ulang item agar sesuai dengan cerita yang ingin disampaikan dalam faktur, seperti mencantumkan layanan inti terlebih dahulu dan pengeluaran yang dapat diganti terakhir.
+
+## Perhitungan PPN
+
+NomadBill menghitung total faktur dari subtotal dan persentase PPN. Rumusnya adalah:
+
+`total = subtotal + (subtotal x vat_percentage / 100)`
+
+Tarif PPN default adalah **19%**, yang sesuai dengan tarif standar Jerman. Anda dapat mengubah persentase PPN per invoice sesuai kebutuhan, selama nilainya tetap dalam rentang yang diizinkan, yaitu **0 hingga 100**.
+
+Artinya:
+
+- **`0`** berlaku untuk invoice bebas PPN atau tanpa tarif
+- **`19`** adalah titik awal default
+- **`100`** adalah batas atas yang diperbolehkan
+
+<Callout kind="info">
+
+Periksa tarif PPN sebelum mengirimkan faktur, terutama jika Anda menagih lintas yurisdiksi atau bekerja dengan perlakuan pajak yang beragam.
+
+</Callout>
+
+## Mata uang dan bahasa
+
+NomadBill mendukung lima mata uang faktur dan empat bahasa faktur. Nilai-nilai ini diterapkan, sehingga faktur selalu menggunakan salah satu opsi yang didukung.
+
+### Mata uang yang didukung
+
+- **EUR**
+- **USD**
+- **GBP**
+- **CHF**
+- **AED**
+
+### Bahasa faktur yang didukung
+
+- **DE**
+- **ID**
+- **FR**
+- **ES**
+
+### Bagaimana mata uang default dipilih
+
+NomadBill menyelesaikan mata uang faktur dalam urutan ini:
+
+1. **Mata uang faktur** — jika faktur sudah memiliki mata uang, nilai tersebut akan digunakan.
+2. **Mata uang default perusahaan** — jika faktur tidak memiliki mata uang eksplisit, NomadBill memeriksa default perusahaan.
+3. **Preferensi mata uang global** — jika tidak satu pun dari dua yang pertama ada, NomadBill akan kembali ke mata uang global yang disimpan di penyimpanan browser lokal sebagai `nb.currency`.
+
+Prioritas ini menjaga faktur yang ada tetap stabil dan tetap memberikan Anda penggantian di seluruh perusahaan dan tingkat pengguna.
+
+## Penomoran faktur
+
+Nomor invoice menggunakan format `R-00001`. Awalan `R` mengidentifikasi jenis dokumen, dan bagian numerik menggunakan lima digit dengan nol di depannya.
+
+NomadBill menghasilkan angka melalui fungsi database yang menetapkan nomor dokumen berikutnya secara atom untuk setiap perusahaan. Hal ini penting jika beberapa orang membuat invoice secara bersamaan, karena urutannya tetap aman dari kondisi balapan.
+
+Dua detail penting untuk penggunaan sehari-hari:
+
+- Nomor faktur adalah **per perusahaan**, tidak dibagikan secara global ke semua akun.
+- Setiap nomor invoice harus unik dalam perusahaan yang sama melalui kombinasi `company_id` dan `invoice_number`.
+
+## generasi PDF
+
+NomadBill dapat mengekspor faktur sebagai dokumen PDF untuk diunduh, dibagikan, atau dikirim melalui email. Mesin PDF menggunakan data faktur standar bersama dengan merek perusahaan Anda untuk menghasilkan dokumen jadi.
+
+PDF yang dihasilkan menggunakan tata letak **Potret A4** dengan **margin 15 mm** dan dapat mencakup:
+
+- logo perusahaan
+- warna merek
+- tabel item baris
+- total blok
+- rincian bank
+- catatan kaki
+
+Output PDF juga mendukung keempat bahasa faktur, sehingga label muncul dalam bahasa yang dipilih pada faktur. Jika Anda menggunakan tata letak PDF khusus, NomadBill juga mendukung rendering berbasis template.
+
+<Columns cols={2}>
+  <Card
+    title="Templat PDF"
+    href="/id/user-guide/pdf-templates"
+    icon="book-open"
+    cta="Buka panduan"
+  />
+  <Card
+    title="Penawaran"
+    href="/id/user-guide/quotes"
+    icon="arrow-right"
+    cta="Lihat panduan terkait"
+  />
+</Columns>
+
+## Mengirim faktur melalui email
+
+NomadBill mengirimkan email invoice melalui Resend menggunakan `noreply@nomadbill.co` sebagai alamat pengirim. Anda dapat mengirim email dokumen dengan konten HTML dan lampiran PDF opsional, atau email bergaya ringkasan yang mencatat detail pengiriman di database.
+
+Saat Anda mengirim email ringkasan faktur, NomadBill memperbarui bidang pelacakan berikut:
+
+- **`sent_at`** — saat faktur dikirim
+- **`sent_to`** — penerima mana yang menerimanya
+- **`email_status`** — disetel ke `sent`
+
+Konten email dapat mencakup:
+
+- nomor dokumen
+- nama pelanggan
+- pesan khusus opsional
+- jumlah totalnya
+
+Ini memberi Anda pengiriman keluar dan jejak audit dasar di dalam catatan faktur.
+
+## Menerima pembayaran dengan Stripe
+
+Aktifkan Stripe pada faktur ketika Anda ingin pelanggan membayar melalui halaman checkout yang dihosting. NomadBill membuat Sesi Stripe Checkout untuk faktur dan mengirimkan pelanggan ke Stripe untuk menyelesaikan pembayaran.
+
+### Cara kerja aliran Stripe
+
+<Steps>
+  <Step title="Aktifkan Stripe untuk faktur" icon="settings">
+
+  Aktifkan Stripe untuk invoice sehingga `stripe_enabled` aktif. Ini menandai faktur memenuhi syarat untuk pembayaran online.
+
+  Setelah diaktifkan, faktur dapat membuat sesi pembayaran yang dihosting.
+
+  </Step>
+
+  <Step title="Buat sesi checkout" icon="lock">
+
+  NomadBill membuat Sesi Stripe Checkout dari total faktur. Jumlah yang dikirim ke Stripe dikonversi ke sen menggunakan `Math.round(total_amount * 100)`, dan kode mata uang dikonversi ke huruf kecil untuk Stripe API.
+
+  Hal ini memastikan Stripe menerima jumlah dalam format yang diharapkan.
+
+  </Step>
+
+  <Step title="Arahkan pelanggan ke Stripe" icon="external-link">
+
+  Pelanggan dialihkan ke halaman checkout yang dihosting Stripe untuk menyelesaikan pembayaran dengan aman. Anda tidak perlu mengumpulkan detail kartu langsung di dalam halaman faktur.
+
+  Pengalihan yang berhasil berarti pelanggan kini menyelesaikan pembayaran di Stripe.
+
+  </Step>
+
+  <Step title="Tangani keberhasilan atau pembatalan" icon="check-circle">
+
+  Setelah pembayaran, Stripe mengirim pelanggan kembali ke salah satu dari dua rute faktur:
+
+  - **Berhasil:** `/invoices/$id/pay/success`
+  - **Batal:** `/invoices/$id/pay/cancel`
+
+  Halaman sukses mengonfirmasi pembayaran dan memicu pelacakan pembelian. Halaman pembatalan memungkinkan pelanggan mencoba lagi.
+
+  </Step>
+
+  <Step title="Perbarui faktur setelah konfirmasi webhook" icon="shield">
+
+  Saat Stripe mengirimkan peristiwa webhook `checkout.session.completed`, NomadBill memperbarui faktur menjadi `payment_status=paid` dan `status=paid`.
+
+  Pembaruan webhook inilah yang menyelesaikan status berbayar di dalam NomadBill.
+
+  </Step>
+</Steps>
+
+## Faktur berulang
+
+Faktur berulang memungkinkan Anda menandai faktur sebagai bagian dari pola penagihan berulang. NomadBill menyimpannya dengan flag `is_recurring` dan nilai `recurring_frequency`.
+
+Frekuensi berulang yang didukung adalah:
+
+- **mingguan**
+- **bulanan**
+- **triwulanan**
+- **tahunan**
+
+<Callout kind="alert">
+
+Faktur berulang hanya merupakan metadata. NomadBill tidak menjalankan tugas cron otomatis dan tidak menghasilkan faktur baru sesuai jadwal hanya dari tanda ini.
+
+</Callout>
+
+Gunakan setelan berulang untuk memberi label dan mengatur penagihan berulang, namun jangan mengandalkan setelan tersebut sebagai mesin langganan otomatis.
+
+## Apa yang harus dilakukan selanjutnya
+
+<Columns cols={2}>
+  <Card
+    title="Kelola templat PDF"
+    href="/id/user-guide/pdf-templates"
+    icon="edit"
+    cta="Sesuaikan tata letak"
+  />
+  <Card
+    title="Bekerja dengan penawaran"
+    href="/id/user-guide/quotes"
+    icon="folder"
+    cta="Buat faktur berdasarkan penawaran"
+  />
+</Columns>

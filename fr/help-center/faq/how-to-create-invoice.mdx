@@ -1,0 +1,78 @@
+---
+title: Comment créer une facture ?
+description: Créez, personnalisez et envoyez des factures dansNomadBillavec support multi-devises,VATcalcul, etPDFlivraison.
+---
+
+## Créer et envoyer une facture
+
+Créez une nouvelle facture à partir de la page **Factures**, remplissez les détails du client et de facturation, consultez lePDFprévisualisez, puis envoyez ou téléchargez la facture finale.NomadBillenregistre les factures non envoyées sous forme de brouillons, afin que vous puissiez revenir les terminer avant la livraison.
+
+<Steps>
+  <Step title="Accédez à Factures et créez une nouvelle facture" icon="file-text">
+
+Ouvrez **Factures** dans votre tableau de bord et cliquez sur **Nouveau**. Vous pouvez également vous rendre directement sur`/invoices/new`si vous connaissez déjà l'itinéraire.
+
+Lorsque le formulaire s'ouvre, la facture démarre au statut **projet**. Vous pouvez continuer à modifier le brouillon jusqu'à ce que vous l'envoyiez.
+
+  </Step>
+
+  <Step title="Sélectionnez la devise et la langue" icon="settings">
+
+Choisissez la **devise** et la **langue** de la facture avant d'ajouter le reste des détails.NomadBillprend en charge ces devises : **EUR**, **USD**, **GBP**, **CHF** et **AED**.
+
+Pour la langue de facturation, choisissez **DE**, **EN**, **FR** ou **ES**. Utilisez la langue qui correspond à ce que votre client s'attend à recevoir.
+
+  </Step>
+
+  <Step title="Saisir les détails du client" icon="users">
+
+Ajoutez le **nom** et l'**adresse** du client exactement tels qu'ils doivent apparaître sur la facture. Ces détails sont utilisés dans le document de facturation etPDFaperçu.
+
+Vérifiez l’orthographe et la mise en forme ici avant de continuer. Corriger les détails du client à ce stade est plus rapide que de mettre à jour une facture envoyée ultérieurement.
+
+  </Step>
+
+  <Step title="Ajouter des éléments de campagne" icon="plus">
+
+Ajoutez un ou plusieurs éléments de ligne pour les biens ou services que vous facturez. Chaque élément de campagne comprend un **nom**, une **quantité** et un **prix**.
+
+Si vous devez modifier l'ordre, faites glisser les éléments de campagne dans l'ordre souhaité. Le sous-total de la facture est mis à jour à mesure que vous ajoutez ou modifiez des articles.
+
+  </Step>
+
+  <Step title="EnsembleVATet consulter les totaux" icon="bar-chart">
+
+Définissez le **VATpourcentage** pour la facture.NomadBillvaleurs par défautVATà **19 %**, mais vous pouvez le modifier si nécessaire.
+
+Le total est calculé comme`subtotal + (subtotal x VAT%)`. Vérifiez le sous-total,VATmontant et le total final avant de continuer.
+
+  </Step>
+
+  <Step title="Prévisualiser et envoyer" icon="send">
+
+Prévisualisez la facture sous forme dePDFpour confirmer la mise en page, les détails du client, les éléments de campagne et les totaux. Si tout semble correct, envoyez la facture par email ou téléchargez-la.
+
+Les factures envoyées sont livrées viaResenddepuis`noreply@nomadbill.co`. Si vous activezStripepaiement sur la facture, le client reçoit un lien de paiement dans le cadre du flux de paiement.
+
+  </Step>
+</Steps>
+
+<Callout kind="tip">
+
+NomadBillgénère automatiquement le numéro de facture au format`R-00001`. La numérotation est gérée par entreprise, chaque entreprise conserve donc sa propre séquence de factures.
+
+</Callout>
+
+<Callout kind="info">
+
+Le statut de la facture évolue`draft`à`sent`, puis à`paid`ou`overdue`. Le statut du paiement est suivi séparément comme`unpaid`, `pending`, `paid`, ou`failed`.
+
+Si le client commenceStripepaiement, le statut du paiement passe à`pending`. QuandStripeconfirme le paiement, le statut passe à`paid`. Si le paiement n'aboutit pas, le statut passe à`failed`.
+
+</Callout>
+
+## Que devriez-vous savoir d’autre ?
+
+Les projets de factures restent modifiables jusqu'à ce que vous les envoyiez. Cela fait des brouillons l'endroit le plus sûr pour ajuster les détails du client, réorganiser des articles ou mettre à jourVATavant la livraison.
+
+NomadBillprend également en charge les métadonnées des factures récurrentes. Vous pouvez définir l'indicateur récurrent et choisir une fréquence de`weekly`, `monthly`, `quarterly`, ou`yearly`, mais cela ne crée pas automatiquement les factures selon un calendrier.

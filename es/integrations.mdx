@@ -1,0 +1,83 @@
+---
+title: Integraciones
+description: Conecte NomadBill a Stripe para pagos, Plaid para sincronización bancaria, Nylas para inteligencia de correo electrónico y Resend para entrega de correo electrónico.
+---
+
+## Servicios conectados
+
+NomadBill se conecta a servicios externos para automatizar el cobro de pagos, la importación de transacciones bancarias, la entrega de correo electrónico y el procesamiento de documentos. Estas integraciones funcionan juntas para que las facturas, los pagos, las transacciones bancarias y los documentos de proveedores permanezcan vinculados sin necesidad de introducir datos manualmente.
+
+<Columns cols={2}>
+  <Card title="Raya" icon="credit-card" href="/es/user-guide/invoicing">
+Sesiones de pago de facturas y facturación de suscripciones con actualizaciones de estado basadas en webhooks.
+  </Card>
+  <Card title="Tartán" icon="banknote" href="/es/user-guide/bank-sync">
+Vinculación de cuentas bancarias para bancos estadounidenses y europeos con hasta 365 días de historial de transacciones.
+  </Card>
+  <Card title="nilas" icon="mail" href="/es/user-guide/email-intelligence">
+Buzón de correo electrónico del agente con clasificación de documentos basada en IA y coincidencia de entidades.
+  </Card>
+  <Card title="Reenviar" icon="send">
+Envío de correo electrónico transaccional para facturas, cotizaciones e invitaciones a equipos.
+  </Card>
+  <Card title="pdfme" icon="layout" href="/es/user-guide/pdf-templates">
+Diseñador de plantillas PDF y generador de documentos de arrastrar y soltar.
+  </Card>
+  <Card title="Supabase" icon="database">
+Base de datos PostgreSQL, autenticación y almacenamiento de archivos con seguridad a nivel de fila.
+  </Card>
+</Columns>
+
+## Procesamiento de pagos
+
+Stripe maneja dos flujos de pago en NomadBill:
+
+- **Pagos de facturas**: cuando habilita el pago en una factura, NomadBill crea una sesión de pago de Stripe. El cliente paga en la página alojada de Stripe y un webhook actualiza el estado de la factura como pagada automáticamente.
+- **Facturación de suscripción**: los planes Starter y Professional se facturan a través de Stripe con una prueba de 7 días. Las actualizaciones del estado de la suscripción regresan a su perfil a través de eventos de webhook.
+
+Las claves de Stripe Connect por empresa se pueden configurar en Configuración, lo que permite a cada empresa utilizar su propia cuenta de Stripe para pagos de facturas.
+
+## Sincronización bancaria
+
+Plaid conecta cuentas bancarias en dos regiones:
+
+- **Bancos estadounidenses**: admite instituciones en los Estados Unidos y Canadá
+- **Bancos de la UE**: admite instituciones en Alemania, Francia, España, Países Bajos, Irlanda y el Reino Unido.
+
+Las transacciones se sincronizan mediante la sincronización incremental basada en cursor de Plaid. La primera conexión importa hasta 365 días de historial. Las sincronizaciones posteriores recuperan solo transacciones nuevas, modificadas o eliminadas.
+
+## Inteligencia de correo electrónico
+
+Nylas proporciona un buzón de agente exclusivo para cada empresa (por ejemplo, `yourcompany@agent.nomadbill.co`). Los correos electrónicos entrantes se procesan a través de un canal de inteligencia artificial que:
+
+- Clasifica mensajes en tipos de documentos (factura entrante, recibo, confirmación de pago, recordatorio, contrato y otros)
+- Extrae datos estructurados como importes, IVA, IBAN, fechas y partidas individuales del cuerpo del correo electrónico y los archivos adjuntos.
+- Relaciona correos electrónicos con facturas, cotizaciones, facturas entrantes, transacciones bancarias y clientes existentes mediante un motor de puntuación
+
+## Entrega de correo electrónico
+
+Resend envía correos electrónicos transaccionales en nombre de NomadBill:
+
+- Correos electrónicos de entrega de facturas y cotizaciones.
+- Correos electrónicos de invitación al equipo.
+- Dirección del remitente: `noreply@nomadbill.co`
+
+## Generación de PDF
+
+La biblioteca pdfme impulsa el sistema de plantillas PDF. Puede diseñar plantillas personalizadas para facturas, cotizaciones y facturas entrantes utilizando un editor visual de arrastrar y soltar. Las plantillas admiten varios idiomas y pueden incluir marcadores de posición de campos personalizados.
+
+## Conciliación automática
+
+Cuando se sincronizan las transacciones bancarias, NomadBill las compara automáticamente con las facturas existentes y las facturas entrantes:
+
+| Tipo de coincidencia | Método | Puntuación de confianza |
+|---|---|---|
+| Factura (pago recibido) | Importe exacto + moneda + fecha dentro de los 14 días | 90 |
+| Gasto (pago efectuado) | Importe exacto + moneda + fecha dentro de los 14 días | 85 |
+| Enlace manual | Seleccionado por el usuario | 100 |
+
+Las transacciones incomparables con candidatos plausibles aparecen como sugerencias con una ventana más amplia de 30 días para revisión manual.
+
+<Callout kind="info">
+NomadBill actualmente no ofrece una API REST pública ni webhooks salientes para desarrolladores externos. Los webhooks Stripe y Nylas son puntos finales entrantes que recibe NomadBill para procesar pagos y eventos de correo electrónico.
+</Callout>

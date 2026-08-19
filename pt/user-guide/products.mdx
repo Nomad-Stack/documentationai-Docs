@@ -1,0 +1,137 @@
+---
+title: Produtos
+description: Crie um catálogo reutilizável de produtos e serviços para faturas e orçamentos.
+---
+
+## Crie um catálogo de produtos reutilizável
+
+Os produtos no NomadBill permitem-lhe guardar uma vez os artigos e serviços que vende e reutilizá-los depois em faturas e orçamentos. O seu catálogo de produtos encontra-se em `/items`, é partilhado ao nível da empresa e pode incluir tanto campos padrão como campos personalizados adaptados à sua atividade.
+
+<Callout kind="info">
+
+O NomadBill armazena os produtos na tabela `items`. O catálogo pertence à sua empresa, e não a um utilizador individual, pelo que a tabela utiliza `company_id` e não inclui `user_id`.
+
+</Callout>
+
+## Campos de produto
+
+Cada produto inclui um pequeno conjunto de campos padrão. Pode acrescentar mais estrutura com campos personalizados caso precise de acompanhar inventário, SKU, certificações ou detalhes internos de preços.
+
+<ParamField body="name" param-type="string" required="true" show-location="false">
+
+O nome do produto ou serviço. O NomadBill exige este campo quando cria ou edita um produto.
+
+</ParamField>
+
+<ParamField body="description" param-type="string" required="false" show-location="false">
+
+Uma descrição mais longa apresentada na caixa de diálogo de criação e edição como campo de texto com várias linhas. Utilize-a para detalhes do serviço, especificações ou notas internas que pretenda ter disponíveis ao reutilizar o artigo.
+
+</ParamField>
+
+<ParamField body="price" param-type="numeric" required="false" show-location="false">
+
+O preço predefinido do produto. O campo utiliza uma introdução numérica com um incremento de `0.01` e os novos produtos assumem `0` por predefinição se não introduzir um preço.
+
+</ParamField>
+
+<ParamField body="company_id" param-type="string" required="true" show-location="false">
+
+A empresa proprietária do produto. Os produtos são registos ao nível da empresa, o que significa que todas as pessoas com acesso à empresa trabalham com o mesmo catálogo.
+
+</ParamField>
+
+Na vista de lista, o NomadBill apresenta as colunas padrão de **nome**, **descrição** e **preço**. O preço é formatado com duas casas decimais para que os valores se mantenham consistentes em todo o catálogo.
+
+Se definir campos personalizados de produto para aparecerem em tabelas, o NomadBill também adiciona essas colunas à vista de lista. As colunas de campos personalizados só são apresentadas quando `show_in_table` está ativado e aparecem por ordem alfabética do nome do campo.
+
+## Criar um produto
+
+Adicione produtos a partir da página `/items` quando pretender criar documentos mais rapidamente e obter linhas mais consistentes. Depois de um produto constar do catálogo, pode voltar a selecioná-lo em vez de introduzir novamente os mesmos dados em cada fatura ou orçamento.
+
+<Steps>
+
+<Step title="Abrir a página de produtos" icon="folder">
+
+Aceda a `/items` a partir da navegação da aplicação.
+
+Deverá ver a sua lista atual de produtos com colunas de nome, descrição, preço e quaisquer campos personalizados de produto configurados para aparecerem na tabela.
+
+</Step>
+
+<Step title="Iniciar um novo produto" icon="plus">
+
+Selecione a opção para criar um novo produto.
+
+O NomadBill abre uma caixa de diálogo onde pode introduzir os dados padrão do produto e quaisquer campos personalizados atribuídos à entidade de produto.
+
+</Step>
+
+<Step title="Introduzir os dados obrigatórios" icon="edit">
+
+Preencha o formulário do produto:
+
+- Introduza um **nome**.
+- Adicione uma **descrição** se pretender incluir mais detalhes sobre o artigo guardado.
+- Introduza um **preço** utilizando valores decimais, como `125.00`.
+- Preencha todos os campos personalizados de produto aplicáveis a este artigo.
+
+Se o formulário for guardado com êxito, o novo produto aparece na lista em `/items`.
+
+</Step>
+
+<Step title="Rever e atualizar o produto guardado" icon="check-circle">
+
+Verifique a linha do produto na vista de lista para confirmar se o nome, a descrição, o preço e os valores visíveis dos campos personalizados estão corretos.
+
+Se precisar de alterar alguma coisa, abra a caixa de diálogo de edição a partir da lista e guarde as atualizações. Para remover um produto, utilize a ação de eliminação integrada, que pede a confirmação da ação antes da eliminação.
+
+</Step>
+
+</Steps>
+
+<Callout kind="tip">
+
+As ações de eliminação incluem um passo de confirmação. Verifique o nome do produto antes de confirmar para não remover o artigo errado do catálogo.
+
+</Callout>
+
+## Utilizar produtos em documentos
+
+Os produtos guardados foram concebidos para acelerar a criação de documentos. Quando cria uma fatura ou um orçamento, o NomadBill reutiliza os dados do produto nas linhas para que não tenha de voltar a introduzir sempre os mesmos nomes, descrições ou preços.
+
+Isto é especialmente útil para serviços recorrentes, pacotes padrão e produtos vendidos com frequência. Em vez de escrever manualmente cada linha, seleciona um produto existente e começa com os valores guardados que já se encontram no catálogo.
+
+Como os produtos são partilhados ao nível da empresa, a sua equipa trabalha com a mesma lista de artigos em faturas e orçamentos. Isto mantém os preços e os nomes mais consistentes, sobretudo quando há mais do que uma pessoa a criar documentos.
+
+## Campos personalizados para produtos
+
+Os campos personalizados permitem transformar o catálogo de produtos básico num inventário estruturado ou registo de serviços. No NomadBill, os campos personalizados de produto utilizam o tipo de entidade `product`.
+
+Exemplos comuns incluem identificadores internos, informações de stock, custos de fornecedores, datas, URLs e ficheiros anexos. Os exemplos predefinidos incluem `produkt_nummer`, `sku`, `produktkategorie`, descrição detalhada, `gewicht_kg`, `einkaufspreis`, `auf_lager`, `produkt_url`, `gueltig_ab`, `zertifizierungen`, `datenblatt` e `marge_formel`.
+
+Diferentes tipos de campo suportam diferentes tipos de dados de produto:
+
+- **Identificadores**, como números automáticos ou valores de texto únicos
+- **Valores comerciais**, como preço de compra, preço de venda ou fórmulas de margem
+- **Dados operacionais**, como estado do stock, categorias e datas de entrada em vigor
+- **Material de apoio**, como fichas técnicas e ligações externas de produtos
+
+Configure estes campos em [Campos personalizados](/pt/user-guide/custom-fields). Quando um campo personalizado de produto está definido para aparecer em tabelas, também passa a fazer parte da vista de lista `/items`.
+
+## Guias relacionados
+
+<Columns cols={2}>
+  <Card
+    title="Faturação"
+    href="/pt/user-guide/invoicing"
+    icon="book-open"
+    cta="Abrir guia"
+  />
+  <Card
+    title="Campos personalizados"
+    href="/pt/user-guide/custom-fields"
+    icon="settings"
+    cta="Gerir campos"
+  />
+</Columns>

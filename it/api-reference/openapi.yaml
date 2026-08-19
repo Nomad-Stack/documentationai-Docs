@@ -1,0 +1,183 @@
+openapi: '3.0.0'
+info:
+  version: 1.0.0
+  title: NomadBill
+  license:
+    name: MIT
+servers:
+  - url: https://api.nomadbill.com/v1
+paths:
+  /documents:
+    get:
+      summary: Elenca i documenti
+      operationId: listDocuments
+      parameters:
+        - name: limit
+          in: query
+          description: Quanti articoli restituire contemporaneamente (max 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: Una serie di documenti impaginati
+          headers:
+            x-next:
+              description: Un collegamento alla pagina successiva di risposte
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documents'
+        default:
+          description: errore imprevisto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Crea documento
+      operationId: createDocument
+      responses:
+        201:
+          description: Risposta nulla
+        default:
+          description: errore imprevisto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /documents/{documentId}:
+    get:
+      summary: Ottieni il documento
+      operationId: showDocumentById
+      parameters:
+        - name: documentId
+          in: path
+          required: true
+          description: L'ID del documento da recuperare
+          schema:
+            type: string
+      responses:
+        200:
+          description: Risposta prevista a una richiesta valida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documents'
+        default:
+          description: errore imprevisto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /folders:
+    get:
+      summary: Elenca cartelle
+      operationId: listFolders
+      parameters:
+        - name: limit
+          in: query
+          description: Quanti articoli restituire contemporaneamente (max 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: Un array di cartelle paginato
+          headers:
+            x-next:
+              description: Un collegamento alla pagina successiva di risposte
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folders'
+        default:
+          description: errore imprevisto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Crea cartella
+      operationId: createFolder
+      responses:
+        201:
+          description: Risposta nulla
+        default:
+          description: errore imprevisto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /folders/{folderId}:
+    get:
+      summary: Ottieni la cartella
+      operationId: showFolderById
+      parameters:
+        - name: folderId
+          in: path
+          required: true
+          description: L'ID della cartella da recuperare
+          schema:
+            type: string
+      responses:
+        200:
+          description: Risposta prevista a una richiesta valida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folders'
+        default:
+          description: errore imprevisto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Document:
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        tag:
+          type: string
+    Documents:
+      type: array
+      items:
+        $ref: '#/components/schemas/Document'
+    Folder:
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        tag:
+          type: string
+    Folders:
+      type: array
+      items:
+        $ref: '#/components/schemas/Folder'
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

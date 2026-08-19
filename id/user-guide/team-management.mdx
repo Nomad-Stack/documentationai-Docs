@@ -1,0 +1,114 @@
+---
+title: Manajemen Tim
+description: Undang rekan satu tim, tetapkan peran admin, editor, atau pemirsa, dan kelola akses di setiap ruang kerja perusahaan di NomadBill.
+---
+
+## Manajemen Tim memungkinkan Anda mengontrol siapa yang dapat mengakses setiap ruang kerja perusahaan
+
+Gunakan Manajemen Tim untuk mengundang rekan satu tim, menetapkan peran yang tepat untuk pekerjaan mereka, dan membatasi akses hanya pada perusahaan tempat mereka berada. Anda dapat memberikan akses administratif penuh kepada pemilik perusahaan, akses pengeditan kepada orang yang membuat dokumen, dan akses read-only kepada siapa saja yang hanya membutuhkan visibilitas.
+
+<Callout kind="info">
+
+Akses tim dikelola per perusahaan. Jika Anda beralih ke perusahaan lain, Anda mengelola tim yang berbeda.
+
+</Callout>
+
+## Cara kerja akses tim
+
+Sebuah tim di NomadBill milik satu perusahaan. Saat Anda menambahkan seseorang ke tim Anda, Anda memberi orang tersebut akses ke ruang kerja perusahaan tertentu, bukan ke semua perusahaan di akun Anda.
+
+Ini penting jika Anda bekerja di banyak perusahaan. Orang yang sama dapat menjadi anggota lebih dari satu perusahaan dan memiliki peran berbeda di masing-masing perusahaan.
+
+NomadBill juga menggunakan izin berbasis peran untuk mengontrol apa yang dapat dilakukan setiap anggota tim. Peran anggota menentukan apakah mereka dapat mengelola tim, mengubah pengaturan perusahaan, mengedit dokumen, atau hanya melihat data perusahaan.
+
+<Callout kind="tip">
+
+Gunakan **viewer** untuk akuntan, klien, atau pemangku kepentingan internal yang memerlukan visibilitas tanpa akses edit. Gunakan **editor** untuk rekan satu tim yang membuat faktur, penawaran harga, atau dokumen lainnya.
+
+</Callout>
+
+## Peran tim
+
+Pilih peran yang sesuai dengan pekerjaan yang perlu dilakukan setiap rekan satu tim.
+
+| Peran | Tingkat akses | Apa yang bisa dilakukan peran ini |
+| --- | --- | --- |
+| **admin** | Akses penuh | Kelola pengaturan perusahaan, undang dan kelola anggota tim, serta akses semua dokumen dan data perusahaan |
+| **editor** | Akses kerja | Membuat dan mengedit dokumen seperti faktur dan penawaran harga, tetapi tidak dapat mengelola pengaturan perusahaan atau tim |
+| **penonton** | Akses hanya baca | Lihat data dan dokumen perusahaan tanpa melakukan perubahan |
+
+<Callout kind="alert">
+
+Hanya tetapkan **admin** kepada orang-orang yang seharusnya dapat mengelola akses untuk seluruh ruang kerja perusahaan.
+
+</Callout>
+
+## Mengundang anggota tim
+
+Admin dapat mengundang anggota tim baru melalui email dan menetapkan peran selama undangan.
+
+<Steps>
+  <Step title="Buka Manajemen Tim" icon="users">
+
+  Masuk ke NomadBill, beralih ke perusahaan yang ingin Anda kelola, dan buka halaman **Tim**.
+
+  </Step>
+  <Step title="Mulai undangan baru" icon="plus">
+
+  Pilih opsi untuk mengundang anggota tim. NomadBill membuka formulir undangan tempat Anda memasukkan alamat email rekan satu tim dan memilih peran mereka.
+
+  </Step>
+  <Step title="Pilih peran yang tepat" icon="shield">
+
+  Pilih **admin**, **editor**, atau **viewer** berdasarkan akses yang dibutuhkan orang tersebut. Peran yang ditetapkan diterapkan ketika mereka menerima undangan.
+
+  </Step>
+  <Step title="Kirim undangannya" icon="send">
+
+  Kirimkan undangannya. NomadBill menghasilkan token undangan unik dan mengirimkan tautan yang dapat digunakan kepada orang yang diundang untuk bergabung dengan perusahaan.
+
+  </Step>
+</Steps>
+
+Setelah Anda mengirimkan undangan, orang yang diundang tersebut belum menjadi anggota tim. Mereka menjadi anggota hanya setelah mereka menerima tautan undangan.
+
+## Menerima undangan
+
+Setiap undangan menyertakan tautan berbasis token yang unik. Saat orang yang diundang membuka tautan itu, NomadBill membawa mereka melalui alur penerimaan undangan dan menambahkan mereka ke perusahaan dengan peran yang ditetapkan.
+
+Jika orang yang diundang sudah bekerja di NomadBill, mereka tetap harus menerima undangan untuk perusahaan tersebut. Keanggotaan perusahaan bersifat terpisah, jadi bergabung dengan satu perusahaan tidak secara otomatis memberikan akses ke perusahaan lain.
+
+Penerimaan yang berhasil menambahkan orang tersebut ke tim untuk perusahaan itu. Setelah itu, mereka dapat beralih ke ruang kerja perusahaan dan menggunakan NomadBill berdasarkan peran yang ditugaskan kepada mereka.
+
+## Mengelola anggota yang ada
+
+Setelah seseorang bergabung dengan tim, admin dapat mengelola keanggotaan tersebut dari halaman Tim.
+
+### Mengubah peran anggota
+
+Perbarui peran ketika tanggung jawab seseorang berubah. Misalnya, promosikan editor menjadi admin jika mereka perlu mengelola pengaturan dan akses tim, atau pindahkan editor ke penampil jika mereka tidak perlu lagi membuat dokumen.
+
+Perubahan peran hanya berlaku untuk perusahaan saat ini. Jika orang yang sama adalah anggota perusahaan lain, akses mereka ke sana tetap sama.
+
+### Hapus anggota
+
+Hapus anggota tim ketika mereka tidak lagi dapat mengakses ruang kerja perusahaan. Menghapus anggota berarti mencabut akses mereka ke data, dokumen, dan pengaturan perusahaan tersebut.
+
+Hal ini tidak menghapus orang tersebut dari perusahaan lain tempat mereka berada. Ini hanya mempengaruhi perusahaan yang dipilih saat ini.
+
+<Callout kind="info">
+
+Jika seseorang mengatakan bahwa mereka tidak dapat melihat faktur, penawaran, atau pengaturan setelah bergabung, konfirmasikan terlebih dahulu bahwa mereka menerima undangan tersebut dan Anda berdua bekerja di ruang kerja perusahaan yang sama.
+
+</Callout>
+
+## Panduan terkait
+
+<Columns cols={2}>
+  <Card title="Pengaturan" href="/id/user-guide/settings" icon="settings" cta="Buka panduan">
+    Kelola konfigurasi tingkat perusahaan yang dapat diakses admin.
+  </Card>
+  <Card title="Faktur" href="/id/user-guide/invoicing" icon="file-text" cta="Buka panduan">
+    Lihat apa yang dapat dibuat dan dikelola oleh editor dan admin dalam pekerjaan penagihan sehari-hari.
+  </Card>
+</Columns>

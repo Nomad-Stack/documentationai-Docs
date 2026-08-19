@@ -1,0 +1,48 @@
+---
+title: Email Faktur Tidak Terkirim
+description: Memecahkan masalah pengiriman faktur di Nomadbill.
+---
+
+## Memecahkan masalah pengiriman email faktur
+Email faktur harus memperbarui catatan faktur ketika NomadBill mengirimkannya. Jika klien tidak menerima faktur, konfirmasikan terlebih dahulu alamat penerima, lalu verifikasi apakah faktur benar-benar ditandai sebagai terkirim sebelum Anda mengirim ulang.
+
+<Steps>
+  <Step title="Periksa alamat email penerima">
+
+    Buka faktur dan tinjau alamat email penerima dengan cermat. Salah ketik, alamat ketinggalan jaman, atau kontak yang salah pada faktur adalah alasan paling umum mengapa email tidak pernah sampai.
+
+    Jika Anda sudah mengirimkan invoice sebelumnya, perhatikan bahwa NomadBill menyimpan penerima terakhir di kolom `sent_to`. Formulir pengiriman ulang menggunakan alamat yang sama dengan penerima default, jadi perbaiki sebelum mengirim lagi jika diperlukan.
+
+  </Step>
+  <Step title="Pastikan faktur telah ditandai sebagai terkirim">
+
+    Periksa bidang faktur yang melacak aktivitas email:
+
+    - `sent_at` muncul ketika NomadBill mencatat email sebagai terkirim.
+    - `sent_to` menunjukkan alamat email mana yang menerima pesan.
+    - `email_status` seharusnya menjadi `sent` setelah tindakan pengiriman berhasil.
+
+    Jika kolom ini kosong atau `email_status` bukan `sent`, NomadBill tidak menyelesaikan langkah pengiriman. Dalam hal ini, pengiriman ulang dari invoice adalah pemeriksaan berikutnya.
+
+  </Step>
+  <Step title="Kirim ulang email faktur">
+
+    Buka faktur dan gunakan tindakan kirim atau kirim ulang email di modal email. NomadBill mengirimkan ringkasan faktur HTML yang mencakup nomor dokumen, nama pelanggan, jumlah, dan pesan khusus apa pun yang Anda tambahkan.
+
+    Setelah Anda mengirimkannya, konfirmasikan bahwa faktur diperbarui dengan nilai `sent_at` yang baru, alamat `sent_to` yang benar, dan `email_status` disetel ke `sent`. Bidang tersebut adalah konfirmasi terbaik Anda bahwa NomadBill memproses permintaan email.
+
+  </Step>
+  <Step title="Periksa folder spam atau sampah">
+
+    Minta klien Anda untuk mencari folder spam, sampah, promosi, atau filter untuk mencari pesan dari `noreply@nomadbill.co`.
+
+    Jika faktur menunjukkan `sent_at`, `sent_to`, dan `email_status` seperti yang diharapkan namun klien masih tidak dapat menemukan pesan tersebut, penyedia email mereka mungkin telah memfilternya setelah pengiriman.
+
+  </Step>
+</Steps>
+
+<Callout kind="alert">
+
+Jika email faktur terus-menerus gagal terkirim, integrasi Resend mungkin tidak dikonfigurasi untuk ruang kerja Anda. Hubungi administrator akun Anda untuk memverifikasi bahwa layanan email telah dikonfigurasi dengan benar.
+
+</Callout>

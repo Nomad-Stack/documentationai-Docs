@@ -1,0 +1,78 @@
+---
+title: ¿Cómo creo una factura?
+description: cree, personalice y envíe facturas en NomadBill con soporte multidivisa, cálculo del IVA y entrega en PDF.
+---
+
+## Crear y enviar una factura
+
+Cree una nueva factura desde la página **Facturas**, complete los detalles de facturación y del cliente, revise la vista previa en PDF y luego envíe o descargue la factura final. NomadBill guarda las facturas no enviadas como borradores, para que pueda regresar y finalizarlas antes de la entrega.
+
+<Steps>
+  <Step title="Navegue a Facturas y cree una nueva factura" icon="file-text">
+
+Abra **Facturas** en su panel y haga clic en **Nuevo**. También puedes ir directamente a `/invoices/new` si ya conoces la ruta.
+
+Cuando se abre el formulario, la factura comienza en estado **borrador**. Puedes continuar editando el borrador hasta que lo envíes.
+
+  </Step>
+
+  <Step title="Seleccione moneda e idioma" icon="settings">
+
+Elija la **moneda** y el **idioma** de la factura antes de agregar el resto de los detalles. NomadBill admite estas monedas: **EUR**, **USD**, **GBP**, **CHF** y **AED**.
+
+Para el idioma de la factura, elija **DE**, **EN**, **FR** o **ES**. Utilice el lenguaje que coincida con lo que su cliente espera recibir.
+
+  </Step>
+
+  <Step title="Introduce los datos del cliente" icon="users">
+
+Agregue el **nombre** y la **dirección** del cliente exactamente como deberían aparecer en la factura. Estos detalles se utilizan en el documento de factura y en la vista previa del PDF.
+
+Verifique la ortografía y el formato aquí antes de continuar. Corregir los datos del cliente en esta etapa es más rápido que actualizar una factura enviada más tarde.
+
+  </Step>
+
+  <Step title="Agregar líneas de pedido" icon="plus">
+
+Agregue una o más partidas para los bienes o servicios que está facturando. Cada artículo de línea incluye un **nombre**, una **cantidad** y un **precio**.
+
+Si necesita cambiar el orden, arrastre las líneas de pedido a la secuencia que desee. El subtotal de la factura se actualiza a medida que agrega o edita artículos.
+
+  </Step>
+
+  <Step title="Establecer IVA y revisar totales" icon="bar-chart">
+
+Establece el **porcentaje de IVA** para la factura. NomadBill establece por defecto el IVA en **19%**, pero puedes cambiarlo cuando sea necesario.
+
+El total se calcula como `subtotal + (subtotal x VAT%)`. Revise el subtotal, el monto del IVA y el total final antes de continuar.
+
+  </Step>
+
+  <Step title="Vista previa y envío" icon="send">
+
+Obtenga una vista previa de la factura como PDF para confirmar el diseño, los detalles del cliente, las líneas de pedido y los totales. Si todo parece correcto, envíe la factura por correo electrónico o descárguela.
+
+Las facturas enviadas se entregan a través de Reenvío desde `noreply@nomadbill.co`. Si habilita el pago con Stripe en la factura, el cliente recibe un enlace de pago como parte del flujo de pago.
+
+  </Step>
+</Steps>
+
+<Callout kind="tip">
+
+NomadBill genera el número de factura automáticamente en el formato `R-00001`. La numeración se gestiona por empresa, por lo que cada empresa mantiene su propia secuencia de facturas.
+
+</Callout>
+
+<Callout kind="info">
+
+El estado de la factura pasa de `draft` a `sent` y luego a `paid` o `overdue`. El estado del pago se rastrea por separado como `unpaid`, `pending`, `paid` o `failed`.
+
+Si el cliente inicia el pago con Stripe, el estado de pago cambia a `pending`. Cuando Stripe confirma el pago, el estado cambia a `paid`. Si el pago no se completa, el estado cambia a `failed`.
+
+</Callout>
+
+## ¿Qué más deberías saber?
+
+Los borradores de facturas siguen siendo editables hasta que los envíes. Eso hace que los borradores sean el lugar más seguro para ajustar los datos del cliente, reordenar artículos o actualizar el IVA antes de la entrega.
+
+NomadBill también admite metadatos de facturas recurrentes. Puede configurar el indicador recurrente y elegir una frecuencia de `weekly`, `monthly`, `quarterly` o `yearly`, pero esto no crea facturas automáticamente según un cronograma.

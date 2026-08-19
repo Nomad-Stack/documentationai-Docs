@@ -1,0 +1,192 @@
+---
+title: 进项发票
+description: 通过自动 VAT 计算和银行对账单上传和管理供应商账单、收据和费用。
+---
+
+## 在一个地方跟踪供应商账单和收据
+
+进项发票可让您将供应商账单、收据和其他业务费用与其他记录一起存储。您可以上传 PDF 或图片，填写发票详细信息，跟踪是否已付款，并在付款出现时将其与银行交易进行匹配。
+
+NomadBill 将原始文件保存在安全存储中，自动计算 VAT 金额，并在发票详细信息页面上显示相关信息，例如链接的邮件、自定义字段和匹配的银行付款。
+
+<Callout kind="info">
+
+支持的上传文件包括 **PDF** 和 **图像文件**。 NomadBill 使用每用户路径模式 `userId/timestamp-filename` 将每个文件存储在 `incoming-invoices` 存储桶中。
+
+</Callout>
+
+## 上传收据
+
+当您想要从文件中手动添加供应商账单时，请使用进项发票区域。
+
+<Steps>
+  <Step title="打开进项发票" icon="folder">
+
+转到 NomadBill 中的进项发票部分并开始新的上传。
+
+当您的设备上已保存收据或供应商账单时，这是最佳选择。
+
+  </Step>
+
+  <Step title="上传文件" icon="upload">
+
+从计算机或手机中选择 **PDF** 或 **图像** 文件。
+
+NomadBill 将上传的文件存储在安全存储中，并在发票记录中保留文件路径。当您稍后打开该文件时，NomadBill 会生成一个签名的查看链接，该链接的有效期为 60 秒。
+
+  </Step>
+
+  <Step title="输入发票详细信息" icon="edit">
+
+添加文档的供应商、发票、VAT 和付款信息。
+
+保存发票后，您应该会在进项发票列表中看到它，并且能够打开其详细信息页面。
+
+  </Step>
+
+  <Step title="查看详情页面" icon="check-circle">
+
+打开保存的发票以验证信息。
+
+详细信息视图包括供应商详细信息、发票详细信息、自定义字段、链接邮件和银行付款的单独卡片。
+
+  </Step>
+</Steps>
+
+## 供应商和发票详细信息
+
+每张进项发票都存储供应商信息和发票特定信息。类别是自由文本，因此您可以使用适合您簿记工作流程的命名结构。
+
+### 供应商字段
+
+<ParamField body="supplier_name" param-type="string" required="false" show-location="false">
+开具账单或收据的供应商或商家的名称。
+</ParamField>
+
+<ParamField body="supplier_address" param-type="string" required="false" show-location="false">
+供应商的邮政地址。
+</ParamField>
+
+<ParamField body="supplier_vat_number" param-type="string" required="false" show-location="false">
+供应商 VAT 注册号（如果文件中提供）。
+</ParamField>
+
+### 发票字段
+
+<ParamField body="invoice_number" param-type="string" required="false" show-location="false">
+供应商自己的发票或收据编号。
+</ParamField>
+
+<ParamField body="invoice_date" param-type="date" required="false" show-location="false">
+供应商发票上显示的日期。
+</ParamField>
+
+<ParamField body="due_date" param-type="date" required="false" show-location="false">
+发票的付款到期日。
+</ParamField>
+
+<ParamField body="payment_date" param-type="date" required="false" show-location="false">
+发票支付日期。当付款匹配时，银行对账单可以更新此信息。
+</ParamField>
+
+<ParamField body="category" param-type="string" required="false" show-location="false">
+费用的自由文本类别。 NomadBill 不强制执行预定义类别列表。
+</ParamField>
+
+<ParamField body="notes" param-type="string" required="false" show-location="false">
+有关收据、供应商或费用的内部注释。
+</ParamField>
+
+<ParamField body="currency" param-type="string" required="false" enum="EUR,USD,GBP,CHF,AED" show-location="false">
+发票上使用的货币。支持的值为 `EUR`、`USD`、`GBP`、`CHF` 和 `AED`。
+</ParamField>
+
+<ParamField body="payment_status" param-type="string" required="false" enum="unpaid,paid" show-location="false">
+发票的当前付款状态。 NomadBill 支持 `unpaid` 和 `paid`。
+</ParamField>
+
+### 金额字段
+
+<ParamField body="net_amount" param-type="number" required="false" show-location="false">
+VAT 之前的发票金额。
+</ParamField>
+
+<ParamField body="vat_percentage" param-type="number" required="false" show-location="false">
+VAT 汇率适用于发票金额。
+</ParamField>
+
+<ParamField body="vat_amount" param-type="number" required="false" show-location="false">
+计算出VAT金额。
+</ParamField>
+
+<ParamField body="amount" param-type="number" required="false" show-location="false">
+发票总金额包括 VAT。
+</ParamField>
+
+### 文件并记录元数据
+
+<ParamField body="file_path" param-type="string" required="false" show-location="false">
+上传的收据或发票文件的存储路径。
+</ParamField>
+
+<ParamField body="upload_date" param-type="date-time" required="false" show-location="false">
+文件上传到 NomadBill 的日期。
+</ParamField>
+
+## VAT 及金额计算
+
+NomadBill 自动重新计算发票总计，因此您无需手动更新每个金额字段。这可以减少输入错误，特别是当您只知道净额和 VAT 汇率或只知道收据中的总金额时。
+
+如果更改 `net_amount` 或 `vat_percentage`，NomadBill 会重新计算 `vat_amount` 和 `amount`。总金额使用以下公式：`gross = net * (1 + pct / 100)`。
+
+如果更改 `amount`，NomadBill 会根据当前 VAT 百分比重新计算 `net_amount` 和 `vat_amount`。当收据仅显示最终总额和 VAT 费率时，这会有所帮助。
+
+<Callout kind="tip">
+
+当收据包含折扣、混合 VAT 费率或未明确区分净值和 VAT 的供应商格式时，请在保存前检查重新计算的值。
+
+</Callout>
+
+## 付款状态和银行对账单
+
+付款状态可帮助您跟踪哪些供应商发票尚未结清以及哪些已付款。 NomadBill有两种状态：`unpaid`和`paid`。
+
+如果您连接银行同步，NomadBill 可以自动将传出银行交易与进项发票进行匹配。匹配逻辑寻找：
+
+- 金额低于零的**传出交易**
+- **完全相同的金额**
+- **相同​​的货币**
+- 发票日期**14天内**内的交易日期
+
+当 NomadBill 找到匹配项时，它将交易链接到进项发票并将付款状态设置为 `paid`。链接的银行付款显示在发票详细信息页面上的银行付款卡中。
+
+您还可以从银行同步区域手动管理连接。如果您取消关联匹配的交易，NomadBill 会将付款状态更改回 `unpaid`。
+
+有关完整的匹配工作流程，请参阅[银行同步](/zh/user-guide/bank-sync)。
+
+## 邮件智能集成
+
+NomadBill 还可以根据邮件数据创建进项发票。当邮件智能从消息中提取收据或供应商账单详细信息时，`createReceiptFromEmail` 可以为您创建进项发票记录。
+
+当供应商通过邮件发送发票并且您希望减少手动输入时，这非常有用。创建后，您可以打开发票详细信息页面，查看提取的字段，添加备注或类别，并确认付款是否已匹配。
+
+详细信息页面还包括链接的邮件卡，可帮助您在需要时将发票追溯到原始邮件上下文。
+
+有关邮件工作流程，请参阅[邮件智能](/zh/user-guide/email-intelligence)。
+
+## 相关指南
+
+<Columns cols={2}>
+  <Card
+    title="银行同步"
+    href="/zh/user-guide/bank-sync"
+    icon="database"
+    cta="打开指南"
+  />
+  <Card
+    title="自定义字段"
+    href="/zh/user-guide/custom-fields"
+    icon="settings"
+    cta="打开指南"
+  />
+</Columns>

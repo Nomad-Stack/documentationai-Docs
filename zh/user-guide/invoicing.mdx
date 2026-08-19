@@ -1,0 +1,299 @@
+---
+title: 开具发票
+description: 通过 VAT 计算、PDF 生成和 Stripe 付款创建、发送和跟踪多种货币的发票。
+---
+
+## 创建、发送和跟踪发票
+
+使用 NomadBill 发票创建专业发票、计算 VAT、导出品牌化 PDF、通过邮件发送发票以及通过 Stripe 接受在线付款。您可以管理草稿和发送的发票、跟踪付款进度并保持整个公司的发票号码一致。
+
+<Callout kind="info">
+
+如果您从批准的报价开始，请使用[报价](/zh/user-guide/quotes)中描述的报价到发票流程。
+
+</Callout>
+
+## 发票状态
+
+NomadBill 使用两个单独的字段跟踪发票：`status` 和 `payment_status`。发票徽章优先考虑付款信息，因此当 `payment_status` 为 `paid` 时，发票将显示为已付款，即使常规 `status` 字段会显示其他内容。
+
+|字段 | 值 |这意味着什么 |
+| --- | --- | --- |
+| `status` | `draft`、`sent`、`paid`、`overdue` |文档生命周期状态 |
+| `payment_status` | `unpaid`、`pending`、`paid`、`failed` |付款处理状态 |
+
+可以这样理解：
+
+- **`draft`** — 您仍在编辑发票，尚未完成发送。
+- **`sent`** — 发票已交付或标记为已发送。
+- **`overdue`** — 到期日已过，发票仍未结算。
+- **`paid`** — 发票已结算。
+
+特定于付款的状态添加了更多详细信息：
+
+- **`unpaid`** — 尚未记录任何付款。
+- **`pending`** — 付款正在进行中。
+- **`paid`** — 付款成功完成。
+- **`failed`** — 付款尝试未完成。
+
+<Callout kind="tip">
+
+如果发票在 UI 中显示 `paid`，则该已付款状态优先于徽章显示的一般文档状态。
+
+</Callout>
+
+## 创建发票
+
+从 **发票** 区域创建新发票，填写客户和账单详细信息，添加明细项，然后在发送之前查看结果。 NomadBill 将未完成的发票保留为草稿，以便您稍后返回。
+
+<Steps>
+  <Step title="开具新发票" icon="file-text">
+
+转到**发票**并创建新发票。 NomadBill 根据您的公司信息准备文档，并在创建发票时分配编号。
+
+当发票打开时，您应该看到可编辑的账单字段、明细项、总计和文档设置。
+
+  </Step>
+
+  <Step title="添加客户和账单详细信息" icon="users">
+
+输入客户信息、发票日期、到期日、货币和语言。选择与收件人匹配的发票语言，以便正确显示 PDF 和邮件中的标签。
+
+保存后，发票将保持**草稿**状态，直到您发送它或以其他方式标记它。
+
+  </Step>
+
+  <Step title="添加明细项" icon="plus">
+
+将每个产品或服务添加为单独的明细项，并包含名称、数量和单价。当您需要澄清范围、计费周期或可交付成果时，请包含说明。
+
+当您添加或编辑项目时，您的小计会更新。
+
+  </Step>
+
+  <Step title="查看 VAT 和总计" icon="bar-chart">
+
+在发送发票之前确认 VAT 百分比。 NomadBill 根据小计和 VAT 百分比计算总计，因此您可以在生成 PDF 或付款链接之前验证金额。
+
+正确的审核步骤应该会给您留下清晰的小计、VAT 金额和最终总计。
+
+  </Step>
+
+  <Step title="导出、发送或收取付款" icon="arrow-right">
+
+发票看起来正确后，生成 PDF，通过邮件发送，或者如果您希望客户在线付款，则启用 Stripe 结账。发送后，NomadBill 可以记录交货详细信息，例如谁收到了发票以及何时发送。
+
+此时，发票将从编辑状态转变为主动跟踪状态。
+
+  </Step>
+</Steps>
+
+## 明细项
+
+每个发票明细项都存储一个小型且一致的结构，因此您可以保持费用清晰且可预测。明细项包括：
+
+- **`id`** — 可选内部标识符
+- **`name`** — 明细项标题
+- **`description`** — 可选详细文本
+- **`quantity`** — 您计费的单位数
+- **`price`** — 每单位的价格
+
+每个计费服务、产品或计费周期使用一个明细项。这使得 PDF 更易于阅读，并帮助您的客户了解总数是如何构建的。
+
+NomadBill还支持明细项的拖放重新排序。重新排序项目以匹配您希望发票讲述的故事，例如首先列出核心服务，最后列出可报销费用。
+
+## VAT 计算
+
+NomadBill 根据小计和 VAT 百分比计算发票总计。公式为：
+
+`total = subtotal + (subtotal x vat_percentage / 100)`
+
+默认 VAT 费率为 **19%**，与标准德国费率相符。您可以根据需要更改每张发票的 VAT 百分比，只要该值保持在 **0 到 100** 允许的范围内即可。
+
+这意味着：
+
+- **`0`** 对于 VAT 豁免或零税率发票有效
+- **`19`** 是默认起点
+- **`100`** 是允许上限
+
+<Callout kind="info">
+
+在发送发票之前检查 VAT 费率，特别是当您跨司法管辖区开具账单或使用混合税务处理时。
+
+</Callout>
+
+## 货币和语言
+
+NomadBill 支持五种发票货币和四种发票语言。这些值是强制执行的，因此发票始终使用受支持的选项之一。
+
+### 支持的货币
+
+- **EUR**
+- **USD**
+- **GBP**
+- **CHF**
+- **AED**
+
+### 支持的发票语言
+
+- **DE**
+- **EN**
+- **FR**
+- **ES**
+
+### 如何选择默认货币
+
+NomadBill 按以下顺序解析发票货币：
+
+1. **发票币种** — 如果发票已有币种，则使用该值。
+2. **公司默认货币** — 如果发票没有明确的货币，则 NomadBill 检查公司默认货币。
+3. **全球货币偏好** — 如果前两者都不存在，则 NomadBill 回退到本地浏览器存储中存储的全球货币 `nb.currency`。
+
+此优先级可保持现有发票稳定，同时仍为您提供公司范围和用户级别的后备。
+
+## 发票编号
+
+发票编号使用格式 `R-00001`。 `R` 前缀标识文档类型，数字部分使用带前导零的五位数字。
+
+NomadBill 通过数据库函数生成编号，该函数自动为每个公司分配下一个文档编号。如果多人同时创建发票，这一点很重要，因为序列不会受到竞争条件的影响。
+
+有两个细节对于日常使用很重要：
+
+- 发票号码是**每家公司**，并非在全球所有账户之间共享。
+- 通过 `company_id` 和 `invoice_number` 组合，每个发票编号在同一公司内必须是唯一的。
+
+## PDF 生成
+
+NomadBill 可以将发票导出为 PDF 文档以供下载、共享或通过邮件发送。 PDF 引擎使用标准发票数据和您公司的品牌来生成最终文档。
+
+生成的 PDF 使用 **A4 纵向**布局，具有 **15 毫米边距**，并且可以包括：
+
+- 公司标志
+- 品牌颜色
+- 明细项表
+- 总计块
+- 银行详细信息
+- 页脚
+
+PDF 输出还支持所有四种发票语言，因此标签以发票上选择的语言显示。如果您使用自定义 PDF 布局，NomadBill 还支持基于模板的渲染。
+
+<Columns cols={2}>
+  <Card
+    title="PDF 模板"
+    href="/zh/user-guide/pdf-templates"
+    icon="book-open"
+    cta="打开指南"
+  />
+  <Card
+    title="报价"
+    href="/zh/user-guide/quotes"
+    icon="arrow-right"
+    cta="查看相关指南"
+  />
+</Columns>
+
+## 通过邮件发送发票
+
+NomadBill 使用 `noreply@nomadbill.co` 作为发件人地址通过 Resend 发送发票邮件。您可以发送包含 HTML 内容和可选 PDF 附件的文档邮件，也可以发送在数据库中记录传递详细信息的摘要式邮件。
+
+当您发送发票摘要邮件时，NomadBill 会更新这些跟踪字段：
+
+- **`sent_at`** — 发票发送时
+- **`sent_to`** — 哪个收件人收到了它
+- **`email_status`** — 设置为 `sent`
+
+邮件内容可以包括：
+
+- 文件编号
+- 客户姓名
+- 可选的自定义消息
+- 总金额
+
+这为您提供了外向交货和发票记录中的基本审计跟踪。
+
+## 接受 Stripe 付款
+
+当您希望客户通过托管结帐页面付款时，请在发票上启用 Stripe。 NomadBill 为发票创建 Stripe 结帐会话，并将客户发送到 Stripe 以完成付款。
+
+### Stripe 流程如何工作
+
+<Steps>
+  <Step title="为发票启用 Stripe" icon="settings">
+
+打开发票的 Stripe，以便 `stripe_enabled` 处于活动状态。这标志着发票符合在线支付的条件。
+
+启用后，发票可以创建托管付款会话。
+
+  </Step>
+
+  <Step title="创建结账会话" icon="lock">
+
+NomadBill 根据发票总额创建 Stripe 结帐会话。发送到 Stripe 的金额将使用 `Math.round(total_amount * 100)` 转换为美分，而 Stripe API 的货币代码将转换为小写。
+
+这可确保 Stripe 收到其期望格式的金额。
+
+  </Step>
+
+  <Step title="将客户重定向至 Stripe" icon="external-link">
+
+客户将被重定向到 Stripe 托管的结帐页面以安全地完成付款。您无需直接在发票页面内收集银行卡详细信息。
+
+成功重定向意味着客户现在正在 Stripe 上完成付款。
+
+  </Step>
+
+  <Step title="处理成功或取消" icon="check-circle">
+
+付款后，Stripe 将客户发送回两个发票路线之一：
+
+- **成功：** `/invoices/$id/pay/success`
+- **取消：** `/invoices/$id/pay/cancel`
+
+成功页面确认付款并触发购买跟踪。取消页面允许客户重试。
+
+  </Step>
+
+  <Step title="Webhook 确认后更新发票" icon="shield">
+
+当 Stripe 发送 `checkout.session.completed` Webhook 事件时，NomadBill 将发票更新为 `payment_status=paid` 和 `status=paid`。
+
+此 Webhook 更新最终确定了 NomadBill 内的付费状态。
+
+  </Step>
+</Steps>
+
+## 经常性发票
+
+定期发票允许您将发票标记为重复计费模式的一部分。 NomadBill 将其与 `is_recurring` 标志和 `recurring_frequency` 值一起存储。
+
+支持的重复频率有：
+
+- **每周**
+- **每月**
+- **季度**
+- **每年**
+
+<Callout kind="alert">
+
+定期发票只是元数据。 NomadBill 不运行自动 cron 作业，并且不会仅根据此标志按计划生成新发票。
+
+</Callout>
+
+使用定期设置来标记和组织重复计费，但不要依赖它们作为自动订阅引擎。
+
+## 接下来做什么
+
+<Columns cols={2}>
+  <Card
+    title="管理 PDF 模板"
+    href="/zh/user-guide/pdf-templates"
+    icon="edit"
+    cta="自定义布局"
+  />
+  <Card
+    title="使用报价"
+    href="/zh/user-guide/quotes"
+    icon="folder"
+    cta="创建基于报价的发票"
+  />
+</Columns>

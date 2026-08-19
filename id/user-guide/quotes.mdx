@@ -1,0 +1,160 @@
+---
+title: Penawaran
+description: Buat, kirim, dan ubah penawaran menjadi faktur dengan dukungan multi-mata uang dan pembuatan PDF.
+---
+
+## Ubah perkiraan proyek menjadi penawaran yang siap untuk klien
+
+Penawaran memungkinkan Anda menyiapkan penawaran harga, mengirimkannya ke klien, dan mengubahnya menjadi faktur setelah klien menerimanya. Alur kerja penawaran menggunakan data inti yang sama dengan faktur, termasuk detail pelanggan, item baris, PPN, mata uang, bahasa, keluaran PDF, pengiriman email, bidang khusus, ekspor CSV, dan templat PDF khusus.
+
+## Status penawaran
+
+Setiap penawaran melacak dua status terpisah: **status** dan **status pembayaran**. Bersama-sama mereka memberi tahu Anda di mana penawaran harga dalam proses penjualan Anda dan apakah pembayaran apa pun yang terkait dengannya telah diselesaikan.
+
+### Status penawaran
+
+| Status | Apa artinya |
+|---|---|
+| **draf** | Anda masih mempersiapkan penawaran. Penawaran belum diselesaikan atau dikonversi. |
+| **terkirim** | Anda telah mengirimkan penawaran ke klien melalui email. |
+| **berkonversi** | Anda mengubah penawaran menjadi faktur. Catatan faktur baru dibuat dari data penawaran. |
+
+### Status pembayaran
+
+| Status pembayaran | Apa artinya |
+|---|---|
+| **belum dibayar** | Tidak ada pembayaran yang dicatat. |
+| **tertunda** | Pembayaran telah dimulai tetapi belum selesai. |
+| **dibayar** | Pembayaran berhasil diselesaikan. |
+| **gagal** | Upaya pembayaran telah dilakukan tetapi tidak berhasil. |
+
+<Callout kind="info">
+
+Penawaran dapat ditandai sebagai `sent` tanpa dibayar, dan dapat diubah menjadi faktur meskipun status pembayarannya masih `unpaid`. Status dan status pembayaran dilacak secara independen.
+
+</Callout>
+
+## Membuat penawaran
+
+Buat penawaran dengan cara yang sama seperti Anda membuat faktur, lalu simpan sebagai penawaran untuk klien.
+
+<Steps>
+  <Step title="Tambahkan pelanggan" icon="users">
+
+  Pilih pelanggan yang sudah ada atau masukkan detail pelanggan langsung pada penawaran. Gunakan bidang informasi pelanggan yang sama dengan yang Anda gunakan untuk faktur, termasuk nama dan alamat pelanggan.
+
+  </Step>
+  <Step title="Tetapkan detail penawaran" icon="settings">
+
+  Masukkan tanggal penawaran, tanggal jatuh tempo, mata uang, dan bahasa. Penawaran mendukung mata uang dan bahasa yang sama seperti faktur.
+
+  Mata uang yang didukung:
+  
+  - `EUR`
+  - `USD`
+  - `GBP`
+  - `CHF`
+  - `AED`
+
+  Bahasa yang didukung:
+  
+  - `DE`
+  - `EN`
+  - `FR`
+  - `ES`
+
+  </Step>
+  <Step title="Tambahkan item baris dan PPN" icon="edit">
+
+  Tambahkan produk atau layanan yang ingin Anda tawarkan, lalu tinjau jumlah, harga, dan PPN. Penawaran ini menyimpan item baris dalam struktur yang sama dengan yang digunakan pada faktur, sehingga penghitungan total dan pajak mengikuti pola yang sama.
+
+  Periksa totalnya sebelum menyimpan. Penawaran Anda sekarang akan menunjukkan jumlah penuh dengan persentase PPN yang dipilih.
+
+  </Step>
+  <Step title="Pilih templat dan tinjau PDF" icon="file-text">
+
+  Pilih templat PDF jika Anda menggunakan tata letak penawaran atau faktur khusus. Kemudian pratinjau PDF untuk mengonfirmasi bahwa harga, merek, bahasa, dan informasi pelanggan sudah benar.
+
+  Saat pratinjau terlihat benar, simpan penawaran. Penawaran sekarang siap dikirim atau dikonversi nanti.
+
+  </Step>
+</Steps>
+
+## Mengonversi penawaran menjadi faktur
+
+Konversikan penawaran ketika klien menerima tawaran Anda. Konversi mengubah status penawaran menjadi `converted` dan membuat faktur baru dengan data bisnis dasar yang sama.
+
+Faktur baru menyalin rincian penawaran pelanggan, alamat, tanggal, mata uang, bahasa, item baris, persentase PPN, templat, dan jumlah total. Ini memberi Anda dokumen penagihan tanpa memasukkan kembali informasi yang sama.
+
+### Bagaimana hubungan itu bekerja
+
+Faktur menyimpan referensi `quote_id` ke penawaran asli. Artinya, hubungan tersebut dilacak dari faktur ke penawaran, bukan dari penawaran ke faktur.
+
+Jika Anda perlu mengonfirmasi bahwa penawaran harga telah diubah menjadi faktur, lihat catatan faktur yang ditautkan oleh `quote_id`. Penawaran itu sendiri mengubah status menjadi `converted`, namun hubungan database langsung dapat dinavigasi dari faktur ke penawaran.
+
+<Callout kind="tip">
+
+Gunakan konversi ketika persyaratan komersial sudah final. Ini menjaga riwayat penawaran harga Anda tetap utuh dan menciptakan peralihan yang mudah dari penjualan ke penagihan.
+
+</Callout>
+
+## Penomoran penawaran
+
+Setiap penawaran mendapatkan nomor dokumennya sendiri dalam format `A-00001`. Awalan `A` adalah singkatan dari Angebot.
+
+Nomor penawaran dibuat per perusahaan dan ditetapkan secara atom. Hal ini mencegah nomor duplikat ketika beberapa orang membuat dokumen secara bersamaan dan menjaga urutan penawaran harga setiap perusahaan tetap konsisten.
+
+Jika diperlukan, Anda dapat mengedit nomor penawaran sebelum mengirimkan dokumen.
+
+## Mengirim penawaran melalui email
+
+Kirim penawaran melalui email dengan alur pengiriman yang sama dengan yang digunakan untuk faktur. NomadBill menghasilkan email ringkasan dokumen dan mengirimkannya melalui Resend menggunakan `noreply@nomadbill.co`.
+
+Sebelum mengirim, tinjau pratinjau PDF dan detail penerima. Setelah dikirim, status penawaran harga berpindah ke `sent`, yang membantu Anda membedakan penawaran harga yang telah disiapkan dengan penawaran harga yang sudah dikirimkan ke klien.
+
+Jika Anda memerlukan dokumen bermerek, gabungkan pengiriman email dengan templat PDF pilihan Anda sehingga klien menerima tata letak akhir yang Anda ingin mereka lihat.
+
+## Setoran dan pembayaran
+
+Penawaran mencakup alur pembayaran, tetapi terkait dengan proses pembayaran faktur. Dalam praktiknya, tindakan pembayaran memanggil alur pembayaran faktur, bukan catatan pembayaran khusus penawaran.
+
+Artinya, penanganan pembayaran berfungsi dengan benar setelah penawaran diubah menjadi faktur. Pada saat itu, faktur dapat digunakan untuk pembayaran dan pembaruan pembayaran.
+
+<Callout kind="alert">
+
+Pembayaran deposit untuk penawaran harga berfungsi dengan benar hanya setelah Anda mengubah penawaran menjadi faktur. Alur pembayaran saat ini menanyakan tabel faktur, bukan tabel kuotasi, sehingga penanganan pembayaran hanya kuotasi terbatas.
+
+</Callout>
+
+Status pembayaran masih muncul dalam kuotasi, namun alur pembaruan pembayaran yang mendasarinya berbasis faktur. Jika Anda memerlukan tautan pembayaran yang andal atau pembaruan status yang didukung Stripe, konversikan penawaran terlebih dahulu dan kumpulkan pembayaran dari faktur.
+
+## Apa yang dapat Anda lakukan dengan penawaran
+
+Penawaran mendukung fitur dokumen yang sama yang tersedia untuk faktur:
+
+- Pratinjau PDF sebelum dikirim
+- Pengiriman email
+- Bidang khusus
+- Email tertaut
+- Ekspor CSV
+- Templat PDF khusus
+- Pengeditan nomor penawaran secara manual
+
+Fitur bersama ini memudahkan peralihan dari penawaran ke faktur tanpa mengubah alur kerja dokumen Anda.
+
+## Lanjutkan dengan panduan terkait
+
+<Columns cols={2}>
+  <Card
+    title="Kelola faktur"
+    href="/id/user-guide/invoicing"
+    icon="file-text"
+    cta="Buka panduan"
+  />
+  <Card
+    title="Sesuaikan template PDF"
+    href="/id/user-guide/pdf-templates"
+    icon="edit"
+    cta="Buka panduan"
+  />
+</Columns>

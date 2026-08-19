@@ -1,0 +1,192 @@
+---
+title: Factures entrantes
+description: Téléchargez et gérez les factures, les reçus et les dépenses des fournisseurs de manière automatique.VATcalcul et rapprochement bancaire.
+---
+
+## Suivez les factures et les reçus des fournisseurs en un seul endroit
+
+Les factures entrantes vous permettent de stocker les factures, reçus et autres dépenses professionnelles des fournisseurs avec le reste de vos dossiers. Vous pouvez télécharger unPDFou une image, remplissez les détails de la facture, vérifiez si elle a été payée et associez-la à une transaction bancaire lorsque le paiement apparaît.
+
+NomadBillconserve le fichier original dans un stockage sécurisé, calculeVATmontants automatiquement et affiche les informations associées telles que les e-mails liés, les champs personnalisés et les paiements bancaires correspondants sur la page de détail de la facture.
+
+<Callout kind="info">
+
+Les fichiers de téléchargement pris en charge incluent les **PDF** et les **fichiers image**.NomadBillstocke chaque fichier dans le`incoming-invoices`compartiment de stockage utilisant un modèle de chemin par utilisateur de`userId/timestamp-filename`.
+
+</Callout>
+
+## Téléchargement des reçus
+
+Utilisez la zone des factures entrantes lorsque vous souhaitez ajouter manuellement une facture fournisseur à partir d'un fichier.
+
+<Steps>
+  <Step title="Factures entrantes ouvertes" icon="folder">
+
+Accédez à la section Factures entrantes dansNomadBillet démarrez un nouveau téléchargement.
+
+C'est la meilleure option lorsque le reçu ou la facture fournisseur est déjà enregistré sur votre appareil.
+
+  </Step>
+
+  <Step title="Téléchargez le fichier" icon="upload">
+
+Sélectionnez un **PDF** ou **fichier image** depuis votre ordinateur ou votre téléphone.
+
+  NomadBillstocke le fichier téléchargé dans un stockage sécurisé et conserve un chemin de fichier dans le dossier de facture. Lorsque vous ouvrirez le fichier plus tard,NomadBillgénère un lien de visualisation signé qui reste valide pendant 60 secondes.
+
+  </Step>
+
+  <Step title="Entrez les détails de la facture" icon="edit">
+
+Ajoutez le fournisseur, la facture,VATet les informations de paiement pour le document.
+
+Après avoir enregistré la facture, vous devriez la voir dans votre liste de factures entrantes et pouvoir ouvrir sa page de détail.
+
+  </Step>
+
+  <Step title="Consultez la page de détails" icon="check-circle">
+
+Ouvrez la facture enregistrée pour vérifier les informations.
+
+La vue détaillée comprend des cartes distinctes pour les détails du fournisseur, les détails de la facture, les champs personnalisés, les e-mails liés et les paiements bancaires.
+
+  </Step>
+</Steps>
+
+## Détails du fournisseur et de la facture
+
+Chaque facture entrante stocke à la fois les informations sur le fournisseur et les informations spécifiques à la facture. Les catégories sont du texte libre, vous pouvez donc utiliser la structure de dénomination qui correspond à votre flux de travail de comptabilité.
+
+### Champs fournisseur
+
+<ParamField body="supplier_name" param-type="string" required="false" show-location="false">
+Nom du fournisseur ou du commerçant qui a émis la facture ou le reçu.
+</ParamField>
+
+<ParamField body="supplier_address" param-type="string" required="false" show-location="false">
+Adresse postale du fournisseur.
+</ParamField>
+
+<ParamField body="supplier_vat_number" param-type="string" required="false" show-location="false">
+FournisseurVATnuméro d’enregistrement, s’il est disponible sur le document.
+</ParamField>
+
+### Champs de facture
+
+<ParamField body="invoice_number" param-type="string" required="false" show-location="false">
+Le numéro de facture ou de reçu du fournisseur.
+</ParamField>
+
+<ParamField body="invoice_date" param-type="date" required="false" show-location="false">
+Date indiquée sur la facture du fournisseur.
+</ParamField>
+
+<ParamField body="due_date" param-type="date" required="false" show-location="false">
+Date d'échéance de paiement de la facture.
+</ParamField>
+
+<ParamField body="payment_date" param-type="date" required="false" show-location="false">
+Date à laquelle la facture a été payée. Le rapprochement bancaire peut le mettre à jour lorsqu'un paiement est apparié.
+</ParamField>
+
+<ParamField body="category" param-type="string" required="false" show-location="false">
+Catégorie de texte libre pour la dépense.NomadBilln'applique pas de liste de catégories prédéfinie.
+</ParamField>
+
+<ParamField body="notes" param-type="string" required="false" show-location="false">
+Notes internes sur la réception, le fournisseur ou la dépense.
+</ParamField>
+
+<ParamField body="currency" param-type="string" required="false" enum="EUR,USD,GBP,CHF,AED" show-location="false">
+Devise utilisée sur la facture. Les valeurs prises en charge sont`EUR`, `USD`, `GBP`, `CHF`, et`AED`.
+</ParamField>
+
+<ParamField body="payment_status" param-type="string" required="false" enum="unpaid,paid" show-location="false">
+État de paiement actuel de la facture.NomadBillprend en charge`unpaid`et`paid`.
+</ParamField>
+
+### Champs de montant
+
+<ParamField body="net_amount" param-type="number" required="false" show-location="false">
+Montant de la facture avantVAT.
+</ParamField>
+
+<ParamField body="vat_percentage" param-type="number" required="false" show-location="false">
+VATtaux appliqué au montant de la facture.
+</ParamField>
+
+<ParamField body="vat_amount" param-type="number" required="false" show-location="false">
+CalculéVATmontant.
+</ParamField>
+
+<ParamField body="amount" param-type="number" required="false" show-location="false">
+Montant brut de la facture incluantVAT.
+</ParamField>
+
+### Classer et enregistrer les métadonnées
+
+<ParamField body="file_path" param-type="string" required="false" show-location="false">
+Chemin de stockage du reçu ou du fichier de facture téléchargé.
+</ParamField>
+
+<ParamField body="upload_date" param-type="date-time" required="false" show-location="false">
+Date à laquelle le fichier a été téléchargé dansNomadBill.
+</ParamField>
+
+## VATet calcul du montant
+
+NomadBillrecalcule automatiquement les totaux des factures afin que vous n'ayez pas besoin de mettre à jour manuellement chaque champ de montant. Cela réduit les erreurs de saisie, surtout lorsque l'on ne connaît que le montant net etVATtaux ou n'avoir que le total brut à partir d'un reçu.
+
+Si tu changes`net_amount`ou`vat_percentage`, NomadBillrecalcule les deux`vat_amount`et`amount`. Le montant brut utilise cette formule :`gross = net * (1 + pct / 100)`.
+
+Si tu changes`amount`, NomadBillrecalcule`net_amount`et`vat_amount`basé sur le courantVATpourcentage. Cela est utile lorsque le reçu indique uniquement le total final etVATtaux.
+
+<Callout kind="tip">
+
+Vérifiez les valeurs recalculées avant de sauvegarder lorsque le ticket comporte des remises, mixtesVATtarifs, ou un formatage du fournisseur qui ne sépare pas le net etVATclairement.
+
+</Callout>
+
+## Statut de paiement et rapprochement bancaire
+
+Le statut de paiement vous aide à suivre quelles factures fournisseurs sont encore ouvertes et lesquelles ont déjà été payées.NomadBillutilise deux statuts :`unpaid`et`paid`.
+
+Si vous connectez la synchronisation bancaire,NomadBillpeut automatiquement faire correspondre les transactions bancaires sortantes aux factures entrantes. La logique de correspondance recherche :
+
+- Une **transaction sortante** d'un montant inférieur à zéro
+- Le **exactement le même montant**
+- La **même devise**
+- Une date de transaction dans les **14 jours** suivant la date de facture
+
+QuandNomadBilltrouve une correspondance, il relie la transaction à la facture entrante et définit le statut de paiement sur`paid`. Les paiements bancaires liés apparaissent dans la carte de paiement bancaire sur la page de détail de la facture.
+
+Vous pouvez également gérer la connexion manuellement depuis la zone de synchronisation bancaire. Si vous dissociez une transaction correspondante,NomadBillmodifie le statut de paiement en`unpaid`.
+
+Pour le flux de travail de correspondance complet, voir [Synchronisation bancaire](/fr/user-guide/bank-sync).
+
+## Intégration de l'intelligence des e-mails
+
+NomadBillpeut également créer une facture entrante à partir de données de courrier électronique. Lorsque l'intelligence électronique extrait les détails du reçu ou de la facture fournisseur d'un message,`createReceiptFromEmail`peut créer l'enregistrement de la facture entrante pour vous.
+
+Ceci est utile lorsque les fournisseurs envoient des factures par e-mail et que vous souhaitez réduire la saisie manuelle. Après la création, vous pouvez ouvrir la page de détail de la facture, consulter les champs extraits, ajouter des notes ou des catégories et confirmer si le paiement a déjà été apparié.
+
+La page de détail comprend également une carte d'e-mails liés, qui vous aide à retracer la facture jusqu'au contexte d'origine de l'e-mail si nécessaire.
+
+Pour le flux de travail de messagerie, voir [Email Intelligence](/fr/user-guide/email-intelligence).
+
+## Guides associés
+
+<Columns cols={2}>
+<Carte
+title="Synchronisation bancaire"
+href="/fr/user-guide/bank-sync"
+icône = "base de données"
+cta="Ouvrir le guide"
+  />
+<Carte
+title="Champs personnalisés"
+href="/fr/user-guide/custom-fields"
+icône = "paramètres"
+cta="Ouvrir le guide"
+  />
+</Columns>

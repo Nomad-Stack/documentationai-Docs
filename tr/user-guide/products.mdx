@@ -1,0 +1,137 @@
+---
+title: Ürünler
+description: Faturalar ve fiyat teklifleri için yeniden kullanılabilir bir ürün ve hizmet kataloğu oluşturun.
+---
+
+## Yeniden kullanılabilir bir ürün kataloğu oluşturun
+
+NomadBill'deki ürünler, sattığınız ürün ve hizmetleri bir kez kaydetmenize, ardından bunları faturalarda ve fiyat tekliflerinde yeniden kullanmanıza olanak tanır. Ürün kataloğunuz `/items`'de bulunur, şirket düzeyinde paylaşılır ve işletmenize uygun hem standart alanları hem de özel alanları içerebilir.
+
+<Callout kind="info">
+
+NomadBill, ürünleri `items` tablosunda saklar. Katalog bireysel bir kullanıcıya değil şirketinize aittir, bu nedenle tabloda `company_id` kullanılmaktadır ve `user_id`'yi içermemektedir.
+
+</Callout>
+
+## Ürün alanları
+
+Her ürün küçük bir dizi standart alan içerir. Envanteri, SKU'ları, sertifikaları veya dahili fiyatlandırma ayrıntılarını takip etmeniz gerekiyorsa özel alanlarla daha fazla yapı ekleyebilirsiniz.
+
+<ParamField body="name" param-type="string" required="true" show-location="false">
+
+Ürün veya hizmet adı. NomadBill, bir ürün oluşturduğunuzda veya düzenlediğinizde bu alanın kullanılmasını gerektirir.
+
+</ParamField>
+
+<ParamField body="description" param-type="string" required="false" show-location="false">
+
+Oluşturma ve düzenleme iletişim kutusunda çok satırlı bir metin alanı olarak gösterilen daha uzun bir açıklama. Öğeyi yeniden kullanırken hazır olmasını istediğiniz servis ayrıntıları, teknik özellikler veya dahili notlar için bunu kullanın.
+
+</ParamField>
+
+<ParamField body="price" param-type="numeric" required="false" show-location="false">
+
+Ürünün varsayılan fiyatı. Alan, `0.01` adımlı sayısal girişi kullanır ve bir fiyat girmezseniz yeni ürünler varsayılan olarak `0` olur.
+
+</ParamField>
+
+<ParamField body="company_id" param-type="string" required="true" show-location="false">
+
+Ürünün sahibi olan firma. Ürünler şirket düzeyindeki kayıtlardır; bu, şirkete erişimi olan herkesin aynı katalogdan çalıştığı anlamına gelir.
+
+</ParamField>
+
+Liste görünümünde NomadBill, **ad**, **açıklama** ve **fiyat** için standart sütunları gösterir. Fiyat iki ondalık basamağa göre biçimlendirilmiştir, böylece tutarlar katalog genelinde tutarlı kalır.
+
+Özel ürün alanlarını tablolarda görünecek şekilde işaretlerseniz NomadBill bu sütunları da liste görünümüne ekler. Özel alan sütunları yalnızca `show_in_table` etkinleştirildiğinde gösterilir ve alan adına göre alfabetik sırada görünürler.
+
+## Ürün oluşturma
+
+Daha hızlı belge oluşturmak ve daha tutarlı satır öğeleri istiyorsanız `/items` sayfasından ürünleri ekleyin. Bir ürün kataloğunuza eklendiğinde, her fatura veya fiyat teklifi için aynı ayrıntıları yeniden yazmak yerine ürünü tekrar seçebilirsiniz.
+
+<Steps>
+
+<Step title="Ürünler sayfasını aç" icon="folder">
+
+Uygulama navigasyonundan `/items`'ye gidin.
+
+Ad, açıklama, fiyat sütunları ve tabloda gösterilecek şekilde yapılandırılmış tüm ürün özel alanlarıyla birlikte mevcut ürün listenizi görmelisiniz.
+
+</Step>
+
+<Step title="Yeni bir ürün başlatın" icon="plus">
+
+Yeni bir ürün oluşturma seçeneğini seçin.
+
+NomadBill, standart ürün ayrıntılarını ve ürün varlığına atanan tüm özel alanları girebileceğiniz bir iletişim kutusu açar.
+
+</Step>
+
+<Step title="Gerekli ayrıntıları girin" icon="edit">
+
+Ürün formunu doldurun:
+
+- Bir **ad** girin.
+- Kaydedilen öğe hakkında daha fazla ayrıntı istiyorsanız bir **açıklama** ekleyin.
+- `125.00` gibi ondalık değerleri kullanarak bir **fiyat** girin.
+- Bu öğe için geçerli olan tüm ürün özel alanlarını doldurun.
+
+Form başarıyla kaydedilirse yeni ürün `/items` üzerindeki listede görünür.
+
+</Step>
+
+<Step title="Kaydedilen ürünü inceleyin ve güncelleyin" icon="check-circle">
+
+Adın, açıklamanın, fiyatın ve görünür özel alan değerlerinin doğru göründüğünü onaylamak için liste görünümündeki ürün satırını kontrol edin.
+
+Herhangi bir şeyi değiştirmeniz gerekiyorsa listeden düzenleme iletişim kutusunu açın ve güncellemelerinizi kaydedin. Bir ürünü kaldırmak için, silme işleminden önceki eylemi onaylayan yerleşik silme eylemini kullanın.
+
+</Step>
+
+</Steps>
+
+<Callout kind="tip">
+
+Silme eylemleri bir onay adımı kullanır. Yanlış katalog öğesini kaldırmamak için onaylamadan önce ürün adını inceleyin.
+
+</Callout>
+
+## Ürünleri belgelerde kullanma
+
+Kaydedilen ürünler belge oluşturmayı hızlandırmak için tasarlanmıştır. Bir fatura veya fiyat teklifi oluşturduğunuzda NomadBill, satır öğelerindeki ürün verilerini yeniden kullanır; böylece her seferinde aynı adları, açıklamaları veya fiyatları yeniden girmenize gerek kalmaz.
+
+Bu en çok yinelenen hizmetler, standart paketler ve sık satılan ürünler için kullanışlıdır. Her satırı manuel olarak yazmak yerine mevcut bir ürünü seçer ve kataloğunuzda önceden kayıtlı olan kayıtlı değerlerden başlarsınız.
+
+Ürünler şirket düzeyinde paylaşıldığından ekibiniz faturalar ve fiyat teklifleri genelinde aynı ürün listesinden çalışır. Bu, özellikle birden fazla kişinin belge oluşturduğu durumlarda fiyatlandırmanın ve adlandırmanın daha tutarlı olmasını sağlar.
+
+## Ürünler için özel alanlar
+
+Özel alanlar, temel ürün kataloğunu yapılandırılmış bir envanter veya hizmet kaydına dönüştürmenize olanak tanır. NomadBill'de ürün özel alanları `product` varlık türünü kullanır.
+
+Yaygın örnekler arasında dahili tanımlayıcılar, stok bilgileri, tedarikçi maliyetleri, tarihler, URL'ler ve dosya ekleri yer alır. Sıralanan örnekler arasında `produkt_nummer`, `sku`, `produktkategorie`, ayrıntılı açıklama, `gewicht_kg`, `einkaufspreis`, `auf_lager`, `produkt_url`, `gueltig_ab`, `zertifizierungen`, `datenblatt`, ve `marge_formel`.
+
+Farklı alan türleri, farklı türdeki ürün verilerini destekler:
+
+- Otomatik numaralar veya benzersiz metin değerleri gibi **tanımlayıcılar**
+- **Alış fiyatı, satış fiyatı veya marj formülleri gibi **ticari değerler**
+- Stok durumu, kategoriler ve geçerlilik tarihleri ​​gibi **operasyonel veriler**
+- Veri sayfaları ve harici ürün bağlantıları gibi **destekleyici materyal**
+
+Bu alanları [Özel alanlar](/tr/user-guide/custom-fields) bölümünde yapılandırın. Bir ürün özel alanı tablolarda gösterilecek şekilde ayarlandığında, bu alan aynı zamanda `/items` liste görünümünün bir parçası haline gelir.
+
+## İlgili kılavuzlar
+
+<Columns cols={2}>
+  <Card
+    title="Faturalama"
+    href="/tr/user-guide/invoicing"
+    icon="book-open"
+    cta="Kılavuzu aç"
+  />
+  <Card
+    title="Özel alanlar"
+    href="/tr/user-guide/custom-fields"
+    icon="settings"
+    cta="Alanları yönet"
+  />
+</Columns>

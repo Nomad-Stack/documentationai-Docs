@@ -1,0 +1,183 @@
+openapi: '3.0.0'
+info:
+  version: 1.0.0
+  title: NomadBill
+  license:
+    name: MIT
+servers:
+  - url: https://api.nomadbill.com/v1
+paths:
+  /documents:
+    get:
+      summary: 문서 나열
+      operationId: listDocuments
+      parameters:
+        - name: limit
+          in: query
+          description: 한 번에 반환할 항목 수(최대 100개)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: 페이징된 문서 배열
+          headers:
+            x-next:
+              description: 응답의 다음 페이지에 대한 링크
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documents'
+        default:
+          description: 예상치 못한 오류
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: 문서 만들기
+      operationId: createDocument
+      responses:
+        201:
+          description: 빈 응답
+        default:
+          description: 예상치 못한 오류
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /documents/{documentId}:
+    get:
+      summary: 문서 가져오기
+      operationId: showDocumentById
+      parameters:
+        - name: documentId
+          in: path
+          required: true
+          description: 검색할 문서의 ID
+          schema:
+            type: string
+      responses:
+        200:
+          description: 유효한 요청에 대한 예상 응답
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documents'
+        default:
+          description: 예상치 못한 오류
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /folders:
+    get:
+      summary: 폴더 나열
+      operationId: listFolders
+      parameters:
+        - name: limit
+          in: query
+          description: 한 번에 반환할 항목 수(최대 100개)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: 페이징된 폴더 배열
+          headers:
+            x-next:
+              description: 응답의 다음 페이지에 대한 링크
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folders'
+        default:
+          description: 예상치 못한 오류
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: 폴더 생성
+      operationId: createFolder
+      responses:
+        201:
+          description: 빈 응답
+        default:
+          description: 예상치 못한 오류
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /folders/{folderId}:
+    get:
+      summary: 폴더 가져오기
+      operationId: showFolderById
+      parameters:
+        - name: folderId
+          in: path
+          required: true
+          description: 검색할 폴더의 ID
+          schema:
+            type: string
+      responses:
+        200:
+          description: 유효한 요청에 대한 예상 응답
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folders'
+        default:
+          description: 예상치 못한 오류
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Document:
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        tag:
+          type: string
+    Documents:
+      type: array
+      items:
+        $ref: '#/components/schemas/Document'
+    Folder:
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        tag:
+          type: string
+    Folders:
+      type: array
+      items:
+        $ref: '#/components/schemas/Folder'
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

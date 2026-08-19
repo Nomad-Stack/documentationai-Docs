@@ -1,0 +1,225 @@
+---
+title: Champs personnalisés
+description: Ajoutez des métadonnées structurées aux clients, produits, factures, devis et factures avec 19 types de champs personnalisés et des règles d'affichage flexibles.
+---
+
+## Les champs personnalisés vous permettent de capturer les détails dont votre entreprise a besoin
+
+Ajoutez vos propres champs aux clients, produits, factures, devis et factures entrantes afin que chaque enregistrement corresponde à votre façon de travailler. Utilisez des champs personnalisés pour les notes internes, les numéros de référence, les catégories, les liens, les calculs, les pièces jointes et le texte généré par l'IA sans modifier votre flux de travail standard.
+
+<Callout kind="info">
+
+Les champs personnalisés sont spécifiques à l'entreprise. Un champ que vous créez est disponible uniquement dans le compte de votre entreprise et uniquement pour le type d'entité auquel vous l'attribuez.
+
+</Callout>
+
+## Comment fonctionnent les champs personnalisés
+
+Les champs personnalisés sont constitués de deux parties : une **définition de champ** et une **valeur de champ**. La définition contrôle l'endroit où le champ apparaît, le type d'entrée qu'il accepte et s'il peut être utilisé dans des tableaux, des formulaires ouPDFmodèles. La valeur correspond aux données réelles enregistrées sur chaque enregistrement.
+
+Vous créez des champs par type d'entité, puis vous les remplissez lorsque vous créez ou modifiez un enregistrement. Par exemple, vous pouvez ajouter un champ de catégorie de client pour les clients, un champ SKU pour les produits ou un champ de référence de projet pour les factures.
+
+### Types d'entités
+
+|Type d'entité|Utilisé pour|
+|---|---|
+| `customer` |Stockez des détails supplémentaires sur les clients, tels que le numéro de client, le site Web, la date d'intégration ou les notes internes.|
+| `product` |Ajoutez des métadonnées spécifiques au produit telles que le SKU, la catégorie, le poids, le prix d'achat ou les certifications.|
+| `invoice` |Capturez les détails des factures tels que les références de projet, les bons de livraison, le statut d'approbation ou les valeurs calculées.|
+| `quote` |Suivez les informations spécifiques au devis telles que les numéros de révision, les notes de validité ou les étapes de vente.|
+| `incoming_invoice` |Enregistrez les métadonnées des factures fournisseurs telles que les références des reçus, les champs d'approbation ou les pièces justificatives jointes.|
+
+<Callout kind="tip">
+
+Conservez les noms de champs spécifiques au type d’enregistrement. Un champ comme`sku`a du sens sur les produits, tandis que`project_reference`est plus facile à conserver sur les factures.
+
+</Callout>
+
+## Types de champs
+
+Choisissez un type de champ en fonction du type de données que vous souhaitez que les utilisateurs saisissent ou génèrent.
+
+|Type de champ|Description|
+|---|---|
+| `text` |Saisie de texte sur une seule ligne.|
+| `multiline` |Zone de texte multiligne pour des notes plus longues.|
+| `email` |Saisie de l'adresse e-mail.|
+| `url` |Entrée de site Web ou de lien.|
+| `phone` |Saisie du numéro de téléphone.|
+| `number` |Saisie de nombres entiers.|
+| `decimal` |Saisie d'un nombre décimal.|
+| `amount` |Saisie du montant en devise.|
+| `percent` |Entrée numérique affichée sous forme de pourcentage.|
+| `date` |Sélecteur de dates.|
+| `datetime` |Sélecteur de date et d’heure.|
+| `boolean` |Case à cocher avec état oui ou non.|
+| `dropdown` |Champ à sélection unique avec des choix prédéfinis.|
+| `multiselect` |Champ à sélection multiple avec des choix prédéfinis.|
+| `autonumber` |Numéro séquentiel attribué automatiquement.|
+| `lookup` |Lien vers une autre entité.|
+| `formula` |Champ calculé basé sur une expression.|
+| `attachment` |Champ de téléchargement de fichier.|
+| `ai` |Champ de texte généré par l'IA basé sur une invite enregistrée.|
+
+## Configuration du terrain
+
+Les paramètres de champ contrôlent la validation, la visibilité et le classement. Configurez ces options lorsque vous créez un champ, puis mettez-les à jour ultérieurement si votre flux de travail change.
+
+<ParamField body="is_required" param-type="boolean" required="false" show-location="false">
+
+Rend ce champ obligatoire lorsque les utilisateurs remplissent un formulaire d'enregistrement.
+
+</ParamField>
+
+<ParamField body="is_unique" param-type="boolean" required="false" show-location="false">
+
+Empêche les valeurs en double pour ce champ dans les enregistrements du même type d'entité.
+
+</ParamField>
+
+<ParamField body="show_in_table" param-type="boolean" required="false" show-location="false">
+
+Affiche le champ sous forme de colonne dans les vues de liste pour ce type d'entité.
+
+</ParamField>
+
+<ParamField body="show_in_form" param-type="boolean" required="false" show-location="false">
+
+Affiche le champ dans les formulaires de création et de modification. Ce paramètre est activé par défaut.
+
+</ParamField>
+
+<ParamField body="available_in_pdf" param-type="boolean" required="false" show-location="false">
+
+Rend le champ disponible pourPDFmodèles. Ce paramètre est activé par défaut.
+
+</ParamField>
+
+<ParamField body="sort_order" param-type="integer" required="false" show-location="false">
+
+Contrôle l'ordre des champs personnalisés dans le type d'entité sélectionné.
+
+</ParamField>
+
+## Création d'un champ personnalisé
+
+Créez des champs à partir du gestionnaire de champs personnalisés dans les paramètres. Le chemin le plus rapide consiste à définir d’abord l’étiquette et le type, puis à activer uniquement les options dont vous avez besoin.
+
+<Steps>
+  <Step title="Ouvrir les champs personnalisés" icon="settings">
+
+Connectez-vous àNomadBillet ouvrez la zone des champs personnalisés dans vos paramètres.
+
+Choisissez le type d'entité que vous souhaitez étendre, tel que clients, produits, factures, devis ou factures entrantes.
+
+  </Step>
+  <Step title="Créer la définition du champ" icon="plus">
+
+Ajoutez un nouveau champ et saisissez un **libellé** que les membres de votre équipe reconnaîtront.NomadBillcrée également une **clé** pour le champ à partir de cette étiquette.
+
+Sélectionnez le **type de champ** qui correspond aux données que vous souhaitez collecter. Si vous choisissez`dropdown`ou`multiselect`, ajoutez les choix parmi lesquels vous souhaitez que les utilisateurs choisissent.
+
+  </Step>
+  <Step title="Configurer la visibilité et la validation" icon="edit">
+
+Activez les options dont vous avez besoin pour ce champ, telles que obligatoire, unique, visible dans les formulaires, visible dans les tableaux ou disponible dansPDFmodèles.
+
+Si vous souhaitez que le champ apparaisse plus tôt ou plus tard que les autres, ajustez son ordre de tri avant de l'enregistrer.
+
+  </Step>
+  <Step title="Enregistrez et testez le champ" icon="check-circle">
+
+Enregistrez le champ, puis ouvrez un enregistrement du même type d'entité et confirmez que l'entrée apparaît là où vous l'attendez.
+
+Le succès ressemble au champ affiché dans la vue formulaire ou tableau en fonction des options que vous avez activées.
+
+  </Step>
+</Steps>
+
+<Callout kind="alert">
+
+Vous ne pouvez pas modifier le type d'un champ après sa création. Si vous avez besoin d'un type différent, créez un nouveau champ et déplacez votre flux de travail vers ce nouveau champ.
+
+</Callout>
+
+## Utiliser des champs personnalisés dans les enregistrements
+
+Après avoir créé un champ,NomadBilll'affiche sur les enregistrements de ce type d'entité lorsque`show_in_form`est activé. Les utilisateurs peuvent saisir des valeurs lors de la création d'un nouvel enregistrement ou les mettre à jour ultérieurement à partir de la vue d'édition.
+
+Les valeurs des champs personnalisés sont enregistrées par enregistrement. Un champ au niveau du produit s'applique uniquement aux produits et un champ au niveau de la facture s'applique uniquement aux factures. Si un champ est également marqué`show_in_table`, la valeur peut apparaître dans les vues de liste pour vous aider à analyser et filtrer les enregistrements plus rapidement.
+
+Les champs personnalisés prennent également en charge les modèles d'édition des pages de détails. Cela les rend utiles pour les informations que vous ne saisissez pas toujours à l’avance, telles que les notes internes, les dates de suivi ou les pièces jointes à l’appui.
+
+## Champs de numérotation automatique
+
+Utilisez des champs de numérotation automatique lorsque vous avez besoin d'identifiants séquentiels quiNomadBillattribue automatiquement. Cela fonctionne bien pour les numéros de client, les numéros de produit, les références internes ou d'autres identifiants structurés qui ne doivent pas être saisis manuellement.
+
+<Callout kind="info">
+
+Les champs de numérotation automatique prennent en charge trois options de configuration :
+
+- **Préfixe** ajoute du texte avant le numéro, tel que`K-`ou`P-`.
+- **Padding** ajoute des zéros non significatifs pour atteindre une largeur fixe.
+- **Start** définit le premier numéro de la séquence.
+
+Un numéro de client peut commencer à`K-1000`, alors qu'un numéro de produit peut utiliser`P-00001`.
+
+</Callout>
+
+Chaque fois qu'un nouvel enregistrement est créé,NomadBillattribue le numéro suivant dans la séquence pour ce champ. Cela réduit la numérotation en double et maintient la cohérence des enregistrements.
+
+## Champs de formule
+
+Utilisez des champs de formule lorsqu'une valeur doit être calculée au lieu d'être saisie manuellement. Les champs de formule sont utiles pour les totaux, les majorations, les valeurs basées sur des pourcentages ou les calculs spécifiques à un enregistrement qui dépendent d'autres champs.
+
+Une expression de formule peut faire référence à des valeurs numériques intégrées et à des champs personnalisés. Les variables disponibles incluent :
+
+- `subtotal`
+- `vat_percentage`
+- `total`
+- `unit_price`
+- `custom.KEY`
+
+Par exemple, vous pouvez utiliser`custom.discount_rate * subtotal / 100`pour calculer un montant de remise lorsque`discount_rate`est stocké dans un autre champ personnalisé. Les valeurs de formule sont calculées automatiquement lorsqueNomadBillenregistre les valeurs des champs personnalisés.
+
+<Callout kind="tip">
+
+Gardez les clés des champs de formule simples et prévisibles afin que les expressions soient plus faciles à lire. Une clé telle que`discount_rate`est plus facile à utiliser dans`custom.discount_rate`qu'un style de dénomination long ou incohérent.
+
+</Callout>
+
+## Champs générés par l'IA
+
+Utilisez les champs générés par l'IA quand vous le souhaitezNomadBillpour écrire du texte pour vous en fonction d'une invite enregistrée. Ceci est utile pour les résumés internes, les brouillons de descriptions, les notes de suivi ou le texte standardisé qui doit être généré à partir des données d'enregistrement.
+
+Avant de pouvoir utiliser un champ AI, créez une invite AI dans le gestionnaire de champs personnalisés. Connectez ensuite cette invite au champ lorsque vous créez la définition de champ. Sur les enregistrements, les utilisateurs peuvent générer ou régénérer le texte directement à partir de la saisie du champ.
+
+NomadBillprend en charge ces modèles d'IA pour les invites :
+
+- `google/gemini-3-flash-preview`
+- `google/gemini-2.5-flash`
+- `google/gemini-2.5-pro`
+- `openai/gpt-5-mini`
+- `openai/gpt-5`
+
+<Callout kind="info">
+
+Les champs générés par l'IA stockent la sortie de texte. Examinez le contenu généré avant de l’utiliser dans des documents destinés aux clients.
+
+</Callout>
+
+## Champs personnalisés dansPDFmodèles
+
+Rendre un champ disponible dansPDFsortie en activant`available_in_pdf`sur la définition du champ. Après cela, vous pouvez placer le champ dans vos modèles de documents et utiliser la valeur personnalisée lors de la génération de factures, de devis ou d'autres fichiers PDF.
+
+Si vous envisagez d'inclure des champs personnalisés dans des documents imprimés, configurez le champ avant de finaliser votre modèle. Cela maintient la structure de votre modèle stable et évite de les retravailler ultérieurement.
+
+Lire [PDFModèles](/fr/user-guide/pdf-templates) pour la configuration du modèle et les options de mise en page du document.
+
+## Guides associés
+
+<Columns cols={3}>
+  <Card title="Gérer les factures" href="/fr/user-guide/invoicing" icon="folder" cta="Ouvrir le guide de facturation" />
+  <Card title="Gérer les produits" href="/fr/user-guide/products" icon="package" cta="Guide des produits ouverts" />
+  <Card title="ConceptionPDFmodèles" href="/fr/user-guide/pdf-templates" icon="book-open" cta="OuvrirPDFguide des modèles" />
+</Columns>

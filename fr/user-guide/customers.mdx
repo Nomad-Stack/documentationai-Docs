@@ -1,0 +1,128 @@
+---
+title: Clients
+description: Gérez les enregistrements clients avec les coordonnées, les champs personnalisés et réutilisez-les dans les factures et les devis.
+---
+
+## Conservez les informations de vos clients au même endroit
+
+Les clients stockent les informations de contact que vous réutilisez dans votre flux de facturation. Ajoutez chaque client une fois`/customers`, gardez leurs détails à jour et utilisez à nouveau ces enregistrements lorsque vous créez des factures et des devis.
+
+Les propriétaires d'entreprise et les membres de l'équipe peuvent gérer les clients dans l'espace de travail de leur entreprise. La liste des clients est triée par nom par ordre alphabétique et le tableau affiche les champs de contact standard ainsi que tous les champs personnalisés configurés pour apparaître dans le tableau.
+
+## Champs client
+
+Chaque dossier client comprend les principaux champs de contact ci-dessous.
+
+<ParamField body="name" param-type="string" required="true" show-location="false">
+
+Le nom d’affichage du client.NomadBillrequiert ce champ et l'utilise comme étiquette principale dans la liste des clients.
+
+</ParamField>
+
+<ParamField body="email" param-type="string" required="false" show-location="false">
+
+L'adresse email du client.
+
+</ParamField>
+
+<ParamField body="phone" param-type="string" required="false" show-location="false">
+
+Le numéro de téléphone du client.
+
+</ParamField>
+
+<ParamField body="address" param-type="string" required="false" show-location="false">
+
+L'adresse du client. Dans la boîte de dialogue de création et de modification, ce champ utilise une zone de texte multiligne afin que vous puissiez saisir une adresse de facturation complète.
+
+</ParamField>
+
+<Callout kind="info">
+
+La liste des clients affiche **nom**, **e-mail** et **téléphone** par défaut. Il affiche également les champs personnalisés du client dans lesquels la visibilité des tables est activée.
+
+</Callout>
+
+## Créer un client
+
+Ajoutez un client depuis la page clients, puis renseignez les coordonnées que vous souhaitez réutiliser ultérieurement.
+
+<Steps>
+  <Step title="Ouvrir la page clients" icon="users">
+
+Aller à`/customers`dans votre espace de travail.
+
+Vous devriez voir un tableau des clients trié par nom. Si vous avez déjà créé des champs personnalisés client avec la visibilité des tables activée, ces colonnes apparaissent également ici.
+
+  </Step>
+  <Step title="Créer un nouveau dossier client" icon="plus">
+
+Créez un nouveau client à partir de l'action de la page.
+
+  NomadBillouvre une boîte de dialogue de création avec les champs client standard et tous les champs personnalisés affectés au`customer`entité.
+
+  </Step>
+  <Step title="Entrez les détails obligatoires et facultatifs" icon="edit">
+
+Remplissez les informations client :
+
+- **Le nom** est requis.
+- **L'e-mail** est facultatif.
+- **Le téléphone** est facultatif.
+- **L'adresse** est facultative et prend en charge le texte multiligne.
+- Les **Champs personnalisés** apparaissent lorsque vous les avez configurés pour les clients.
+
+Les espaces de travail de démonstration peuvent déjà inclure des champs prédéfinis tels que`kundennummer`, `kundenkategorie`, `website`, `kunden_seit`, `notizen_intern`, `praeferierte_sprachen`, et`newsletter`.
+
+  </Step>
+  <Step title="Enregistrez et vérifiez le résultat" icon="check-circle">
+
+Sauvez le client.
+
+Après l'enregistrement, le client apparaît dans la vue liste sous la position alphabétique correcte. Si un champ personnalisé est configuré pour s'afficher dans les tableaux, sa valeur apparaît également sous forme de colonne dans la ligne.
+
+  </Step>
+</Steps>
+
+## Modification et suppression de clients
+
+Mettez à jour un client à partir de la même boîte de dialogue utilisée pour la création. Vous pouvez modifier les champs de contact standard et tous les champs personnalisés attribués aux clients à tout moment.
+
+Lorsque vous supprimez un client,NomadBillvous demande de confirmer l'action avant de supprimer l'enregistrement. Utilisez la suppression avec précaution si vous vous fiez à ces informations client dans votre processus de facturation habituel.
+
+## Utiliser les clients dans les factures
+
+Les clients sont conçus pour gagner du temps lorsque vous créez des factures. Au lieu de retaper les coordonnées de chaque document, vous sélectionnez ou réutilisez un enregistrement client existant.
+
+Les factures stockent le nom du client dans le`customer_name`champ. Cela signifie que le dossier client fournit le nom de la source que vous utilisez dans les flux de facturation, tout en gardant votre liste de clients organisée en un seul endroit.
+
+<Callout kind="tip">
+
+Configurez vos clients avant de commencer à envoyer des factures régulièrement. Une liste de clients claire accélère la création des factures et réduit les incohérences de dénomination entre les documents.
+
+</Callout>
+
+## Champs personnalisés pour les clients
+
+Les champs personnalisés des clients vous permettent de suivre des informations au-delà des champs de contact standard.NomadBillattribue ces champs au`customer`type d'entité, ce qui signifie qu'elles apparaissent dans les formulaires client et, une fois configurées, dans la table client.
+
+Utilisez des champs personnalisés pour des données telles que les numéros de clients internes, les catégories, les sites Web, les dates de début, les préférences linguistiques, les notes ou le statut d'inscription à la newsletter. Les données de démonstration peuvent inclure des champs tels que`kundennummer`comme numéro automatique,`kundenkategorie`sous forme de liste déroulante,`website`sous forme d'URL,`kunden_seit`comme rendez-vous,`notizen_intern`sous forme de texte multiligne,`praeferierte_sprachen`en multisélection, et`newsletter`comme booléen.
+
+Pour les instructions de configuration et les types de champs, voir [Champs personnalisés](/fr/user-guide/custom-fields).
+
+## Où aller ensuite
+
+<Columns cols={2}>
+<Carte
+title="Facturation"
+href="/fr/user-guide/invoicing"
+icon="livre-ouvert"
+cta="Ouvrir le guide de facturation"
+  />
+<Carte
+title="Champs personnalisés"
+href="/fr/user-guide/custom-fields"
+icône = "paramètres"
+cta="Configurer les champs personnalisés"
+  />
+</Columns>

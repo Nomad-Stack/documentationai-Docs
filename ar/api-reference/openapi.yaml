@@ -1,0 +1,183 @@
+openapi: '3.0.0'
+info:
+  version: 1.0.0
+  title: NomadBill
+  license:
+    name: MIT
+servers:
+  - url: https://api.nomadbill.com/v1
+paths:
+  /documents:
+    get:
+      summary: قائمة الوثائق
+      operationId: listDocuments
+      parameters:
+        - name: limit
+          in: query
+          description: كم عدد العناصر المراد إرجاعها في المرة الواحدة (الحد الأقصى 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: مجموعة مقسمة إلى صفحات من المستندات
+          headers:
+            x-next:
+              description: رابط إلى الصفحة التالية من الردود
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documents'
+        default:
+          description: خطأ غير متوقع
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: إنشاء مستند
+      operationId: createDocument
+      responses:
+        201:
+          description: استجابة فارغة
+        default:
+          description: خطأ غير متوقع
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /documents/{documentId}:
+    get:
+      summary: الحصول على وثيقة
+      operationId: showDocumentById
+      parameters:
+        - name: documentId
+          in: path
+          required: true
+          description: معرف الوثيقة المراد استردادها
+          schema:
+            type: string
+      responses:
+        200:
+          description: الاستجابة المتوقعة لطلب صالح
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documents'
+        default:
+          description: خطأ غير متوقع
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /folders:
+    get:
+      summary: قائمة المجلدات
+      operationId: listFolders
+      parameters:
+        - name: limit
+          in: query
+          description: كم عدد العناصر المراد إرجاعها في المرة الواحدة (الحد الأقصى 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: مجموعة مقسمة إلى صفحات من المجلدات
+          headers:
+            x-next:
+              description: رابط إلى الصفحة التالية من الردود
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folders'
+        default:
+          description: خطأ غير متوقع
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: إنشاء مجلد
+      operationId: createFolder
+      responses:
+        201:
+          description: استجابة فارغة
+        default:
+          description: خطأ غير متوقع
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /folders/{folderId}:
+    get:
+      summary: احصل على المجلد
+      operationId: showFolderById
+      parameters:
+        - name: folderId
+          in: path
+          required: true
+          description: معرف المجلد المراد استرداده
+          schema:
+            type: string
+      responses:
+        200:
+          description: الاستجابة المتوقعة لطلب صالح
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folders'
+        default:
+          description: خطأ غير متوقع
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Document:
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        tag:
+          type: string
+    Documents:
+      type: array
+      items:
+        $ref: '#/components/schemas/Document'
+    Folder:
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        tag:
+          type: string
+    Folders:
+      type: array
+      items:
+        $ref: '#/components/schemas/Folder'
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

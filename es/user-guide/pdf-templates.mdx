@@ -1,0 +1,175 @@
+---
+title: Plantillas PDF
+description: Diseñe diseños PDF personalizados para facturas, cotizaciones y recibos con edición de arrastrar y soltar, plantillas reutilizables y colores de marca.
+---
+
+## Diseñe diseños PDF personalizados para sus documentos
+
+Las plantillas PDF le permiten controlar el aspecto de las facturas, cotizaciones y documentos entrantes al obtener una vista previa, exportarlos o enviarlos. Puede comenzar desde un diseño en blanco, elegir un diseño prediseñado o importar una plantilla JSON y luego ajustar el resultado en un editor de arrastrar y soltar.
+
+<Callout kind="info">
+
+Administre plantillas en **Configuración → Plantillas**. NomadBill mantiene listas de plantillas separadas para facturas, cotizaciones y documentos entrantes, para que pueda diseñar cada tipo de documento de forma independiente.
+
+</Callout>
+
+## Cómo funcionan las plantillas PDF
+
+Cada plantilla PDF almacena el diseño completo de un tipo de documento. Eso incluye la estructura de la página, bloques de texto, tablas, imágenes y estilos utilizados para generar el PDF final.
+
+Cuando crea o edita una factura, cotización o documento entrante, puede usar la plantilla predeterminada para ese tipo de documento o elegir una plantilla guardada diferente. Esto le brinda una manera consistente de mantener los documentos cotidianos dentro de la marca y al mismo tiempo permitir diseños alternativos cuando sea necesario.
+
+NomadBill admite tres tipos de documentos:
+
+| Tipo de documento | Utilizado para | Donde lo seleccionas |
+| --- | --- | --- |
+| Factura | Facturas salientes que envías a los clientes | Formulario de factura y vista previa |
+| Cita | Cotizaciones u ofertas que envías antes de facturar | Formulario de cotización y vista previa |
+| Entrante | Facturas entrantes, facturas de proveedores o recibos | Flujos de documentos entrantes |
+
+## Tipos de documentos
+
+Las plantillas se agrupan por tipo de documento porque cada tipo tiene un propósito diferente y puede necesitar una redacción o un énfasis en el diseño diferente.
+
+| Tipo | Título típico en PDF | Uso común |
+| --- | --- | --- |
+| `invoice` | Factura | Facturar a un cliente por el trabajo completado o los bienes entregados |
+| `quote` | Cita | Envío de propuesta de precio antes del inicio de obras |
+| `incoming` | Recibo o factura recibida | Registro de gastos de proveedores o recibos cargados |
+
+<Callout kind="tip">
+
+Si desea diseños diferentes para el mismo tipo de documento, cree varias plantillas y establezca una como predeterminada. Aún puedes elegir otra plantilla para un documento específico cuando sea necesario.
+
+</Callout>
+
+## Creando una plantilla
+
+Puede crear plantillas de tres maneras: comenzar en blanco, comenzar desde la galería o importar un archivo JSON existente.
+
+<Steps>
+  <Step title="Crear una plantilla en blanco" icon="plus">
+
+Abra **Configuración → Plantillas**, elija la pestaña tipo de documento, luego cree una nueva plantilla y seleccione **En blanco**.
+
+Una plantilla en blanco comienza con el diseño predeterminado de NomadBill para ese tipo de documento. Esta es la opción más rápida cuando desea un control total pero aún desea que los campos estándar requeridos ya estén asignados.
+
+  </Step>
+  <Step title="Empezar desde la galería" icon="book-open">
+
+Abra **Configuración → Plantillas**, elija la pestaña tipo de documento, luego cree una nueva plantilla y seleccione **Galería**.
+
+Elija una de las siete plantillas integradas si desea un diseño terminado que pueda adaptar. Este es el mejor punto de partida cuando deseas un diseño profesional sin tener que crear cada sección desde cero.
+
+  </Step>
+  <Step title="Importar una plantilla JSON" icon="upload">
+
+Abra **Configuración → Plantillas**, elija la pestaña tipo de documento, luego cree una nueva plantilla y seleccione **Importar desde JSON**.
+
+Cargue un archivo `.json` que contenga una estructura de plantilla válida. Utilice esta ruta si ya tiene un archivo de plantilla compatible y desea reutilizarlo en empresas o entornos.
+
+  </Step>
+</Steps>
+
+## Galería de plantillas
+
+NomadBill incluye siete plantillas prediseñadas que puedes utilizar como punto de partida.
+
+| Plantilla | Estilo | Lo mejor para |
+| --- | --- | --- |
+| Clásico | Valor predeterminado equilibrado con un encabezado del color de la marca | Facturas y cotizaciones de uso general |
+| Moderno | Barra superior coloreada con un título en negrita | Diseños de vanguardia |
+| Mínimo | Diseño monocromático sin detalles de color | Documentos sencillos y con bajo consumo de tinta |
+| Blanco | Diseño limpio e imprimible con un bloque de método de pago | Facturas formales y flujos de trabajo de impresión |
+| Azul | Detalles en azul con una fila total llena | Totales de alto contraste y secciones de resumen |
+| Verde | Barra decorativa izquierda verde | Diseños de marca alternativos |
+| Elegante | Título grande con una sutil tabla gris | Documentos pulidos de cara al cliente |
+
+## Editar una plantilla
+
+El editor de plantillas se abre en un diseñador de pantalla completa para que pueda crear y ajustar diseños visualmente. Puede arrastrar campos a su posición, cambiar su tamaño, cambiar texto y refinar la estructura visual sin editar el JSON subyacente a mano.
+
+Los tipos de campos disponibles incluyen texto, texto de múltiples variables, tablas, listas, líneas, formas, imágenes, firmas, fechas, casillas de verificación, grupos de radio, códigos QR y códigos de barras. Esto le brinda suficiente flexibilidad para crear diseños de facturas estándar, así como diseños de documentos más personalizados.
+
+La mayoría de los usuarios dedicarán su tiempo a ajustar posiciones, espacios, etiquetas y presentación de la tabla. Si mantiene intactos los nombres de los campos estándar, NomadBill continúa completando esos campos automáticamente cuando genera el PDF.
+
+<Callout kind="info">
+
+La lista de elementos del documento normalmente se representa a través del campo de tabla `items`. Si elimina o cambia el nombre de ese campo, las líneas de pedido ya no aparecerán en el PDF generado.
+
+</Callout>
+
+## Campos estándar
+
+NomadBill completa automáticamente nombres de campos específicos cuando procesa un PDF. Mantenga estos nombres sin cambios si desea que la aplicación siga asignando datos del documento a la plantilla.
+
+| Nombre del campo | Contiene |
+| --- | --- |
+| `company_logo` | Imagen del logotipo de su empresa |
+| `company_name` | Nombre para mostrar de su empresa |
+| `company_address` | La dirección de su empresa, normalmente con varias líneas |
+| `company_vat` | Su valor y etiqueta de identificación fiscal o de IVA |
+| `doc_title` | Título del documento como Factura, Cotización o Recibo |
+| `doc_number` | Número de documento |
+| `doc_date` | Etiqueta de fecha de emisión y valor |
+| `doc_due_date` | Etiqueta de fecha de vencimiento y valor |
+| `bill_to_label` | Etiqueta de la sección de clientes |
+| `customer_name` | Nombre del cliente |
+| `customer_address` | Dirección del cliente |
+| `items` | Tabla de partidas individuales |
+| `subtotal_label` | Etiqueta subtotal |
+| `subtotal` | Importe subtotal |
+| `vat_label` | Etiqueta de IVA |
+| `vat_amount` | Importe del IVA |
+| `total_label` | Etiqueta total |
+| `total` | Importe total |
+| `bank_label` | Etiqueta de la sección de detalles de pago |
+| `bank_details` | Instrucciones bancarias o de pago |
+| `signature` | Imagen de firma |
+| `footer` | Texto de pie de página |
+
+## Colores de marca
+
+Las plantillas de galería pueden aplicar los colores de la marca de su empresa automáticamente. NomadBill lee los colores primarios y secundarios de la configuración de la empresa y los utiliza para cambiar el color de los elementos de plantilla compatibles.
+
+Esto funciona mejor cuando desea una marca coherente en todas las facturas y cotizaciones sin actualizar manualmente cada bloque de texto, encabezado o elemento destacado. Dependiendo de la plantilla, el color de acento generalmente se aplica a encabezados, barras, totales o resaltados de fondo.
+
+Algunos diseños de marca también admiten mantener el texto en negro y al mismo tiempo aplicar la paleta de su marca para resaltar las áreas. Utilice ese enfoque si los colores de su marca son claros o si la legibilidad es más importante que el estilo del texto a todo color.
+
+## Plantillas en varios idiomas
+
+Las plantillas admiten cuatro idiomas: DE, EN, FR y ES. Los cambios de idioma actualizan las etiquetas integradas, como el título del documento, las etiquetas de fecha, el subtotal, el IVA, el total y otro texto estándar utilizado en las plantillas predeterminadas.
+
+NomadBill traduce las etiquetas de las plantillas por separado del diseño mismo. Eso significa que puede cambiar de idioma sin perder posiciones, espacios, colores u otros cambios de diseño que haya realizado en el editor.
+
+Si trabaja en varios idiomas, cree una plantilla por idioma cuando necesite un control total sobre la redacción y el formato. Si el diseño sigue siendo el mismo, puede reutilizar el mismo diseño y confiar en las etiquetas traducidas cuando corresponda.
+
+## Campos personalizados en plantillas
+
+Los campos personalizados le permiten agregar valores específicos de la empresa, del cliente o del documento a sus archivos PDF. En las plantillas, estos valores utilizan nombres de campo en el formato `cf_{entity}_{key}`.
+
+Por ejemplo, un campo personalizado vinculado a una factura se puede asignar con un nombre de campo como `cf_invoice_project_reference`. Un campo personalizado a nivel de cliente sigue el mismo patrón que el segmento de entidad de cliente.
+
+Lea [Campos personalizados](/es/user-guide/custom-fields) antes de agregar estos marcadores de posición para que las claves de campo y los nombres de los campos de la plantilla permanezcan alineados.
+
+<Callout kind="tip">
+
+Si un campo personalizado aparece en blanco en el PDF, primero confirme que el campo existe, que la clave coincide exactamente y que el nombre del campo en la plantilla usa el patrón `cf_{entity}_{key}` esperado.
+
+</Callout>
+
+## Establecer una plantilla predeterminada
+
+Cada tipo de documento puede tener una plantilla predeterminada. La plantilla predeterminada se utiliza automáticamente a menos que elija una diferente en el formulario del documento o en la pantalla de vista previa.
+
+Para cambiar el valor predeterminado, abra **Configuración → Plantillas**, busque la plantilla en la pestaña del tipo de documento correcto y use **Establecer valor predeterminado**. La plantilla actualizada se convierte en el nuevo punto de partida para ese tipo de documento en toda su empresa.
+
+Esto es útil cuando estás implementando un diseño actualizado. Primero configure la nueva plantilla como predeterminada y luego mantenga las plantillas más antiguas disponibles para casos especiales o coherencia histórica.
+
+## Guías relacionadas
+
+<Columns cols={3}>
+  <Card title="Facturación" href="/es/user-guide/invoicing" icon="book-open" cta="abrir guia" />
+  <Card title="Cotizaciones" href="/es/user-guide/quotes" icon="arrow-right" cta="Ver guía relacionada" />
+  <Card title="Campos personalizados" href="/es/user-guide/custom-fields" icon="settings" cta="Aprenda cómo se asignan los campos" />
+</Columns>

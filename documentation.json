@@ -375,6 +375,2359 @@
             ]
           }
         ]
+      },
+      {
+        "language": "Spanish",
+        "tabs": [
+          {
+            "tab": "Documentación",
+            "icon": "book",
+            "groups": [
+              {
+                "group": "Primeros pasos",
+                "icon": "rocket",
+                "pages": [
+                  {
+                    "title": "Introducción a NomadBill",
+                    "path": "es/introduction",
+                    "icon": "home"
+                  },
+                  {
+                    "title": "Inicio rápido",
+                    "path": "es/quickstart",
+                    "icon": "zap"
+                  }
+                ]
+              },
+              {
+                "group": "Conceptos básicos",
+                "icon": "layers",
+                "pages": [
+                  {
+                    "title": "Características",
+                    "path": "es/features",
+                    "icon": "star"
+                  }
+                ]
+              },
+              {
+                "group": "Guía del usuario",
+                "icon": "book-open",
+                "pages": [
+                  {
+                    "title": "Panel de control",
+                    "path": "es/user-guide/dashboard",
+                    "icon": "layout-dashboard"
+                  },
+                  {
+                    "title": "Clientes",
+                    "path": "es/user-guide/customers",
+                    "icon": "users"
+                  },
+                  {
+                    "title": "Productos",
+                    "path": "es/user-guide/products",
+                    "icon": "package"
+                  },
+                  {
+                    "title": "Facturación",
+                    "path": "es/user-guide/invoicing",
+                    "icon": "file-text"
+                  },
+                  {
+                    "title": "Cotizaciones",
+                    "path": "es/user-guide/quotes",
+                    "icon": "file"
+                  },
+                  {
+                    "title": "Facturas entrantes",
+                    "path": "es/user-guide/incoming-invoices",
+                    "icon": "inbox"
+                  },
+                  {
+                    "title": "Sincronización bancaria",
+                    "path": "es/user-guide/bank-sync",
+                    "icon": "landmark"
+                  },
+                  {
+                    "title": "Inteligencia de correo electrónico",
+                    "path": "es/user-guide/email-intelligence",
+                    "icon": "mail"
+                  },
+                  {
+                    "title": "Plantillas PDF",
+                    "path": "es/user-guide/pdf-templates",
+                    "icon": "file-type"
+                  },
+                  {
+                    "title": "Campos personalizados",
+                    "path": "es/user-guide/custom-fields",
+                    "icon": "sliders"
+                  },
+                  {
+                    "title": "Gestión de equipos",
+                    "path": "es/user-guide/team-management",
+                    "icon": "user-cog"
+                  },
+                  {
+                    "title": "Configuración",
+                    "path": "es/user-guide/settings",
+                    "icon": "settings"
+                  }
+                ]
+              },
+              {
+                "group": "Avanzado",
+                "icon": "settings",
+                "pages": [
+                  {
+                    "title": "Integraciones",
+                    "path": "es/integrations",
+                    "icon": "plug"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Referencia API",
+            "icon": "code",
+            "groups": [
+              {
+                "group": "Endpoints",
+                "openapi": "es/api-reference/openapi.yaml",
+                "pages": []
+              }
+            ]
+          },
+          {
+            "tab": "Centro de ayuda",
+            "icon": "help-circle",
+            "pages": [
+              {
+                "title": "Centro de ayuda",
+                "path": "es/help-center",
+                "icon": "home"
+              },
+              {
+                "group": "Preguntas frecuentes",
+                "icon": "help-circle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "¿Cómo creo una factura?",
+                    "path": "es/help-center/faq/how-to-create-invoice"
+                  }
+                ]
+              },
+              {
+                "group": "Solución de problemas",
+                "icon": "alert-triangle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "Correo electrónico de factura no enviado",
+                    "path": "es/help-center/troubleshooting/invoice-email-not-sent"
+                  }
+                ]
+              },
+              {
+                "group": "Guías",
+                "icon": "book-open",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "Agregar un cliente",
+                    "path": "es/help-center/guides/add-client"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Registro de cambios",
+            "icon": "clock",
+            "pages": [
+              {
+                "title": "Registro de cambios",
+                "path": "es/changelog",
+                "icon": "history"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "language": "French",
+        "tabs": [
+          {
+            "tab": "Documentation",
+            "icon": "book",
+            "groups": [
+              {
+                "group": "Premiers pas",
+                "icon": "rocket",
+                "pages": [
+                  {
+                    "title": "Introduction àNomadBill",
+                    "path": "fr/introduction",
+                    "icon": "home"
+                  },
+                  {
+                    "title": "Démarrage rapide",
+                    "path": "fr/quickstart",
+                    "icon": "zap"
+                  }
+                ]
+              },
+              {
+                "group": "Concepts fondamentaux",
+                "icon": "layers",
+                "pages": [
+                  {
+                    "title": "Caractéristiques",
+                    "path": "fr/features",
+                    "icon": "star"
+                  }
+                ]
+              },
+              {
+                "group": "Guide de l’utilisateur",
+                "icon": "book-open",
+                "pages": [
+                  {
+                    "title": "Tableau de bord",
+                    "path": "fr/user-guide/dashboard",
+                    "icon": "layout-dashboard"
+                  },
+                  {
+                    "title": "Clients",
+                    "path": "fr/user-guide/customers",
+                    "icon": "users"
+                  },
+                  {
+                    "title": "Produits",
+                    "path": "fr/user-guide/products",
+                    "icon": "package"
+                  },
+                  {
+                    "title": "Facturation",
+                    "path": "fr/user-guide/invoicing",
+                    "icon": "file-text"
+                  },
+                  {
+                    "title": "Quotes",
+                    "path": "fr/user-guide/quotes",
+                    "icon": "file"
+                  },
+                  {
+                    "title": "Factures entrantes",
+                    "path": "fr/user-guide/incoming-invoices",
+                    "icon": "inbox"
+                  },
+                  {
+                    "title": "Synchronisation bancaire",
+                    "path": "fr/user-guide/bank-sync",
+                    "icon": "landmark"
+                  },
+                  {
+                    "title": "Intelligence par e-mail",
+                    "path": "fr/user-guide/email-intelligence",
+                    "icon": "mail"
+                  },
+                  {
+                    "title": "PDF Templates",
+                    "path": "fr/user-guide/pdf-templates",
+                    "icon": "file-type"
+                  },
+                  {
+                    "title": "Champs personnalisés",
+                    "path": "fr/user-guide/custom-fields",
+                    "icon": "sliders"
+                  },
+                  {
+                    "title": "Gestion d'équipe",
+                    "path": "fr/user-guide/team-management",
+                    "icon": "user-cog"
+                  },
+                  {
+                    "title": "Paramètres",
+                    "path": "fr/user-guide/settings",
+                    "icon": "settings"
+                  }
+                ]
+              },
+              {
+                "group": "Avancé",
+                "icon": "settings",
+                "pages": [
+                  {
+                    "title": "Intégrations",
+                    "path": "fr/integrations",
+                    "icon": "plug"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Référence API",
+            "icon": "code",
+            "groups": [
+              {
+                "group": "Points de terminaison",
+                "openapi": "fr/api-reference/openapi.yaml",
+                "pages": []
+              }
+            ]
+          },
+          {
+            "tab": "Centre d’aide",
+            "icon": "help-circle",
+            "pages": [
+              {
+                "title": "Centre d'aide",
+                "path": "fr/help-center",
+                "icon": "home"
+              },
+              {
+                "group": "Questions fréquentes",
+                "icon": "help-circle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "Comment créer une facture ?",
+                    "path": "fr/help-center/faq/how-to-create-invoice"
+                  }
+                ]
+              },
+              {
+                "group": "Dépannage",
+                "icon": "alert-triangle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "E-mail de facture non envoyé",
+                    "path": "fr/help-center/troubleshooting/invoice-email-not-sent"
+                  }
+                ]
+              },
+              {
+                "group": "Guides",
+                "icon": "book-open",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "Ajouter un client",
+                    "path": "fr/help-center/guides/add-client"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Journal des modifications",
+            "icon": "clock",
+            "pages": [
+              {
+                "title": "Journal des modifications",
+                "path": "fr/changelog",
+                "icon": "history"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "language": "Italian",
+        "tabs": [
+          {
+            "tab": "Documentazione",
+            "icon": "book",
+            "groups": [
+              {
+                "group": "Primi passi",
+                "icon": "rocket",
+                "pages": [
+                  {
+                    "title": "Introduzione a NomadBill",
+                    "path": "it/introduction",
+                    "icon": "home"
+                  },
+                  {
+                    "title": "Avvio rapido",
+                    "path": "it/quickstart",
+                    "icon": "zap"
+                  }
+                ]
+              },
+              {
+                "group": "Concetti fondamentali",
+                "icon": "layers",
+                "pages": [
+                  {
+                    "title": "Caratteristiche",
+                    "path": "it/features",
+                    "icon": "star"
+                  }
+                ]
+              },
+              {
+                "group": "Guida utente",
+                "icon": "book-open",
+                "pages": [
+                  {
+                    "title": "Cruscotto",
+                    "path": "it/user-guide/dashboard",
+                    "icon": "layout-dashboard"
+                  },
+                  {
+                    "title": "Clienti",
+                    "path": "it/user-guide/customers",
+                    "icon": "users"
+                  },
+                  {
+                    "title": "Prodotti",
+                    "path": "it/user-guide/products",
+                    "icon": "package"
+                  },
+                  {
+                    "title": "Fatturazione",
+                    "path": "it/user-guide/invoicing",
+                    "icon": "file-text"
+                  },
+                  {
+                    "title": "Preventivi",
+                    "path": "it/user-guide/quotes",
+                    "icon": "file"
+                  },
+                  {
+                    "title": "Fatture passive",
+                    "path": "it/user-guide/incoming-invoices",
+                    "icon": "inbox"
+                  },
+                  {
+                    "title": "Sincronizzazione bancariaria",
+                    "path": "it/user-guide/bank-sync",
+                    "icon": "landmark"
+                  },
+                  {
+                    "title": "Gestione intelligente delle email",
+                    "path": "it/user-guide/email-intelligence",
+                    "icon": "mail"
+                  },
+                  {
+                    "title": "Modelli PDF",
+                    "path": "it/user-guide/pdf-templates",
+                    "icon": "file-type"
+                  },
+                  {
+                    "title": "Campi personalizzati",
+                    "path": "it/user-guide/custom-fields",
+                    "icon": "sliders"
+                  },
+                  {
+                    "title": "Gestione del team",
+                    "path": "it/user-guide/team-management",
+                    "icon": "user-cog"
+                  },
+                  {
+                    "title": "Impostazioni",
+                    "path": "it/user-guide/settings",
+                    "icon": "settings"
+                  }
+                ]
+              },
+              {
+                "group": "Avanzate",
+                "icon": "settings",
+                "pages": [
+                  {
+                    "title": "Integrazioni",
+                    "path": "it/integrations",
+                    "icon": "plug"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Riferimento API",
+            "icon": "code",
+            "groups": [
+              {
+                "group": "Endpoint",
+                "openapi": "it/api-reference/openapi.yaml",
+                "pages": []
+              }
+            ]
+          },
+          {
+            "tab": "Centro assistenza",
+            "icon": "help-circle",
+            "pages": [
+              {
+                "title": "Centro assistenza",
+                "path": "it/help-center",
+                "icon": "home"
+              },
+              {
+                "group": "Domande frequenti",
+                "icon": "help-circle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "Come creo una fattura?",
+                    "path": "it/help-center/faq/how-to-create-invoice"
+                  }
+                ]
+              },
+              {
+                "group": "Risoluzione dei problemi",
+                "icon": "alert-triangle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "E-mail di fattura non inviata",
+                    "path": "it/help-center/troubleshooting/invoice-email-not-sent"
+                  }
+                ]
+              },
+              {
+                "group": "Guide",
+                "icon": "book-open",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "Aggiungi un cliente",
+                    "path": "it/help-center/guides/add-client"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Registro delle modifiche",
+            "icon": "clock",
+            "pages": [
+              {
+                "title": "Registro delle modifiche",
+                "path": "it/changelog",
+                "icon": "history"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "language": "Portuguese",
+        "tabs": [
+          {
+            "tab": "Documentação",
+            "icon": "book",
+            "groups": [
+              {
+                "group": "Primeiros passos",
+                "icon": "rocket",
+                "pages": [
+                  {
+                    "title": "Introdução ao NomadBill",
+                    "path": "pt/introduction",
+                    "icon": "home"
+                  },
+                  {
+                    "title": "Início rápido",
+                    "path": "pt/quickstart",
+                    "icon": "zap"
+                  }
+                ]
+              },
+              {
+                "group": "Conceitos fundamentais",
+                "icon": "layers",
+                "pages": [
+                  {
+                    "title": "Funcionalidades",
+                    "path": "pt/features",
+                    "icon": "star"
+                  }
+                ]
+              },
+              {
+                "group": "Guia do utilizador",
+                "icon": "book-open",
+                "pages": [
+                  {
+                    "title": "Painel",
+                    "path": "pt/user-guide/dashboard",
+                    "icon": "layout-dashboard"
+                  },
+                  {
+                    "title": "Clientes",
+                    "path": "pt/user-guide/customers",
+                    "icon": "users"
+                  },
+                  {
+                    "title": "Produtos",
+                    "path": "pt/user-guide/products",
+                    "icon": "package"
+                  },
+                  {
+                    "title": "Faturação",
+                    "path": "pt/user-guide/invoicing",
+                    "icon": "file-text"
+                  },
+                  {
+                    "title": "Orçamentos",
+                    "path": "pt/user-guide/quotes",
+                    "icon": "file"
+                  },
+                  {
+                    "title": "Faturas recebidas",
+                    "path": "pt/user-guide/incoming-invoices",
+                    "icon": "inbox"
+                  },
+                  {
+                    "title": "Sincronização bancária",
+                    "path": "pt/user-guide/bank-sync",
+                    "icon": "landmark"
+                  },
+                  {
+                    "title": "Inteligência de e-mail",
+                    "path": "pt/user-guide/email-intelligence",
+                    "icon": "mail"
+                  },
+                  {
+                    "title": "Modelos PDF",
+                    "path": "pt/user-guide/pdf-templates",
+                    "icon": "file-type"
+                  },
+                  {
+                    "title": "Campos personalizados",
+                    "path": "pt/user-guide/custom-fields",
+                    "icon": "sliders"
+                  },
+                  {
+                    "title": "Gestão da equipa",
+                    "path": "pt/user-guide/team-management",
+                    "icon": "user-cog"
+                  },
+                  {
+                    "title": "Definições",
+                    "path": "pt/user-guide/settings",
+                    "icon": "settings"
+                  }
+                ]
+              },
+              {
+                "group": "Avançado",
+                "icon": "settings",
+                "pages": [
+                  {
+                    "title": "Integrações",
+                    "path": "pt/integrations",
+                    "icon": "plug"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Referência da API",
+            "icon": "code",
+            "groups": [
+              {
+                "group": "Endpoints",
+                "openapi": "pt/api-reference/openapi.yaml",
+                "pages": []
+              }
+            ]
+          },
+          {
+            "tab": "Centro de ajuda",
+            "icon": "help-circle",
+            "pages": [
+              {
+                "title": "Centro de ajuda",
+                "path": "pt/help-center",
+                "icon": "home"
+              },
+              {
+                "group": "Perguntas frequentes",
+                "icon": "help-circle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "Como criar uma fatura?",
+                    "path": "pt/help-center/faq/how-to-create-invoice"
+                  }
+                ]
+              },
+              {
+                "group": "Resolução de problemas",
+                "icon": "alert-triangle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "E-mail da fatura não enviado",
+                    "path": "pt/help-center/troubleshooting/invoice-email-not-sent"
+                  }
+                ]
+              },
+              {
+                "group": "Guias",
+                "icon": "book-open",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "Adicionar um cliente",
+                    "path": "pt/help-center/guides/add-client"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Registo de alterações",
+            "icon": "clock",
+            "pages": [
+              {
+                "title": "Registo de alterações",
+                "path": "pt/changelog",
+                "icon": "history"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "language": "Russian",
+        "tabs": [
+          {
+            "tab": "Документация",
+            "icon": "book",
+            "groups": [
+              {
+                "group": "Начало работы",
+                "icon": "rocket",
+                "pages": [
+                  {
+                    "title": "Введение в NomadBill",
+                    "path": "ru/introduction",
+                    "icon": "home"
+                  },
+                  {
+                    "title": "Быстрый старт",
+                    "path": "ru/quickstart",
+                    "icon": "zap"
+                  }
+                ]
+              },
+              {
+                "group": "Основные понятия",
+                "icon": "layers",
+                "pages": [
+                  {
+                    "title": "Функции",
+                    "path": "ru/features",
+                    "icon": "star"
+                  }
+                ]
+              },
+              {
+                "group": "Руководство пользователя",
+                "icon": "book-open",
+                "pages": [
+                  {
+                    "title": "Панель управления",
+                    "path": "ru/user-guide/dashboard",
+                    "icon": "layout-dashboard"
+                  },
+                  {
+                    "title": "Клиенты",
+                    "path": "ru/user-guide/customers",
+                    "icon": "users"
+                  },
+                  {
+                    "title": "Продукты",
+                    "path": "ru/user-guide/products",
+                    "icon": "package"
+                  },
+                  {
+                    "title": "Выставление счетов",
+                    "path": "ru/user-guide/invoicing",
+                    "icon": "file-text"
+                  },
+                  {
+                    "title": "Коммерческие предложения",
+                    "path": "ru/user-guide/quotes",
+                    "icon": "file"
+                  },
+                  {
+                    "title": "Входящие счета",
+                    "path": "ru/user-guide/incoming-invoices",
+                    "icon": "inbox"
+                  },
+                  {
+                    "title": "Банковская синхронизация",
+                    "path": "ru/user-guide/bank-sync",
+                    "icon": "landmark"
+                  },
+                  {
+                    "title": "Аналитика электронной почты",
+                    "path": "ru/user-guide/email-intelligence",
+                    "icon": "mail"
+                  },
+                  {
+                    "title": "Шаблоны PDF",
+                    "path": "ru/user-guide/pdf-templates",
+                    "icon": "file-type"
+                  },
+                  {
+                    "title": "Пользовательские поля",
+                    "path": "ru/user-guide/custom-fields",
+                    "icon": "sliders"
+                  },
+                  {
+                    "title": "Управление командой",
+                    "path": "ru/user-guide/team-management",
+                    "icon": "user-cog"
+                  },
+                  {
+                    "title": "Настройки",
+                    "path": "ru/user-guide/settings",
+                    "icon": "settings"
+                  }
+                ]
+              },
+              {
+                "group": "Дополнительно",
+                "icon": "settings",
+                "pages": [
+                  {
+                    "title": "Интеграции",
+                    "path": "ru/integrations",
+                    "icon": "plug"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Справочник API",
+            "icon": "code",
+            "groups": [
+              {
+                "group": "Конечные точки",
+                "openapi": "ru/api-reference/openapi.yaml",
+                "pages": []
+              }
+            ]
+          },
+          {
+            "tab": "Справочный центр",
+            "icon": "help-circle",
+            "pages": [
+              {
+                "title": "Справочный центр",
+                "path": "ru/help-center",
+                "icon": "home"
+              },
+              {
+                "group": "Часто задаваемые вопросы",
+                "icon": "help-circle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "Как создать счет-фактуру?",
+                    "path": "ru/help-center/faq/how-to-create-invoice"
+                  }
+                ]
+              },
+              {
+                "group": "Устранение неполадок",
+                "icon": "alert-triangle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "Электронное письмо со счетом-фактурой не отправлено",
+                    "path": "ru/help-center/troubleshooting/invoice-email-not-sent"
+                  }
+                ]
+              },
+              {
+                "group": "Руководства",
+                "icon": "book-open",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "Добавить клиента",
+                    "path": "ru/help-center/guides/add-client"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Журнал изменений",
+            "icon": "clock",
+            "pages": [
+              {
+                "title": "Журнал изменений",
+                "path": "ru/changelog",
+                "icon": "history"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "language": "Turkish",
+        "tabs": [
+          {
+            "tab": "Dokümantasyon",
+            "icon": "book",
+            "groups": [
+              {
+                "group": "Başlarken",
+                "icon": "rocket",
+                "pages": [
+                  {
+                    "title": "NomadBill'e Giriş",
+                    "path": "tr/introduction",
+                    "icon": "home"
+                  },
+                  {
+                    "title": "Hızlı başlangıç",
+                    "path": "tr/quickstart",
+                    "icon": "zap"
+                  }
+                ]
+              },
+              {
+                "group": "Temel kavramlar",
+                "icon": "layers",
+                "pages": [
+                  {
+                    "title": "Özellikler",
+                    "path": "tr/features",
+                    "icon": "star"
+                  }
+                ]
+              },
+              {
+                "group": "Kullanıcı kılavuzu",
+                "icon": "book-open",
+                "pages": [
+                  {
+                    "title": "Kontrol Paneli",
+                    "path": "tr/user-guide/dashboard",
+                    "icon": "layout-dashboard"
+                  },
+                  {
+                    "title": "Müşteriler",
+                    "path": "tr/user-guide/customers",
+                    "icon": "users"
+                  },
+                  {
+                    "title": "Ürünler",
+                    "path": "tr/user-guide/products",
+                    "icon": "package"
+                  },
+                  {
+                    "title": "Faturalama",
+                    "path": "tr/user-guide/invoicing",
+                    "icon": "file-text"
+                  },
+                  {
+                    "title": "Teklifler",
+                    "path": "tr/user-guide/quotes",
+                    "icon": "file"
+                  },
+                  {
+                    "title": "Gelen Faturalar",
+                    "path": "tr/user-guide/incoming-invoices",
+                    "icon": "inbox"
+                  },
+                  {
+                    "title": "Banka Senkronizasyonu",
+                    "path": "tr/user-guide/bank-sync",
+                    "icon": "landmark"
+                  },
+                  {
+                    "title": "Akıllı E-posta",
+                    "path": "tr/user-guide/email-intelligence",
+                    "icon": "mail"
+                  },
+                  {
+                    "title": "PDF Şablonları",
+                    "path": "tr/user-guide/pdf-templates",
+                    "icon": "file-type"
+                  },
+                  {
+                    "title": "Özel Alanlar",
+                    "path": "tr/user-guide/custom-fields",
+                    "icon": "sliders"
+                  },
+                  {
+                    "title": "Ekip Yönetimi",
+                    "path": "tr/user-guide/team-management",
+                    "icon": "user-cog"
+                  },
+                  {
+                    "title": "Ayarlar",
+                    "path": "tr/user-guide/settings",
+                    "icon": "settings"
+                  }
+                ]
+              },
+              {
+                "group": "Gelişmiş",
+                "icon": "settings",
+                "pages": [
+                  {
+                    "title": "Entegrasyonlar",
+                    "path": "tr/integrations",
+                    "icon": "plug"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "API Referansı",
+            "icon": "code",
+            "groups": [
+              {
+                "group": "Uç noktalar",
+                "openapi": "tr/api-reference/openapi.yaml",
+                "pages": []
+              }
+            ]
+          },
+          {
+            "tab": "Yardım Merkezi",
+            "icon": "help-circle",
+            "pages": [
+              {
+                "title": "Yardım Merkezi",
+                "path": "tr/help-center",
+                "icon": "home"
+              },
+              {
+                "group": "Sık sorulan sorular",
+                "icon": "help-circle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "Nasıl fatura oluşturabilirim?",
+                    "path": "tr/help-center/faq/how-to-create-invoice"
+                  }
+                ]
+              },
+              {
+                "group": "Sorun giderme",
+                "icon": "alert-triangle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "Fatura E-postası Gönderilemedi",
+                    "path": "tr/help-center/troubleshooting/invoice-email-not-sent"
+                  }
+                ]
+              },
+              {
+                "group": "Kılavuzlar",
+                "icon": "book-open",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "Müşteri Ekle",
+                    "path": "tr/help-center/guides/add-client"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Değişiklik günlüğü",
+            "icon": "clock",
+            "pages": [
+              {
+                "title": "Değişiklik günlüğü",
+                "path": "tr/changelog",
+                "icon": "history"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "language": "Arabic",
+        "tabs": [
+          {
+            "tab": "التوثيق",
+            "icon": "book",
+            "groups": [
+              {
+                "group": "البدء",
+                "icon": "rocket",
+                "pages": [
+                  {
+                    "title": "مقدمة إلى NomadBill",
+                    "path": "ar/introduction",
+                    "icon": "home"
+                  },
+                  {
+                    "title": "البدء السريع",
+                    "path": "ar/quickstart",
+                    "icon": "zap"
+                  }
+                ]
+              },
+              {
+                "group": "المفاهيم الأساسية",
+                "icon": "layers",
+                "pages": [
+                  {
+                    "title": "الميزات",
+                    "path": "ar/features",
+                    "icon": "star"
+                  }
+                ]
+              },
+              {
+                "group": "دليل المستخدم",
+                "icon": "book-open",
+                "pages": [
+                  {
+                    "title": "لوحة المعلومات",
+                    "path": "ar/user-guide/dashboard",
+                    "icon": "layout-dashboard"
+                  },
+                  {
+                    "title": "عملاء",
+                    "path": "ar/user-guide/customers",
+                    "icon": "users"
+                  },
+                  {
+                    "title": "منتجات",
+                    "path": "ar/user-guide/products",
+                    "icon": "package"
+                  },
+                  {
+                    "title": "الفواتير",
+                    "path": "ar/user-guide/invoicing",
+                    "icon": "file-text"
+                  },
+                  {
+                    "title": "عروض الأسعار",
+                    "path": "ar/user-guide/quotes",
+                    "icon": "file"
+                  },
+                  {
+                    "title": "الفواتير الواردة",
+                    "path": "ar/user-guide/incoming-invoices",
+                    "icon": "inbox"
+                  },
+                  {
+                    "title": "مزامنة الحسابات المصرفية",
+                    "path": "ar/user-guide/bank-sync",
+                    "icon": "landmark"
+                  },
+                  {
+                    "title": "ذكاء البريد الإلكتروني",
+                    "path": "ar/user-guide/email-intelligence",
+                    "icon": "mail"
+                  },
+                  {
+                    "title": "قوالب PDF",
+                    "path": "ar/user-guide/pdf-templates",
+                    "icon": "file-type"
+                  },
+                  {
+                    "title": "الحقول المخصصة",
+                    "path": "ar/user-guide/custom-fields",
+                    "icon": "sliders"
+                  },
+                  {
+                    "title": "إدارة الفريق",
+                    "path": "ar/user-guide/team-management",
+                    "icon": "user-cog"
+                  },
+                  {
+                    "title": "إعدادات",
+                    "path": "ar/user-guide/settings",
+                    "icon": "settings"
+                  }
+                ]
+              },
+              {
+                "group": "متقدم",
+                "icon": "settings",
+                "pages": [
+                  {
+                    "title": "عمليات التكامل",
+                    "path": "ar/integrations",
+                    "icon": "plug"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "مرجع API",
+            "icon": "code",
+            "groups": [
+              {
+                "group": "نقاط النهاية",
+                "openapi": "ar/api-reference/openapi.yaml",
+                "pages": []
+              }
+            ]
+          },
+          {
+            "tab": "مركز المساعدة",
+            "icon": "help-circle",
+            "pages": [
+              {
+                "title": "مركز المساعدة",
+                "path": "ar/help-center",
+                "icon": "home"
+              },
+              {
+                "group": "الأسئلة الشائعة",
+                "icon": "help-circle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "كيف أقوم بإنشاء فاتورة؟",
+                    "path": "ar/help-center/faq/how-to-create-invoice"
+                  }
+                ]
+              },
+              {
+                "group": "استكشاف الأخطاء وإصلاحها",
+                "icon": "alert-triangle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "لم يتم إرسال الفاتورة بالبريد الإلكتروني",
+                    "path": "ar/help-center/troubleshooting/invoice-email-not-sent"
+                  }
+                ]
+              },
+              {
+                "group": "الأدلة",
+                "icon": "book-open",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "إضافة عميل",
+                    "path": "ar/help-center/guides/add-client"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "سجل التغييرات",
+            "icon": "clock",
+            "pages": [
+              {
+                "title": "سجل التغييرات",
+                "path": "ar/changelog",
+                "icon": "history"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "language": "Hindi",
+        "tabs": [
+          {
+            "tab": "दस्तावेज़ीकरण",
+            "icon": "book",
+            "groups": [
+              {
+                "group": "शुरुआत",
+                "icon": "rocket",
+                "pages": [
+                  {
+                    "title": "NomadBill का परिचय",
+                    "path": "hi/introduction",
+                    "icon": "home"
+                  },
+                  {
+                    "title": "त्वरित शुरुआत",
+                    "path": "hi/quickstart",
+                    "icon": "zap"
+                  }
+                ]
+              },
+              {
+                "group": "मुख्य अवधारणाएँ",
+                "icon": "layers",
+                "pages": [
+                  {
+                    "title": "विशेषताएँ",
+                    "path": "hi/features",
+                    "icon": "star"
+                  }
+                ]
+              },
+              {
+                "group": "उपयोगकर्ता मार्गदर्शिका",
+                "icon": "book-open",
+                "pages": [
+                  {
+                    "title": "डैशबोर्ड",
+                    "path": "hi/user-guide/dashboard",
+                    "icon": "layout-dashboard"
+                  },
+                  {
+                    "title": "ग्राहक",
+                    "path": "hi/user-guide/customers",
+                    "icon": "users"
+                  },
+                  {
+                    "title": "उत्पाद",
+                    "path": "hi/user-guide/products",
+                    "icon": "package"
+                  },
+                  {
+                    "title": "चालान प्रबंधन",
+                    "path": "hi/user-guide/invoicing",
+                    "icon": "file-text"
+                  },
+                  {
+                    "title": "कोटेशन",
+                    "path": "hi/user-guide/quotes",
+                    "icon": "file"
+                  },
+                  {
+                    "title": "आने वाले चालान",
+                    "path": "hi/user-guide/incoming-invoices",
+                    "icon": "inbox"
+                  },
+                  {
+                    "title": "बैंक सिंक",
+                    "path": "hi/user-guide/bank-sync",
+                    "icon": "landmark"
+                  },
+                  {
+                    "title": "ईमेल इंटेलिजेंस",
+                    "path": "hi/user-guide/email-intelligence",
+                    "icon": "mail"
+                  },
+                  {
+                    "title": "PDF टेम्पलेट्स",
+                    "path": "hi/user-guide/pdf-templates",
+                    "icon": "file-type"
+                  },
+                  {
+                    "title": "कस्टम फ़ील्ड",
+                    "path": "hi/user-guide/custom-fields",
+                    "icon": "sliders"
+                  },
+                  {
+                    "title": "टीम प्रबंधन",
+                    "path": "hi/user-guide/team-management",
+                    "icon": "user-cog"
+                  },
+                  {
+                    "title": "सेटिंग्स",
+                    "path": "hi/user-guide/settings",
+                    "icon": "settings"
+                  }
+                ]
+              },
+              {
+                "group": "उन्नत",
+                "icon": "settings",
+                "pages": [
+                  {
+                    "title": "एकीकरण",
+                    "path": "hi/integrations",
+                    "icon": "plug"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "API संदर्भ",
+            "icon": "code",
+            "groups": [
+              {
+                "group": "एंडपॉइंट",
+                "openapi": "hi/api-reference/openapi.yaml",
+                "pages": []
+              }
+            ]
+          },
+          {
+            "tab": "सहायता केंद्र",
+            "icon": "help-circle",
+            "pages": [
+              {
+                "title": "सहायता केंद्र",
+                "path": "hi/help-center",
+                "icon": "home"
+              },
+              {
+                "group": "अक्सर पूछे जाने वाले प्रश्न",
+                "icon": "help-circle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "मैं चालान कैसे बनाऊं?",
+                    "path": "hi/help-center/faq/how-to-create-invoice"
+                  }
+                ]
+              },
+              {
+                "group": "समस्या निवारण",
+                "icon": "alert-triangle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "चालान ईमेल नहीं भेजा गया",
+                    "path": "hi/help-center/troubleshooting/invoice-email-not-sent"
+                  }
+                ]
+              },
+              {
+                "group": "मार्गदर्शिकाएँ",
+                "icon": "book-open",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "एक ग्राहक जोड़ें",
+                    "path": "hi/help-center/guides/add-client"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "परिवर्तन लॉग",
+            "icon": "clock",
+            "pages": [
+              {
+                "title": "परिवर्तन लॉग",
+                "path": "hi/changelog",
+                "icon": "history"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "language": "Chinese",
+        "tabs": [
+          {
+            "tab": "文档",
+            "icon": "book",
+            "groups": [
+              {
+                "group": "入门",
+                "icon": "rocket",
+                "pages": [
+                  {
+                    "title": "NomadBill 简介",
+                    "path": "zh/introduction",
+                    "icon": "home"
+                  },
+                  {
+                    "title": "快速入门",
+                    "path": "zh/quickstart",
+                    "icon": "zap"
+                  }
+                ]
+              },
+              {
+                "group": "核心概念",
+                "icon": "layers",
+                "pages": [
+                  {
+                    "title": "特征",
+                    "path": "zh/features",
+                    "icon": "star"
+                  }
+                ]
+              },
+              {
+                "group": "用户指南",
+                "icon": "book-open",
+                "pages": [
+                  {
+                    "title": "仪表板",
+                    "path": "zh/user-guide/dashboard",
+                    "icon": "layout-dashboard"
+                  },
+                  {
+                    "title": "顾客",
+                    "path": "zh/user-guide/customers",
+                    "icon": "users"
+                  },
+                  {
+                    "title": "产品",
+                    "path": "zh/user-guide/products",
+                    "icon": "package"
+                  },
+                  {
+                    "title": "开具发票",
+                    "path": "zh/user-guide/invoicing",
+                    "icon": "file-text"
+                  },
+                  {
+                    "title": "报价",
+                    "path": "zh/user-guide/quotes",
+                    "icon": "file"
+                  },
+                  {
+                    "title": "进项发票",
+                    "path": "zh/user-guide/incoming-invoices",
+                    "icon": "inbox"
+                  },
+                  {
+                    "title": "银行同步",
+                    "path": "zh/user-guide/bank-sync",
+                    "icon": "landmark"
+                  },
+                  {
+                    "title": "邮件智能",
+                    "path": "zh/user-guide/email-intelligence",
+                    "icon": "mail"
+                  },
+                  {
+                    "title": "PDF 模板",
+                    "path": "zh/user-guide/pdf-templates",
+                    "icon": "file-type"
+                  },
+                  {
+                    "title": "自定义字段",
+                    "path": "zh/user-guide/custom-fields",
+                    "icon": "sliders"
+                  },
+                  {
+                    "title": "团队管理",
+                    "path": "zh/user-guide/team-management",
+                    "icon": "user-cog"
+                  },
+                  {
+                    "title": "设置",
+                    "path": "zh/user-guide/settings",
+                    "icon": "settings"
+                  }
+                ]
+              },
+              {
+                "group": "高级",
+                "icon": "settings",
+                "pages": [
+                  {
+                    "title": "集成",
+                    "path": "zh/integrations",
+                    "icon": "plug"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "API 参考",
+            "icon": "code",
+            "groups": [
+              {
+                "group": "端点",
+                "openapi": "zh/api-reference/openapi.yaml",
+                "pages": []
+              }
+            ]
+          },
+          {
+            "tab": "帮助中心",
+            "icon": "help-circle",
+            "pages": [
+              {
+                "title": "帮助中心",
+                "path": "zh/help-center",
+                "icon": "home"
+              },
+              {
+                "group": "常见问题",
+                "icon": "help-circle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "如何创建发票？",
+                    "path": "zh/help-center/faq/how-to-create-invoice"
+                  }
+                ]
+              },
+              {
+                "group": "故障排除",
+                "icon": "alert-triangle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "发票邮件未发送",
+                    "path": "zh/help-center/troubleshooting/invoice-email-not-sent"
+                  }
+                ]
+              },
+              {
+                "group": "指南",
+                "icon": "book-open",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "添加客户",
+                    "path": "zh/help-center/guides/add-client"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "变更日志",
+            "icon": "clock",
+            "pages": [
+              {
+                "title": "变更日志",
+                "path": "zh/changelog",
+                "icon": "history"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "language": "Japanese",
+        "tabs": [
+          {
+            "tab": "ドキュメント",
+            "icon": "book",
+            "groups": [
+              {
+                "group": "はじめに",
+                "icon": "rocket",
+                "pages": [
+                  {
+                    "title": "NomadBill の紹介",
+                    "path": "ja/introduction",
+                    "icon": "home"
+                  },
+                  {
+                    "title": "クイックスタート",
+                    "path": "ja/quickstart",
+                    "icon": "zap"
+                  }
+                ]
+              },
+              {
+                "group": "基本概念",
+                "icon": "layers",
+                "pages": [
+                  {
+                    "title": "特徴",
+                    "path": "ja/features",
+                    "icon": "star"
+                  }
+                ]
+              },
+              {
+                "group": "ユーザーガイド",
+                "icon": "book-open",
+                "pages": [
+                  {
+                    "title": "ダッシュボード",
+                    "path": "ja/user-guide/dashboard",
+                    "icon": "layout-dashboard"
+                  },
+                  {
+                    "title": "お客様",
+                    "path": "ja/user-guide/customers",
+                    "icon": "users"
+                  },
+                  {
+                    "title": "製品",
+                    "path": "ja/user-guide/products",
+                    "icon": "package"
+                  },
+                  {
+                    "title": "請求書発行",
+                    "path": "ja/user-guide/invoicing",
+                    "icon": "file-text"
+                  },
+                  {
+                    "title": "引用",
+                    "path": "ja/user-guide/quotes",
+                    "icon": "file"
+                  },
+                  {
+                    "title": "請求書の受信",
+                    "path": "ja/user-guide/incoming-invoices",
+                    "icon": "inbox"
+                  },
+                  {
+                    "title": "バンク同期",
+                    "path": "ja/user-guide/bank-sync",
+                    "icon": "landmark"
+                  },
+                  {
+                    "title": "電子メールインテリジェンス",
+                    "path": "ja/user-guide/email-intelligence",
+                    "icon": "mail"
+                  },
+                  {
+                    "title": "PDF テンプレート",
+                    "path": "ja/user-guide/pdf-templates",
+                    "icon": "file-type"
+                  },
+                  {
+                    "title": "カスタムフィールド",
+                    "path": "ja/user-guide/custom-fields",
+                    "icon": "sliders"
+                  },
+                  {
+                    "title": "チームマネジメント",
+                    "path": "ja/user-guide/team-management",
+                    "icon": "user-cog"
+                  },
+                  {
+                    "title": "設定",
+                    "path": "ja/user-guide/settings",
+                    "icon": "settings"
+                  }
+                ]
+              },
+              {
+                "group": "詳細",
+                "icon": "settings",
+                "pages": [
+                  {
+                    "title": "統合",
+                    "path": "ja/integrations",
+                    "icon": "plug"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "API リファレンス",
+            "icon": "code",
+            "groups": [
+              {
+                "group": "エンドポイント",
+                "openapi": "ja/api-reference/openapi.yaml",
+                "pages": []
+              }
+            ]
+          },
+          {
+            "tab": "ヘルプセンター",
+            "icon": "help-circle",
+            "pages": [
+              {
+                "title": "ヘルプセンター",
+                "path": "ja/help-center",
+                "icon": "home"
+              },
+              {
+                "group": "よくある質問",
+                "icon": "help-circle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "請求書を作成するにはどうすればよいですか?",
+                    "path": "ja/help-center/faq/how-to-create-invoice"
+                  }
+                ]
+              },
+              {
+                "group": "トラブルシューティング",
+                "icon": "alert-triangle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "請求書メールが送信されない",
+                    "path": "ja/help-center/troubleshooting/invoice-email-not-sent"
+                  }
+                ]
+              },
+              {
+                "group": "ガイド",
+                "icon": "book-open",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "顧客を追加する",
+                    "path": "ja/help-center/guides/add-client"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "変更履歴",
+            "icon": "clock",
+            "pages": [
+              {
+                "title": "変更履歴",
+                "path": "ja/changelog",
+                "icon": "history"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "language": "Korean",
+        "tabs": [
+          {
+            "tab": "문서",
+            "icon": "book",
+            "groups": [
+              {
+                "group": "시작하기",
+                "icon": "rocket",
+                "pages": [
+                  {
+                    "title": "NomadBill 소개",
+                    "path": "ko/introduction",
+                    "icon": "home"
+                  },
+                  {
+                    "title": "빠른 시작",
+                    "path": "ko/quickstart",
+                    "icon": "zap"
+                  }
+                ]
+              },
+              {
+                "group": "핵심 개념",
+                "icon": "layers",
+                "pages": [
+                  {
+                    "title": "기능",
+                    "path": "ko/features",
+                    "icon": "star"
+                  }
+                ]
+              },
+              {
+                "group": "사용자 가이드",
+                "icon": "book-open",
+                "pages": [
+                  {
+                    "title": "대시보드",
+                    "path": "ko/user-guide/dashboard",
+                    "icon": "layout-dashboard"
+                  },
+                  {
+                    "title": "고객",
+                    "path": "ko/user-guide/customers",
+                    "icon": "users"
+                  },
+                  {
+                    "title": "제품",
+                    "path": "ko/user-guide/products",
+                    "icon": "package"
+                  },
+                  {
+                    "title": "인보이스 발행",
+                    "path": "ko/user-guide/invoicing",
+                    "icon": "file-text"
+                  },
+                  {
+                    "title": "견적서",
+                    "path": "ko/user-guide/quotes",
+                    "icon": "file"
+                  },
+                  {
+                    "title": "수신 인보이스",
+                    "path": "ko/user-guide/incoming-invoices",
+                    "icon": "inbox"
+                  },
+                  {
+                    "title": "은행 동기화",
+                    "path": "ko/user-guide/bank-sync",
+                    "icon": "landmark"
+                  },
+                  {
+                    "title": "이메일 인텔리전스",
+                    "path": "ko/user-guide/email-intelligence",
+                    "icon": "mail"
+                  },
+                  {
+                    "title": "PDF 템플릿",
+                    "path": "ko/user-guide/pdf-templates",
+                    "icon": "file-type"
+                  },
+                  {
+                    "title": "사용자 정의 필드",
+                    "path": "ko/user-guide/custom-fields",
+                    "icon": "sliders"
+                  },
+                  {
+                    "title": "팀 관리",
+                    "path": "ko/user-guide/team-management",
+                    "icon": "user-cog"
+                  },
+                  {
+                    "title": "설정",
+                    "path": "ko/user-guide/settings",
+                    "icon": "settings"
+                  }
+                ]
+              },
+              {
+                "group": "고급",
+                "icon": "settings",
+                "pages": [
+                  {
+                    "title": "통합",
+                    "path": "ko/integrations",
+                    "icon": "plug"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "API 레퍼런스",
+            "icon": "code",
+            "groups": [
+              {
+                "group": "엔드포인트",
+                "openapi": "ko/api-reference/openapi.yaml",
+                "pages": []
+              }
+            ]
+          },
+          {
+            "tab": "도움말 센터",
+            "icon": "help-circle",
+            "pages": [
+              {
+                "title": "도움말 센터",
+                "path": "ko/help-center",
+                "icon": "home"
+              },
+              {
+                "group": "자주 묻는 질문",
+                "icon": "help-circle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "인보이스는 어떻게 생성하나요?",
+                    "path": "ko/help-center/faq/how-to-create-invoice"
+                  }
+                ]
+              },
+              {
+                "group": "문제 해결",
+                "icon": "alert-triangle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "인보이스 이메일이 전송되지 않았습니다",
+                    "path": "ko/help-center/troubleshooting/invoice-email-not-sent"
+                  }
+                ]
+              },
+              {
+                "group": "가이드",
+                "icon": "book-open",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "고객 추가",
+                    "path": "ko/help-center/guides/add-client"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "변경 내역",
+            "icon": "clock",
+            "pages": [
+              {
+                "title": "변경 내역",
+                "path": "ko/changelog",
+                "icon": "history"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "language": "Indonesian",
+        "tabs": [
+          {
+            "tab": "Dokumentasi",
+            "icon": "book",
+            "groups": [
+              {
+                "group": "Memulai",
+                "icon": "rocket",
+                "pages": [
+                  {
+                    "title": "Pengantar NomadBill",
+                    "path": "id/introduction",
+                    "icon": "home"
+                  },
+                  {
+                    "title": "Mulai cepat",
+                    "path": "id/quickstart",
+                    "icon": "zap"
+                  }
+                ]
+              },
+              {
+                "group": "Konsep inti",
+                "icon": "layers",
+                "pages": [
+                  {
+                    "title": "Fitur",
+                    "path": "id/features",
+                    "icon": "star"
+                  }
+                ]
+              },
+              {
+                "group": "Panduan pengguna",
+                "icon": "book-open",
+                "pages": [
+                  {
+                    "title": "Dasbor",
+                    "path": "id/user-guide/dashboard",
+                    "icon": "layout-dashboard"
+                  },
+                  {
+                    "title": "Pelanggan",
+                    "path": "id/user-guide/customers",
+                    "icon": "users"
+                  },
+                  {
+                    "title": "Produk",
+                    "path": "id/user-guide/products",
+                    "icon": "package"
+                  },
+                  {
+                    "title": "Faktur",
+                    "path": "id/user-guide/invoicing",
+                    "icon": "file-text"
+                  },
+                  {
+                    "title": "Penawaran",
+                    "path": "id/user-guide/quotes",
+                    "icon": "file"
+                  },
+                  {
+                    "title": "Faktur Masuk",
+                    "path": "id/user-guide/incoming-invoices",
+                    "icon": "inbox"
+                  },
+                  {
+                    "title": "Sinkronisasi Bank",
+                    "path": "id/user-guide/bank-sync",
+                    "icon": "landmark"
+                  },
+                  {
+                    "title": "Intelijen Email",
+                    "path": "id/user-guide/email-intelligence",
+                    "icon": "mail"
+                  },
+                  {
+                    "title": "Templat PDF",
+                    "path": "id/user-guide/pdf-templates",
+                    "icon": "file-type"
+                  },
+                  {
+                    "title": "Bidang Kustom",
+                    "path": "id/user-guide/custom-fields",
+                    "icon": "sliders"
+                  },
+                  {
+                    "title": "Manajemen Tim",
+                    "path": "id/user-guide/team-management",
+                    "icon": "user-cog"
+                  },
+                  {
+                    "title": "Pengaturan",
+                    "path": "id/user-guide/settings",
+                    "icon": "settings"
+                  }
+                ]
+              },
+              {
+                "group": "Lanjutan",
+                "icon": "settings",
+                "pages": [
+                  {
+                    "title": "Integrasi",
+                    "path": "id/integrations",
+                    "icon": "plug"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Referensi API",
+            "icon": "code",
+            "groups": [
+              {
+                "group": "Endpoint",
+                "openapi": "id/api-reference/openapi.yaml",
+                "pages": []
+              }
+            ]
+          },
+          {
+            "tab": "Pusat Bantuan",
+            "icon": "help-circle",
+            "pages": [
+              {
+                "title": "Pusat Bantuan",
+                "path": "id/help-center",
+                "icon": "home"
+              },
+              {
+                "group": "Pertanyaan umum",
+                "icon": "help-circle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "Bagaimana cara membuat faktur?",
+                    "path": "id/help-center/faq/how-to-create-invoice"
+                  }
+                ]
+              },
+              {
+                "group": "Pemecahan masalah",
+                "icon": "alert-triangle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "Email Faktur Tidak Terkirim",
+                    "path": "id/help-center/troubleshooting/invoice-email-not-sent"
+                  }
+                ]
+              },
+              {
+                "group": "Panduan",
+                "icon": "book-open",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "Tambahkan Pelanggan",
+                    "path": "id/help-center/guides/add-client"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Log perubahan",
+            "icon": "clock",
+            "pages": [
+              {
+                "title": "log perubahan",
+                "path": "id/changelog",
+                "icon": "history"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "language": "Thai",
+        "tabs": [
+          {
+            "tab": "เอกสารประกอบ",
+            "icon": "book",
+            "groups": [
+              {
+                "group": "เริ่มต้นใช้งาน",
+                "icon": "rocket",
+                "pages": [
+                  {
+                    "title": "แนะนำ NomadBill",
+                    "path": "th/introduction",
+                    "icon": "home"
+                  },
+                  {
+                    "title": "เริ่มต้นอย่างรวดเร็ว",
+                    "path": "th/quickstart",
+                    "icon": "zap"
+                  }
+                ]
+              },
+              {
+                "group": "แนวคิดหลัก",
+                "icon": "layers",
+                "pages": [
+                  {
+                    "title": "ฟีเจอร์",
+                    "path": "th/features",
+                    "icon": "star"
+                  }
+                ]
+              },
+              {
+                "group": "คู่มือผู้ใช้",
+                "icon": "book-open",
+                "pages": [
+                  {
+                    "title": "แดชบอร์ด",
+                    "path": "th/user-guide/dashboard",
+                    "icon": "layout-dashboard"
+                  },
+                  {
+                    "title": "ลูกค้า",
+                    "path": "th/user-guide/customers",
+                    "icon": "users"
+                  },
+                  {
+                    "title": "สินค้า",
+                    "path": "th/user-guide/products",
+                    "icon": "package"
+                  },
+                  {
+                    "title": "การออกใบแจ้งหนี้",
+                    "path": "th/user-guide/invoicing",
+                    "icon": "file-text"
+                  },
+                  {
+                    "title": "ใบเสนอราคา",
+                    "path": "th/user-guide/quotes",
+                    "icon": "file"
+                  },
+                  {
+                    "title": "ใบแจ้งหนี้ขาเข้า",
+                    "path": "th/user-guide/incoming-invoices",
+                    "icon": "inbox"
+                  },
+                  {
+                    "title": "ซิงค์ธนาคาร",
+                    "path": "th/user-guide/bank-sync",
+                    "icon": "landmark"
+                  },
+                  {
+                    "title": "อีเมลอัจฉริยะ",
+                    "path": "th/user-guide/email-intelligence",
+                    "icon": "mail"
+                  },
+                  {
+                    "title": "เทมเพลต PDF",
+                    "path": "th/user-guide/pdf-templates",
+                    "icon": "file-type"
+                  },
+                  {
+                    "title": "ฟิลด์ที่กำหนดเอง",
+                    "path": "th/user-guide/custom-fields",
+                    "icon": "sliders"
+                  },
+                  {
+                    "title": "การจัดการทีม",
+                    "path": "th/user-guide/team-management",
+                    "icon": "user-cog"
+                  },
+                  {
+                    "title": "การตั้งค่า",
+                    "path": "th/user-guide/settings",
+                    "icon": "settings"
+                  }
+                ]
+              },
+              {
+                "group": "ขั้นสูง",
+                "icon": "settings",
+                "pages": [
+                  {
+                    "title": "บูรณาการ",
+                    "path": "th/integrations",
+                    "icon": "plug"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "เอกสารอ้างอิง API",
+            "icon": "code",
+            "groups": [
+              {
+                "group": "เอ็นด์พอยต์",
+                "openapi": "th/api-reference/openapi.yaml",
+                "pages": []
+              }
+            ]
+          },
+          {
+            "tab": "ศูนย์ช่วยเหลือ",
+            "icon": "help-circle",
+            "pages": [
+              {
+                "title": "ศูนย์ช่วยเหลือ",
+                "path": "th/help-center",
+                "icon": "home"
+              },
+              {
+                "group": "คำถามที่พบบ่อย",
+                "icon": "help-circle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "ฉันจะสร้างใบแจ้งหนี้ได้อย่างไร",
+                    "path": "th/help-center/faq/how-to-create-invoice"
+                  }
+                ]
+              },
+              {
+                "group": "การแก้ไขปัญหา",
+                "icon": "alert-triangle",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "ไม่ได้ส่งอีเมลใบแจ้งหนี้",
+                    "path": "th/help-center/troubleshooting/invoice-email-not-sent"
+                  }
+                ]
+              },
+              {
+                "group": "คู่มือ",
+                "icon": "book-open",
+                "expandable": false,
+                "pages": [
+                  {
+                    "title": "เพิ่มลูกค้า",
+                    "path": "th/help-center/guides/add-client"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "บันทึกการเปลี่ยนแปลง",
+            "icon": "clock",
+            "pages": [
+              {
+                "title": "บันทึกการเปลี่ยนแปลง",
+                "path": "th/changelog",
+                "icon": "history"
+              }
+            ]
+          }
+        ]
       }
     ]
   },

@@ -1,0 +1,192 @@
+---
+title: Facturas entrantes
+description: Cargue y administre facturas, recibos y gastos de proveedores con cálculo automático del IVA y conciliación bancaria.
+---
+
+## Realice un seguimiento de las facturas y recibos de los proveedores en un solo lugar
+
+Las facturas entrantes le permiten almacenar facturas de proveedores, recibos y otros gastos comerciales junto con el resto de sus registros. Puede cargar un PDF o una imagen, completar los detalles de la factura, realizar un seguimiento de si se ha pagado y relacionarlo con una transacción bancaria cuando aparezca el pago.
+
+NomadBill mantiene el archivo original en un almacenamiento seguro, calcula los montos del IVA automáticamente y muestra información relacionada, como correos electrónicos vinculados, campos personalizados y pagos bancarios coincidentes en la página de detalles de la factura.
+
+<Callout kind="info">
+
+Los archivos de carga admitidos incluyen **PDF** y **archivos de imagen**. NomadBill almacena cada archivo en el depósito de almacenamiento `incoming-invoices` utilizando un patrón de ruta por usuario de `userId/timestamp-filename`.
+
+</Callout>
+
+## Cargando recibos
+
+Utilice el área de facturas entrantes cuando desee agregar una factura de proveedor manualmente desde un archivo.
+
+<Steps>
+  <Step title="Abrir facturas entrantes" icon="folder">
+
+Vaya a la sección de facturas entrantes en NomadBill e inicie una nueva carga.
+
+Esta es la mejor opción cuando ya tienes el recibo o factura del proveedor guardado en tu dispositivo.
+
+  </Step>
+
+  <Step title="Sube el archivo" icon="upload">
+
+Seleccione un archivo **PDF** o **imagen** desde su computadora o teléfono.
+
+NomadBill almacena el archivo cargado en un almacenamiento seguro y mantiene una ruta de archivo en el registro de la factura. Cuando abre el archivo más tarde, NomadBill genera un enlace de visualización firmado que permanece válido durante 60 segundos.
+
+  </Step>
+
+  <Step title="Ingrese los detalles de la factura" icon="edit">
+
+Agregue el proveedor, la factura, el IVA y la información de pago del documento.
+
+Después de guardar la factura, debería verla en su lista de facturas entrantes y poder abrir su página de detalles.
+
+  </Step>
+
+  <Step title="Revisa la página de detalles" icon="check-circle">
+
+Abra la factura guardada para verificar la información.
+
+La vista detallada incluye tarjetas separadas para detalles de proveedores, detalles de facturas, campos personalizados, correos electrónicos vinculados y pagos bancarios.
+
+  </Step>
+</Steps>
+
+## Detalles del proveedor y de la factura
+
+Cada factura entrante almacena tanto información del proveedor como información específica de la factura. Las categorías son texto libre, por lo que puede utilizar la estructura de nombres que se adapte a su flujo de trabajo contable.
+
+### Campos de proveedor
+
+<ParamField body="supplier_name" param-type="string" required="false" show-location="false">
+Nombre del proveedor o comerciante que emitió la factura o recibo.
+</ParamField>
+
+<ParamField body="supplier_address" param-type="string" required="false" show-location="false">
+Dirección postal del proveedor.
+</ParamField>
+
+<ParamField body="supplier_vat_number" param-type="string" required="false" show-location="false">
+Número de registro de IVA del proveedor, si está disponible en el documento.
+</ParamField>
+
+### Campos de factura
+
+<ParamField body="invoice_number" param-type="string" required="false" show-location="false">
+Número de factura o recibo propio del proveedor.
+</ParamField>
+
+<ParamField body="invoice_date" param-type="date" required="false" show-location="false">
+Fecha que aparece en la factura del proveedor.
+</ParamField>
+
+<ParamField body="due_date" param-type="date" required="false" show-location="false">
+Fecha de vencimiento del pago de la factura.
+</ParamField>
+
+<ParamField body="payment_date" param-type="date" required="false" show-location="false">
+Fecha en que se pagó la factura. La conciliación bancaria puede actualizar esto cuando se iguala un pago.
+</ParamField>
+
+<ParamField body="category" param-type="string" required="false" show-location="false">
+Categoría de texto libre para el gasto. NomadBill no impone una lista de categorías predefinidas.
+</ParamField>
+
+<ParamField body="notes" param-type="string" required="false" show-location="false">
+Notas internas sobre el recibo, proveedor o gasto.
+</ParamField>
+
+<ParamField body="currency" param-type="string" required="false" enum="EUR,USD,GBP,CHF,AED" show-location="false">
+Moneda utilizada en la factura. Los valores admitidos son `EUR`, `USD`, `GBP`, `CHF` y `AED`.
+</ParamField>
+
+<ParamField body="payment_status" param-type="string" required="false" enum="unpaid,paid" show-location="false">
+Estado de pago actual de la factura. NomadBill admite `unpaid` y `paid`.
+</ParamField>
+
+### Campos de importe
+
+<ParamField body="net_amount" param-type="number" required="false" show-location="false">
+Importe de la factura antes del IVA.
+</ParamField>
+
+<ParamField body="vat_percentage" param-type="number" required="false" show-location="false">
+Tipo de IVA aplicado al importe de la factura.
+</ParamField>
+
+<ParamField body="vat_amount" param-type="number" required="false" show-location="false">
+Importe del IVA calculado.
+</ParamField>
+
+<ParamField body="amount" param-type="number" required="false" show-location="false">
+Importe bruto de la factura incluido el IVA.
+</ParamField>
+
+### Archivar y registrar metadatos
+
+<ParamField body="file_path" param-type="string" required="false" show-location="false">
+Ruta de almacenamiento del archivo de factura o recibo cargado.
+</ParamField>
+
+<ParamField body="upload_date" param-type="date-time" required="false" show-location="false">
+Fecha en que se cargó el archivo en NomadBill.
+</ParamField>
+
+## Cálculo del IVA y del importe
+
+NomadBill recalcula los totales de las facturas automáticamente, por lo que no es necesario actualizar cada campo de importe manualmente. Esto reduce los errores de entrada, especialmente cuando sólo conoce el importe neto y el tipo de IVA o sólo tiene el total bruto de un recibo.
+
+Si cambia `net_amount` o `vat_percentage`, NomadBill vuelve a calcular tanto `vat_amount` como `amount`. El importe bruto utiliza esta fórmula: `gross = net * (1 + pct / 100)`.
+
+Si cambia `amount`, NomadBill vuelve a calcular `net_amount` y `vat_amount` en función del porcentaje de IVA actual. Esto ayuda cuando el recibo muestra solo el total final y el tipo de IVA.
+
+<Callout kind="tip">
+
+Verifique los valores recalculados antes de guardarlos cuando el recibo incluya descuentos, tasas de IVA mixtas o formato de proveedor que no separe claramente el IVA neto y el IVA.
+
+</Callout>
+
+## Estado de pago y conciliación bancaria
+
+El estado de pago le ayuda a realizar un seguimiento de qué facturas de proveedores aún están abiertas y cuáles ya se han pagado. NomadBill utiliza dos estados: `unpaid` y `paid`.
+
+Si conecta la sincronización bancaria, NomadBill puede hacer coincidir las transacciones bancarias salientes con las facturas entrantes automáticamente. La lógica de coincidencia busca:
+
+- Una **transacción saliente** con un importe inferior a cero
+- La **exactamente la misma cantidad**
+- La **misma moneda**
+- Una fecha de transacción dentro de **14 días** de la fecha de la factura
+
+Cuando NomadBill encuentra una coincidencia, vincula la transacción a la factura entrante y establece el estado del pago en `paid`. Los pagos bancarios vinculados aparecen en la tarjeta de pagos bancarios en la página de detalles de la factura.
+
+También puedes gestionar la conexión manualmente desde el área de sincronización bancaria. Si desvincula una transacción coincidente, NomadBill cambia el estado del pago nuevamente a `unpaid`.
+
+Para conocer el flujo de trabajo de coincidencia completo, consulte [Sincronización bancaria](/es/user-guide/bank-sync).
+
+## Integración de inteligencia de correo electrónico
+
+NomadBill también puede crear una factura entrante a partir de datos de correo electrónico. Cuando la inteligencia de correo electrónico extrae los detalles del recibo o de la factura del proveedor de un mensaje, `createReceiptFromEmail` puede crear el registro de factura entrante por usted.
+
+Esto es útil cuando los proveedores envían facturas por correo electrónico y desea reducir la entrada manual. Después de la creación, puede abrir la página de detalles de la factura, revisar los campos extraídos, agregar notas o categorías y confirmar si el pago ya se ha igualado.
+
+La página de detalles también incluye una tarjeta de correo electrónico vinculada, que le ayuda a rastrear la factura hasta el contexto del correo electrónico original cuando sea necesario.
+
+Para conocer el flujo de trabajo del correo electrónico, consulte [Inteligencia de correo electrónico](/es/user-guide/email-intelligence).
+
+## Guías relacionadas
+
+<Columns cols={2}>
+  <Card
+    title="sincronización bancaria"
+href="/es/user-guide/bank-sync"
+icono="base de datos"
+    cta="abrir guia"
+  />
+  <Card
+    title="Campos personalizados"
+href="/es/user-guide/custom-fields"
+icono="configuración"
+    cta="abrir guia"
+  />
+</Columns>

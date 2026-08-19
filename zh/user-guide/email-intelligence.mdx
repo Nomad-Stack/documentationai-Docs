@@ -1,0 +1,246 @@
+---
+title: 邮件智能
+description: 自动对传入邮件进行分类，使用 AI 提取文档数据，并将邮件与发票、报价和收据进行匹配。
+---
+
+## 将您的共享邮箱变成文档收件箱
+
+邮件智能 为您的公司提供专用邮箱，用于监视传入消息、识别业务文档、提取关键数据并建议指向 NomadBill 中正确记录的链接。它是专为自由职业者和小团队现有的工作方式而设计的：供应商通过邮件发送发票，客户回复报价，付款确认信息会到达同一个收件箱。
+
+## 代理邮箱
+
+每家公司都会获得一个专用的代理邮箱，格式为 `agent_name@agent.nomadbill.co`。如果您的工作区使用自定义代理域，则邮箱将改用该域。
+
+只有公司所有者可以配置邮箱。在设置过程中，NomadBill 通过将代理名称转换为小写、用连字符替换空格以及将 slug 限制为 40 个字符，将代理名称标准化为邮箱安全格式。
+
+一旦配置开始，NomadBill：
+
+- 使用 Nylas 创建邮件授权
+- 将邮箱连接存储在`company_email_accounts`记录中
+- 为传入邮件事件注册一个网络钩子
+
+Webhook 侦听以下事件：
+
+- `message.created`
+- `message.updated`
+- `grant.expired`
+
+NomadBill 在 `/api/public/nylas-webhook` 注册 Webhook。在初始 webhook 握手期间，`GET` 处理程序返回与收到的完全相同的 `challenge` 查询参数。
+
+## 如何处理传入的邮件
+
+每条新消息都遵循相同的处理流程，因此结果保持一致并避免重复工作。
+
+<Steps>
+  <Step title="接收 webhook 事件" icon="zap">
+
+当创建或更新消息或授权到期时，Nylas 会向 `/api/public/nylas-webhook` 发送 Webhook 事件。
+
+NomadBill 可以使用 HMAC-SHA256 验证 `x-nylas-signature` 标头。签名验证是可选的，但您应该将其视为推荐的生产设置。
+
+  </Step>
+
+  <Step title="获取完整的邮件" icon="download">
+
+有效事件到达后，NomadBill 从连接的邮箱中获取完整的邮件内容和元数据。
+
+该系统还可以防止重复处理。如果同一封邮件已完成、已跳过或仍在五分钟窗口内处理，NomadBill 不会再次分析它。
+
+  </Step>
+
+  <Step title="跳过不应分析的消息" icon="shield">
+
+NomadBill 跳过从代理邮箱本身发送的邮件。这种自我邮件防护可以防止循环并避免分析系统生成的邮件。
+
+如果出站或不相关的消息不代表可用的业务文档，则也可以在分类过程中排除它们。
+
+  </Step>
+
+  <Step title="下载附件和消息内容" icon="paperclip">
+
+处理器在运行文档分析之前收集邮件正文和任何可用附件。
+
+这为分类器提供了足够的上下文来识别消息是否包含发票、收据、报价、确认或其他文档类型。
+
+  </Step>
+
+  <Step title="运行AI分类和提取" icon="code">
+
+NomadBill 使用 `google/gemini-3.6-flash` 通过 Lovable AI 网关将邮件内容发送到 AI 管道。
+
+该模型对文档进行分类并提取结构化字段，例如总计、日期、名称和参考号，以便您可以在 NomadBill 中查看它们，而无需手动复制数据。
+
+  </Step>
+
+  <Step title="计算匹配建议" icon="check-circle">
+
+提取后，匹配引擎会将邮件与发票、报价、进项发票、银行交易和公司中的客户进行比较。
+
+每个可能的匹配都会得到一个分数。 NomadBill 保留满足最低阈值的建议，并首先显示最强的候选者。
+
+  </Step>
+
+  <Step title="存储结果并保留您的决定" icon="database">
+
+最终分析与邮件记录一起存储，包括提取的数据和建议的链接。
+
+如果您已经链接或驳回了建议，NomadBill 会在以后重新分析时保留该决定，而不是重置您的工作。
+
+  </Step>
+</Steps>
+
+## 文档分类
+
+邮件智能 将每条分析的邮件分类为以下文档类型之一：
+
+- `incoming_invoice`
+- `receipt`
+- `outgoing_invoice`
+- `quote`
+- `payment_confirmation`
+- `reminder`
+- `contract`
+- `other`
+
+该分类有助于 NomadBill 决定下一步要提供哪些操作。例如，只有 `incoming_invoice` 和 `receipt` 邮件可以直接转换为进项发票记录。
+
+## AI 提取的数据
+
+分析结果可以包括以下提取的字段。
+
+<ParamField body="doc_type" param-type="string" required="true" show-location="false">
+检测到的邮件文档类型。
+</ParamField>
+
+<ParamField body="confidence" param-type="number" show-location="false">
+分类结果的模型置信度得分。
+</ParamField>
+
+<ParamField body="summary" param-type="string" show-location="false">
+邮件或附件所包含内容的简短摘要。
+</ParamField>
+
+<ParamField body="document_number" param-type="string" show-location="false">
+在文档中检测到的主发票、收据、报价或确认号。
+</ParamField>
+
+<ParamField body="reference_numbers" param-type="array" show-location="false">
+在邮件或附件中找到的其他参考标识符。
+</ParamField>
+
+<ParamField body="total_amount" param-type="number" show-location="false">
+检测到的文档总金额。
+</ParamField>
+
+<ParamField body="net_amount" param-type="number" show-location="false">
+当文档提供 VAT 之前的净额。
+</ParamField>
+
+<ParamField body="vat_amount" param-type="number" show-location="false">
+从文档中提取的 VAT 金额。
+</ParamField>
+
+<ParamField body="vat_percentage" param-type="number" show-location="false">
+能够可靠识别时的 VAT 率。
+</ParamField>
+
+<ParamField body="currency" param-type="string" show-location="false">
+检测到的单据金额的货币代码。
+</ParamField>
+
+<ParamField body="document_date" param-type="string" show-location="false">
+文档中找到的发布日期。
+</ParamField>
+
+<ParamField body="due_date" param-type="string" show-location="false">
+付款到期日（如果存在）。
+</ParamField>
+
+<ParamField body="vendor_name" param-type="string" show-location="false">
+与文档关联的供应商或发件人名称。
+</ParamField>
+
+<ParamField body="customer_name" param-type="string" show-location="false">
+文档中引用的客户名称。
+</ParamField>
+
+<ParamField body="iban" param-type="string" show-location="false">
+在邮件或文档中检测到的银行帐号。
+</ParamField>
+
+<ParamField body="category" param-type="string" show-location="false">
+分析期间分配的广泛类别。
+</ParamField>
+
+<ParamField body="ocr_text" param-type="string" show-location="false">
+提取的文档文本用于下游分类和匹配。
+</ParamField>
+
+<ParamField body="line_items" param-type="array" show-location="false">
+当附件包含逐项详细信息时，从文档中检测到明细项。
+</ParamField>
+
+## 匹配与建议
+
+分析后，NomadBill 在您的工作区中查找相关记录并对每个候选人进行评分。建议必须达到最低分数 `0.35` 才能显示，并且系统每封邮件最多返回 12 条建议。
+
+匹配引擎评估多种记录类型：
+
+- 发票
+- 报价
+- 进项发票
+- 银行交易
+- 顾客
+
+对于发票，最强烈的信号是文件编号、金额、收件人和客户身份。评分模型为以下方面加分：
+
+- 找到的号码：`+0.55`
+- 金额约为`±0.5%`或`±0.02`：`+0.30`
+- 货币匹配：`+0.05`
+- 14天内日期：`+0.10`
+- `sent_to` 包含发件人邮件：`+0.25`
+- 客户姓名匹配：`+0.15`
+
+对于银行交易，引擎重点关注支付证据和对方身份。它为以下方面加分：
+
+- 金额匹配：`+0.45`
+- 找到的候选人编号：`+0.35`
+- 对应名称匹配：`+0.20`
+- 30天内日期：`+0.10`
+
+对于客户来说，引擎会在建议操作记录之前尝试识别邮件属于谁。它为以下方面加分：
+
+- 精确的邮件匹配：`+0.80`
+- 相同域名：`+0.50`
+- 姓名匹配：`+0.30`
+
+这些分数是相加的，因此强匹配通常会同时组合多个信号，而不是依赖于一个字段。
+
+## 管理邮件链接
+
+NomadBill 跟踪每封邮件与您的记录的关系。链接可以处于以下三种状态之一：
+
+- **建议** — NomadBill 找到了可能的匹配项，正在等待您的审核。
+- **链接** — 您确认该邮件属于特定发票、报价、收据、交易或客户。
+- **驳回** — 您拒绝了建议，如果再次分析邮件，该决定将被保留。
+
+使用邮件视图上的邮件智能卡来查看提取的字段、检查建议以及确认或忽略匹配项。当邮件已连接到记录时，链接的邮件活动也会从另一侧显示在发票、报价、收据、交易和客户详细信息页面上。
+
+如果单据类型为 `incoming_invoice` 或 `receipt`，您可以直接从邮件创建进项发票。 `createReceiptFromEmail` 操作使用提取的文档数据来预填充新记录，并避免在邮件已处理或有意跳过时创建重复项。
+
+<Callout kind="info">
+
+邮件智能近乎实时更新。 NomadBill 通过 `company_email_accounts.last_event_at` 上的 Supabase Realtime 侦听邮箱活动，并在需要时回退到 30 秒轮询周期。
+
+</Callout>
+
+## 相关指南
+
+<Columns cols={2}>
+  <Card title="开具发票" href="/zh/user-guide/invoicing" icon="file-text" cta="打开指南">
+管理销项发票并了解链接的邮件如何支持后续和付款跟踪。
+  </Card>
+  <Card title="进项发票" href="/zh/user-guide/incoming-invoices" icon="folder" cta="打开指南">
+查看供应商账单、通过邮件分析创建记录并保持采购文档井井有条。
+  </Card>
+</Columns>

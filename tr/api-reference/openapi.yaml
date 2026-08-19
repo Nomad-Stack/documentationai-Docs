@@ -1,0 +1,183 @@
+openapi: '3.0.0'
+info:
+  version: 1.0.0
+  title: NomadBill
+  license:
+    name: MIT
+servers:
+  - url: https://api.nomadbill.com/v1
+paths:
+  /documents:
+    get:
+      summary: Belgeleri listeleyin
+      operationId: listDocuments
+      parameters:
+        - name: limit
+          in: query
+          description: Tek seferde iade edilecek ürün sayısı (maks. 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: Sayfalandırılmış bir belge dizisi
+          headers:
+            x-next:
+              description: Yanıtların bir sonraki sayfasına giden bağlantı
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documents'
+        default:
+          description: beklenmeyen hata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Doküman oluştur
+      operationId: createDocument
+      responses:
+        201:
+          description: Boş yanıt
+        default:
+          description: beklenmeyen hata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /documents/{documentId}:
+    get:
+      summary: Belgeyi al
+      operationId: showDocumentById
+      parameters:
+        - name: documentId
+          in: path
+          required: true
+          description: Alınacak belgenin kimliği
+          schema:
+            type: string
+      responses:
+        200:
+          description: Geçerli bir isteğe beklenen yanıt
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Documents'
+        default:
+          description: beklenmeyen hata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /folders:
+    get:
+      summary: Klasörleri listeleme
+      operationId: listFolders
+      parameters:
+        - name: limit
+          in: query
+          description: Tek seferde iade edilecek ürün sayısı (maks. 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: Disk belleğine alınmış bir klasör dizisi
+          headers:
+            x-next:
+              description: Yanıtların bir sonraki sayfasına giden bağlantı
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folders'
+        default:
+          description: beklenmeyen hata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Klasör oluştur
+      operationId: createFolder
+      responses:
+        201:
+          description: Boş yanıt
+        default:
+          description: beklenmeyen hata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /folders/{folderId}:
+    get:
+      summary: Klasörü al
+      operationId: showFolderById
+      parameters:
+        - name: folderId
+          in: path
+          required: true
+          description: Alınacak klasörün kimliği
+          schema:
+            type: string
+      responses:
+        200:
+          description: Geçerli bir isteğe beklenen yanıt
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folders'
+        default:
+          description: beklenmeyen hata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Document:
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        tag:
+          type: string
+    Documents:
+      type: array
+      items:
+        $ref: '#/components/schemas/Document'
+    Folder:
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        tag:
+          type: string
+    Folders:
+      type: array
+      items:
+        $ref: '#/components/schemas/Folder'
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

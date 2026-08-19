@@ -1,0 +1,197 @@
+---
+title: Sincronizzazione bancariaria
+description: Collega conti bancari statunitensi ed europei, sincronizza automaticamente le transazioni e riconcilia i pagamenti con le fatture.
+---
+
+## Sincronizzazione bancariaria porta le tue transazioni bancarie in NomadBill così puoi tenere traccia dei pagamenti in entrata e in uscita rispetto alle tue fatture.
+
+Una volta connesso un account, NomadBill sincronizza fino a 365 giorni di cronologia delle transazioni e mantiene la connessione aggiornata con sincronizzazioni incrementali. Le transazioni sincronizzate possono quindi essere abbinate automaticamente o manualmente alle fatture in uscita e alle fatture passive.
+
+<Callout kind="info">
+
+Scegli la regione della banca che corrisponde all'istituto a cui desideri connetterti. La pagina Sincronizzazione bancariaria ha pulsanti di connessione separati per le banche **US** ed **EU** ed è necessario iniziare con quello corretto.
+
+- **US** supporta le banche in `US` e `CA`
+- **EU** supporta le banche in `GB`, `FR`, `ES`, `NL`, `IE` e `DE`
+
+Se la tua banca non è disponibile in una regione, prova nell'altra solo se l'istituto effettivamente opera lì.
+
+</Callout>
+
+## Collegamento di un conto bancario
+
+Collega ciascun conto bancario dalla pagina Sincronizzazione bancaria. NomadBill utilizza Plaid come provider di connessione e memorizza la connessione sotto la tua azienda.
+
+<Steps>
+  <Step title="Apri la pagina Sincronizzazione bancaria" icon="folder">
+
+Accedi a NomadBill e apri **Sincronizzazione bancariaria** dall'area autenticata dell'app.
+
+Dovresti vedere due opzioni di connessione sulla pagina: una per le banche **US** e una per le banche **EU**.
+
+  </Step>
+
+  <Step title="Scegli la regione corretta" icon="globe">
+
+Seleziona il pulsante relativo alla regione in cui è detenuto il tuo conto bancario.
+
+- Utilizzare l'opzione **US** per le banche in `US` o `CA`
+- Utilizzare l'opzione **EU** per le banche in `GB`, `FR`, `ES`, `NL`, `IE` o `DE`
+
+Dopo aver scelto una regione, Plaid apre un flusso di connessione bancaria sicura.
+
+  </Step>
+
+  <Step title="Autenticati con la tua banca" icon="lock">
+
+Completa il flusso Plaid selezionando il tuo istituto e accedendo con le credenziali della tua banca, se richiesto.
+
+Plaid restituisce i dettagli della connessione a NomadBill, inclusi gli account collegati e il nome dell'istituto.
+
+  </Step>
+
+  <Step title="Attendi la sincronizzazione iniziale" icon="refresh-cw">
+
+Dopo aver creato la connessione, NomadBill avvia la prima sincronizzazione delle transazioni.
+
+Una connessione riuscita memorizza dettagli come il fornitore, la regione, l'istituto, gli account collegati, lo stato della sincronizzazione e l'ora dell'ultima sincronizzazione riuscita. Una volta terminata la sincronizzazione, le tue transazioni verranno visualizzate nel conto bancario collegato.
+
+  </Step>
+</Steps>
+
+## Sincronizzazione delle transazioni
+
+NomadBill utilizza la sincronizzazione incrementale basata sul cursore per mantenere aggiornato l'elenco delle transazioni. La prima sincronizzazione richiede fino a 365 giorni di cronologia e le sincronizzazioni successive continuano dall'ultimo cursore salvato invece di recuperare nuovamente la cronologia completa.
+
+### Cosa viene sincronizzato
+
+Ciascuna connessione bancaria memorizza il proprio stato di sincronizzazione, incluso l'elemento Plaid, i conti collegati e un cursore di sincronizzazione. Le transazioni vengono salvate con dettagli quali importo, valuta, direzione, data di prenotazione, informazioni sulla controparte, dettagli del commerciante, categorie, stato in sospeso e payload originale della transazione grezza.
+
+### Come funziona la sincronizzazione incrementale
+
+NomadBill sincronizza le transazioni tramite il flusso di sincronizzazione delle transazioni incrementale di Plaid. Ogni sincronizzazione legge le pagine dei risultati fino a quando Plaid non ha più modifiche da restituire o la sincronizzazione raggiunge il limite di sicurezza.
+
+- La sincronizzazione è **basata su cursore**, quindi ogni esecuzione continua dall'ultimo punto di sincronizzazione riuscita
+- Una singola sincronizzazione elabora fino a **20 pagine**
+- Ogni pagina può includere fino a **500 transazioni**
+- Il limite effettivo per esecuzione della sincronizzazione è **10.000 transazioni**
+
+NomadBill salva il cursore di sincronizzazione aggiornato **solo dopo che la sincronizzazione completa è stata completata con successo**. Se una sincronizzazione fallisce durante il corso, NomadBill mantiene il cursore precedente in modo che l'esecuzione successiva possa riprovare in sicurezza.
+
+### Come vengono scritte le transazioni
+
+Le transazioni sincronizzate vengono inserite o aggiornate in batch di record **200** alla volta. Ciò mantiene gestibili le sincronizzazioni di grandi dimensioni pur gestendo in modo efficiente un volume elevato di transazioni.
+
+Ogni transazione è legata a:
+
+- la tua azienda
+- il collegamento bancario da cui proviene
+- l'ID della transazione esterna originale
+- il conto di origine all'interno dell'istituto collegato
+
+### Come funzionano gli importi e le indicazioni
+
+Plaid e NomadBill utilizzano convenzioni di importo opposte per il flusso di cassa. Plaid tratta gli importi positivi come denaro in uscita dal conto, mentre NomadBill memorizza gli importi positivi come denaro ricevuto.
+
+| Plaid segno | Significato in Plaid | Importo memorizzato in NomadBill | Direzione |
+|---|---|---:|---|
+| Positivo | Denaro in uscita dal conto | Negativo | `out` |
+| Negativo | Soldi che entrano nel conto | Positivo | `in` |
+
+Questo inversione di segno rende la riconciliazione più intuitiva all'interno di NomadBill. I pagamenti in entrata dei clienti vengono visualizzati come importi positivi, mentre i pagamenti in uscita, come le fatture dei fornitori, vengono visualizzati come importi negativi.
+
+## Corrispondenza automatica
+
+NomadBill tenta automaticamente di riconciliare le transazioni sincronizzate con le fatture. La logica di corrispondenza è diversa per il denaro in entrata e per quello in uscita.
+
+### Come funziona l'abbinamento
+
+Il denaro in entrata viene confrontato con le fatture inviate e scadute. Il denaro in uscita viene confrontato con le fatture passive. In entrambi i casi, NomadBill cerca l'importo esatto e la corrispondenza della valuta, quindi controlla se la data della transazione rientra nei 14 giorni successivi alla finestra della data della fattura.
+
+Se viene trovata una corrispondenza, NomadBill scrive il collegamento alla transazione e aggiorna automaticamente lo stato del pagamento della fattura.
+
+### Abbina fiducia e risultato
+
+| Flusso della partita | Tipo di transazione | Regola della corrispondenza | Fiducia | Risultato |
+|---|---|---|---:|---|
+| `autoMatchInvoices` | Pagamento in entrata | Importo esatto + valuta + data entro 14 giorni | 90| Imposta `matched_invoice_id`, `match_method` su `amount+date`, fattura `payment_status` su `paid` e fattura `status` su `paid` |
+| `autoMatchIncomingInvoices` | Pagamento in uscita | Importo esatto + valuta + data entro 14 giorni | 85| Imposta `matched_incoming_invoice_id`, `match_method` su `amount+date` e la fattura passiva `payment_status` su `paid` |
+
+### Cosa viene abbinato automaticamente
+
+Una transazione può essere abbinata automaticamente quando soddisfa tutte queste condizioni:
+
+- l'importo corrisponde esattamente
+- la valuta corrisponde esattamente
+- la data rientra nella finestra di corrispondenza di 14 giorni
+- la fattura sia in uno stato ancora riconciliabile
+
+Per le fatture in uscita, NomadBill prende di mira le fatture già **sent** o **overdue**. Per le fatture passive, NomadBill contrassegna la fattura come pagata senza modificarla in uno stato documento diverso.
+
+## Abbinamento manuale
+
+La corrispondenza automatica gestisce prima i casi ovvi. Quando una transazione necessita di revisione, puoi abbinarla manualmente.
+
+### Suggerimenti dei candidati
+
+NomadBill genera candidati alla revisione manuale con una finestra di ricerca più ampia rispetto alla corrispondenza automatica.
+
+- Effettua la ricerca all'interno di una finestra di data **30 giorni**
+- Restituisce fino a **5 candidati** per transazione
+- È progettato per la revisione, non per l'assegnazione automatica
+
+Ciò è utile quando la data di pagamento differisce dalla data della fattura più del previsto o quando desideri confermare una delle numerose possibili corrispondenze.
+
+### Comportamento del collegamento manuale
+
+Quando colleghi una transazione manualmente, NomadBill la registra come corrispondenza confermata.
+
+- `match_confidence` è impostato su **100**
+- `match_method` è impostato su `manual`
+
+Un collegamento manuale prevale sulla necessità di ulteriori suggerimenti logici su tale transazione e chiarisce che la corrispondenza è stata confermata dall'utente.
+
+## Scollegamento e gestione delle connessioni
+
+Utilizza lo scollegamento quando la transazione è collegata alla fattura sbagliata. Elimina una connessione quando desideri rimuovere completamente il feed bancario.
+
+### Scollega una transazione abbinata
+
+Lo scollegamento rimuove la relazione tra una transazione e il record della fattura corrispondente.
+
+Quando scolleghi una transazione, NomadBill:
+
+- cancella tutti i campi relativi alla corrispondenza sulla transazione
+- reimposta la fattura in uscita collegata `payment_status` su `unpaid`
+- lascia invariata una fattura in uscita `status` se era già impostata su `paid`
+- reimposta la fattura passiva collegata `payment_status` su `unpaid`
+
+Utilizza lo scollegamento con attenzione se fai già affidamento sullo stato pagato per la revisione contabile, poiché lo scollegamento non sposta nuovamente lo stato di una fattura in uscita da `paid` a `sent`.
+
+### Elimina un collegamento bancario
+
+L'eliminazione di una connessione rimuove il collegamento Plaid e tutte le transazioni sincronizzate che ne fanno parte.
+
+Quando elimini una connessione, NomadBill:
+
+- tenta di revocare l'accesso Plaid per quell'elemento
+- continua anche se il passo di revoca Plaid fallisce
+- cancella la registrazione del collegamento bancario
+- cancellazione a cascata di tutte le transazioni effettuate nell'ambito di tale connessione
+
+Se ricolleghi la stessa banca in un secondo momento, NomadBill crea una nuova connessione e uno stato di sincronizzazione.
+
+<Columns cols={2}>
+  <Card
+    title="Gestisci fatture in uscita"
+    href="/it/user-guide/invoicing"
+    icon="file-text"
+    cta="Apri la guida alla fatturazione"
+  />
+  <Card
+    title="Monitora le fatture dei fornitori"
+    href="/it/user-guide/incoming-invoices"
+    icon="folder"
+    cta="Apri la guida alle fatture passive"
+  />
+</Columns>

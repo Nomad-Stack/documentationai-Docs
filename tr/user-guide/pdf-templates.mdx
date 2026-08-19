@@ -1,0 +1,175 @@
+---
+title: PDF Şablonları
+description: Sürükle ve bırak düzenleme, yeniden kullanılabilir şablonlar ve marka renkleriyle faturalar, teklifler ve makbuzlar için özel PDF düzenleri tasarlayın.
+---
+
+## Belgeleriniz için özel PDF düzenleri tasarlayın
+
+PDF şablonları, faturaların, tekliflerin ve gelen belgelerin önizlemesini yaptığınızda, dışa aktardığınızda veya gönderdiğinizde nasıl görüneceğini kontrol etmenize olanak tanır. Boş bir düzenden başlayabilir, önceden oluşturulmuş bir tasarım seçebilir veya bir JSON şablonunu içe aktarabilir ve ardından sonucu bir sürükle ve bırak düzenleyicide ayarlayabilirsiniz.
+
+<Callout kind="info">
+
+**Ayarlar → Şablonlar** bölümünden şablonları yönetin. NomadBill, faturalar, fiyat teklifleri ve gelen belgeler için ayrı şablon listeleri tutar; böylece her belge türünü bağımsız olarak tasarlayabilirsiniz.
+
+</Callout>
+
+## PDF şablonları nasıl çalışır?
+
+Her PDF şablonu, bir belge türüne ilişkin tam düzeni saklar. Bu, son PDF'yi oluşturmak için kullanılan sayfa yapısını, metin bloklarını, tabloları, görüntüleri ve stili içerir.
+
+Bir fatura, fiyat teklifi veya gelen belge oluşturduğunuzda veya düzenlediğinizde, söz konusu belge türü için varsayılan şablonu kullanabilir veya farklı bir kayıtlı şablon seçebilirsiniz. Bu size günlük belgeleri markaya uygun tutmanın tutarlı bir yolunu sunarken, gerektiğinde alternatif düzenlere de izin verir.
+
+NomadBill üç belge türünü destekler:
+
+| Belge türü | | için kullanılır Nereden seçersiniz |
+| --- | --- | --- |
+| Fatura | Müşterilerinize gönderdiğiniz giden faturalar | Fatura formu ve önizleme |
+| Teklif | Faturalandırmadan önce gönderdiğiniz fiyat teklifleri veya teklifler | Teklif formu ve önizleme |
+| Gelen | Gelen faturalar, tedarikçi faturaları veya makbuzları | Gelen belge akışları |
+
+## Belge türleri
+
+Şablonlar belge türüne göre gruplandırılmıştır çünkü her türün farklı bir amacı vardır ve farklı ifadelere veya düzen vurgularına ihtiyaç duyabilir.
+
+| Tür | PDF'deki tipik başlık | Ortak kullanım |
+| --- | --- | --- |
+| `invoice` | Fatura | Tamamlanan iş veya teslim edilen mallar için müşteriye fatura kesme |
+| `quote` | Teklif | İşe başlamadan önce fiyat teklifi gönderme |
+| `incoming` | Makbuz veya gelen fatura | Tedarikçi masraflarını veya yüklenen makbuzları kaydetme |
+
+<Callout kind="tip">
+
+Aynı belge türü için farklı düzenler istiyorsanız birden fazla şablon oluşturun ve birini varsayılan olarak ayarlayın. Gerektiğinde belirli bir belge için yine başka bir şablon seçebilirsiniz.
+
+</Callout>
+
+## Şablon oluşturma
+
+Şablonları üç şekilde oluşturabilirsiniz: boş başlayın, galeriden başlayın veya mevcut bir JSON dosyasını içe aktarın.
+
+<Steps>
+  <Step title="Boş bir şablon oluşturun" icon="plus">
+
+  **Ayarlar → Şablonlar**'ı açın, belge türü sekmesini seçin, ardından yeni bir şablon oluşturun ve **Boş**'u seçin.
+
+  Boş bir şablon, söz konusu belge türü için NomadBill'in varsayılan düzeninden başlar. Tam kontrol istediğinizde ancak yine de gerekli standart alanların önceden eşlenmesini istediğinizde bu en hızlı seçenektir.
+
+  </Step>
+  <Step title="Galeriden başlayın" icon="book-open">
+
+  **Ayarlar → Şablonlar**'ı açın, belge türü sekmesini seçin, ardından yeni bir şablon oluşturun ve **Galeri**'yi seçin.
+
+  Uyarlayabileceğiniz bitmiş bir düzen istiyorsanız yedi yerleşik şablondan birini seçin. Her bölümü sıfırdan oluşturmadan profesyonel bir düzen istediğinizde bu en iyi başlangıç ​​noktasıdır.
+
+  </Step>
+  <Step title="JSON şablonunu içe aktar" icon="upload">
+
+  **Ayarlar → Şablonlar**'ı açın, belge türü sekmesini seçin, ardından yeni bir şablon oluşturun ve **JSON'den içe aktar**'ı seçin.
+
+  Geçerli bir şablon yapısı içeren bir `.json` dosyası yükleyin. Zaten uyumlu bir şablon dosyanız varsa ve bunu şirketler veya ortamlarda yeniden kullanmak istiyorsanız bu yolu kullanın.
+
+  </Step>
+</Steps>
+
+## Şablon galerisi
+
+NomadBill, başlangıç ​​noktası olarak kullanabileceğiniz önceden oluşturulmuş yedi şablon içerir.
+
+| Şablon | Stil | Şunun için en iyisi |
+| --- | --- | --- |
+| Klasik | Marka rengi başlığıyla dengeli varsayılan | Genel amaçlı faturalar ve fiyat teklifleri |
+| Modern | Kalın başlıklı renkli üst çubuk | Marka öncüsü düzenler |
+| Asgari | Renkli vurgular içermeyen tek renkli düzen | Basit, düşük mürekkepli belgeler |
+| Beyaz | Ödeme yöntemi bloğuyla yazdırılabilir düzeni temizleyin | Resmi faturalar ve yazdırma iş akışları |
+| Mavi | Toplam satır dolu mavi vurgular | Yüksek kontrastlı toplamlar ve özet bölümler |
+| Yeşil | Yeşil sol vurgu çubuğu | Alternatif markalı düzenler |
+| Zarif | İnce gri tablolu büyük başlık | Müşteriye yönelik cilalanmış belgeler |
+
+## Şablonu düzenleme
+
+Şablon düzenleyici tam ekran bir tasarımcıda açılır, böylece mizanpajları görsel olarak oluşturup ayarlayabilirsiniz. Temeldeki JSON'yi elle düzenlemeden alanları konumlarına sürükleyebilir, yeniden boyutlandırabilir, metni değiştirebilir ve görsel yapıyı iyileştirebilirsiniz.
+
+Kullanılabilir alan türleri arasında metin, çok değişkenli metin, tablolar, listeler, çizgiler, şekiller, resimler, imzalar, tarihler, onay kutuları, radyo grupları, QR kodları ve barkodlar bulunur. Bu size standart fatura düzenlerinin yanı sıra daha özelleştirilmiş belge tasarımları oluşturmanız için yeterli esneklik sağlar.
+
+Çoğu kullanıcı zamanlarını konumları, aralıkları, etiketleri ve tablo sunumunu ayarlamakla geçirir. Standart alan adlarını olduğu gibi bırakırsanız NomadBill, PDF'yi oluşturduğunda bu alanları otomatik olarak doldurmaya devam eder.
+
+<Callout kind="info">
+
+Belge öğesi listesi genellikle `items` tablo alanı aracılığıyla oluşturulur. Bu alanı kaldırırsanız veya yeniden adlandırırsanız satır öğeleri artık oluşturulan PDF'de görünmeyecektir.
+
+</Callout>
+
+## Standart alanlar
+
+NomadBill, bir PDF oluşturduğunda belirli alan adlarını otomatik olarak doldurur. Uygulamanın belge verilerini şablonla eşlemeye devam etmesini istiyorsanız bu adları değiştirmeden bırakın.
+
+| Alan adı | İçerir |
+| --- | --- |
+| `company_logo` | Şirketinizin logo resmi |
+| `company_name` | Şirketinizin görünen adı |
+| `company_address` | Şirket adresiniz, genellikle çok satırlı |
+| `company_vat` | VAT veya vergi kimlik etiketiniz ve değeriniz |
+| `doc_title` | Fatura, Fiyat Teklifi veya Makbuz gibi belge başlığı |
+| `doc_number` | Belge numarası |
+| `doc_date` | Yayın tarihi etiketi ve değeri |
+| `doc_due_date` | Son tarih etiketi ve değeri |
+| `bill_to_label` | Müşteri bölümü etiketi |
+| `customer_name` | Müşteri adı |
+| `customer_address` | Müşteri adresi |
+| `items` | Satır öğeleri tablosu |
+| `subtotal_label` | Ara toplam etiketi |
+| `subtotal` | Ara toplam tutar |
+| `vat_label` | VAT etiketi |
+| `vat_amount` | VAT miktarı |
+| `total_label` | Toplam etiket |
+| `total` | Toplam tutar |
+| `bank_label` | Ödeme ayrıntıları bölümü etiketi |
+| `bank_details` | Banka veya ödeme talimatları |
+| `signature` | İmza resmi |
+| `footer` | Altbilgi metni |
+
+## Marka renkleri
+
+Galeri şablonları şirketinizin marka renklerini otomatik olarak uygulayabilir. NomadBill, şirket ayarlarından birincil ve ikincil renklerinizi okur ve desteklenen şablon öğelerini yeniden renklendirmek için bunları kullanır.
+
+Bu, her metin bloğunu, başlığı veya vurgu öğesini manuel olarak güncellemeden, tüm faturalarda ve fiyat tekliflerinde tutarlı markalama istediğinizde en iyi sonucu verir. Şablona bağlı olarak vurgu rengi genellikle başlıklara, çubuklara, toplamlara veya arka plan vurgularına uygulanır.
+
+Bazı markalı düzenler, marka paletinizi vurgu alanlarına uygularken metni siyah tutmayı da destekler. Markanızın renkleri açıksa veya okunabilirlik tam renkli metin stilinden daha önemliyse bu yaklaşımı kullanın.
+
+## Çok dilli şablonlar
+
+Şablonlar dört dili destekler: DE, EN, FR ve ES. Dil değişiklikleri belge başlığı, tarih etiketleri, alt toplam, VAT, toplam gibi yerleşik etiketleri ve varsayılan şablonlarda kullanılan diğer standart metinleri günceller.
+
+NomadBill şablon etiketlerini mizanpajın kendisinden ayrı olarak çevirir. Bu, düzenleyicide yaptığınız konumları, aralıkları, renkleri veya diğer tasarım değişikliklerini kaybetmeden dilleri değiştirebileceğiniz anlamına gelir.
+
+Birden fazla dilde çalışıyorsanız, ifadeler ve biçimlendirme üzerinde tam kontrole ihtiyaç duyduğunuzda her dil için bir şablon oluşturun. Düzen aynı kalırsa aynı tasarımı yeniden kullanabilir ve uygun olduğunda çevrilmiş etiketlere güvenebilirsiniz.
+
+## Şablonlardaki özel alanlar
+
+Özel alanlar, PDF'lerinize şirkete, müşteriye veya belgeye özel değerler eklemenizi sağlar. Şablonlarda bu değerler `cf_{entity}_{key}` biçimindeki alan adlarını kullanır.
+
+Örneğin, bir faturaya bağlanan özel bir alan, `cf_invoice_project_reference` gibi bir alan adıyla eşlenebilir. Müşteri düzeyindeki özel alan, müşteri varlığı segmentiyle aynı modeli izler.
+
+Alan anahtarlarınızın ve şablon alan adlarınızın aynı hizada kalması için bu yer tutucuları eklemeden önce [Özel Alanlar](/tr/user-guide/custom-fields) bölümünü okuyun.
+
+<Callout kind="tip">
+
+PDF'de özel bir alan boş görünüyorsa öncelikle alanın mevcut olduğunu, anahtarın tam olarak eşleştiğini ve şablondaki alan adının beklenen `cf_{entity}_{key}` modelini kullandığını doğrulayın.
+
+</Callout>
+
+## Varsayılan şablonu ayarlama
+
+Her belge türünün bir varsayılan şablonu olabilir. Belge formunda veya önizleme ekranında farklı bir şablon seçmediğiniz sürece varsayılan şablon otomatik olarak kullanılır.
+
+Varsayılanı değiştirmek için **Ayarlar → Şablonlar**'ı açın, doğru belge türü sekmesinde şablonu bulun ve **Varsayılanı ayarla** seçeneğini kullanın. Güncellenen şablon, şirketiniz genelinde söz konusu belge türü için yeni başlangıç ​​noktası haline gelir.
+
+Bu, yenilenmiş bir düzeni kullanıma sunduğunuzda kullanışlıdır. Önce yeni şablonu varsayılan olarak ayarlayın, ardından eski şablonları özel durumlar veya tarihsel tutarlılık için kullanılabilir durumda tutun.
+
+## İlgili kılavuzlar
+
+<Columns cols={3}>
+  <Card title="Faturalama" href="/tr/user-guide/invoicing" icon="book-open" cta="Kılavuzu aç" />
+  <Card title="Teklifler" href="/tr/user-guide/quotes" icon="arrow-right" cta="İlgili kılavuzu görüntüle" />
+  <Card title="Özel Alanlar" href="/tr/user-guide/custom-fields" icon="settings" cta="Alanların nasıl eşlendiğini öğrenin" />
+</Columns>

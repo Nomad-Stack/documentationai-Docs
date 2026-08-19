@@ -1,0 +1,143 @@
+---
+title: Mulai cepat
+description: >-
+  Siapkan akun NomadBill Anda, buat perusahaan pertama Anda, dan kirimkan perusahaan pertama Anda
+  faktur dalam hitungan menit.
+---
+## Prasyarat
+
+Sebelum memulai, pastikan Anda memiliki:
+
+- Alamat email yang valid
+- Detail bisnis Anda, termasuk nama perusahaan, alamat, dan nomor PPN jika ada
+- Bahasa dan mata uang default pilihan Anda
+- Detail rekening bank jika Anda berencana menambahkan informasi pembayaran atau pembayaran nanti
+
+<Callout kind="info" collapsed="false">
+  Mulailah dengan uji coba gratis 7 hari. Tidak diperlukan kartu kredit saat Anda mendaftar.
+</Callout>
+
+## Daftar dan siapkan perusahaan Anda
+
+Buat akun Anda, lalu konfigurasikan perusahaan tempat Anda akan menagih.
+
+<Steps>
+  <Step title="Buat akun Anda" icon="users" title-type="p">
+    Kunjungi [app.nomadbill.co](https://app.nomadbill.co/) dan daftar dengan email dan sandi Anda, atau lanjutkan dengan Google.
+
+    Setelah Anda mengonfirmasi akun Anda, NomadBill memasukkan Anda dan membawa Anda ke pengaturan perusahaan.
+  </Step>
+
+  <Step title="Buat perusahaan pertama Anda" icon="plus" title-type="p">
+    Masukkan nama perusahaan Anda dan pilih slug perusahaan. NomadBill menggunakan slug tersebut untuk mengidentifikasi ruang kerja perusahaan Anda.
+
+    Pilih bahasa default dari `DE`, `EN`, `FR`, atau `ES`, lalu pilih mata uang default Anda: `EUR`, `USD`, `GBP`, `CHF`, atau `AED`.
+  </Step>
+
+  <Step title="Tambahkan detail perusahaan di Pengaturan" icon="settings" title-type="p">
+    Buka [Pengaturan](https://app.nomadbill.co/settings) dan lengkapi profil perusahaan Anda dengan nama resmi perusahaan, alamat, nomor PPN, dan detail bank Anda.
+
+    Anda juga dapat mengonfigurasi branding, default faktur, templat PDF, dan bidang khusus dari area yang sama.
+  </Step>
+</Steps>
+
+## Ikhtisar dasbor
+
+Dasbor Anda langsung memberi Anda gambaran kerja bisnis. Ini menunjukkan pendapatan, biaya, keuntungan, dan kas beredar di bagian atas, diikuti dengan grafik dan aktivitas yang membantu Anda memahami apa yang berubah.
+
+Di bawah KPI utama, Anda dapat meninjau tren pendapatan, biaya, dan laba selama enam bulan terakhir, umur piutang, pendapatan menurut klien, aktivitas terkini, dan campuran mata uang Anda.
+
+<Columns cols="3">
+  <Card title="Dasbor" href="/id/user-guide/dashboard" icon="bar-chart" horizontal="false">
+    Tinjau KPI, tren, data umur piutang, dan aktivitas akun terkini.
+  </Card>
+
+  <Card title="Faktur" href="/id/user-guide/invoicing" icon="file-text" horizontal="false">
+    Buat faktur, kelola pelanggan, dan kirim PDF melalui email.
+  </Card>
+
+  <Card title="Faktur masuk" href="/id/user-guide/incoming-invoices" icon="upload" horizontal="false">
+    Unggah faktur dan tanda terima pemasok untuk pelacakan pengeluaran.
+  </Card>
+</Columns>
+
+## Kirim faktur pertama Anda
+
+Buat faktur pertama Anda dari editor faktur, lalu kirimkan sebagai PDF melalui email atau unduh untuk pengiriman manual.
+
+<Steps>
+  <Step title="Buka faktur baru" icon="plus" title-type="p">
+    Buka `Invoices` dan klik `New`, atau langsung buka `/invoices/new`.
+
+    NomadBill membuat draft invoice untuk perusahaan tempat Anda bekerja saat ini.
+  </Step>
+
+  <Step title="Tetapkan pelanggan, mata uang, dan bahasa" icon="users" title-type="p">
+    Pilih mata uang faktur dan bahasa dokumen, lalu masukkan nama dan alamat pelanggan.
+
+    Gunakan salah satu mata uang invoice yang didukung: `EUR`, `USD`, `GBP`, `CHF`, atau `AED`. Gunakan salah satu bahasa faktur yang didukung: `DE`, `EN`, `FR`, atau `ES`.
+  </Step>
+
+  <Step title="Tambahkan item baris dan PPN" icon="edit" title-type="p">
+    Tambahkan setiap item baris dengan nama, jumlah, dan harga satuan. Kemudian tetapkan persentase PPN untuk invoice atau item baris berdasarkan kebutuhan penagihan Anda.
+
+    Default yang umum adalah PPN `19%`. Periksa totalnya sebelum melanjutkan.
+  </Step>
+
+  <Step title="Pratinjau dan kirim PDF" icon="send" title-type="p">
+    Pratinjau PDF yang dihasilkan untuk mengonfirmasi tata letak, detail pelanggan, total, dan PPN.
+
+    Jika semuanya sudah benar, kirimkan faktur melalui email atau unduh PDF dan kirimkan sendiri. Jika Anda mengirimnya dari NomadBill, email dikirimkan melalui Resend.
+  </Step>
+</Steps>
+
+<Callout kind="tip" collapsed="false">
+  NomadBill memberi nomor otomatis pada faktur per perusahaan menggunakan format `R-00001`, sehingga faktur pertama Anda diberi nomor secara otomatis.
+</Callout>
+
+## Catat pengeluaran pertama Anda
+
+Unggah faktur atau tanda terima masuk untuk mulai melacak biaya pemasok.
+
+<Steps>
+  <Step title="Buka Faktur Masuk" icon="upload" title-type="p">
+    Buka `Incoming Invoices` atau buka `/incoming`.
+
+    Area ini menyimpan file yang diunggah di ruang kerja Anda dan menyimpannya di catatan pengeluaran.
+  </Step>
+
+  <Step title="Unggah berkasnya" icon="plus" title-type="p">
+    Unggah faktur atau tanda terima pemasok sebagai PDF atau gambar.
+
+    NomadBill menyimpan file di bucket penyimpanan `incoming-invoices` sehingga Anda dapat mengaksesnya lagi nanti.
+  </Step>
+
+  <Step title="Lengkapi rincian pengeluaran" icon="edit" title-type="p">
+    Tambahkan nama pemasok, jumlah, kategori, tanggal faktur, dan tanggal jatuh tempo jika relevan.
+
+    Setelah Anda menyimpan catatan, pengeluaran tersedia untuk ditinjau bersama dengan dokumen asli yang diunggah.
+  </Step>
+</Steps>
+
+## Langkah selanjutnya
+
+Setelah perusahaan Anda siap dan catatan pertama Anda dibuat, hubungkan alur kerja yang paling sering Anda gunakan.
+
+<Columns cols="2">
+  <Card title="Sinkronisasi Bank" href="/id/user-guide/bank-sync" icon="database" horizontal="false">
+    Hubungkan bank-bank AS dan UE yang didukung melalui Plaid dan impor riwayat transaksi hingga 365 hari.
+  </Card>
+
+  <Card title="Intelijen Email" href="/id/user-guide/email-intelligence" icon="zap" horizontal="false">
+    Otomatiskan pengambilan dokumen dan kurangi entri data manual dari email pemasok.
+  </Card>
+
+  <Card title="Pengaturan" href="/id/user-guide/settings" icon="settings" horizontal="false">
+    Konfigurasikan branding, default, templat PDF, dan bidang khusus untuk setiap perusahaan.
+  </Card>
+
+  <Card title="Manajemen Tim" href="/id/user-guide/team-management" icon="users" horizontal="false">
+    Undang rekan satu tim dan kelola akses di seluruh ruang kerja perusahaan Anda.
+  </Card>
+</Columns>
+

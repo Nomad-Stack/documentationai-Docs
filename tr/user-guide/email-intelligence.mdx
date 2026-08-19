@@ -1,0 +1,246 @@
+---
+title: Akıllı E-posta
+description: Gelen e-postaları otomatik olarak sınıflandırın, yapay zeka ile belge verilerini çıkarın ve e-postaları faturalar, fiyat teklifleri ve makbuzlarla eşleştirin.
+---
+
+## Paylaşılan posta kutunuzu belge gelen kutusuna dönüştürün
+
+Email Intelligence, şirketinize, gelen mesajları izleyen, iş belgelerini tanımlayan, önemli verileri çıkaran ve NomadBill'deki doğru kayıtlara bağlantılar öneren özel bir posta kutusu sağlar. Serbest çalışanların ve küçük ekiplerin halihazırdaki çalışma şekline göre tasarlanmıştır: tedarikçiler faturaları e-postayla gönderir, müşteriler tekliflere yanıt verir ve ödeme onayları aynı gelen kutusuna ulaşır.
+
+## Temsilci posta kutusu
+
+Her şirkete `agent_name@agent.nomadbill.co` formatında bir özel temsilci posta kutusu verilir. Çalışma alanınız özel bir aracı etki alanı kullanıyorsa posta kutusu bunun yerine bu etki alanını kullanır.
+
+Posta kutusunu yalnızca şirket sahibi hazırlayabilir. Kurulum sırasında NomadBill, aracı adını küçük harfe dönüştürerek, boşlukları tirelerle değiştirerek ve bilgiyi 40 karakterleriyle sınırlayarak posta kutusu için güvenli bir formatta normalleştirir.
+
+Sağlama başladıktan sonra NomadBill:
+
+- Nylas ile bir posta bağışı oluşturur
+- posta kutusu bağlantısını `company_email_accounts` kaydında saklar
+- gelen posta etkinlikleri için bir web kancası kaydeder
+
+Webhook şu olayları dinler:
+
+- `message.created`
+- `message.updated`
+- `grant.expired`
+
+NomadBill web kancasını `/api/public/nylas-webhook`'ye kaydeder. İlk webhook anlaşması sırasında `GET` işleyicisi, `challenge` sorgu parametresini tam olarak alındığı gibi döndürür.
+
+## Gelen e-postalar nasıl işlenir?
+
+Her yeni mesaj aynı işlem akışını takip eder, böylece sonuçlar tutarlı kalır ve mükerrer işlerden kaçınılır.
+
+<Steps>
+  <Step title="Webhook etkinliğini alın" icon="zap">
+
+  Nylas, bir mesaj oluşturulduğunda veya güncellendiğinde ya da yetkinin süresi dolduğunda `/api/public/nylas-webhook`'ye bir web kancası olayı gönderir.
+
+  NomadBill, `x-nylas-signature` başlığını HMAC-SHA256 ile doğrulayabilir. İmza doğrulaması isteğe bağlıdır ancak bunu önerilen üretim kurulumu olarak değerlendirmelisiniz.
+
+  </Step>
+
+  <Step title="E-postanın tamamını getir" icon="download">
+
+  Geçerli bir olay geldikten sonra NomadBill, bağlı posta kutusundan tüm e-posta içeriğini ve meta verileri alır.
+
+  Sistem aynı zamanda mükerrer işlemlere karşı da koruma sağlar. Aynı e-posta zaten tamamlanmışsa, zaten atlanmışsa veya beş dakikalık bir süre içinde hâlâ işleniyorsa, NomadBill onu yeniden analiz etmez.
+
+  </Step>
+
+  <Step title="Analiz edilmemesi gereken mesajları atlayın" icon="shield">
+
+  NomadBill, aracının posta kutusundan gönderilen mesajları atlar. Bu kendi kendine e-posta koruması döngüleri önler ve sistem tarafından oluşturulan postaların analiz edilmesini önler.
+
+  Giden veya alakasız mesajlar, kullanılabilir bir iş belgesini temsil etmiyorlarsa, sınıflandırma sırasında da hariç tutulabilir.
+
+  </Step>
+
+  <Step title="Ekleri ve mesaj içeriğini indirin" icon="paperclip">
+
+  İşlemci, belge analizini çalıştırmadan önce e-posta metnini ve mevcut tüm ekleri toplar.
+
+  Bu, sınıflandırıcıya mesajın fatura, makbuz, fiyat teklifi, onay veya başka bir belge türü içerip içermediğini anlayacak yeterli bağlamı sağlar.
+
+  </Step>
+
+  <Step title="AI sınıflandırmasını ve çıkarma işlemini çalıştırın" icon="code">
+
+  NomadBill, Lovable AI ağ geçidi aracılığıyla `google/gemini-3.6-flash`'yi kullanarak e-posta içeriğini AI hattına gönderir.
+
+  Model, belgeyi sınıflandırır ve toplamlar, tarihler, adlar ve referans numaraları gibi yapılandırılmış alanları çıkarır; böylece verileri elle kopyalamak yerine bunları NomadBill içinde inceleyebilirsiniz.
+
+  </Step>
+
+  <Step title="Eşleştirme önerilerini hesaplayın" icon="check-circle">
+
+  Çıkartmanın ardından eşleştirme motoru, e-postayı faturalar, fiyat teklifleri, gelen faturalar, banka işlemleri ve şirketinizdeki müşterilerle karşılaştırır.
+
+  Mümkün olan her maç bir puan alır. NomadBill, minimum eşiği karşılayan önerileri tutar ve en güçlü adayları ilk önce gösterir.
+
+  </Step>
+
+  <Step title="Sonucu saklayın ve kararlarınızı koruyun" icon="database">
+
+  Nihai analiz, çıkarılan veriler ve önerilen bağlantılar dahil olmak üzere e-posta kaydıyla birlikte saklanır.
+
+  Bir öneriyi zaten bağladıysanız veya reddettiyseniz NomadBill, çalışmanızı sıfırlamak yerine daha sonra yeniden analizde bu kararı korur.
+
+  </Step>
+</Steps>
+
+## Belge sınıflandırması
+
+Email Intelligence, analiz edilen her mesajı aşağıdaki belge türlerinden birinde sınıflandırır:
+
+- `incoming_invoice`
+- `receipt`
+- `outgoing_invoice`
+- `quote`
+- `payment_confirmation`
+- `reminder`
+- `contract`
+- `other`
+
+Sınıflandırma, NomadBill'in bir sonraki adımda hangi eylemleri sunacağına karar vermesine yardımcı olur. Örneğin, yalnızca `incoming_invoice` ve `receipt` e-postaları doğrudan gelen fatura kaydına dönüştürülebilir.
+
+## Yapay zekadan çıkarılan veriler
+
+Analiz sonucu aşağıdaki çıkarılan alanları içerebilir.
+
+<ParamField body="doc_type" param-type="string" required="true" show-location="false">
+E-posta için algılanan belge türü.
+</ParamField>
+
+<ParamField body="confidence" param-type="number" show-location="false">
+Sınıflandırma sonucuna ilişkin model güven puanı.
+</ParamField>
+
+<ParamField body="summary" param-type="string" show-location="false">
+E-postanın veya ekin içeriğinin kısa bir özeti.
+</ParamField>
+
+<ParamField body="document_number" param-type="string" show-location="false">
+Belgede tespit edilen ana fatura, makbuz, fiyat teklifi veya onay numarası.
+</ParamField>
+
+<ParamField body="reference_numbers" param-type="array" show-location="false">
+E-postada veya ekte bulunan ek referans tanımlayıcıları.
+</ParamField>
+
+<ParamField body="total_amount" param-type="number" show-location="false">
+Belge için tespit edilen toplam brüt tutar.
+</ParamField>
+
+<ParamField body="net_amount" param-type="number" show-location="false">
+Belgede belirtildiğinde VAT'den önceki net tutar.
+</ParamField>
+
+<ParamField body="vat_amount" param-type="number" show-location="false">
+Belgeden çıkarılan VAT tutarı.
+</ParamField>
+
+<ParamField body="vat_percentage" param-type="number" show-location="false">
+Güvenilir bir şekilde tanımlanabildiğinde VAT oranı.
+</ParamField>
+
+<ParamField body="currency" param-type="string" show-location="false">
+Belge tutarı için tespit edilen para birimi kodu.
+</ParamField>
+
+<ParamField body="document_date" param-type="string" show-location="false">
+Belgede bulunan yayın tarihi.
+</ParamField>
+
+<ParamField body="due_date" param-type="string" show-location="false">
+Mevcut olması durumunda ödemenin son tarihi.
+</ParamField>
+
+<ParamField body="vendor_name" param-type="string" show-location="false">
+Belgeyle ilişkili tedarikçi veya gönderenin adı.
+</ParamField>
+
+<ParamField body="customer_name" param-type="string" show-location="false">
+Belgede başvurulan müşteri adı.
+</ParamField>
+
+<ParamField body="iban" param-type="string" show-location="false">
+E-postada veya belgede tespit edilen banka hesap numarası.
+</ParamField>
+
+<ParamField body="category" param-type="string" show-location="false">
+Analiz sırasında atanan geniş bir kategori.
+</ParamField>
+
+<ParamField body="ocr_text" param-type="string" show-location="false">
+Aşağı yönde sınıflandırma ve eşleştirme için kullanılan çıkarılan belge metni.
+</ParamField>
+
+<ParamField body="line_items" param-type="array" show-location="false">
+Ekte ayrıntılı ayrıntılar yer aldığında belgedeki satır öğeleri algılandı.
+</ParamField>
+
+## Eşleştirme ve öneriler
+
+Analizin ardından NomadBill, çalışma alanınızdaki ilgili kayıtları arar ve her adayı puanlar. Bir önerinin görünmesi için minimum `0.35` puanına ulaşması gerekir ve sistem, e-posta başına en fazla 12 öneri döndürür.
+
+Eşleştirme motoru çeşitli kayıt türlerini değerlendirir:
+
+- faturalar
+- tırnak
+- gelen faturalar
+- banka işlemleri
+- müşteriler
+
+Faturalar için en güçlü sinyaller belge numarası, tutar, alıcı ve müşteri kimliğidir. Puanlama modeli aşağıdakiler için puan ekler:
+
+- bulunan numara: `+0.55`
+- yaklaşık `±0.5%` veya `±0.02` dahilindeki miktar: `+0.30`
+- para birimi eşleşmesi: `+0.05`
+- 14 gün içindeki tarih: `+0.10`
+- `sent_to` gönderenin e-postasını içerir: `+0.25`
+- müşteri adı eşleşmesi: `+0.15`
+
+Banka işlemleri için motor, ödeme kanıtlarına ve karşı tarafın kimliğine odaklanır. Şunlar için puan ekler:
+
+- miktar eşleşmesi: `+0.45`
+- aday numarası bulundu: `+0.35`
+- Karşılık adı eşleşmesi: `+0.20`
+- 30 gün içindeki tarih: `+0.10`
+
+Müşteriler için motor, operasyonel kayıtları önermeden önce e-postanın kime ait olduğunu belirlemeye çalışır. Şunlar için puan ekler:
+
+- tam e-posta eşleşmesi: `+0.80`
+- aynı alan adı: `+0.50`
+- ad eşleşmesi: `+0.30`
+
+Bu puanlar toplanır, dolayısıyla güçlü eşleşmeler genellikle tek bir alana bağlı olmak yerine birkaç sinyali aynı anda birleştirir.
+
+## E-posta bağlantılarını yönetme
+
+NomadBill, her e-postanın kayıtlarınızla nasıl ilişkili olduğunu takip eder. Bağlantılar üç durumdan birinde olabilir:
+
+- **Önerilen** — NomadBill olası bir eşleşme buldu ve incelemenizi bekliyor.
+- **Bağlantılı** — E-postanın belirli bir faturaya, teklife, makbuza, işleme veya müşteriye ait olduğunu onayladınız.
+- **Reddedildi** — Bir öneriyi reddettiniz ve e-posta tekrar analiz edilirse bu karar korunur.
+
+Çıkarılan alanları incelemek, önerileri incelemek ve eşleşmeleri onaylamak veya reddetmek için e-posta görünümündeki Akıllı E-posta kartını kullanın. Bir e-posta zaten bir kayda bağlı olduğunda, bağlantılı e-posta etkinliği diğer taraftan fatura, fiyat teklifi, makbuz, işlem ve müşteri ayrıntısı sayfalarında da görünür.
+
+Belge türü `incoming_invoice` veya `receipt` ise doğrudan e-postadan gelen bir fatura oluşturabilirsiniz. `createReceiptFromEmail` eylemi, yeni kaydı önceden doldurmak için çıkarılan belge verilerini kullanır ve e-posta zaten işlendiğinde veya kasıtlı olarak atlandığında kopyaların oluşturulmasını önler.
+
+<Callout kind="info">
+
+Akıllı E-posta neredeyse gerçek zamanlı olarak güncellenir. NomadBill, `company_email_accounts.last_event_at` üzerindeki Supabase Gerçek Zamanlı aracılığıyla posta kutusu etkinliğini dinler ve gerektiğinde 30 saniyelik yoklama döngüsüne geri döner.
+
+</Callout>
+
+## İlgili kılavuzlar
+
+<Columns cols={2}>
+  <Card title="Faturalama" href="/tr/user-guide/invoicing" icon="file-text" cta="Kılavuzu aç">
+    Giden faturaları yönetin ve bağlantılı e-postaların takip ve ödeme takibini nasıl desteklediğini anlayın.
+  </Card>
+  <Card title="Gelen faturalar" href="/tr/user-guide/incoming-invoices" icon="folder" cta="Kılavuzu aç">
+    Tedarikçi faturalarını inceleyin, e-posta analizinden kayıtlar oluşturun ve satın alma belgelerini düzenli tutun.
+  </Card>
+</Columns>

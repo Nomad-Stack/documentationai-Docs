@@ -1,0 +1,192 @@
+---
+title:الفواتير الواردة
+description:قم بتحميل وإدارة فواتير الموردين والإيصالات والنفقات من خلال حساب VAT التلقائي والتسوية المصرفية.
+---
+
+## تتبع فواتير وإيصالات الموردين في مكان واحد
+
+تتيح لك الفواتير الواردة تخزين فواتير الموردين والإيصالات ونفقات الأعمال الأخرى إلى جانب بقية سجلاتك. يمكنك تحميل PDF أو صورة، وملء تفاصيل الفاتورة، وتتبع ما إذا كان قد تم دفعها، ومطابقتها بمعاملة مصرفية عند ظهور الدفع.
+
+NomadBill يحتفظ بالملف الأصلي في مخزن آمن، ويحسب VAT المبالغ تلقائيًا، ويعرض المعلومات ذات الصلة مثل رسائل البريد الإلكتروني المرتبطة والحقول المخصصة والمدفوعات المصرفية المطابقة في صفحة تفاصيل الفاتورة.
+
+<Callout kind="info">
+
+تتضمن ملفات التحميل المدعومة **PDFs** و**ملفات الصور**. NomadBill يخزن كل ملف في `incoming-invoices` مجموعة التخزين باستخدام نمط مسار لكل مستخدم من `userId/timestamp-filename`.
+
+</Callout>
+
+## تحميل الإيصالات
+
+استخدم منطقة الفواتير الواردة عندما تريد إضافة فاتورة المورد يدويًا من ملف.
+
+<Steps>
+  <Step title="فتح الفواتير الواردة" icon="folder">
+
+انتقل إلى قسم الفواتير الواردة في NomadBill وابدأ تحميلًا جديدًا.
+
+هذا هو الخيار الأفضل عندما يكون لديك بالفعل الإيصال أو فاتورة المورد محفوظة على جهازك.
+
+  </Step>
+
+  <Step title="قم بتحميل الملف" icon="upload">
+
+حدد ملف **PDF** أو **صورة** من جهاز الكمبيوتر أو الهاتف.
+
+NomadBill يخزن الملف الذي تم تحميله في مخزن آمن ويحتفظ بمسار الملف في سجل الفاتورة. عند فتح الملف لاحقًا، يقوم NomadBill بإنشاء رابط عرض موقع يظل صالحًا لمدة 60 ثانية.
+
+  </Step>
+
+  <Step title="أدخل تفاصيل الفاتورة" icon="edit">
+
+أضف المورد والفاتورة وVAT ومعلومات الدفع للمستند.
+
+بعد حفظ الفاتورة، يجب أن تراها في قائمة الفواتير الواردة لديك وتتمكن من فتح صفحة التفاصيل الخاصة بها.
+
+  </Step>
+
+  <Step title="قم بمراجعة صفحة التفاصيل" icon="check-circle">
+
+افتح الفاتورة المحفوظة للتأكد من صحة المعلومات.
+
+يتضمن عرض التفاصيل بطاقات منفصلة لتفاصيل المورد وتفاصيل الفاتورة والحقول المخصصة ورسائل البريد الإلكتروني المرتبطة والمدفوعات المصرفية.
+
+  </Step>
+</Steps>
+
+## تفاصيل المورد والفاتورة
+
+تقوم كل فاتورة واردة بتخزين معلومات المورد والمعلومات الخاصة بالفاتورة. الفئات عبارة عن نص حر، لذا يمكنك استخدام بنية التسمية التي تناسب سير عمل مسك الدفاتر لديك.
+
+### حقول الموردين
+
+<ParamField body="supplier_name" param-type="string" required="false" show-location="false">
+اسم المورد أو التاجر الذي أصدر الفاتورة أو الإيصال.
+</ParamField>
+
+<ParamField body="supplier_address" param-type="string" required="false" show-location="false">
+العنوان البريدي للمورد.
+</ParamField>
+
+<ParamField body="supplier_vat_number" param-type="string" required="false" show-location="false">
+رقم تسجيل المورد VAT، إن وجد في الوثيقة.
+</ParamField>
+
+### حقول الفاتورة
+
+<ParamField body="invoice_number" param-type="string" required="false" show-location="false">
+رقم الفاتورة أو الإيصال الخاص بالمورد.
+</ParamField>
+
+<ParamField body="invoice_date" param-type="date" required="false" show-location="false">
+التاريخ المبين على فاتورة المورد.
+</ParamField>
+
+<ParamField body="due_date" param-type="date" required="false" show-location="false">
+تاريخ استحقاق سداد الفاتورة.
+</ParamField>
+
+<ParamField body="payment_date" param-type="date" required="false" show-location="false">
+تاريخ دفع الفاتورة. يمكن للتسوية المصرفية تحديث ذلك عند مطابقة الدفع.
+</ParamField>
+
+<ParamField body="category" param-type="string" required="false" show-location="false">
+فئة النص الحر للنفقة. NomadBill لا يفرض قائمة فئات محددة مسبقًا.
+</ParamField>
+
+<ParamField body="notes" param-type="string" required="false" show-location="false">
+ملاحظات داخلية حول الاستلام أو المورد أو المصروفات.
+</ParamField>
+
+<ParamField body="currency" param-type="string" required="false" enum="EUR,USD,GBP,CHF,AED" show-location="false">
+العملة المستخدمة في الفاتورة. القيم المدعومة هي `EUR`، `USD`، `GBP`، `CHF`، و`AED`.
+</ParamField>
+
+<ParamField body="payment_status" param-type="string" required="false" enum="unpaid,paid" show-location="false">
+حالة الدفع الحالية للفاتورة. NomadBill يدعم `unpaid` و `paid`.
+</ParamField>
+
+### حقول المبلغ
+
+<ParamField body="net_amount" param-type="number" required="false" show-location="false">
+مبلغ الفاتورة قبل VAT.
+</ParamField>
+
+<ParamField body="vat_percentage" param-type="number" required="false" show-location="false">
+VAT نسبة تطبق على مبلغ الفاتورة.
+</ParamField>
+
+<ParamField body="vat_amount" param-type="number" required="false" show-location="false">
+المبلغ المحسوب VAT.
+</ParamField>
+
+<ParamField body="amount" param-type="number" required="false" show-location="false">
+إجمالي مبلغ الفاتورة بما في ذلك VAT.
+</ParamField>
+
+### ملف وتسجيل البيانات الوصفية
+
+<ParamField body="file_path" param-type="string" required="false" show-location="false">
+مسار تخزين ملف الإيصال أو الفاتورة الذي تم تحميله.
+</ParamField>
+
+<ParamField body="upload_date" param-type="date-time" required="false" show-location="false">
+تاريخ تحميل الملف إلى NomadBill.
+</ParamField>
+
+## VAT وحساب المبلغ
+
+NomadBill يعيد حساب إجماليات الفاتورة تلقائيًا حتى لا تحتاج إلى تحديث كل حقل مبلغ يدويًا. يؤدي هذا إلى تقليل أخطاء الإدخال، خاصة عندما تعرف فقط المبلغ الصافي ومعدل VAT أو لديك فقط الإجمالي الإجمالي من الإيصال.
+
+إذا قمت بتغيير `net_amount` أو `vat_percentage`، فإن NomadBill يعيد حساب كل من `vat_amount` و`amount`. يستخدم المبلغ الإجمالي هذه الصيغة: `gross = net * (1 + pct / 100)`.
+
+إذا قمت بتغيير `amount`، NomadBill، فسيتم إعادة حساب `net_amount` و`vat_amount` بناءً على النسبة المئوية VAT الحالية. يساعد هذا عندما يُظهر الإيصال فقط الإجمالي النهائي ومعدل VAT.
+
+<Callout kind="tip">
+
+تحقق من القيم المُعاد حسابها قبل الحفظ عندما يتضمن الإيصال خصومات أو أسعار مختلطة VAT أو تنسيق المورد الذي لا يفصل بين الصافي وVAT بوضوح.
+
+</Callout>
+
+## حالة الدفع والتسوية المصرفية
+
+تساعدك حالة الدفع على تتبع فواتير الموردين التي لا تزال مفتوحة والفواتير التي تم دفعها بالفعل. NomadBill يستخدم حالتين: `unpaid` و `paid`.
+
+إذا قمت بتوصيل المزامنة المصرفية، فيمكن لـ NomadBill مطابقة المعاملات المصرفية الصادرة مع الفواتير الواردة تلقائيًا. يبحث منطق المطابقة عن:
+
+- **معاملة صادرة** بمبلغ أقل من الصفر
+- ** نفس المبلغ بالضبط **
+- **نفس العملة**
+- تاريخ المعاملة خلال **14 يومًا** من تاريخ الفاتورة
+
+عندما يجد NomadBill تطابقًا، فإنه يربط المعاملة بالفاتورة الواردة ويعين حالة الدفع على `paid`. تظهر الدفعات المصرفية المرتبطة في بطاقة الدفعات المصرفية في صفحة تفاصيل الفاتورة.
+
+يمكنك أيضًا إدارة الاتصال يدويًا من منطقة مزامنة الحسابات المصرفية. إذا قمت بإلغاء ربط معاملة مطابقة، فإن NomadBill يغير حالة الدفع مرة أخرى إلى `unpaid`.
+
+للحصول على سير عمل المطابقة الكاملة، راجع [مزامنة الحسابات المصرفية](/ar/user-guide/bank-sync).
+
+## تكامل معلومات البريد الإلكتروني
+
+NomadBill يمكنه أيضًا إنشاء فاتورة واردة من بيانات البريد الإلكتروني. عندما تقوم معلومات البريد الإلكتروني باستخراج تفاصيل فاتورة المورد أو الاستلام من الرسالة، يمكن لـ `createReceiptFromEmail` إنشاء سجل الفاتورة الواردة لك.
+
+يكون هذا مفيدًا عندما يرسل الموردون الفواتير عبر البريد الإلكتروني وتريد تقليل الإدخال اليدوي. بعد الإنشاء، يمكنك فتح صفحة تفاصيل الفاتورة، ومراجعة الحقول المستخرجة، وإضافة ملاحظات أو فئات، والتأكد من مطابقة الدفعة بالفعل.
+
+تتضمن صفحة التفاصيل أيضًا بطاقة رسائل بريد إلكتروني مرتبطة، مما يساعدك على تتبع الفاتورة مرة أخرى إلى سياق البريد الإلكتروني الأصلي عند الحاجة.
+
+للتعرف على سير عمل البريد الإلكتروني، راجع [ذكاء البريد الإلكتروني](/ar/user-guide/email-intelligence).
+
+## أدلة ذات صلة
+
+<Columns cols={2}>
+  <Card
+    title="مزامنة الحسابات المصرفية"
+    href="/ar/user-guide/bank-sync"
+    icon="database"
+    cta="فتح الدليل"
+  />
+  <Card
+    title="الحقول المخصصة"
+    href="/ar/user-guide/custom-fields"
+    icon="settings"
+    cta="فتح الدليل"
+  />
+</Columns>

@@ -1,0 +1,128 @@
+---
+title: Pelanggan
+description: Kelola catatan pelanggan dengan detail kontak, bidang khusus, dan penggunaan kembali di seluruh faktur dan penawaran harga.
+---
+
+## Simpan detail pelanggan Anda di satu tempat
+
+Pelanggan menyimpan informasi kontak yang Anda gunakan kembali di seluruh alur kerja penagihan Anda. Tambahkan setiap pelanggan satu kali di `/customers`, selalu perbarui detailnya, dan gunakan kembali catatan tersebut saat Anda membuat faktur dan penawaran harga.
+
+Pemilik perusahaan dan anggota tim dapat mengelola pelanggan di ruang kerja perusahaan mereka. Daftar pelanggan diurutkan menurut abjad berdasarkan nama, dan tabel memperlihatkan bidang kontak standar ditambah bidang khusus yang dikonfigurasi untuk muncul di tabel.
+
+## Bidang pelanggan
+
+Setiap catatan pelanggan mencakup bidang kontak inti di bawah.
+
+<ParamField body="name" param-type="string" required="true" show-location="false">
+
+Nama tampilan pelanggan. NomadBill memerlukan bidang ini dan menggunakannya sebagai label utama dalam daftar pelanggan.
+
+</ParamField>
+
+<ParamField body="email" param-type="string" required="false" show-location="false">
+
+Alamat email pelanggan.
+
+</ParamField>
+
+<ParamField body="phone" param-type="string" required="false" show-location="false">
+
+Nomor telepon pelanggan.
+
+</ParamField>
+
+<ParamField body="address" param-type="string" required="false" show-location="false">
+
+Alamat pelanggan. Dalam dialog buat dan edit, bidang ini menggunakan area teks multibaris sehingga Anda dapat memasukkan alamat penagihan lengkap.
+
+</ParamField>
+
+<Callout kind="info">
+
+Daftar pelanggan menampilkan **nama**, **email**, dan **telepon** secara default. Ini juga menunjukkan bidang khusus pelanggan di mana visibilitas tabel diaktifkan.
+
+</Callout>
+
+## Menciptakan pelanggan
+
+Tambahkan pelanggan dari halaman pelanggan, lalu isi detail kontak yang ingin Anda gunakan kembali nanti.
+
+<Steps>
+  <Step title="Buka halaman pelanggan" icon="users">
+
+  Buka `/customers` di ruang kerja Anda.
+
+  Anda akan melihat tabel pelanggan yang diurutkan berdasarkan nama. Jika Anda sudah membuat bidang khusus pelanggan dengan visibilitas tabel diaktifkan, kolom tersebut juga muncul di sini.
+
+  </Step>
+  <Step title="Mulai catatan pelanggan baru" icon="plus">
+
+  Buat pelanggan baru dari tindakan halaman.
+
+  NomadBill membuka dialog pembuatan dengan bidang pelanggan standar dan bidang khusus apa pun yang ditetapkan ke entitas `customer`.
+
+  </Step>
+  <Step title="Masukkan detail wajib dan opsional" icon="edit">
+
+  Isi informasi pelanggan:
+
+  - **Nama** wajib diisi.
+  - **Email** bersifat opsional.
+  - **Telepon** adalah opsional.
+  - **Alamat** bersifat opsional dan mendukung teks multibaris.
+  - **Bidang khusus** muncul saat Anda mengonfigurasinya untuk pelanggan.
+
+  Ruang kerja demo mungkin sudah menyertakan bidang unggulan seperti `kundennummer`, `kundenkategorie`, `website`, `kunden_seit`, `notizen_intern`, `praeferierte_sprachen`, dan `newsletter`.
+
+  </Step>
+  <Step title="Simpan dan verifikasi hasilnya" icon="check-circle">
+
+  Selamatkan pelanggan.
+
+  Setelah disimpan, pelanggan muncul dalam tampilan daftar di bawah posisi alfabet yang benar. Jika bidang khusus dikonfigurasi untuk ditampilkan dalam tabel, nilainya juga muncul sebagai kolom di baris.
+
+  </Step>
+</Steps>
+
+## Mengedit dan menghapus pelanggan
+
+Perbarui pelanggan dari dialog yang sama yang digunakan untuk pembuatan. Anda dapat mengubah bidang kontak standar dan bidang khusus pelanggan yang ditetapkan kapan saja.
+
+Saat Anda menghapus pelanggan, NomadBill meminta Anda mengonfirmasi tindakan sebelum menghapus catatan. Gunakan penghapusan dengan hati-hati jika Anda mengandalkan informasi pelanggan tersebut dalam proses penagihan reguler Anda.
+
+## Menggunakan pelanggan dalam faktur
+
+Pelanggan dirancang untuk menghemat waktu saat Anda membuat faktur. Daripada mengetik ulang rincian kontak untuk setiap dokumen, Anda memilih atau menggunakan kembali data pelanggan yang sudah ada.
+
+Faktur menyimpan nama pelanggan di bidang `customer_name`. Itu berarti catatan pelanggan menyediakan nama sumber yang Anda gunakan dalam alur kerja faktur, sekaligus menjaga daftar pelanggan Anda tetap terorganisir di satu tempat.
+
+<Callout kind="tip">
+
+Siapkan pelanggan sebelum Anda mulai mengirim faktur secara teratur. Daftar pelanggan yang bersih mempercepat pembuatan faktur dan mengurangi inkonsistensi penamaan di seluruh dokumen.
+
+</Callout>
+
+## Bidang khusus untuk pelanggan
+
+Bidang khusus pelanggan memungkinkan Anda melacak informasi di luar bidang kontak standar. NomadBill menetapkan bidang ini ke jenis entitas `customer`, yang berarti bidang tersebut muncul di formulir pelanggan dan, ketika dikonfigurasi, di tabel pelanggan.
+
+Gunakan bidang khusus untuk data seperti nomor pelanggan internal, kategori, situs web, tanggal mulai, preferensi bahasa, catatan, atau status keikutsertaan buletin. Data demo dapat mencakup bidang seperti `kundennummer` sebagai nomor otomatis, `kundenkategorie` sebagai tarik-turun, `website` sebagai URL, `kunden_seit` sebagai tanggal, `notizen_intern` sebagai teks multibaris, `praeferierte_sprachen` sebagai pilihan ganda, dan `newsletter` sebagai boolean.
+
+Untuk petunjuk pengaturan dan tipe kolom, lihat [Bidang khusus](/id/user-guide/custom-fields).
+
+## Ke mana harus pergi selanjutnya
+
+<Columns cols={2}>
+  <Card
+    title="Faktur"
+    href="/id/user-guide/invoicing"
+    icon="book-open"
+    cta="Buka panduan faktur"
+  />
+  <Card
+    title="Bidang khusus"
+    href="/id/user-guide/custom-fields"
+    icon="settings"
+    cta="Konfigurasikan bidang khusus"
+  />
+</Columns>

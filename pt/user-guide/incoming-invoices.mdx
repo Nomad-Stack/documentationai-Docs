@@ -1,0 +1,192 @@
+---
+title: Faturas recebidas
+description: Carregue e faça a gestão de faturas de fornecedores, recibos e despesas com cálculo automático do IVA e reconciliação bancária.
+---
+
+## Acompanhe faturas de fornecedores e recibos num único local
+
+As faturas recebidas permitem-lhe armazenar faturas de fornecedores, recibos e outras despesas da empresa juntamente com os restantes registos. Pode carregar um PDF ou uma imagem, preencher os dados da fatura, acompanhar se foi paga e correspondê-la a uma transação bancária quando o pagamento aparecer.
+
+O NomadBill mantém o ficheiro original num armazenamento seguro, calcula automaticamente os valores do IVA e apresenta informações relacionadas, como e-mails associados, campos personalizados e pagamentos bancários correspondentes, na página de detalhes da fatura.
+
+<Callout kind="info">
+
+Os ficheiros de carregamento suportados incluem **PDFs** e **ficheiros de imagem**. O NomadBill armazena cada ficheiro no bucket de armazenamento `incoming-invoices`, utilizando um padrão de caminho por utilizador `userId/timestamp-filename`.
+
+</Callout>
+
+## Carregar recibos
+
+Utilize a área de faturas recebidas quando pretender adicionar manualmente uma fatura de fornecedor a partir de um ficheiro.
+
+<Steps>
+  <Step title="Abrir as faturas recebidas" icon="folder">
+
+  Aceda à secção de faturas recebidas no NomadBill e inicie um novo carregamento.
+
+  Esta é a melhor opção quando já tem o recibo ou a fatura do fornecedor guardado no seu dispositivo.
+
+  </Step>
+
+  <Step title="Carregar o ficheiro" icon="upload">
+
+  Selecione um ficheiro **PDF** ou de **imagem** no seu computador ou telemóvel.
+
+  O NomadBill armazena o ficheiro carregado num armazenamento seguro e mantém um caminho para o ficheiro no registo da fatura. Quando abrir o ficheiro mais tarde, o NomadBill gera uma ligação de visualização assinada, válida durante 60 segundos.
+
+  </Step>
+
+  <Step title="Introduzir os dados da fatura" icon="edit">
+
+  Adicione as informações do fornecedor, da fatura, do IVA e do pagamento do documento.
+
+  Depois de guardar a fatura, deverá vê-la na lista de faturas recebidas e conseguir abrir a respetiva página de detalhes.
+
+  </Step>
+
+  <Step title="Rever a página de detalhes" icon="check-circle">
+
+  Abra a fatura guardada para verificar as informações.
+
+  A vista de detalhes inclui cartões separados para os dados do fornecedor, dados da fatura, campos personalizados, e-mails associados e pagamentos bancários.
+
+  </Step>
+</Steps>
+
+## Dados do fornecedor e da fatura
+
+Cada fatura recebida armazena tanto as informações do fornecedor como informações específicas da fatura. As categorias são de texto livre, pelo que pode utilizar a estrutura de nomes que melhor se adapte ao seu fluxo de contabilidade.
+
+### Campos do fornecedor
+
+<ParamField body="supplier_name" param-type="string" required="false" show-location="false">
+Nome do fornecedor ou comerciante que emitiu a fatura ou o recibo.
+</ParamField>
+
+<ParamField body="supplier_address" param-type="string" required="false" show-location="false">
+Morada postal do fornecedor.
+</ParamField>
+
+<ParamField body="supplier_vat_number" param-type="string" required="false" show-location="false">
+Número de identificação de IVA do fornecedor, se estiver disponível no documento.
+</ParamField>
+
+### Campos da fatura
+
+<ParamField body="invoice_number" param-type="string" required="false" show-location="false">
+O número da fatura ou do recibo atribuído pelo próprio fornecedor.
+</ParamField>
+
+<ParamField body="invoice_date" param-type="date" required="false" show-location="false">
+Data apresentada na fatura do fornecedor.
+</ParamField>
+
+<ParamField body="due_date" param-type="date" required="false" show-location="false">
+Data de vencimento do pagamento da fatura.
+</ParamField>
+
+<ParamField body="payment_date" param-type="date" required="false" show-location="false">
+Data em que a fatura foi paga. A reconciliação bancária pode atualizar esta data quando é encontrado um pagamento correspondente.
+</ParamField>
+
+<ParamField body="category" param-type="string" required="false" show-location="false">
+Categoria de texto livre para a despesa. O NomadBill não impõe uma lista de categorias predefinida.
+</ParamField>
+
+<ParamField body="notes" param-type="string" required="false" show-location="false">
+Notas internas sobre o recibo, o fornecedor ou a despesa.
+</ParamField>
+
+<ParamField body="currency" param-type="string" required="false" enum="EUR,USD,GBP,CHF,AED" show-location="false">
+Moeda utilizada na fatura. Os valores suportados são `EUR`, `USD`, `GBP`, `CHF` e `AED`.
+</ParamField>
+
+<ParamField body="payment_status" param-type="string" required="false" enum="unpaid,paid" show-location="false">
+Estado atual do pagamento da fatura. O NomadBill suporta `unpaid` e `paid`.
+</ParamField>
+
+### Campos de valores
+
+<ParamField body="net_amount" param-type="number" required="false" show-location="false">
+Valor da fatura antes do IVA.
+</ParamField>
+
+<ParamField body="vat_percentage" param-type="number" required="false" show-location="false">
+Taxa de IVA aplicada ao valor da fatura.
+</ParamField>
+
+<ParamField body="vat_amount" param-type="number" required="false" show-location="false">
+Valor de IVA calculado.
+</ParamField>
+
+<ParamField body="amount" param-type="number" required="false" show-location="false">
+Valor bruto da fatura, incluindo IVA.
+</ParamField>
+
+### Metadados do ficheiro e do registo
+
+<ParamField body="file_path" param-type="string" required="false" show-location="false">
+Caminho de armazenamento do ficheiro de recibo ou fatura carregado.
+</ParamField>
+
+<ParamField body="upload_date" param-type="date-time" required="false" show-location="false">
+Data em que o ficheiro foi carregado para o NomadBill.
+</ParamField>
+
+## Cálculo do IVA e dos valores
+
+O NomadBill recalcula automaticamente os totais das faturas para que não tenha de atualizar manualmente todos os campos de valores. Isto reduz os erros de introdução, sobretudo quando conhece apenas o valor líquido e a taxa de IVA ou quando apenas dispõe do total bruto de um recibo.
+
+Se alterar `net_amount` ou `vat_percentage`, o NomadBill recalcula `vat_amount` e `amount`. O valor bruto utiliza esta fórmula: `gross = net * (1 + pct / 100)`.
+
+Se alterar `amount`, o NomadBill recalcula `net_amount` e `vat_amount` com base na percentagem de IVA atual. Isto é útil quando o recibo apresenta apenas o total final e a taxa de IVA.
+
+<Callout kind="tip">
+
+Verifique os valores recalculados antes de guardar quando o recibo incluir descontos, taxas de IVA diferentes ou uma formatação do fornecedor que não separe claramente o valor líquido do IVA.
+
+</Callout>
+
+## Estado do pagamento e reconciliação bancária
+
+O estado do pagamento ajuda-o a acompanhar quais as faturas de fornecedores que ainda estão pendentes e quais já foram pagas. O NomadBill utiliza dois estados: `unpaid` e `paid`.
+
+Se associar a sincronização bancária, o NomadBill pode fazer corresponder automaticamente as transações bancárias de saída às faturas recebidas. A lógica de correspondência procura:
+
+- Uma **transação de saída** com um valor inferior a zero
+- O **mesmo valor exato**
+- A **mesma moeda**
+- Uma data da transação dentro dos **14 dias** seguintes à data da fatura
+
+Quando o NomadBill encontra uma correspondência, associa a transação à fatura recebida e define o estado do pagamento como `paid`. Os pagamentos bancários associados aparecem no cartão de pagamentos bancários da página de detalhes da fatura.
+
+Também pode gerir a associação manualmente a partir da área de sincronização bancária. Se desassociar uma transação correspondente, o NomadBill volta a alterar o estado do pagamento para `unpaid`.
+
+Para conhecer o fluxo completo de correspondência, veja [Sincronização bancária](/pt/user-guide/bank-sync).
+
+## Integração com a inteligência de e-mail
+
+O NomadBill também pode criar uma fatura recebida a partir de dados de um e-mail. Quando a inteligência de e-mail extrai os dados de um recibo ou de uma fatura de fornecedor de uma mensagem, `createReceiptFromEmail` pode criar o registo da fatura recebida por si.
+
+Isto é útil quando os fornecedores enviam faturas por e-mail e pretende reduzir a introdução manual. Após a criação, pode abrir a página de detalhes da fatura, rever os campos extraídos, adicionar notas ou categorias e confirmar se já foi encontrado um pagamento correspondente.
+
+A página de detalhes também inclui um cartão de e-mails associados, que o ajuda a rastrear a fatura até ao contexto do e-mail original, quando necessário.
+
+Para conhecer o fluxo de e-mail, veja [Inteligência de e-mail](/pt/user-guide/email-intelligence).
+
+## Guias relacionados
+
+<Columns cols={2}>
+  <Card
+    title="Sincronização bancária"
+    href="/pt/user-guide/bank-sync"
+    icon="database"
+    cta="Abrir guia"
+  />
+  <Card
+    title="Campos personalizados"
+    href="/pt/user-guide/custom-fields"
+    icon="settings"
+    cta="Abrir guia"
+  />
+</Columns>

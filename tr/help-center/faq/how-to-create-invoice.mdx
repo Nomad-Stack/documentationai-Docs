@@ -1,0 +1,78 @@
+---
+title: Nasıl fatura oluşturabilirim?
+description: Çoklu para birimi desteği, VAT hesaplama ve PDF teslimatı ile NomadBill'de faturalar oluşturun, özelleştirin ve gönderin.
+---
+
+## Fatura oluşturma ve gönderme
+
+**Faturalar** sayfasından yeni bir fatura oluşturun, müşteri ve fatura ayrıntılarını girin, PDF önizlemesini inceleyin ve ardından son faturayı gönderin veya indirin. NomadBill gönderilmemiş faturaları taslak olarak kaydeder, böylece teslimattan önce geri gelip bunları tamamlayabilirsiniz.
+
+<Steps>
+  <Step title="Faturalar'a gidin ve yeni bir fatura oluşturun" icon="file-text">
+
+  Kontrol panelinizde **Faturalar**'ı açın ve **Yeni**'yi tıklayın. Rotayı zaten biliyorsanız doğrudan `/invoices/new`'ye de gidebilirsiniz.
+
+  Form açıldığında fatura **taslak** statüsünde başlar. Taslağı gönderene kadar düzenlemeye devam edebilirsiniz.
+
+  </Step>
+
+  <Step title="Para birimini ve dili seçin" icon="settings">
+
+  Ayrıntıların geri kalanını eklemeden önce faturanın **para birimi** ve **dili** seçin. NomadBill şu para birimlerini destekler: **EUR**, **USD**, **GBP**, **CHF** ve **AED**.
+
+  Fatura dili için **DE**, **EN**, **FR** veya **ES**'yi seçin. Müşterinizin almayı beklediği dille eşleşen dili kullanın.
+
+  </Step>
+
+  <Step title="Müşteri ayrıntılarını girin" icon="users">
+
+  Müşterinin **adını** ve **adresini** tam olarak faturada görünmesi gerektiği şekilde ekleyin. Bu ayrıntılar fatura belgesinde ve PDF önizlemesinde kullanılır.
+
+  Devam etmeden önce burada yazım ve biçimlendirmeyi bir kez daha kontrol edin. Bu aşamada müşteri ayrıntılarını düzeltmek, gönderilen bir faturayı daha sonra güncellemekten daha hızlıdır.
+
+  </Step>
+
+  <Step title="Satır öğeleri ekleyin" icon="plus">
+
+  Faturalandırdığınız ürün veya hizmetler için bir veya daha fazla satır öğesi ekleyin. Her satır öğesi bir **ad**, **miktar** ve **fiyat** içerir.
+
+  Sırayı değiştirmeniz gerekiyorsa satır öğelerini istediğiniz sıraya sürükleyin. Siz öğeleri ekledikçe veya düzenledikçe fatura alt toplamı güncellenir.
+
+  </Step>
+
+  <Step title="VAT'yi ayarlayın ve toplamları inceleyin" icon="bar-chart">
+
+  Fatura için **VAT yüzdesini** ayarlayın. NomadBill, VAT'yi varsayılan olarak **19%** olarak ayarlar, ancak gerektiğinde bunu değiştirebilirsiniz.
+
+  Toplam `subtotal + (subtotal x VAT%)` olarak hesaplanır. Devam etmeden önce alt toplamı, VAT tutarını ve son toplamı inceleyin.
+
+  </Step>
+
+  <Step title="Önizleyin ve gönderin" icon="send">
+
+  Düzeni, müşteri ayrıntılarını, satır öğelerini ve toplamları onaylamak için faturayı PDF olarak önizleyin. Her şey doğru görünüyorsa faturayı e-postayla gönderin veya bunun yerine indirin.
+
+  Gönderilen faturalar `noreply@nomadbill.co`'den Resend aracılığıyla teslim edilir. Faturada Stripe ödemesini etkinleştirirseniz müşteri, ödeme akışının bir parçası olarak bir ödeme bağlantısı alır.
+
+  </Step>
+</Steps>
+
+<Callout kind="tip">
+
+NomadBill, fatura numarasını otomatik olarak `R-00001` biçiminde oluşturur. Numaralandırma şirket bazında yönetildiğinden her şirket kendi fatura sırasını korur.
+
+</Callout>
+
+<Callout kind="info">
+
+Fatura durumu `draft` üzerinden `sent`'ye ve ardından `paid` veya `overdue`'ye taşınır. Ödeme durumu `unpaid`, `pending`, `paid` veya `failed` olarak ayrı ayrı izlenir.
+
+Müşteri Stripe ödeme işlemini başlatırsa ödeme durumu `pending` olarak değişir. Stripe ödemeyi onayladığında durum `paid` olarak değişir. Ödeme tamamlanmazsa durum `failed` olarak değişir.
+
+</Callout>
+
+## Başka ne bilmelisin?
+
+Taslak faturalar siz gönderene kadar düzenlenebilir durumda kalır. Bu, taslakları teslimattan önce müşteri ayrıntılarını ayarlamak, öğeleri yeniden sıralamak veya VAT'yi güncellemek için en güvenli yer haline getirir.
+
+NomadBill ayrıca yinelenen fatura meta verilerini de destekler. Yinelenen bayrağı ayarlayabilir ve `weekly`, `monthly`, `quarterly` veya `yearly` sıklığını seçebilirsiniz, ancak bu, faturaları bir programa göre otomatik olarak oluşturmaz.

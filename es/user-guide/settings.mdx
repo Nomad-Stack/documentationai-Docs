@@ -1,0 +1,100 @@
+---
+title: Configuración
+description: configure la marca de la empresa, los colores, el logotipo, las plantillas PDF y los campos personalizados para cada empresa en NomadBill.
+---
+
+## Configure cómo aparece cada empresa en NomadBill
+
+Utilice Configuración para administrar los detalles de la empresa que aparecen en facturas, cotizaciones y exportaciones de PDF. Puede actualizar el perfil de su empresa, cargar un logotipo, elegir colores de marca, administrar plantillas PDF y definir campos personalizados para la empresa activa.
+
+<Callout kind="info">
+
+Si administra varias empresas, NomadBill almacena la configuración por separado para cada empresa.
+
+</Callout>
+
+## Perfil de la empresa
+
+El perfil de su empresa controla la información comercial que se muestra en los documentos generados. Mantenga estos detalles precisos para que las facturas y cotizaciones incluyan la información correcta del remitente.
+
+Actualice el perfil de su empresa con detalles como:
+
+- **Nombre de la empresa**: se muestra como el nombre de su empresa en los documentos
+- **Dirección**: se utiliza en el bloque de dirección de la empresa en facturas y cotizaciones.
+- **ID de IVA**: se utiliza para detalles de documentos relacionados con el IVA
+- **Logotipo**: disponible para plantillas PDF con marca
+
+Cuando exporta o obtiene una vista previa de documentos, NomadBill utiliza la información de esta empresa en el resultado PDF. Esto incluye valores como el nombre de la empresa, la dirección de la empresa, los detalles del IVA y la ubicación del logotipo en las plantillas compatibles.
+
+## Marca y colores
+
+La configuración de marca controla la identidad visual utilizada en sus plantillas PDF. Cargue su logotipo y defina colores primarios y secundarios para mantener los documentos exportados alineados con la marca de su empresa.
+
+Los colores primarios y secundarios se almacenan con la configuración de su empresa y se pueden aplicar a los acentos de la plantilla. Dependiendo de la plantilla, NomadBill usa esos colores para encabezados, resaltados y otros elementos visuales en los archivos PDF generados.
+
+<Callout kind="tip">
+
+Algunas plantillas de marca mantienen el texto del cuerpo en negro y aplican los colores solo a los acentos. Esto mejora la legibilidad y al mismo tiempo coincide con su marca.
+
+</Callout>
+
+### Configurar la marca
+
+<Steps>
+  <Step title="Abra la configuración de su empresa" icon="settings">
+
+Vaya a **Configuración** de la empresa que desea actualizar. Si trabaja en varias empresas, confirme que está editando la correcta antes de realizar cambios.
+
+  </Step>
+  <Step title="Actualizar datos de la empresa" icon="edit">
+
+Ingrese o revise su **nombre de la empresa**, **dirección** e **ID de IVA**. Guarde los cambios para que NomadBill pueda usarlos en facturas, cotizaciones y exportaciones de PDF.
+
+Una actualización exitosa significa que los detalles más recientes de su empresa aparecerán la próxima vez que obtenga una vista previa o exporte un documento.
+
+  </Step>
+  <Step title="Sube tu logotipo" icon="upload">
+
+Agregue el logotipo de su empresa en el área de marca de Configuración. Las plantillas PDF compatibles pueden colocar ese logotipo en el encabezado del documento o en la sección de la empresa.
+
+Después de cargarlo, su logotipo debería aparecer en las vistas previas de las plantillas de marca y en los archivos PDF exportados que incluyen un campo de logotipo.
+
+  </Step>
+  <Step title="Elige colores de marca" icon="palette">
+
+Establezca su **color primario** y **color secundario** para la empresa. NomadBill utiliza estos colores al aplicar marcas a plantillas PDF compatibles.
+
+Después de guardarlas, las plantillas con marca deben reflejar los colores de acento actualizados en las vistas previas o en los documentos generados.
+
+  </Step>
+</Steps>
+
+## Plantillas PDF
+
+Las plantillas PDF controlan el diseño y el estilo de sus facturas, cotizaciones y documentos PDF entrantes. Desde Configuración, puede abrir el área Plantillas para administrar plantillas para diferentes tipos de documentos.
+
+NomadBill admite plantillas de marca que pueden utilizar el logotipo y los colores de su empresa. Las plantillas están disponibles por tipo de documento y puede elegir qué plantilla debe actuar como predeterminada.
+
+Lea la guía completa para administrar plantillas, valores predeterminados y opciones de marca en [plantillas PDF](/es/user-guide/pdf-templates).
+
+## Campos personalizados
+
+Los campos personalizados le permiten almacenar información adicional relacionada con la empresa o documentos que no se ajusta a los campos predeterminados. Úselos cuando su flujo de trabajo necesite etiquetas, referencias o puntos de datos internos adicionales.
+
+Una vez configurados, los campos personalizados pueden admitir flujos de trabajo de documentos más personalizados sin cambiar el perfil estándar de su empresa. Para obtener detalles de configuración y uso, consulte [Campos personalizados](/es/user-guide/custom-fields).
+
+## La configuración se almacena por empresa
+
+<Callout kind="info">
+
+Cuando cambia a otra empresa, está trabajando con un conjunto diferente de configuraciones. Los detalles del perfil de la empresa, la marca, las plantillas y los campos personalizados no se transfieren automáticamente entre empresas.
+
+</Callout>
+
+## Guías relacionadas
+
+<Columns cols={3}>
+  <Card title="Plantillas PDF" href="/es/user-guide/pdf-templates" icon="book-open" cta="abrir guia" />
+  <Card title="Campos personalizados" href="/es/user-guide/custom-fields" icon="settings" cta="Administrar campos" />
+  <Card title="Gestión de equipos" href="/es/user-guide/team-management" icon="users" cta="Ver guía" />
+</Columns>

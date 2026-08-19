@@ -1,0 +1,160 @@
+---
+title: Cotizaciones
+description: cree, envíe y convierta cotizaciones en facturas con soporte multidivisa y generación de PDF.
+---
+
+## Convierta las estimaciones del proyecto en cotizaciones listas para el cliente
+
+Las cotizaciones le permiten preparar una oferta, enviarla a un cliente y convertirla en una factura una vez que el cliente la acepte. El flujo de trabajo de cotización utiliza los mismos datos básicos que las facturas, incluidos detalles del cliente, partidas individuales, IVA, moneda, idioma, salida de PDF, entrega de correo electrónico, campos personalizados, exportación CSV y plantillas PDF personalizadas.
+
+## Estados de cotización
+
+Cada cotización rastrea dos estados separados: **estado** y **estado de pago**. Juntos le indican dónde se encuentra la cotización en su proceso de ventas y si se ha completado algún pago relacionado con ella.
+
+### Estado de la cotización
+
+| Estado | Lo que significa |
+|---|---|
+| **borrador** | Todavía estás preparando la cotización. La cotización no ha sido finalizada ni convertida. |
+| **enviado** | Ha enviado el presupuesto al cliente por correo electrónico. |
+| **convertido** | Convirtiste la cotización en una factura. Se creó un nuevo registro de factura a partir de los datos de la cotización. |
+
+### Estado de pago
+
+| Estado de pago | Lo que significa |
+|---|---|
+| **sin pagar** | No se ha registrado ningún pago. |
+| **pendiente** | Se ha iniciado un pago pero aún no se ha completado. |
+| **pagado** | Pago completado exitosamente. |
+| **fallido** | Se intentó realizar el pago pero no tuvo éxito. |
+
+<Callout kind="info">
+
+Una cotización se puede marcar como `sent` sin pagarse y se puede convertir en una factura incluso si su estado de pago sigue siendo `unpaid`. El estado y el estado del pago se rastrean de forma independiente.
+
+</Callout>
+
+## Creando una cotización
+
+Cree una cotización de la misma manera que crea una factura y luego guárdela como una oferta para el cliente.
+
+<Steps>
+  <Step title="Añadir el cliente" icon="users">
+
+Seleccione un cliente existente o ingrese los detalles del cliente directamente en la cotización. Utilice los mismos campos de información del cliente que utiliza para las facturas, incluido el nombre y la dirección del cliente.
+
+  </Step>
+  <Step title="Establecer los detalles de la cotización" icon="settings">
+
+Ingrese la fecha de cotización, la fecha de vencimiento, la moneda y el idioma. Las cotizaciones admiten las mismas monedas e idiomas que las facturas.
+
+Monedas admitidas:
+  
+  - `EUR`
+  - `USD`
+  - `GBP`
+  - `CHF`
+  - `AED`
+
+Idiomas soportados:
+  
+  - `DE`
+  - `EN`
+  - `FR`
+  - `ES`
+
+  </Step>
+  <Step title="Agregar partidas e IVA" icon="edit">
+
+Agrega los productos o servicios que deseas ofrecer, luego revisa cantidades, precios e IVA. La cotización almacena las partidas en la misma estructura utilizada por las facturas, por lo que los totales y los cálculos de impuestos siguen el mismo patrón.
+
+Consulta el total antes de guardar. Su cotización ahora debería mostrar el monto total con el porcentaje de IVA seleccionado aplicado.
+
+  </Step>
+  <Step title="Elige una plantilla y revisa el PDF" icon="file-text">
+
+Seleccione una plantilla PDF si utiliza diseños de factura o cotización personalizados. Luego, obtenga una vista previa del PDF para confirmar que los precios, la marca, el idioma y la información del cliente sean correctos.
+
+Cuando la vista previa se vea bien, guarde la cotización. La cotización ahora está lista para enviarse o convertirse más tarde.
+
+  </Step>
+</Steps>
+
+## Conversión de cotización a factura
+
+Convierta una cotización cuando el cliente acepte su oferta. La conversión cambia el estado de la cotización a `converted` y crea una nueva factura con los mismos datos comerciales subyacentes.
+
+La nueva factura copia los detalles del cliente, la dirección, las fechas, la moneda, el idioma, las partidas, el porcentaje de IVA, la plantilla y el monto total de la cotización. Esto le proporciona un documento de facturación sin tener que volver a ingresar la misma información.
+
+### Cómo funciona la relación
+
+La factura almacena una referencia `quote_id` a la cotización original. Eso significa que la relación se rastrea desde la factura hasta la cotización, no desde la cotización hasta la factura.
+
+Si necesita confirmar que una cotización se convirtió en una factura, consulte el registro de factura vinculado por `quote_id`. La cotización en sí cambia de estado a `converted`, pero la relación directa de la base de datos es navegable desde la factura hasta la cotización.
+
+<Callout kind="tip">
+
+Utilice la conversión cuando los términos comerciales sean definitivos. Mantiene intacto su historial de cotizaciones y crea una transferencia clara de las ventas a la facturación.
+
+</Callout>
+
+## Numeración de cotizaciones
+
+Cada cotización tiene su propio número de documento en el formato `A-00001`. El prefijo `A` significa Angebot.
+
+Los números de cotización se generan por empresa y se asignan de forma atómica. Esto evita números duplicados cuando varias personas crean documentos al mismo tiempo y mantiene coherente la secuencia de cotizaciones de cada empresa.
+
+Si es necesario, puede editar el número de cotización antes de enviar el documento.
+
+## Envío de cotizaciones por correo electrónico
+
+Envíe cotizaciones por correo electrónico con el mismo flujo de entrega utilizado para las facturas. NomadBill genera el correo electrónico de resumen del documento y lo envía mediante Resend utilizando `noreply@nomadbill.co`.
+
+Antes de enviar, revise la vista previa del PDF y los detalles del destinatario. Después del envío, el estado de la cotización pasa a `sent`, lo que le ayuda a distinguir las cotizaciones preparadas de las cotizaciones ya entregadas al cliente.
+
+Si necesita documentos de marca, combine el envío de correo electrónico con la plantilla PDF seleccionada para que el cliente reciba el diseño final que desea que vea.
+
+## Depósitos y pagos
+
+Las cotizaciones incluyen un flujo de pago, pero está vinculado al proceso de pago de la factura. En la práctica, la acción de pago llama al flujo de pago de la factura en lugar de a un registro de pago específico de la cotización.
+
+Eso significa que el manejo de pagos funciona correctamente una vez que la cotización se ha convertido en una factura. En ese momento, la factura se puede utilizar para realizar pagos y realizar actualizaciones.
+
+<Callout kind="alert">
+
+El pago del depósito para una cotización funciona correctamente solo después de convertir la cotización en una factura. El flujo de pago actual consulta la tabla de facturas, no la tabla de cotizaciones, por lo que el manejo de pagos solo de cotizaciones es limitado.
+
+</Callout>
+
+Los estados de pago todavía aparecen en las cotizaciones, pero el flujo de actualización de pago subyacente se basa en facturas. Si necesita un enlace de pago confiable o actualizaciones de estado respaldadas por Stripe, primero convierta la cotización y cobre el pago de la factura.
+
+## Qué puedes hacer con las comillas
+
+Las cotizaciones admiten las mismas funciones de documentos disponibles para las facturas:
+
+- Vista previa del PDF antes de enviar
+- Entrega de correo electrónico
+- Campos personalizados
+- Correos electrónicos vinculados
+- Exportación CSV
+- Plantillas PDF personalizadas
+- Edición manual del número de cotización
+
+Estas funciones compartidas facilitan el paso de la cotización a la factura sin cambiar el flujo de trabajo de sus documentos.
+
+## Continuar con guías relacionadas
+
+<Columns cols={2}>
+  <Card
+    title="Gestionar facturas"
+href="/es/user-guide/invoicing"
+icono="archivo-texto"
+    cta="abrir guia"
+  />
+  <Card
+    title="Personalizar plantillas PDF"
+href="/es/user-guide/pdf-templates"
+icono="editar"
+    cta="abrir guia"
+  />
+</Columns>

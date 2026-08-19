@@ -1,0 +1,175 @@
+---
+title: PDFModèles
+description: Concevoir sur mesurePDFmises en page pour les factures, les devis et les reçus avec édition par glisser-déposer, modèles réutilisables et couleurs de marque.
+---
+
+## Concevoir sur mesurePDFmises en page pour vos documents
+
+PDFLes modèles vous permettent de contrôler l'apparence des factures, des devis et des documents entrants lorsque vous les prévisualisez, les exportez ou les envoyez. Vous pouvez partir d'une mise en page vierge, choisir une conception prédéfinie ou importer uneJSONmodèle, puis ajustez le résultat dans un éditeur glisser-déposer.
+
+<Callout kind="info">
+
+Gérez les modèles dans **Paramètres → Modèles**.NomadBillconserve des listes de modèles distinctes pour les factures, les devis et les documents entrants, afin que vous puissiez concevoir chaque type de document indépendamment.
+
+</Callout>
+
+## CommentPDFles modèles fonctionnent
+
+ChaquePDFLe modèle stocke la mise en page complète pour un type de document. Cela inclut la structure de la page, les blocs de texte, les tableaux, les images et le style utilisés pour générer le résultat final.PDF.
+
+Lorsque vous créez ou modifiez une facture, un devis ou un document entrant, vous pouvez utiliser le modèle par défaut pour ce type de document ou choisir un autre modèle enregistré. Cela vous offre un moyen cohérent de conserver les documents quotidiens fidèles à votre marque tout en permettant des mises en page alternatives en cas de besoin.
+
+NomadBillprend en charge trois types de documents :
+
+|Type de document|Utilisé pour|Où vous le sélectionnez|
+| --- | --- | --- |
+|Facture|Factures sortantes que vous envoyez aux clients|Formulaire de facture et aperçu|
+|Citation|Devis ou offres que vous envoyez avant la facturation|Formulaire de devis et aperçu|
+|Entrant|Factures entrantes, factures fournisseurs ou reçus|Flux de documents entrants|
+
+## Types de documents
+
+Les modèles sont regroupés par type de document, car chaque type a un objectif différent et peut nécessiter une formulation ou une mise en page différente.
+
+|Taper|Titre typique dansPDF |Utilisation courante|
+| --- | --- | --- |
+| `invoice` |Facture|Facturer un client pour un travail terminé ou des marchandises livrées|
+| `quote` |Citation|Envoi d'une proposition de prix avant le début des travaux|
+| `incoming` |Reçu ou facture entrante|Enregistrement des dépenses des fournisseurs ou des reçus téléchargés|
+
+<Callout kind="tip">
+
+Si vous souhaitez différentes mises en page pour le même type de document, créez plusieurs modèles et définissez-en un par défaut. Vous pouvez toujours choisir un autre modèle pour un document spécifique si nécessaire.
+
+</Callout>
+
+## Création d'un modèle
+
+Vous pouvez créer des modèles de trois manières : démarrer vide, démarrer à partir de la galerie ou importer un modèle existant.JSONdéposer.
+
+<Steps>
+  <Step title="Créer un modèle vierge" icon="plus">
+
+Ouvrez **Paramètres → Modèles**, choisissez l'onglet Type de document, puis créez un nouveau modèle et sélectionnez **Vierge**.
+
+Un modèle vierge commence à partir deNomadBillla mise en page par défaut de pour ce type de document. Il s’agit de l’option la plus rapide lorsque vous souhaitez un contrôle total tout en souhaitant que les champs standard requis soient déjà mappés.
+
+  </Step>
+  <Step title="Commencez par la galerie" icon="book-open">
+
+Ouvrez **Paramètres → Modèles**, choisissez l'onglet Type de document, puis créez un nouveau modèle et sélectionnez **Galerie**.
+
+Choisissez l'un des sept modèles intégrés si vous souhaitez une mise en page finie que vous pouvez adapter. C’est le meilleur point de départ lorsque vous souhaitez une mise en page professionnelle sans créer chaque section à partir de zéro.
+
+  </Step>
+  <Step title="Importer unJSONmodèle" icon="upload">
+
+Ouvrez **Paramètres → Modèles**, choisissez l'onglet Type de document, puis créez un nouveau modèle et sélectionnez **Importer depuisJSON**.
+
+Téléchargez un`.json`fichier contenant une structure de modèle valide. Utilisez ce chemin si vous disposez déjà d’un fichier modèle compatible et que vous souhaitez le réutiliser dans plusieurs entreprises ou environnements.
+
+  </Step>
+</Steps>
+
+## Galerie de modèles
+
+NomadBillcomprend sept modèles prédéfinis que vous pouvez utiliser comme point de départ.
+
+|Modèle|Style|Idéal pour|
+| --- | --- | --- |
+|Classique|Valeur par défaut équilibrée avec un en-tête de couleur de marque|Factures et devis à usage général|
+|Moderne|Barre supérieure colorée avec un titre en gras|Des mises en page avant-gardistes|
+|Minimal|Disposition monochrome sans accents colorés|Documents simples et à faible consommation d'encre|
+|Blanc|Mise en page imprimable propre avec un bloc de mode de paiement|Factures formelles et flux de travail d'impression|
+|Bleu|Accents bleus avec une ligne totale remplie|Totaux très contrastés et sections récapitulatives|
+|Vert|Barre d'accent verte à gauche|Mises en page de marque alternatives|
+|Élégant|Grand titre avec un tableau gris subtil|Documents soignés destinés aux clients|
+
+## Modification d'un modèle
+
+L'éditeur de modèles s'ouvre dans un concepteur plein écran afin que vous puissiez créer et ajuster visuellement les mises en page. Vous pouvez faire glisser les champs, les redimensionner, modifier le texte et affiner la structure visuelle sans modifier le sous-jacent.JSONmanuellement.
+
+Les types de champs disponibles incluent le texte, le texte à plusieurs variables, les tableaux, les listes, les lignes, les formes, les images, les signatures, les dates, les cases à cocher, les groupes radio, les codes QR et les codes-barres. Cela vous donne suffisamment de flexibilité pour créer des présentations de factures standard ainsi que des conceptions de documents plus personnalisées.
+
+La plupart des utilisateurs passeront leur temps à ajuster les positions, l'espacement, les étiquettes et la présentation des tableaux. Si vous conservez les noms de champs standard intacts,NomadBillcontinue de remplir ces champs automatiquement lorsqu'il génère lePDF.
+
+<Callout kind="info">
+
+La liste des éléments du document est généralement affichée via le`items`champ du tableau. Si vous supprimez ou renommez ce champ, les éléments de campagne n'apparaîtront plus dans le fichier généré.PDF.
+
+</Callout>
+
+## Champs standards
+
+NomadBillremplit automatiquement les noms de champs spécifiques lorsqu'il restitue unPDF. Conservez ces noms inchangés si vous souhaitez que l'application conserve les données du document de mappage dans le modèle.
+
+|Nom du champ|Contient|
+| --- | --- |
+| `company_logo` |Image du logo de votre entreprise|
+| `company_name` |Nom d'affichage de votre entreprise|
+| `company_address` |Adresse de votre entreprise, généralement sur plusieurs lignes|
+| `company_vat` |TonVATou étiquette et valeur d'identification fiscale|
+| `doc_title` |Titre du document tel que facture, devis ou reçu|
+| `doc_number` |Numéro du document|
+| `doc_date` |Étiquette et valeur de la date d'émission|
+| `doc_due_date` |Libellé et valeur de la date d'échéance|
+| `bill_to_label` |Étiquette de la section client|
+| `customer_name` |Nom du client|
+| `customer_address` |Adresse du client|
+| `items` |Tableau des éléments de campagne|
+| `subtotal_label` |Libellé du sous-total|
+| `subtotal` |Montant du sous-total|
+| `vat_label` | VATétiquette|
+| `vat_amount` | VATmontant|
+| `total_label` |Etiquette totale|
+| `total` |Montant total|
+| `bank_label` |Étiquette de la section Détails du paiement|
+| `bank_details` |Instructions bancaires ou de paiement|
+| `signature` |Image signature|
+| `footer` |Texte de pied de page|
+
+## Couleurs de la marque
+
+Les modèles de galerie peuvent appliquer automatiquement les couleurs de la marque de votre entreprise.NomadBilllit vos couleurs primaires et secondaires à partir des paramètres de l'entreprise et les utilise pour recolorer les éléments de modèle pris en charge.
+
+Cela fonctionne mieux lorsque vous souhaitez une image de marque cohérente sur toutes les factures et devis sans mettre à jour manuellement chaque bloc de texte, en-tête ou élément d'accent. Selon le modèle, la couleur d'accent est généralement appliquée aux en-têtes, aux barres, aux totaux ou aux surbrillances d'arrière-plan.
+
+Certaines mises en page de marque prennent également en charge le maintien du texte en noir tout en appliquant la palette de votre marque aux zones d'accentuation. Utilisez cette approche si les couleurs de votre marque sont claires ou si la lisibilité est plus importante que le style du texte en couleur.
+
+## Modèles multilingues
+
+Les modèles prennent en charge quatre langues : DE, EN, FR et ES. Les changements de langue mettent à jour les étiquettes intégrées telles que le titre du document, les étiquettes de date, le sous-total,VAT, total et autre texte standard utilisé dans les modèles par défaut.
+
+NomadBilltraduit les étiquettes du modèle séparément de la mise en page elle-même. Cela signifie que vous pouvez changer de langue sans perdre les positions, l'espacement, les couleurs ou les autres modifications de conception que vous avez apportées dans l'éditeur.
+
+Si vous travaillez dans plusieurs langues, créez un modèle par langue lorsque vous avez besoin d'un contrôle total sur la formulation et le formatage. Si la mise en page reste la même, vous pouvez réutiliser le même design et vous fier aux étiquettes traduites, le cas échéant.
+
+## Champs personnalisés dans les modèles
+
+Les champs personnalisés vous permettent d'ajouter des valeurs spécifiques à une entreprise, un client ou un document à vos PDF. Dans les modèles, ces valeurs utilisent des noms de champs au format`cf_{entity}_{key}`.
+
+Par exemple, un champ personnalisé lié à une facture peut être mappé avec un nom de champ tel que`cf_invoice_project_reference`. Un champ personnalisé au niveau du client suit le même modèle avec le segment d'entité client.
+
+Lire [Champs personnalisés](/fr/user-guide/custom-fields) avant d'ajouter ces espaces réservés afin que vos clés de champ et les noms de champs de votre modèle restent alignés.
+
+<Callout kind="tip">
+
+Si un champ personnalisé apparaît vide dans lePDF, vérifiez d'abord que le champ existe, que la clé correspond exactement et que le nom du champ dans le modèle utilise le nom attendu.`cf_{entity}_{key}`modèle.
+
+</Callout>
+
+## Définition d'un modèle par défaut
+
+Chaque type de document peut avoir un modèle par défaut. Le modèle par défaut est utilisé automatiquement, sauf si vous en choisissez un autre sur le formulaire de document ou sur l'écran d'aperçu.
+
+Pour modifier la valeur par défaut, ouvrez **Paramètres → Modèles**, recherchez le modèle dans l'onglet de type de document approprié et utilisez **Définir par défaut**. Le modèle mis à jour devient le nouveau point de départ pour ce type de document dans votre entreprise.
+
+Ceci est utile lorsque vous déployez une mise en page actualisée. Définissez d'abord le nouveau modèle par défaut, puis conservez les anciens modèles disponibles pour des cas particuliers ou pour la cohérence historique.
+
+## Guides associés
+
+<Columns cols={3}>
+  <Card title="Facturation" href="/fr/user-guide/invoicing" icon="book-open" cta="Ouvrir le guide" />
+  <Card title="Citations" href="/fr/user-guide/quotes" icon="arrow-right" cta="Voir le guide associé" />
+  <Card title="Champs personnalisés" href="/fr/user-guide/custom-fields" icon="settings" cta="Découvrez comment les champs sont mappés" />
+</Columns>

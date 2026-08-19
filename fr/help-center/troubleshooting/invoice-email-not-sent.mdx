@@ -1,0 +1,48 @@
+---
+title: E-mail de facture non envoyé
+description: Résoudre les problèmes de livraison des factures dans Nomadbill.
+---
+
+## Résoudre les problèmes de livraison par e-mail de facture
+Les e-mails de facturation doivent mettre à jour l'enregistrement de la facture lorsqueNomadBillles envoie. Si un client n'a pas reçu de facture, confirmez d'abord l'adresse du destinataire, puis vérifiez si la facture a bien été marquée comme envoyée avant de la renvoyer.
+
+<Steps>
+  <Step title="Vérifiez l'adresse e-mail du destinataire">
+
+Ouvrez la facture et examinez attentivement l'adresse e-mail du destinataire. Une faute de frappe, une adresse obsolète ou un mauvais contact sur la facture sont la raison la plus courante pour laquelle un e-mail n'arrive jamais.
+
+Si vous avez déjà envoyé la facture, notez queNomadBillstocke le dernier destinataire dans le`sent_to`champ. Le formulaire de renvoi utilise la même adresse que le destinataire par défaut, corrigez-la donc avant de renvoyer si nécessaire.
+
+  </Step>
+  <Step title="Vérifiez que la facture a été marquée comme envoyée">
+
+Vérifiez les champs de facture qui suivent l'activité des e-mails :
+
+    - `sent_at`montre quandNomadBilla enregistré l'e-mail tel qu'il a été envoyé.
+    - `sent_to`indique quelle adresse e-mail a reçu le message.
+    - `email_status`devrait être`sent`après une action d'envoi réussie.
+
+Si ces champs sont vides ou`email_status`n'est pas`sent`, NomadBilln'a pas terminé l'étape d'envoi. Dans ce cas, le renvoi de la facture constitue le prochain contrôle.
+
+  </Step>
+  <Step title="Resendl'email de facture">
+
+Ouvrez la facture et utilisez l'action d'envoi ou de renvoi d'e-mail dans le modal d'e-mail.NomadBillenvoie un récapitulatif de la facture HTML qui comprend le numéro du document, le nom du client, le montant et tout message personnalisé que vous ajoutez.
+
+Après l'avoir envoyé, confirmez que la facture est mise à jour avec un nouveau`sent_at`valeur, la bonne`sent_to`adresse, et`email_status`réglé sur`sent`. Ces champs sont votre meilleure confirmation queNomadBilltraité la demande par courrier électronique.
+
+  </Step>
+  <Step title="Vérifiez les dossiers de spam ou de courrier indésirable">
+
+Demandez à votre client de rechercher dans ses spams, courriers indésirables, promotions ou dossiers filtrés les messages provenant de`noreply@nomadbill.co`.
+
+Si la facture indique`sent_at`, `sent_to`, et`email_status`comme prévu mais le client ne trouve toujours pas le message, son fournisseur de messagerie l'a peut-être filtré après la livraison.
+
+  </Step>
+</Steps>
+
+<Callout kind="alert">
+
+Si les e-mails de facture ne parviennent pas à être envoyés, leResendl'intégration n'est peut-être pas configurée pour votre espace de travail. Contactez l'administrateur de votre compte pour vérifier que le service de messagerie est correctement configuré.
+
+</Callout>

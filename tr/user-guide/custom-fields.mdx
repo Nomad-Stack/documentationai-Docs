@@ -1,0 +1,225 @@
+---
+title: Özel Alanlar
+description: 19 özel alan türleri ve esnek görüntüleme kurallarıyla müşterilere, ürünlere, faturalara, fiyat tekliflerine ve faturalara yapılandırılmış meta veriler ekleyin.
+---
+
+## Özel alanlar işletmenizin ihtiyaç duyduğu ayrıntıları yakalamanıza olanak tanır
+
+Müşterilerinize, ürünlerinize, faturalarınıza, tekliflerinize ve gelen faturalarınıza kendi alanlarınızı ekleyerek her kaydın çalışma şeklinize uymasını sağlayın. Standart iş akışınızı değiştirmeden dahili notlar, referans numaraları, kategoriler, bağlantılar, hesaplamalar, ekler ve yapay zeka tarafından oluşturulan metinler için özel alanlar kullanın.
+
+<Callout kind="info">
+
+Özel alanlar şirkete özeldir. Oluşturduğunuz alan yalnızca şirket hesabınızda ve yalnızca onu atadığınız varlık türü için kullanılabilir.
+
+</Callout>
+
+## Özel alanlar nasıl çalışır?
+
+Özel alanlar iki bölümden oluşturulur: **alan tanımı** ve **alan değeri**. Tanım, alanın nerede görüneceğini, ne tür bir girişi kabul edeceğini ve tablolarda, formlarda veya PDF şablonlarında kullanılıp kullanılamayacağını kontrol eder. Değer, her kayda kaydedilen gerçek verilerdir.
+
+Varlık türüne göre alanlar oluşturursunuz ve ardından bir kaydı oluşturduğunuzda veya düzenlediğinizde bunları doldurursunuz. Örneğin, müşteriler için bir müşteri kategorisi alanı, ürünler için bir SKU alanı veya faturalar için bir proje referans alanı ekleyebilirsiniz.
+
+### Varlık türleri
+
+| Varlık türü | | için kullanılır
+|---|---|
+| `customer` | Müşteri numarası, web sitesi, işe alım tarihi veya dahili notlar gibi müşterilerle ilgili ekstra ayrıntıları saklayın. |
+| `product` | SKU, kategori, ağırlık, satın alma fiyatı veya sertifikalar gibi ürüne özel meta veriler ekleyin. |
+| `invoice` | Proje referansları, teslimat notları, onay durumu veya hesaplanan değerler gibi fatura ayrıntılarını yakalayın. |
+| `quote` | Revizyon numaraları, geçerlilik notları veya satış aşamaları gibi teklife özel bilgileri izleyin. |
+| `incoming_invoice` | Makbuz referansları, onay alanları veya ekli destekleyici belgeler gibi tedarikçi faturası meta verilerini kaydedin. |
+
+<Callout kind="tip">
+
+Alan adlarını kayıt türüne özel tutun. `sku` gibi bir alan ürünlerde anlamlıyken `project_reference`'nin faturalarda bakımı daha kolaydır.
+
+</Callout>
+
+## Alan türleri
+
+Kullanıcıların girmesini veya oluşturmasını istediğiniz veri türüne göre bir alan türü seçin.
+
+| Alan türü | Açıklama |
+|---|---|
+| `text` | Tek satırlık metin girişi. |
+| `multiline` | Daha uzun notlar için çok satırlı metin alanı. |
+| `email` | E-posta adresi girişi. |
+| `url` | Web sitesi veya bağlantı girişi. |
+| `phone` | Telefon numarası girişi. |
+| `number` | Tam sayı girişi. |
+| `decimal` | Ondalık sayı girişi. |
+| `amount` | Para birimi miktarı girişi. |
+| `percent` | Yüzde olarak gösterilen sayısal giriş. |
+| `date` | Tarih seçici. |
+| `datetime` | Tarih ve saat seçici. |
+| `boolean` | Evet veya hayır durumunu içeren onay kutusu. |
+| `dropdown` | Önceden tanımlanmış seçeneklere sahip tek seçim alanı. |
+| `multiselect` | Önceden tanımlanmış seçeneklere sahip çoklu seçim alanı. |
+| `autonumber` | Otomatik olarak atanan sıra numarası. |
+| `lookup` | Başka bir varlığa bağlantı verin. |
+| `formula` | Bir ifadeye göre hesaplanan alan. |
+| `attachment` | Dosya yükleme alanı. |
+| `ai` | Kaydedilmiş bir istemi temel alarak AI tarafından oluşturulan metin alanı. |
+
+## Saha konfigürasyonu
+
+Saha ayarları doğrulamayı, görünürlüğü ve sıralamayı kontrol eder. Bir alan oluşturduğunuzda bu seçenekleri yapılandırın ve daha sonra iş akışınız değişirse bunları güncelleyin.
+
+<ParamField body="is_required" param-type="boolean" required="false" show-location="false">
+
+Kullanıcılar kayıt formunu doldururken alanı zorunlu hale getirir.
+
+</ParamField>
+
+<ParamField body="is_unique" param-type="boolean" required="false" show-location="false">
+
+Aynı varlık türündeki kayıtlar arasında söz konusu alan için yinelenen değerleri önler.
+
+</ParamField>
+
+<ParamField body="show_in_table" param-type="boolean" required="false" show-location="false">
+
+Alanı, söz konusu varlık türü için liste görünümlerinde bir sütun olarak gösterir.
+
+</ParamField>
+
+<ParamField body="show_in_form" param-type="boolean" required="false" show-location="false">
+
+Oluşturma ve düzenleme formlarındaki alanı gösterir. Bu ayar varsayılan olarak etkindir.
+
+</ParamField>
+
+<ParamField body="available_in_pdf" param-type="boolean" required="false" show-location="false">
+
+Alanı PDF şablonları için kullanılabilir hale getirir. Bu ayar varsayılan olarak etkindir.
+
+</ParamField>
+
+<ParamField body="sort_order" param-type="integer" required="false" show-location="false">
+
+Seçilen varlık türü içindeki özel alanların sırasını kontrol eder.
+
+</ParamField>
+
+## Özel bir alan oluşturma
+
+Ayarlardaki özel alan yöneticisinden alanlar oluşturun. En hızlı yol, önce etiketi ve türü tanımlamak, ardından yalnızca ihtiyacınız olan seçenekleri açmaktır.
+
+<Steps>
+  <Step title="Özel Alanları Aç" icon="settings">
+
+  NomadBill'de oturum açın ve ayarlarınızda özel alanlar alanını açın.
+
+  Müşteriler, ürünler, faturalar, teklifler veya gelen faturalar gibi genişletmek istediğiniz varlık türünü seçin.
+
+  </Step>
+  <Step title="Alan tanımını oluşturun" icon="plus">
+
+  Yeni bir alan ekleyin ve ekibinizdeki kişilerin tanıyacağı bir **etiket** girin. NomadBill ayrıca bu etiketteki alan için bir **anahtar** oluşturur.
+
+  Toplamak istediğiniz verilerle eşleşen **alan türünü** seçin. `dropdown` veya `multiselect`'yi seçerseniz kullanıcıların seçmesini istediğiniz seçenekleri ekleyin.
+
+  </Step>
+  <Step title="Görünürlüğü ve doğrulamayı yapılandırma" icon="edit">
+
+  İlgili alan için gerekli, benzersiz, formlarda görünür, tablolarda görünür veya PDF şablonlarında mevcut gibi ihtiyacınız olan seçenekleri açın.
+
+  Alanın diğerlerinden daha erken veya daha sonra görünmesini istiyorsanız kaydetmeden önce sıralama düzenini ayarlayın.
+
+  </Step>
+  <Step title="Alanı kaydedin ve test edin" icon="check-circle">
+
+  Alanı kaydedin, ardından aynı varlık türünde bir kayıt açın ve girişin beklediğiniz yerde göründüğünü onaylayın.
+
+  Başarı, etkinleştirdiğiniz seçeneklere göre formda veya tablo görünümünde gösterilen alana benzer.
+
+  </Step>
+</Steps>
+
+<Callout kind="alert">
+
+Bir alanın türünü, oluşturulduktan sonra değiştiremezsiniz. Farklı bir türe ihtiyacınız varsa yeni bir alan oluşturun ve iş akışınızı bu yeni alana taşıyın.
+
+</Callout>
+
+## Kayıtlarda özel alanları kullanma
+
+Bir alan oluşturduktan sonra NomadBill, `show_in_form` etkinleştirildiğinde bu alanı söz konusu varlık türünün kayıtlarında gösterir. Kullanıcılar yeni bir kayıt oluştururken değerleri girebilir veya bunları daha sonra düzenleme görünümünden güncelleyebilir.
+
+Özel alan değerleri kayıt başına kaydedilir. Ürün düzeyindeki alan yalnızca ürünlere, fatura düzeyindeki alan ise yalnızca faturalara uygulanır. Bir alan aynı zamanda `show_in_table` olarak işaretlenmişse, kayıtları daha hızlı taramanıza ve filtrelemenize yardımcı olmak için değer liste görünümlerinde görünebilir.
+
+Özel alanlar ayrıca ayrıntı sayfası düzenleme modellerini de destekler. Bu da onları, dahili notlar, takip tarihleri ​​veya destekleyici ekler gibi her zaman önceden girmediğiniz bilgiler için yararlı kılar.
+
+## Otomatik numara alanları
+
+NomadBill'in otomatik olarak atadığı sıralı kimliklere ihtiyaç duyduğunuzda otomatik numara alanlarını kullanın. Bu, müşteri numaraları, ürün numaraları, dahili referanslar veya manuel olarak girilmemesi gereken diğer yapılandırılmış kimlikler için işe yarar.
+
+<Callout kind="info">
+
+Otomatik numara alanları üç kurulum seçeneğini destekler:
+
+- **Önek** sayıdan önce `K-` veya `P-` gibi metin ekler.
+- **Doldurma** sabit bir genişliğe ulaşmak için baştaki sıfırları ekler.
+- **Başlat** dizideki ilk sayıyı ayarlar.
+
+Bir müşteri numarası `K-1000` ile başlayabilirken bir ürün numarası `P-00001`'yi kullanabilir.
+
+</Callout>
+
+Her yeni kayıt oluşturulduğunda, NomadBill o alan için sıradaki bir sonraki numarayı atar. Bu, yinelenen numaralandırmayı azaltır ve kayıtların tutarlı kalmasını sağlar.
+
+## Formül alanları
+
+Bir değerin manuel olarak girilmesi yerine hesaplanması gerektiğinde formül alanlarını kullanın. Formül alanları toplamlar, işaretlemeler, yüzdeye dayalı değerler veya diğer alanlara bağlı kayda özgü hesaplamalar için kullanışlıdır.
+
+Bir formül ifadesi yerleşik sayısal değerlere ve özel alanlara başvurabilir. Mevcut değişkenler şunları içerir:
+
+- `subtotal`
+- `vat_percentage`
+- `total`
+- `unit_price`
+- `custom.KEY`
+
+Örneğin, `discount_rate` başka bir özel alanda depolandığında indirim tutarını hesaplamak için `custom.discount_rate * subtotal / 100`'yi kullanabilirsiniz. NomadBill özel alan değerlerini kaydettiğinde formül değerleri otomatik olarak hesaplanır.
+
+<Callout kind="tip">
+
+İfadelerin okunmasını kolaylaştırmak için formül alanı anahtarlarını basit ve öngörülebilir tutun. `discount_rate` gibi bir anahtarın `custom.discount_rate`'de kullanılması, uzun veya tutarsız bir adlandırma stilinden daha kolaydır.
+
+</Callout>
+
+## Yapay zeka tarafından oluşturulan alanlar
+
+NomadBill'in kayıtlı bir istemi temel alarak sizin için metin yazmasını istediğinizde yapay zeka tarafından oluşturulan alanları kullanın. Bu, dahili özetler, taslak açıklamalar, takip notları veya kayıt verilerinden oluşturulması gereken standartlaştırılmış metinler için kullanışlıdır.
+
+Bir AI alanını kullanabilmeniz için önce özel alanlar yöneticisinde bir AI istemi oluşturun. Daha sonra alan tanımını oluşturduğunuzda bu istemi alana bağlayın. Kayıtlarda kullanıcılar metni doğrudan alan girişinden oluşturabilir veya yeniden oluşturabilir.
+
+NomadBill, istemler için şu yapay zeka modellerini destekler:
+
+- `google/gemini-3-flash-preview`
+- `google/gemini-2.5-flash`
+- `google/gemini-2.5-pro`
+- `openai/gpt-5-mini`
+- `openai/gpt-5`
+
+<Callout kind="info">
+
+Yapay zeka tarafından oluşturulan alanlar metin çıktısını saklar. Oluşturulan içeriği müşteriye yönelik belgelerde kullanmadan önce inceleyin.
+
+</Callout>
+
+## PDF şablonlarındaki özel alanlar
+
+Alan tanımında `available_in_pdf`'yi etkinleştirerek PDF çıkışında bir alanı kullanılabilir hale getirin. Bundan sonra alanı belge şablonlarınıza yerleştirebilir ve özel değeri faturalar, teklifler veya diğer PDF'ler oluştururken kullanabilirsiniz.
+
+Basılı belgelere özel alanlar eklemeyi planlıyorsanız şablonunuzu tamamlamadan önce alanı ayarlayın. Bu, şablon yapınızı sabit tutar ve daha sonra yeniden çalışmayı önler.
+
+Şablon kurulumu ve belge düzeni seçenekleri için [PDF Şablonları](/tr/user-guide/pdf-templates) bölümünü okuyun.
+
+## İlgili kılavuzlar
+
+<Columns cols={3}>
+  <Card title="Faturaları yönet" href="/tr/user-guide/invoicing" icon="folder" cta="Faturalandırma kılavuzunu aç" />
+  <Card title="Ürünleri yönet" href="/tr/user-guide/products" icon="package" cta="Ürün kılavuzunu aç" />
+  <Card title="PDF şablonlarını tasarlayın" href="/tr/user-guide/pdf-templates" icon="book-open" cta="PDF şablon kılavuzunu açın" />
+</Columns>

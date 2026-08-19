@@ -1,0 +1,83 @@
+---
+title: 集成
+description: 连接 NomadBill 至 Stripe 进行付款，连接 Plaid 进行银行同步，连接 Nylas 进行邮件智能，连接 Resend 进行邮件传送。
+---
+
+## 连接服务
+
+NomadBill 连接到外部服务以自动化付款收款、银行交易导入、邮件传送和文档处理。这些集成协同工作，使发票、付款、银行交易和供应商文档保持链接，无需手动输入数据。
+
+<Columns cols={2}>
+  <Card title="Stripe" icon="credit-card" href="/zh/user-guide/invoicing">
+通过 Webhook 驱动的状态更新进行发票结帐会话和订阅计费。
+  </Card>
+  <Card title="Plaid" icon="banknote" href="/zh/user-guide/bank-sync">
+US 与欧洲银行链接的银行账户，交易历史长达 365 天。
+  </Card>
+  <Card title="Nylas" icon="mail" href="/zh/user-guide/email-intelligence">
+具有 AI 支持的文档分类和实体匹配的代理邮件邮箱。
+  </Card>
+  <Card title="Resend" icon="send">
+用于发送发票、报价和团队邀请的交易邮件。
+  </Card>
+  <Card title="pdfme" icon="layout" href="/zh/user-guide/pdf-templates">
+拖放式 PDF 模板设计器和文档生成器。
+  </Card>
+  <Card title="Supabase" icon="database">
+PostgreSQL 具有行级安全性的数据库、身份验证和文件存储。
+  </Card>
+</Columns>
+
+## 付款处理
+
+Stripe 在 NomadBill 中处理两个支付流程：
+
+- **发票付款** — 当您启用发票付款时，NomadBill 会创建 Stripe 结账会话。客户在 Stripe 的托管页面上付款，并且 Webhook 将发票状态更新为自动付款。
+- **订阅计费** — Starter 和 Professional 计划通过 Stripe 计费，试用期为 7 天。订阅状态更新通过 webhook 事件流回您的个人资料。
+
+可以在“设置”中配置每个公司的 Stripe 连接密钥，允许每个公司使用自己的 Stripe 账户进行发票付款。
+
+## 银行同步
+
+Plaid 连接两个地区的银行账户：
+
+- **US 银行** — 支持美国和加拿大的机构
+- **EU 银行** — 支持德国、法国、西班牙、荷兰、爱尔兰和英国的机构
+
+交易使用 Plaid 的基于游标的增量同步进行同步。第一个连接最多可导入 365 天的历史记录。后续同步仅检索新的、修改的或删除的事务。
+
+## 邮件智能
+
+Nylas为每个公司提供专用的代理邮箱（例如`yourcompany@agent.nomadbill.co`）。传入邮件通过 AI 管道进行处理，该管道：
+
+- 将消息分类为文档类型（进项发票、收据、付款确认、提醒、合同等）
+- 从邮件正文和附件中提取结构化数据，例如金额、VAT、IBAN、日期和明细项
+- 使用评分引擎将邮件与现有发票、报价、进项发票、银行交易和客户进行匹配
+
+## 邮件发送
+
+Resend 代表 NomadBill 发送交易邮件：
+
+- 发票和报价发送邮件
+- 团队邀请邮件
+- 发件人地址：`noreply@nomadbill.co`
+
+## PDF 生成
+
+pdfme 库为 PDF 模板系统提供支持。您可以使用可视化拖放编辑器设计发票、报价和进项发票的自定义模板。模板支持多种语言，并且可以包含自定义字段占位符。
+
+## 自动对账
+
+银行交易同步后，NomadBill 会自动将其与现有发票和进项发票进行匹配：
+
+|比赛类型|方法|置信度得分 |
+|---|---|---|
+|发票（收款）| 14天内准确金额+货币+日期| 90 | 90
+|费用（付款）| 14天内准确金额+货币+日期| 85 | 85
+|手动链接 |用户选择 | 100 | 100
+
+与看似合理的候选人的不匹配交易会作为建议浮出水面，并提供更宽的 30 天人工审核窗口。
+
+<Callout kind="info">
+NomadBill 目前不为外部开发人员提供公共 REST API 或传出 Webhook。 Stripe 和 Nylas Webhook 是 NomadBill 接收的用于处理支付和邮件事件的传入端点。
+</Callout>

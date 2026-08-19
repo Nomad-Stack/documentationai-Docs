@@ -1,0 +1,225 @@
+---
+title: 自定义字段
+description: 使用 19 种自定义字段类型和灵活的显示规则，向客户、产品、发票、报价和账单添加结构化元数据。
+---
+
+## 自定义字段可让您捕获业务所需的详细信息
+
+将您自己的字段添加到客户、产品、发票、报价和进项发票中，以便每条记录都符合您的工作方式。将自定义字段用于内部注释、参考编号、类别、链接、计算、附件和 AI 生成的文本，而无需更改标准工作流程。
+
+<Callout kind="info">
+
+自定义字段是特定于公司的。您创建的字段仅在您的公司账户内可用，并且仅适用于您分配到的实体类型。
+
+</Callout>
+
+## 自定义字段如何工作
+
+自定义字段由两部分组成：**字段定义**和**字段值**。定义控制字段出现的位置、接受什么类型的输入以及是否可以在表、表单或 PDF 模板中使用。该值是每条记录中保存的实际数据。
+
+您可以为每个实体类型创建字段，然后在创建或编辑记录时填写它们。例如，您可以为客户添加客户类别字段、为产品添加 SKU 字段或为发票添加项目参考字段。
+
+### 实体类型
+
+|实体类型 |用于 |
+|---|---|
+| `customer` |存储有关客户的额外详细信息，例如客户编号、网站、入职日期或内部注释。 |
+| `product` |添加特定于产品的元数据，例如 SKU、类别、重量、购买价格或认证。 |
+| `invoice` |捕获发票详细信息，例如项目参考、交货单、审批状态或计算值。 |
+| `quote` |跟踪报价特定信息，例如修订号、有效性说明或销售阶段。 |
+| `incoming_invoice` |保存供应商账单元数据，例如收据参考、批准字段或附加的支持文档。 |
+
+<Callout kind="tip">
+
+保留特定于记录类型的字段名称。像 `sku` 这样的字段对产品有意义，而 `project_reference` 在发票上更容易维护。
+
+</Callout>
+
+## 字段类型
+
+根据您希望用户输入或生成的数据类型选择字段类型。
+
+|字段类型 |描述 |
+|---|---|
+| `text` |单行文本输入。 |
+| `multiline` |多行文本区域用于较长的注释。 |
+| `email` |输入邮件地址。 |
+| `url` |网站或链接输入。 |
+| `phone` |输入电话号码。 |
+| `number` |整数输入。 |
+| `decimal` |十进制数输入。 |
+| `amount` |输入货币金额。 |
+| `percent` |数字输入显示为百分比。 |
+| `date` |日期选择器。 |
+| `datetime` |日期和时间选择器。 |
+| `boolean` |具有是或否状态的复选框。 |
+| `dropdown` |具有预定义选项的单选字段。 |
+| `multiselect` |具有预定义选项的多选字段。 |
+| `autonumber` |自动分配序号。 |
+| `lookup` |链接到另一个实体。 |
+| `formula` |基于表达式的计算字段。 |
+| `attachment` |文件上传字段。 |
+| `ai` | AI 基于保存的提示生成的文本字段。 |
+
+## 字段配置
+
+字段设置控制验证、可见性和排序。创建字段时配置这些选项，然后在工作流程发生变化时更新它们。
+
+<ParamField body="is_required" param-type="boolean" required="false" show-location="false">
+
+当用户填写记录表单时，使该字段成为必填字段。
+
+</ParamField>
+
+<ParamField body="is_unique" param-type="boolean" required="false" show-location="false">
+
+防止同一实体类型的记录中该字段出现重复值。
+
+</ParamField>
+
+<ParamField body="show_in_table" param-type="boolean" required="false" show-location="false">
+
+在该实体类型的列表视图中将字段显示为列。
+
+</ParamField>
+
+<ParamField body="show_in_form" param-type="boolean" required="false" show-location="false">
+
+显示创建和编辑表单中的字段。默认情况下启用此设置。
+
+</ParamField>
+
+<ParamField body="available_in_pdf" param-type="boolean" required="false" show-location="false">
+
+使该字段可用于 PDF 模板。默认情况下启用此设置。
+
+</ParamField>
+
+<ParamField body="sort_order" param-type="integer" required="false" show-location="false">
+
+控制所选实体类型中自定义字段的顺序。
+
+</ParamField>
+
+## 创建自定义字段
+
+从设置中的自定义字段管理器创建字段。最快的路径是首先定义标签和类型，然后仅打开您需要的选项。
+
+<Steps>
+  <Step title="打开自定义字段" icon="settings">
+
+登录 NomadBill 并在您的设置中打开自定义字段区域。
+
+选择您要扩展的实体类型，例如客户、产品、发票、报价或进项发票。
+
+  </Step>
+  <Step title="创建字段定义" icon="plus">
+
+添加一个新字段并输入您团队中的人员能够识别的**标签**。 NomadBill 还为该标签中的字段创建一个**键**。
+
+选择与您要收集的数据相匹配的**字段类型**。如果您选择 `dropdown` 或 `multiselect`，请添加您希望用户选择的选项。
+
+  </Step>
+  <Step title="配置可见性和验证" icon="edit">
+
+打开该字段所需的选项，例如必填、唯一、在表单中可见、在表格中可见或在 PDF 模板中可用。
+
+如果您希望该字段比其他字段早或晚显示，请在保存之前调整其排序顺序。
+
+  </Step>
+  <Step title="保存并测试该字段" icon="check-circle">
+
+保存字段，然后打开相同实体类型的记录并确认输入出现在您期望的位置。
+
+成功看起来就像根据您启用的选项显示在表单或表格视图中的字段。
+
+  </Step>
+</Steps>
+
+<Callout kind="alert">
+
+创建字段后就无法更改其类型。如果您需要不同的类型，请创建一个新字段并将工作流程移至该新字段。
+
+</Callout>
+
+## 在记录中使用自定义字段
+
+创建字段后，当启用 `show_in_form` 时，NomadBill 会在该实体类型的记录上显示该字段。用户可以在创建新记录时输入值，或稍后从编辑视图中更新它们。
+
+自定义字段值按记录保存。产品级字段仅适用于产品，发票级字段仅适用于发票。如果字段还标记为 `show_in_table`，则该值可以显示在列表视图中，以帮助您更快地扫描和筛选记录。
+
+自定义字段还支持详细信息页面编辑模式。这使得它们对于您并不总是预先输入的信息非常有用，例如内部注释、后续日期或支持附件。
+
+## 自动编号字段
+
+当您需要 NomadBill 自动分配的连续 ID 时，请使用自动编号字段。这对于不应手动输入的客户编号、产品编号、内部参考或其他结构化 ID 非常有效。
+
+<Callout kind="info">
+
+自动编号字段支持三种设置选项：
+
+- **前缀** 在号码前添加文本，例如 `K-` 或 `P-`。
+- **填充** 添加前导零以达到固定宽度。
+- **开始** 设置序列中的第一个数字。
+
+客户编号可能以 `K-1000` 开头，而产品编号可能以 `P-00001` 开头。
+
+</Callout>
+
+每次创建新记录时，NomadBill 都会为该字段分配序列中的下一个编号。这减少了重复编号并保持记录一致。
+
+## 公式字段
+
+当需要计算值而不是手动输入值时，请使用公式字段。公式字段对于总计、加价、基于百分比的值或依赖于其他字段的特定于记录的计算非常有用。
+
+公式表达式可以引用内置数值和自定义字段。可用变量包括：
+
+- `subtotal`
+- `vat_percentage`
+- `total`
+- `unit_price`
+- `custom.KEY`
+
+例如，当 `discount_rate` 存储在另一个自定义字段中时，您可以使用 `custom.discount_rate * subtotal / 100` 计算折扣金额。 NomadBill 保存自定义字段值时会自动计算公式值。
+
+<Callout kind="tip">
+
+保持公式字段键简单且可预测，以便表达式更易于阅读。像 `discount_rate` 这样的密钥在 `custom.discount_rate` 中比长或不一致的命名样式更容易使用。
+
+</Callout>
+
+## AI 生成的字段
+
+当您希望 NomadBill 根据保存的提示为您编写文本时，请使用 AI 生成的字段。这对于应从记录数据生成的内部摘要、草稿描述、后续注释或标准化文本非常有用。
+
+在使用 AI 字段之前，请在自定义字段管理器中创建 AI 提示。然后在创建字段定义时将该提示连接到该字段。在记录上，用户可以直接从字段输入生成或重新生成文本。
+
+NomadBill 支持这些 AI 型号的提示：
+
+- `google/gemini-3-flash-preview`
+- `google/gemini-2.5-flash`
+- `google/gemini-2.5-pro`
+- `openai/gpt-5-mini`
+- `openai/gpt-5`
+
+<Callout kind="info">
+
+AI 生成的字段存储文本输出。在面向客户的文档中使用生成的内容之前，请对其进行审查。
+
+</Callout>
+
+## PDF 模板中的自定义字段
+
+通过在字段定义上启用 `available_in_pdf`，使字段在 PDF 输出中可用。之后，您可以将该字段放置在文档模板中，并在生成发票、报价或其他 PDF 时使用自定义值。
+
+如果您计划在打印文档中包含自定义字段，请在完成模板之前设置该字段。这可以保持模板结构稳定并避免以后返工。
+
+请阅读 [PDF 模板](/zh/user-guide/pdf-templates) 了解模板设置和文档布局选项。
+
+## 相关指南
+
+<Columns cols={3}>
+  <Card title="管理发票" href="/zh/user-guide/invoicing" icon="folder" cta="打开发票指南" />
+  <Card title="管理产品" href="/zh/user-guide/products" icon="package" cta="打开产品指南" />
+  <Card title="设计 PDF 模板" href="/zh/user-guide/pdf-templates" icon="book-open" cta="打开 PDF 模板指南" />
+</Columns>
