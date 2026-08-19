@@ -1,83 +1,84 @@
 ---
+
 title: Integrações
-description: Ligue o NomadBill ao Stripe para pagamentos, ao Plaid para sincronização bancária, ao Nylas para inteligência de e-mail e ao Resend para entrega de e-mails.
+description: Conecte o NomadBill ao Stripe para pagamentos, Plaid para sincronização bancária, Nylas para inteligência de e-mail e Resend para envio de e-mails.
+
 ---
 
-## Serviços ligados
+## Serviços conectados
 
-O NomadBill liga-se a serviços externos para automatizar a cobrança de pagamentos, a importação de transações bancárias, a entrega de e-mails e o processamento de documentos. Estas integrações funcionam em conjunto para manter faturas, pagamentos, transações bancárias e documentos de fornecedores associados sem introdução manual de dados.
+O NomadBill conecta-se a serviços externos para automatizar a coleta de pagamentos, a importação de transações bancárias, o envio de e-mails e o processamento de documentos. Essas integrações funcionam juntas para que as faturas, os pagamentos, as transações bancárias e os documentos fornecedores permaneçam ligados sem entrada manual de dados.
 
 <Columns cols={2}>
   <Card title="Stripe" icon="credit-card" href="/pt/user-guide/invoicing">
-    Sessões de pagamento de faturas e faturação de subscrições com atualizações de estado acionadas por webhooks.
+    Sessões de checkout de fatura e cobrança por assinaturas com atualizações de status via webhook.
   </Card>
   <Card title="Plaid" icon="banknote" href="/pt/user-guide/bank-sync">
-    Ligação de contas bancárias para bancos dos EUA e da Europa, com até 365 dias de histórico de transações.
+    Ligação de contas bancárias para bancos nos Estados Unidos e Europa com até 365 dias de histórico de transações.
   </Card>
   <Card title="Nylas" icon="mail" href="/pt/user-guide/email-intelligence">
-    Caixa de correio de e-mail do agente com classificação de documentos e correspondência de entidades baseadas em IA.
+    Caixa de correio do agente com classificação de documentos por IA e correspondência de entidades.
   </Card>
   <Card title="Resend" icon="send">
-    Entrega de e-mails transacionais para faturas, orçamentos e convites de equipa.
+    Envio de e-mails comerciais para faturas, cotações e convites para equipe.
   </Card>
   <Card title="pdfme" icon="layout" href="/pt/user-guide/pdf-templates">
-    Editor de modelos de PDF de arrastar e largar e gerador de documentos.
+    Desenho visual e gerador de documentos baseado em PDF com suporte a múltiplas línguas.
   </Card>
   <Card title="Supabase" icon="database">
-    Base de dados PostgreSQL, autenticação e armazenamento de ficheiros com segurança ao nível das linhas.
+    Banco PostgreSQL, autenticação e armazenamento de arquivos com segurança de linha de dados.
   </Card>
 </Columns>
 
 ## Processamento de pagamentos
 
-O Stripe gere dois fluxos de pagamento no NomadBill:
+O Stripe gerencia dois fluxos de pagamento no NomadBill:
 
-- **Pagamentos de faturas** — Quando ativa o pagamento numa fatura, o NomadBill cria uma sessão do Stripe Checkout. O cliente paga na página alojada pelo Stripe e um webhook atualiza automaticamente o estado da fatura para paga.
-- **Faturação de subscrições** — Os planos Starter e Professional são faturados através do Stripe, com um período experimental de 7 dias. As atualizações do estado da subscrição são enviadas de volta para o seu perfil através de eventos de webhook.
+- **Pagamentos por fatura** — Quando você habilita o pagamento em uma fatura, o NomadBill cria uma sessão de checkout do Stripe. O cliente paga na página hospedada do Stripe e um webhook atualiza automaticamente o status da fatura para pago.
+- **Cobrança por assinaturas** — Plano Starter e Profissional são cobrados pelo Stripe com uma trial de 7 dias. As atualizações de status de assinatura fluem de volta ao seu perfil via eventos de evento web.
 
-As chaves do Stripe Connect podem ser configuradas por empresa nas Definições, permitindo que cada empresa utilize a sua própria conta Stripe para pagamentos de faturas.
+Chaves de conexão do Stripe individuais podem ser configuradas em Configurações, permitindo que cada empresa use sua própria conta do Stripe para pagamentos de faturas.
 
 ## Sincronização bancária
 
-O Plaid liga contas bancárias em duas regiões:
+O Plaid conecta contas bancárias em dois regiões:
 
-- **Bancos dos EUA** — Suporta instituições nos Estados Unidos e no Canadá
-- **Bancos da UE** — Suporta instituições na Alemanha, em França, Espanha, nos Países Baixos, na Irlanda e no Reino Unido
+- **Bancos nos Estados Unidos e Canadá** — Suporta instituições nos Estados Unidos e Canadá
+- **Bancos da Europa** — Suporta instituições na Alemanha, França, Espanha, Holanda, Irlanda e Reino Unido
 
-As transações são sincronizadas através da sincronização incremental baseada em cursor do Plaid. A primeira ligação importa até 365 dias de histórico. As sincronizações seguintes obtêm apenas transações novas, alteradas ou removidas.
+As transações são sincronizadas usando o incremental sync de cursor do Plaid. A primeira conexão importa até 365 dias de histórico. As sincronizações posteriores recuperam apenas novas, modificadas ou removidas transações.
 
 ## Inteligência de e-mail
 
-O Nylas disponibiliza uma caixa de correio dedicada do agente para cada empresa (por exemplo, `yourcompany@agent.nomadbill.co`). Os e-mails recebidos são processados através de um fluxo de IA que:
+O Nylas provisiona uma caixa de correio exclusiva para cada empresa (por exemplo, `yourcompany@agent.nomadbill.co`). Os e-mails recebidos são processados por um pipeline de IA que:
 
-- Classifica as mensagens por tipos de documento (fatura recebida, recibo, confirmação de pagamento, lembrete, contrato e outros)
-- Extrai dados estruturados, como montantes, IVA, IBAN, datas e linhas, do corpo do e-mail e dos anexos
-- Faz a correspondência dos e-mails com faturas, orçamentos, faturas recebidas, transações bancárias e clientes existentes através de um mecanismo de pontuação
+- Classifica mensagens em tipos de documentos (fatura de entrada, recibo, confirmação de pagamento, lembrança, contrato e outros)
+- Extrai dados estruturados como valores, IVA, IBAN, datas e itens de linha do corpo do e-mail e anexos
+- Correlaciona os e-mails aos documentos existentes, faturas, cotações, faturas de entrada bancárias e clientes usando um motor de pontuação
 
-## Entrega de e-mails
+## Envio de e-mails
 
-O Resend envia e-mails transacionais em nome do NomadBill:
+O Resend envia e-mails comerciais em nome do NomadBill:
 
-- E-mails de entrega de faturas e orçamentos
-- E-mails de convite para a equipa
-- Endereço do remetente: `noreply@nomadbill.co`
+- Envio de e-mails para faturas, cotações e convites para equipe
+- Endereço de remetente: `noreply@nomadbill.co`
 
 ## Geração de PDF
 
-A biblioteca pdfme é utilizada pelo sistema de modelos de PDF. Pode criar modelos personalizados para faturas, orçamentos e faturas recebidas através de um editor visual de arrastar e largar. Os modelos suportam vários idiomas e podem incluir marcadores de posição de campos personalizados.
+A biblioteca pdfme fornece o sistema de gerenciamento de modelos PDF. Você pode projetar modelos personalizados para faturas, cotações e faturas de entrada usando um editor visual de arrastar e soltar. Os modelos suportam múltiplas línguas e podem incluir marcadores de campo personalizados.
 
 ## Reconciliação automática
 
-Quando as transações bancárias são sincronizadas, o NomadBill faz automaticamente a correspondência com faturas existentes e faturas recebidas:
+Quando as transações bancárias são sincronizadas, o NomadBill reconhece automaticamente-as às faturas e às faturas de entrada existentes:
 
 | Tipo de correspondência | Método | Pontuação de confiança |
 |---|---|---|
-| Fatura (pagamento recebido) | Montante exato + moeda + data num intervalo de 14 dias | 90 |
-| Despesa (pagamento efetuado) | Montante exato + moeda + data num intervalo de 14 dias | 85 |
-| Associação manual | Selecionada pelo utilizador | 100 |
+| Fatura (pagamento de entrada) | Valor exato + moeda + data dentro de 14 dias | 90 |
+| Despesa (pagamento de saída) | Valor exato + moeda + data dentro de 14 dias | 85 |
+| Link manual | Selecionado pelo usuário | 100 |
 
-As transações sem correspondência com candidatos plausíveis são apresentadas como sugestões com um intervalo mais amplo de 30 dias para análise manual.
+Transações não correspondidas com candidatos plausíveis são surfadas como sugestões com uma janela de 30 dias para revisão manual.
 
 <Callout kind="info">
-  Atualmente, o NomadBill não disponibiliza uma API REST pública nem webhooks de saída para programadores externos. Os webhooks do Stripe e do Nylas são endpoints de entrada que o NomadBill recebe para processar eventos de pagamento e de e-mail.
+  O NomadBill ainda não oferece um API REST público ou webhooks de saída para desenvolvedores externos. Os webhooks do Stripe e Nylas são pontos de entrada internos que o NomadBill recebe para processar eventos de pagamento e e-mail.
 </Callout>
