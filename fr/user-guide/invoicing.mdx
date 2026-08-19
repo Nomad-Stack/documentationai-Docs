@@ -1,299 +1,299 @@
 ---
-title: Invoicing
-description: Create, send, and track invoices in multiple currencies with VAT calculation, PDF generation, and Stripe payments.
+title: Facturation
+description: Créez, envoyez et suivez des factures dans plusieurs devises avec le calcul TVA, la génération PDF et les paiements Stripe.
 ---
 
-## Create, send, and track invoices
+## Créer, envoyer et suivre des factures
 
-Use NomadBill invoicing to create professional invoices, calculate VAT, export branded PDFs, send invoices by email, and accept online payments through Stripe. You can manage draft and sent invoices, track payment progress, and keep invoice numbers consistent across your company.
+Utilisez la facturation NomadBill pour créer des factures professionnelles, calculer TVA, exporter des PDF de marque, envoyer des factures par e-mail et accepter des paiements en ligne via Stripe. Vous pouvez gérer les factures préliminaires et envoyées, suivre la progression des paiements et maintenir la cohérence des numéros de facture dans toute votre entreprise.
 
 <Callout kind="info">
 
-If you start from an approved quote, use the quote-to-invoice flow described in [Quotes](/en/user-guide/quotes).
+Si vous partez d'un devis approuvé, utilisez le flux du devis à la facture décrit dans [Devis](/fr/user-guide/quotes).
 
 </Callout>
 
-## Invoice statuses
+## Statuts des factures
 
-NomadBill tracks invoices with two separate fields: `status` and `payment_status`. The invoice badge prioritizes payment information, so when `payment_status` is `paid`, the invoice displays as paid even if the general `status` field would otherwise show something else.
+NomadBill suit les factures avec deux champs distincts : `status` et `payment_status`. Le badge de facture donne la priorité aux informations de paiement. Ainsi, lorsque `payment_status` est `paid`, la facture s'affiche comme payée même si le champ général `status` afficherait autrement autre chose.
 
-| Field | Values | What it means |
+| Champ | Valeurs | Ce que cela signifie |
 | --- | --- | --- |
-| `status` | `draft`, `sent`, `paid`, `overdue` | The document lifecycle status |
-| `payment_status` | `unpaid`, `pending`, `paid`, `failed` | The payment processing state |
+| `status` | `draft`, `sent`, `paid`, `overdue` | L'état du cycle de vie du document |
+| `payment_status` | `unpaid`, `pending`, `paid`, `failed` | L'état du traitement des paiements |
 
-A practical way to read this is:
+Une manière pratique de lire ceci est :
 
-- **`draft`** — you are still editing the invoice and have not finalized sending it.
-- **`sent`** — the invoice has been delivered or marked as sent.
-- **`overdue`** — the due date has passed and the invoice is still not settled.
-- **`paid`** — the invoice is settled.
+- **`draft`** — vous êtes toujours en train de modifier la facture et n'avez pas finalisé son envoi.
+- **`sent`** — la facture a été livrée ou marquée comme envoyée.
+- **`overdue`** — la date d'échéance est dépassée et la facture n'est toujours pas réglée.
+- **`paid`** — la facture est réglée.
 
-Payment-specific states add more detail:
+Les états spécifiques au paiement ajoutent plus de détails :
 
-- **`unpaid`** — no payment has been recorded yet.
-- **`pending`** — payment is in progress.
-- **`paid`** — payment completed successfully.
-- **`failed`** — a payment attempt did not complete.
+- **`unpaid`** — aucun paiement n'a encore été enregistré.
+- **`pending`** — le paiement est en cours.
+- **`paid`** — paiement effectué avec succès.
+- **`failed`** — une tentative de paiement n'a pas abouti.
 
 <Callout kind="tip">
 
-If an invoice shows `paid` in the UI, that paid state takes priority over the general document status for badge display.
+Si une facture affiche `paid` dans l'interface utilisateur, cet état payé est prioritaire sur l'état général du document pour l'affichage du badge.
 
 </Callout>
 
-## Creating an invoice
+## Créer une facture
 
-Create a new invoice from the **Invoices** area, complete the customer and billing details, add your line items, and then review the result before sending it. NomadBill keeps unfinished invoices as drafts so you can return to them later.
+Créez une nouvelle facture à partir de la zone **Factures**, complétez les détails du client et de facturation, ajoutez vos éléments de ligne, puis examinez le résultat avant de l'envoyer. NomadBill conserve les factures inachevées sous forme de brouillons afin que vous puissiez y revenir plus tard.
 
 <Steps>
-  <Step title="Open a new invoice" icon="file-text">
+  <Step title="Ouvrir une nouvelle facture" icon="file-text">
 
-  Go to **Invoices** and create a new invoice. NomadBill prepares the document with your company context and assigns numbering when the invoice is created.
+  Accédez à **Factures** et créez une nouvelle facture. NomadBill prépare le document avec le contexte de votre entreprise et attribue une numérotation lors de la création de la facture.
 
-  When the invoice opens, you should see editable billing fields, line items, totals, and document settings.
-
-  </Step>
-
-  <Step title="Add customer and billing details" icon="users">
-
-  Enter the customer information, invoice date, due date, currency, and language. Choose the invoice language that matches the recipient so labels in the PDF and email are presented correctly.
-
-  After saving, the invoice remains in **draft** status until you send it or mark it otherwise.
+  Lorsque la facture s'ouvre, vous devriez voir les champs de facturation, les éléments de ligne, les totaux et les paramètres du document modifiables.
 
   </Step>
 
-  <Step title="Add line items" icon="plus">
+  <Step title="Ajouter les détails du client et de facturation" icon="users">
 
-  Add each product or service as a separate line item with a name, quantity, and unit price. Include a description when you need to clarify scope, billing period, or deliverables.
+  Saisissez les informations client, la date de facture, la date d'échéance, la devise et la langue. Choisissez la langue de facturation qui correspond au destinataire afin que les étiquettes dans le PDF et l'e-mail soient présentées correctement.
 
-  Your subtotal updates as you add or edit items.
-
-  </Step>
-
-  <Step title="Review VAT and totals" icon="bar-chart">
-
-  Confirm the VAT percentage before sending the invoice. NomadBill calculates the total from the subtotal and VAT percentage, so you can verify the amount before generating the PDF or payment link.
-
-  A correct review step should leave you with a clear subtotal, VAT amount, and final total.
+  Après enregistrement, la facture reste au statut **brouillon** jusqu'à ce que vous l'envoyiez ou la marquiez autrement.
 
   </Step>
 
-  <Step title="Export, send, or collect payment" icon="arrow-right">
+  <Step title="Ajouter des postes" icon="plus">
 
-  Once the invoice looks correct, generate the PDF, send it by email, or enable Stripe checkout if you want the customer to pay online. After sending, NomadBill can record delivery details such as who received the invoice and when it was sent.
+  Ajoutez chaque produit ou service en tant qu'élément de ligne distinct avec un nom, une quantité et un prix unitaire. Incluez une description lorsque vous devez clarifier la portée, la période de facturation ou les livrables.
 
-  At that point, the invoice moves from editing into active tracking.
+  Votre sous-total est mis à jour à mesure que vous ajoutez ou modifiez des éléments.
+
+  </Step>
+
+  <Step title="Examiner TVA et les totaux" icon="bar-chart">
+
+  Confirmez le pourcentage TVA avant d'envoyer la facture. NomadBill calcule le total à partir du sous-total et du pourcentage TVA, afin que vous puissiez vérifier le montant avant de générer le PDF ou le lien de paiement.
+
+  Une étape de révision correcte devrait vous laisser avec un sous-total clair, un montant TVA et un total final.
+
+  </Step>
+
+  <Step title="Exporter, envoyer ou collecter un paiement" icon="arrow-right">
+
+  Une fois que la facture semble correcte, générez le PDF, envoyez-le par e-mail ou activez le paiement Stripe si vous souhaitez que le client paie en ligne. Après l'envoi, NomadBill peut enregistrer les détails de la livraison tels que la personne qui a reçu la facture et la date d'envoi.
+
+  À ce stade, la facture passe de l’édition au suivi actif.
 
   </Step>
 </Steps>
 
-## Line items
+## Éléments de campagne
 
-Each invoice line item stores a small, consistent structure so you can keep charges clear and predictable. A line item includes:
+Chaque élément de ligne de facture stocke une petite structure cohérente afin que vous puissiez garder les frais clairs et prévisibles. Un poste comprend :
 
-- **`id`** — optional internal identifier
-- **`name`** — the line item title
-- **`description`** — optional detail text
-- **`quantity`** — how many units you bill
-- **`price`** — the price per unit
+- **`id`** — identifiant interne facultatif
+- **`name`** : le titre de l'poste.
+- **`description`** — texte détaillé facultatif
+- **`quantity`** — combien d'unités vous facturez
+- **`price`** — le prix unitaire
 
-Use one line item per billable service, product, or billing period. This makes the PDF easier to read and helps your customer understand how the total was built.
+Utilisez un poste par service, produit ou période de facturation facturable. Cela rend le PDF plus facile à lire et aide votre client à comprendre comment le total a été construit.
 
-NomadBill also supports drag-and-drop reordering for line items. Reorder items to match the story you want the invoice to tell, such as listing core services first and reimbursable expenses last.
+NomadBill prend également en charge la réorganisation par glisser-déposer des postes. Réorganisez les éléments en fonction de l'histoire que vous souhaitez que la facture raconte, par exemple en énumérant les services de base en premier et les dépenses remboursables en dernier.
 
-## VAT calculation
+## Calcul TVA
 
-NomadBill calculates invoice totals from the subtotal and VAT percentage. The formula is:
+NomadBill calcule les totaux des factures à partir du sous-total et du pourcentage TVA. La formule est :
 
 `total = subtotal + (subtotal x vat_percentage / 100)`
 
-The default VAT rate is **19%**, which matches the standard German rate. You can change the VAT percentage per invoice as needed, as long as the value stays within the allowed range of **0 to 100**.
+Le taux TVA par défaut est de **19 %**, ce qui correspond au taux allemand standard. Vous pouvez modifier le pourcentage TVA par facture selon vos besoins, à condition que la valeur reste dans la plage autorisée de **0 à 100**.
 
-That means:
+Cela signifie :
 
-- **`0`** is valid for VAT-exempt or zero-rated invoices
-- **`19`** is the default starting point
-- **`100`** is the upper allowed limit
+- **`0`** est valable pour les factures exemptées de TVA ou détaxées
+- **`19`** est le point de départ par défaut
+- **`100`** est la limite supérieure autorisée
 
 <Callout kind="info">
 
-Check the VAT rate before sending the invoice, especially if you bill across jurisdictions or work with mixed tax treatments.
+Vérifiez le taux TVA avant d'envoyer la facture, surtout si vous facturez dans plusieurs juridictions ou si vous travaillez avec des traitements fiscaux mixtes.
 
 </Callout>
 
-## Currencies and languages
+## Devises et langues
 
-NomadBill supports five invoice currencies and four invoice languages. These values are enforced, so invoices always use one of the supported options.
+NomadBill prend en charge cinq devises de facturation et quatre langues de facturation. Ces valeurs sont appliquées, de sorte que les factures utilisent toujours l'une des options prises en charge.
 
-### Supported currencies
+### Devises prises en charge
 
 - **EUR**
 - **USD**
 - **GBP**
 - **CHF**
-- **AED**
+- **DEA**
 
-### Supported invoice languages
+### Langues de facturation prises en charge
 
 - **DE**
-- **EN**
+- **FR**
 - **FR**
 - **ES**
 
-### How the default currency is chosen
+### Comment la devise par défaut est choisie
 
-NomadBill resolves the invoice currency in this order:
+NomadBill résout la devise de facturation dans cet ordre :
 
-1. **Invoice currency** — if the invoice already has a currency, that value is used.
-2. **Company default currency** — if the invoice has no explicit currency, NomadBill checks the company default.
-3. **Global currency preference** — if neither of the first two exists, NomadBill falls back to the global currency stored in local browser storage as `nb.currency`.
+1. **Devise de la facture** — si la facture comporte déjà une devise, cette valeur est utilisée.
+2. **Devise par défaut de l'entreprise** — si la facture n'a pas de devise explicite, NomadBill vérifie la devise par défaut de l'entreprise.
+3. **Préférence de devise globale** — si aucune des deux premières n'existe, NomadBill revient à la devise globale stockée dans le stockage du navigateur local sous le nom `nb.currency`.
 
-This priority keeps existing invoices stable while still giving you a company-wide and user-level fallback.
+Cette priorité maintient les factures existantes stables tout en vous offrant une solution de repli à l'échelle de l'entreprise et au niveau des utilisateurs.
 
-## Invoice numbering
+## Numérotation des factures
 
-Invoice numbers use the format `R-00001`. The `R` prefix identifies the document type, and the numeric portion uses five digits with leading zeros.
+Les numéros de facture utilisent le format `R-00001`. Le préfixe `R` identifie le type de document et la partie numérique utilise cinq chiffres précédés de zéros.
 
-NomadBill generates numbers through a database function that assigns the next document number atomically for each company. That matters if multiple people create invoices at the same time, because the sequence remains safe from race conditions.
+NomadBill génère des numéros via une fonction de base de données qui attribue atomiquement le numéro de document suivant pour chaque entreprise. Cela est important si plusieurs personnes créent des factures en même temps, car la séquence reste à l'abri des conditions de concurrence.
 
-Two details are important for day-to-day use:
+Deux détails sont importants pour une utilisation quotidienne :
 
-- Invoice numbers are **per company**, not shared globally across all accounts.
-- Each invoice number must be unique within the same company through the `company_id` and `invoice_number` combination.
+- Les numéros de facture sont **par entreprise** et ne sont pas partagés globalement entre tous les comptes.
+- Chaque numéro de facture doit être unique au sein d'une même entreprise grâce à la combinaison `company_id` et `invoice_number`.
 
-## PDF generation
+## Génération PDF
 
-NomadBill can export invoices as PDF documents for download, sharing, or email delivery. The PDF engine uses standard invoice data together with your company branding to produce a finished document.
+NomadBill peut exporter des factures sous forme de documents PDF pour téléchargement, partage ou envoi par courrier électronique. Le moteur PDF utilise les données de facture standard ainsi que la marque de votre entreprise pour produire un document fini.
 
-The generated PDF uses an **A4 portrait** layout with **15 mm margins** and can include:
+Le PDF généré utilise une mise en page **A4 portrait** avec des **marges de 15 mm** et peut inclure :
 
-- company logo
-- brand color
-- line items table
-- totals block
-- bank details
-- footer
+- logo de l'entreprise
+- couleur de la marque
+- tableau des postes
+- bloc de totaux
+- coordonnées bancaires
+- pied de page
 
-PDF output also supports all four invoice languages, so labels appear in the language selected on the invoice. If you use custom PDF layouts, NomadBill also supports template-based rendering.
+La sortie PDF prend également en charge les quatre langues de facturation, de sorte que les étiquettes apparaissent dans la langue sélectionnée sur la facture. Si vous utilisez des mises en page PDF personnalisées, NomadBill prend également en charge le rendu basé sur des modèles.
 
 <Columns cols={2}>
-  <Card
-    title="PDF templates"
-    href="/en/user-guide/pdf-templates"
-    icon="book-open"
-    cta="Open guide"
+  <Carte
+    title="Modèles PDF"
+    href="/fr/user-guide/pdf-templates"
+    icon="livre-ouvert"
+    cta="Ouvrir le guide"
   />
-  <Card
-    title="Quotes"
-    href="/en/user-guide/quotes"
-    icon="arrow-right"
-    cta="View related guide"
+  <Carte
+    title="Devis"
+    href="/fr/user-guide/quotes"
+    icône="flèche-droite"
+    cta="Voir le guide associé"
   />
 </Columns>
 
-## Sending invoices by email
+## Envoi des factures par email
 
-NomadBill sends invoice emails through Resend using `noreply@nomadbill.co` as the sender address. You can send either a document email with HTML content and an optional PDF attachment, or a summary-style email that records delivery details in the database.
+NomadBill envoie des e-mails de facture via Resend en utilisant `noreply@nomadbill.co` comme adresse d'expéditeur. Vous pouvez envoyer soit un e-mail de document avec un contenu HTML et une pièce jointe PDF facultative, soit un e-mail de type résumé qui enregistre les détails de livraison dans la base de données.
 
-When you send an invoice summary email, NomadBill updates these tracking fields:
+Lorsque vous envoyez un e-mail récapitulatif de facture, NomadBill met à jour ces champs de suivi :
 
-- **`sent_at`** — when the invoice was sent
-- **`sent_to`** — which recipient received it
-- **`email_status`** — set to `sent`
+- **`sent_at`** — date d'envoi de la facture
+- **`sent_to`** — quel destinataire l'a reçu
+- **`email_status`** — réglé sur `sent`
 
-The email content can include:
+Le contenu de l'e-mail peut inclure :
 
-- the document number
-- the customer name
-- an optional custom message
-- the total amount
+- le numéro du document
+- le nom du client
+- un message personnalisé facultatif
+- le montant total
 
-This gives you both outbound delivery and a basic audit trail inside the invoice record.
+Cela vous donne à la fois une livraison sortante et une piste d'audit de base dans l'enregistrement de la facture.
 
-## Accepting payments with Stripe
+## Accepter les paiements avec Stripe
 
-Enable Stripe on an invoice when you want the customer to pay through a hosted checkout page. NomadBill creates a Stripe Checkout Session for the invoice and sends the customer to Stripe to complete payment.
+Activez Stripe sur une facture lorsque vous souhaitez que le client paie via une page de paiement hébergée. NomadBill crée une session de paiement Stripe pour la facture et envoie le client à Stripe pour finaliser le paiement.
 
-### How the Stripe flow works
+### Comment fonctionne le flux Stripe
 
 <Steps>
-  <Step title="Enable Stripe for the invoice" icon="settings">
+  <Step title="Activer Stripe pour la facture" icon="settings">
 
-  Turn on Stripe for the invoice so `stripe_enabled` is active. This marks the invoice as eligible for online payment.
+  Activez Stripe pour la facture afin que `stripe_enabled` soit actif. Cela marque la facture comme éligible au paiement en ligne.
 
-  Once enabled, the invoice can create a hosted payment session.
-
-  </Step>
-
-  <Step title="Create the checkout session" icon="lock">
-
-  NomadBill creates a Stripe Checkout Session from the invoice total. The amount sent to Stripe is converted to cents using `Math.round(total_amount * 100)`, and the currency code is converted to lowercase for the Stripe API.
-
-  This ensures Stripe receives the amount in the format it expects.
+  Une fois activée, la facture peut créer une session de paiement hébergée.
 
   </Step>
 
-  <Step title="Redirect the customer to Stripe" icon="external-link">
+  <Step title="Créer la session de paiement" icon="lock">
 
-  The customer is redirected to the Stripe-hosted checkout page to complete payment securely. You do not need to collect card details directly inside the invoice page.
+  NomadBill crée une session de paiement Stripe à partir du total de la facture. Le montant envoyé à Stripe est converti en cents à l'aide de `Math.round(total_amount * 100)`, et le code de devise est converti en minuscules pour le Stripe API.
 
-  A successful redirect means the customer is now completing payment on Stripe.
-
-  </Step>
-
-  <Step title="Handle success or cancellation" icon="check-circle">
-
-  After payment, Stripe sends the customer back to one of two invoice routes:
-
-  - **Success:** `/invoices/$id/pay/success`
-  - **Cancel:** `/invoices/$id/pay/cancel`
-
-  The success page confirms payment and triggers purchase tracking. The cancel page lets the customer try again.
+  Cela garantit que Stripe reçoit le montant dans le format attendu.
 
   </Step>
 
-  <Step title="Update the invoice after webhook confirmation" icon="shield">
+  <Step title="Rediriger le client vers Stripe" icon="external-link">
 
-  When Stripe sends the `checkout.session.completed` webhook event, NomadBill updates the invoice to `payment_status=paid` and `status=paid`.
+  Le client est redirigé vers la page de paiement hébergée par Stripe pour effectuer le paiement en toute sécurité. Vous n'avez pas besoin de collecter les détails de la carte directement sur la page de facture.
 
-  This webhook update is what finalizes the paid state inside NomadBill.
+  Une redirection réussie signifie que le client effectue maintenant le paiement sur Stripe.
+
+  </Step>
+
+  <Step title="Gérer le succès ou l'annulation" icon="check-circle">
+
+  Après le paiement, Stripe renvoie le client vers l'une des deux voies de facturation suivantes :
+
+  - **Succès :** `/invoices/$id/pay/success`
+  - **Annuler :** `/invoices/$id/pay/cancel`
+
+  La page de réussite confirme le paiement et déclenche le suivi des achats. La page d'annulation permet au client de réessayer.
+
+  </Step>
+
+  <Step title="Mettre à jour la facture après confirmation du webhook" icon="shield">
+
+  Lorsque Stripe envoie l'événement webhook `checkout.session.completed`, NomadBill met à jour la facture vers `payment_status=paid` et `status=paid`.
+
+  Cette mise à jour du webhook finalise l’état payant dans NomadBill.
 
   </Step>
 </Steps>
 
-## Recurring invoices
+## Factures récurrentes
 
-Recurring invoices let you mark an invoice as part of a repeated billing pattern. NomadBill stores this with the `is_recurring` flag and a `recurring_frequency` value.
+Les factures récurrentes vous permettent de marquer une facture comme faisant partie d'un modèle de facturation répétée. NomadBill stocke cela avec l'indicateur `is_recurring` et une valeur `recurring_frequency`.
 
-Supported recurring frequencies are:
+Les fréquences récurrentes prises en charge sont :
 
-- **weekly**
-- **monthly**
-- **quarterly**
-- **yearly**
+- **hebdomadaire**
+- **mensuel**
+- **trimestriel**
+- **annuel**
 
 <Callout kind="alert">
 
-Recurring invoices are metadata only. NomadBill does not run an automatic cron job and does not generate new invoices on a schedule from this flag alone.
+Les factures récurrentes sont uniquement des métadonnées. NomadBill n'exécute pas de tâche cron automatique et ne génère pas de nouvelles factures selon un calendrier à partir de cet indicateur uniquement.
 
 </Callout>
 
-Use recurring settings to label and organize repeat billing, but do not rely on them as an automated subscription engine.
+Utilisez des paramètres récurrents pour étiqueter et organiser la facturation répétée, mais ne comptez pas sur eux comme moteur d'abonnement automatisé.
 
-## What to do next
+## Que faire ensuite
 
 <Columns cols={2}>
-  <Card
-    title="Manage PDF templates"
-    href="/en/user-guide/pdf-templates"
-    icon="edit"
-    cta="Customize layouts"
+  <Carte
+    title="Gérer les modèles PDF"
+    href="/fr/user-guide/pdf-templates"
+    icône = "modifier"
+    cta="Personnaliser les mises en page"
   />
-  <Card
-    title="Work with quotes"
-    href="/en/user-guide/quotes"
-    icon="folder"
-    cta="Create quote-based invoices"
+  <Carte
+    title="Travailler avec des guillemets"
+    href="/fr/user-guide/quotes"
+    icône="dossier"
+    cta="Créer des factures basées sur un devis"
   />
 </Columns>

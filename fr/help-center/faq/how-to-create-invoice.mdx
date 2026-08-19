@@ -1,6 +1,6 @@
 ---
 title: Comment créer une facture ?
-description: Créez, personnalisez et envoyez des factures dans NomadBill avec prise en charge multi-devises, calcul VAT et livraison PDF.
+description: Créez, personnalisez et envoyez des factures dans NomadBill avec prise en charge multi-devises, calcul TVA et livraison PDF.
 ---
 
 ## Créer et envoyer une facture
@@ -12,7 +12,7 @@ Créez une nouvelle facture à partir de la page **Factures**, remplissez les d�
 
   Ouvrez **Factures** dans votre tableau de bord et cliquez sur **Nouveau**. Vous pouvez également vous rendre directement à `/invoices/new` si vous connaissez déjà l'itinéraire.
 
-  Lorsque le formulaire s'ouvre, la facture démarre au statut **projet**. Vous pouvez continuer à modifier le brouillon jusqu'à ce que vous l'envoyiez.
+  Lorsque le formulaire s'ouvre, la facture démarre au statut **brouillon**. Vous pouvez continuer à modifier le brouillon jusqu'à ce que vous l'envoyiez.
 
   </Step>
 
@@ -32,19 +32,19 @@ Créez une nouvelle facture à partir de la page **Factures**, remplissez les d�
 
   </Step>
 
-  <Step title="Ajouter des éléments de campagne" icon="plus">
+  <Step title="Ajouter des postes" icon="plus">
 
-  Ajoutez un ou plusieurs éléments de ligne pour les biens ou services que vous facturez. Chaque élément de campagne comprend un **nom**, une **quantité** et un **prix**.
+  Ajoutez un ou plusieurs éléments de ligne pour les biens ou services que vous facturez. Chaque poste comprend un **nom**, une **quantité** et un **prix**.
 
-  Si vous devez modifier l'ordre, faites glisser les éléments de campagne dans l'ordre souhaité. Le sous-total de la facture est mis à jour à mesure que vous ajoutez ou modifiez des articles.
+  Si vous devez modifier l'ordre, faites glisser les postes dans l'ordre souhaité. Le sous-total de la facture est mis à jour à mesure que vous ajoutez ou modifiez des articles.
 
   </Step>
 
-  <Step title="Définissez VAT et examinez les totaux" icon="bar-chart">
+  <Step title="Définissez TVA et examinez les totaux" icon="bar-chart">
 
-  Définissez le **pourcentage VAT** pour la facture. NomadBill définit par défaut VAT sur **19 %**, mais vous pouvez le modifier si nécessaire.
+  Définissez le **pourcentage TVA** pour la facture. NomadBill définit par défaut TVA sur **19 %**, mais vous pouvez le modifier si nécessaire.
 
-  Le total est calculé comme `subtotal + (subtotal x VAT%)`. Vérifiez le sous-total, le montant VAT et le total final avant de continuer.
+  Le total est calculé comme `subtotal + (subtotal x TVA%)`. Vérifiez le sous-total, le montant TVA et le total final avant de continuer.
 
   </Step>
 
@@ -73,6 +73,6 @@ Si le client lance le paiement Stripe, le statut de paiement passe à `pending`.
 
 ## Que devriez-vous savoir d’autre ?
 
-Les projets de factures restent modifiables jusqu'à ce que vous les envoyiez. Cela fait des brouillons l'endroit le plus sûr pour ajuster les détails du client, réorganiser des articles ou mettre à jour VAT avant la livraison.
+Les projets de factures restent modifiables jusqu'à ce que vous les envoyiez. Cela fait des brouillons l'endroit le plus sûr pour ajuster les détails du client, réorganiser des articles ou mettre à jour TVA avant la livraison.
 
 NomadBill prend également en charge les métadonnées des factures récurrentes. Vous pouvez définir l'indicateur récurrent et choisir une fréquence `weekly`, `monthly`, `quarterly` ou `yearly`, mais cela ne crée pas automatiquement de factures selon un calendrier.

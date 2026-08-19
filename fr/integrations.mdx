@@ -8,19 +8,19 @@ description: Connectez NomadBill à Stripe pour les paiements, Plaid pour la syn
 NomadBill se connecte à des services externes pour automatiser l'encaissement des paiements, l'importation des transactions bancaires, l'envoi d'e-mails et le traitement des documents. Ces intégrations fonctionnent ensemble pour que les factures, les paiements, les transactions bancaires et les documents fournisseurs restent liés sans saisie manuelle des données.
 
 <Columns cols={2}>
-  <Card title="Stripe" icon="credit-card" href="/en/user-guide/invoicing">
+  <Card title="Stripe" icon="credit-card" href="/fr/user-guide/invoicing">
     Sessions de paiement des factures et facturation des abonnements avec mises à jour de statut basées sur des webhooks.
   </Card>
-  <Card title="Plaid" icon="banknote" href="/en/user-guide/bank-sync">
+  <Card title="Plaid" icon="banknote" href="/fr/user-guide/bank-sync">
     Liaison de comptes bancaires pour les banques américaines et européennes avec jusqu'à 365 jours d'historique des transactions.
   </Card>
-  <Card title="Nylas" icon="mail" href="/en/user-guide/email-intelligence">
+  <Card title="Nylas" icon="mail" href="/fr/user-guide/email-intelligence">
     Boîte aux lettres électronique de l'agent avec classification des documents et correspondance des entités basées sur l'IA.
   </Card>
   <Card title="Resend" icon="send">
     Envoi d'e-mails transactionnels pour les factures, les devis et les invitations d'équipe.
   </Card>
-  <Card title="pdfme" icon="layout" href="/en/user-guide/pdf-templates">
+  <Card title="pdfme" icon="layout" href="/fr/user-guide/pdf-templates">
     Concepteur de modèles PDF et générateur de documents par glisser-déposer.
   </Card>
   <Card title="Supabase" icon="database">
@@ -51,7 +51,7 @@ Les transactions sont synchronisées à l'aide de la synchronisation incrémenti
 Nylas fournit une boîte aux lettres d'agent dédiée pour chaque entreprise (par exemple, `yourcompany@agent.nomadbill.co`). Les e-mails entrants sont traités via un pipeline d'IA qui :
 
 - Classe les messages en types de documents (facture entrante, reçu, confirmation de paiement, rappel, contrat et autres)
-- Extrait les données structurées telles que les montants, VAT, IBAN, les dates et les éléments de ligne du corps de l'e-mail et des pièces jointes
+- Extrait les données structurées telles que les montants, TVA, IBAN, les dates et les éléments de ligne du corps de l'e-mail et des pièces jointes
 - Fait correspondre les e-mails aux factures existantes, aux devis, aux factures entrantes, aux transactions bancaires et aux clients à l'aide d'un moteur de notation
 
 ## Envoi par e-mail

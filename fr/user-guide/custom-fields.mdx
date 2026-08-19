@@ -1,178 +1,178 @@
 ---
-title: Custom Fields
-description: Add structured metadata to customers, products, invoices, quotes, and bills with 19 custom field types and flexible display rules.
+title: Champs personnalisés
+description: Ajoutez des métadonnées structurées aux clients, produits, factures, devis et factures avec 19 types de champs personnalisés et des règles d'affichage flexibles.
 ---
 
-## Custom fields let you capture the details your business needs
+## Les champs personnalisés vous permettent de capturer les détails dont votre entreprise a besoin
 
-Add your own fields to customers, products, invoices, quotes, and incoming invoices so every record matches the way you work. Use custom fields for internal notes, reference numbers, categories, links, calculations, attachments, and AI-generated text without changing your standard workflow.
+Ajoutez vos propres champs aux clients, produits, factures, devis et factures entrantes afin que chaque enregistrement corresponde à votre façon de travailler. Utilisez des champs personnalisés pour les notes internes, les numéros de référence, les catégories, les liens, les calculs, les pièces jointes et le texte généré par l'IA sans modifier votre flux de travail standard.
 
 <Callout kind="info">
 
-Custom fields are company-specific. A field you create is available only inside your company account and only for the entity type you assign it to.
+Les champs personnalisés sont spécifiques à l'entreprise. Un champ que vous créez est disponible uniquement dans le compte de votre entreprise et uniquement pour le type d'entité auquel vous l'attribuez.
 
 </Callout>
 
-## How custom fields work
+## Comment fonctionnent les champs personnalisés
 
-Custom fields are built from two parts: a **field definition** and a **field value**. The definition controls where the field appears, what kind of input it accepts, and whether it can be used in tables, forms, or PDF templates. The value is the actual data saved on each record.
+Les champs personnalisés sont constitués de deux parties : une **définition de champ** et une **valeur de champ**. La définition contrôle l'endroit où le champ apparaît, le type d'entrée qu'il accepte et s'il peut être utilisé dans des tableaux, des formulaires ou des modèles PDF. La valeur correspond aux données réelles enregistrées sur chaque enregistrement.
 
-You create fields per entity type, then fill them in when you create or edit a record. For example, you might add a customer category field for customers, a SKU field for products, or a project reference field for invoices.
+Vous créez des champs par type d'entité, puis vous les remplissez lorsque vous créez ou modifiez un enregistrement. Par exemple, vous pouvez ajouter un champ de catégorie de client pour les clients, un champ SKU pour les produits ou un champ de référence de projet pour les factures.
 
-### Entity types
+### Types d'entités
 
-| Entity type | Used for |
+| Type d'entité | Utilisé pour |
 |---|---|
-| `customer` | Store extra details about customers, such as customer number, website, onboarding date, or internal notes. |
-| `product` | Add product-specific metadata such as SKU, category, weight, purchase price, or certifications. |
-| `invoice` | Capture invoice details such as project references, delivery notes, approval status, or calculated values. |
-| `quote` | Track quote-specific information such as revision numbers, validity notes, or sales stages. |
-| `incoming_invoice` | Save supplier bill metadata such as receipt references, approval fields, or attached supporting documents. |
+| `customer` | Stockez des détails supplémentaires sur les clients, tels que le numéro de client, le site Web, la date d'intégration ou les notes internes. |
+| `product` | Ajoutez des métadonnées spécifiques au produit telles que le SKU, la catégorie, le poids, le prix d'achat ou les certifications. |
+| `invoice` | Capturez les détails des factures tels que les références de projet, les bons de livraison, le statut d'approbation ou les valeurs calculées. |
+| `quote` | Suivez les informations spécifiques au devis telles que les numéros de révision, les notes de validité ou les étapes de vente. |
+| `incoming_invoice` | Enregistrez les métadonnées des factures fournisseurs telles que les références des reçus, les champs d'approbation ou les pièces justificatives jointes. |
 
 <Callout kind="tip">
 
-Keep field names specific to the record type. A field like `sku` makes sense on products, while `project_reference` is easier to maintain on invoices.
+Conservez les noms de champs spécifiques au type d’enregistrement. Un champ comme `sku` est logique sur les produits, tandis que `project_reference` est plus facile à gérer sur les factures.
 
 </Callout>
 
-## Field types
+## Types de champs
 
-Choose a field type based on the kind of data you want users to enter or generate.
+Choisissez un type de champ en fonction du type de données que vous souhaitez que les utilisateurs saisissent ou génèrent.
 
-| Field type | Description |
+| Type de champ | Description |
 |---|---|
-| `text` | Single-line text input. |
-| `multiline` | Multi-line text area for longer notes. |
-| `email` | Email address input. |
-| `url` | Website or link input. |
-| `phone` | Phone number input. |
-| `number` | Whole number input. |
-| `decimal` | Decimal number input. |
-| `amount` | Currency amount input. |
-| `percent` | Numeric input shown as a percentage. |
-| `date` | Date picker. |
-| `datetime` | Date and time picker. |
-| `boolean` | Checkbox with yes or no state. |
-| `dropdown` | Single-select field with predefined choices. |
-| `multiselect` | Multi-select field with predefined choices. |
-| `autonumber` | Automatically assigned sequential number. |
-| `lookup` | Link to another entity. |
-| `formula` | Calculated field based on an expression. |
-| `attachment` | File upload field. |
-| `ai` | AI-generated text field based on a saved prompt. |
+| `text` | Saisie de texte sur une seule ligne. |
+| `multiline` | Zone de texte multiligne pour des notes plus longues. |
+| `email` | Saisie de l'adresse e-mail. |
+| `url` | Entrée de site Web ou de lien. |
+| `phone` | Saisie du numéro de téléphone. |
+| `number` | Saisie de nombres entiers. |
+| `decimal` | Saisie d'un nombre décimal. |
+| `amount` | Saisie du montant en devise. |
+| `percent` | Entrée numérique affichée sous forme de pourcentage. |
+| `date` | Sélecteur de dates. |
+| `datetime` | Sélecteur de date et d’heure. |
+| `boolean` | Case à cocher avec état oui ou non. |
+| `dropdown` | Champ à sélection unique avec des choix prédéfinis. |
+| `multiselect` | Champ à sélection multiple avec des choix prédéfinis. |
+| `autonumber` | Numéro séquentiel attribué automatiquement. |
+| `lookup` | Lien vers une autre entité. |
+| `formula` | Champ calculé basé sur une expression. |
+| `attachment` | Champ de téléchargement de fichier. |
+| `ai` | Champ de texte généré par l'IA basé sur une invite enregistrée. |
 
-## Field configuration
+## Configuration du terrain
 
-Field settings control validation, visibility, and ordering. Configure these options when you create a field, then update them later if your workflow changes.
+Les paramètres de champ contrôlent la validation, la visibilité et le classement. Configurez ces options lorsque vous créez un champ, puis mettez-les à jour ultérieurement si votre flux de travail change.
 
 <ParamField body="is_required" param-type="boolean" required="false" show-location="false">
 
-Makes the field mandatory when users fill out a record form.
+Rend ce champ obligatoire lorsque les utilisateurs remplissent un formulaire d'enregistrement.
 
 </ParamField>
 
 <ParamField body="is_unique" param-type="boolean" required="false" show-location="false">
 
-Prevents duplicate values for that field across records of the same entity type.
+Empêche les valeurs en double pour ce champ dans les enregistrements du même type d'entité.
 
 </ParamField>
 
 <ParamField body="show_in_table" param-type="boolean" required="false" show-location="false">
 
-Shows the field as a column in list views for that entity type.
+Affiche le champ sous forme de colonne dans les vues de liste pour ce type d'entité.
 
 </ParamField>
 
 <ParamField body="show_in_form" param-type="boolean" required="false" show-location="false">
 
-Shows the field in create and edit forms. This setting is enabled by default.
+Affiche le champ dans les formulaires de création et de modification. Ce paramètre est activé par défaut.
 
 </ParamField>
 
 <ParamField body="available_in_pdf" param-type="boolean" required="false" show-location="false">
 
-Makes the field available for PDF templates. This setting is enabled by default.
+Rend le champ disponible pour les modèles PDF. Ce paramètre est activé par défaut.
 
 </ParamField>
 
 <ParamField body="sort_order" param-type="integer" required="false" show-location="false">
 
-Controls the order of custom fields within the selected entity type.
+Contrôle l'ordre des champs personnalisés dans le type d'entité sélectionné.
 
 </ParamField>
 
-## Creating a custom field
+## Création d'un champ personnalisé
 
-Create fields from the custom fields manager in settings. The fastest path is to define the label and type first, then turn on only the options you need.
+Créez des champs à partir du gestionnaire de champs personnalisés dans les paramètres. Le chemin le plus rapide consiste à définir d’abord l’étiquette et le type, puis à activer uniquement les options dont vous avez besoin.
 
 <Steps>
-  <Step title="Open Custom Fields" icon="settings">
+  <Step title="Ouvrir les champs personnalisés" icon="settings">
 
-  Sign in to NomadBill and open the custom fields area in your settings.
+  Connectez-vous à NomadBill et ouvrez la zone des champs personnalisés dans vos paramètres.
 
-  Choose the entity type you want to extend, such as customers, products, invoices, quotes, or incoming invoices.
-
-  </Step>
-  <Step title="Create the field definition" icon="plus">
-
-  Add a new field and enter a **label** that people on your team will recognize. NomadBill also creates a **key** for the field from that label.
-
-  Select the **field type** that matches the data you want to collect. If you choose `dropdown` or `multiselect`, add the choices you want users to pick from.
+  Choisissez le type d'entité que vous souhaitez étendre, tel que clients, produits, factures, devis ou factures entrantes.
 
   </Step>
-  <Step title="Configure visibility and validation" icon="edit">
+  <Step title="Créer la définition du champ" icon="plus">
 
-  Turn on the options you need for that field, such as required, unique, visible in forms, visible in tables, or available in PDF templates.
+  Ajoutez un nouveau champ et saisissez un **libellé** que les membres de votre équipe reconnaîtront. NomadBill crée également une **clé** pour le champ de cette étiquette.
 
-  If you want the field to appear earlier or later than others, adjust its sort order before saving.
+  Sélectionnez le **type de champ** qui correspond aux données que vous souhaitez collecter. Si vous choisissez `dropdown` ou `multiselect`, ajoutez les choix parmi lesquels vous souhaitez que les utilisateurs choisissent.
 
   </Step>
-  <Step title="Save and test the field" icon="check-circle">
+  <Step title="Configurer la visibilité et la validation" icon="edit">
 
-  Save the field, then open a record of the same entity type and confirm the input appears where you expect it.
+  Activez les options dont vous avez besoin pour ce champ, telles que obligatoire, unique, visible dans les formulaires, visible dans les tableaux ou disponible dans les modèles PDF.
 
-  Success looks like the field showing in the form or table view based on the options you enabled.
+  Si vous souhaitez que le champ apparaisse plus tôt ou plus tard que les autres, ajustez son ordre de tri avant de l'enregistrer.
+
+  </Step>
+  <Step title="Enregistrez et testez le champ" icon="check-circle">
+
+  Enregistrez le champ, puis ouvrez un enregistrement du même type d'entité et confirmez que l'entrée apparaît là où vous l'attendez.
+
+  Le succès ressemble au champ affiché dans la vue formulaire ou tableau en fonction des options que vous avez activées.
 
   </Step>
 </Steps>
 
 <Callout kind="alert">
 
-You cannot change a field's type after it has been created. If you need a different type, create a new field and move your workflow to that new field.
+Vous ne pouvez pas modifier le type d'un champ après sa création. Si vous avez besoin d'un type différent, créez un nouveau champ et déplacez votre flux de travail vers ce nouveau champ.
 
 </Callout>
 
-## Using custom fields in records
+## Utiliser des champs personnalisés dans les enregistrements
 
-After you create a field, NomadBill shows it on records of that entity type when `show_in_form` is enabled. Users can enter values while creating a new record or update them later from the edit view.
+Après avoir créé un champ, NomadBill l'affiche sur les enregistrements de ce type d'entité lorsque `show_in_form` est activé. Les utilisateurs peuvent saisir des valeurs lors de la création d'un nouvel enregistrement ou les mettre à jour ultérieurement à partir de la vue d'édition.
 
-Custom field values are saved per record. A product-level field applies only to products, and an invoice-level field applies only to invoices. If a field is also marked `show_in_table`, the value can appear in list views to help you scan and filter records more quickly.
+Les valeurs des champs personnalisés sont enregistrées par enregistrement. Un champ au niveau du produit s'applique uniquement aux produits et un champ au niveau de la facture s'applique uniquement aux factures. Si un champ est également marqué `show_in_table`, la valeur peut apparaître dans les vues de liste pour vous aider à analyser et filtrer les enregistrements plus rapidement.
 
-Custom fields also support detail-page editing patterns. That makes them useful for information you do not always enter upfront, such as internal notes, follow-up dates, or supporting attachments.
+Les champs personnalisés prennent également en charge les modèles d'édition des pages de détails. Cela les rend utiles pour les informations que vous ne saisissez pas toujours à l’avance, telles que les notes internes, les dates de suivi ou les pièces jointes à l’appui.
 
-## Auto-number fields
+## Champs de numérotation automatique
 
-Use auto-number fields when you need sequential IDs that NomadBill assigns automatically. This works well for customer numbers, product numbers, internal references, or other structured IDs that should not be entered manually.
+Utilisez les champs de numérotation automatique lorsque vous avez besoin d'ID séquentiels que NomadBill attribue automatiquement. Cela fonctionne bien pour les numéros de client, les numéros de produit, les références internes ou d'autres identifiants structurés qui ne doivent pas être saisis manuellement.
 
 <Callout kind="info">
 
-Auto-number fields support three setup options:
+Les champs de numérotation automatique prennent en charge trois options de configuration :
 
-- **Prefix** adds text before the number, such as `K-` or `P-`.
-- **Padding** adds leading zeroes to reach a fixed width.
-- **Start** sets the first number in the sequence.
+- **Préfixe** ajoute du texte avant le numéro, tel que `K-` ou `P-`.
+- **Padding** ajoute des zéros non significatifs pour atteindre une largeur fixe.
+- **Start** définit le premier numéro de la séquence.
 
-A customer number might start at `K-1000`, while a product number might use `P-00001`.
+Un numéro de client peut commencer par `K-1000`, tandis qu'un numéro de produit peut utiliser `P-00001`.
 
 </Callout>
 
-Each time a new record is created, NomadBill assigns the next number in the sequence for that field. This reduces duplicate numbering and keeps records consistent.
+Chaque fois qu'un nouvel enregistrement est créé, NomadBill attribue le numéro suivant dans la séquence pour ce champ. Cela réduit la numérotation en double et maintient la cohérence des enregistrements.
 
-## Formula fields
+## Champs de formule
 
-Use formula fields when a value should be calculated instead of entered manually. Formula fields are useful for totals, markups, percentage-based values, or record-specific calculations that depend on other fields.
+Utilisez des champs de formule lorsqu'une valeur doit être calculée au lieu d'être saisie manuellement. Les champs de formule sont utiles pour les totaux, les majorations, les valeurs basées sur des pourcentages ou les calculs spécifiques à un enregistrement qui dépendent d'autres champs.
 
-A formula expression can reference built-in numeric values and custom fields. Available variables include:
+Une expression de formule peut faire référence à des valeurs numériques intégrées et à des champs personnalisés. Les variables disponibles incluent :
 
 - `subtotal`
 - `vat_percentage`
@@ -180,21 +180,21 @@ A formula expression can reference built-in numeric values and custom fields. Av
 - `unit_price`
 - `custom.KEY`
 
-For example, you can use `custom.discount_rate * subtotal / 100` to calculate a discount amount when `discount_rate` is stored in another custom field. Formula values are calculated automatically when NomadBill saves custom field values.
+Par exemple, vous pouvez utiliser `custom.discount_rate * subtotal / 100` pour calculer un montant de remise lorsque `discount_rate` est stocké dans un autre champ personnalisé. Les valeurs de formule sont calculées automatiquement lorsque NomadBill enregistre les valeurs des champs personnalisés.
 
 <Callout kind="tip">
 
-Keep formula field keys simple and predictable so expressions are easier to read. A key such as `discount_rate` is easier to use in `custom.discount_rate` than a long or inconsistent naming style.
+Gardez les clés des champs de formule simples et prévisibles afin que les expressions soient plus faciles à lire. Une clé telle que `discount_rate` est plus facile à utiliser dans `custom.discount_rate` qu'un style de dénomination long ou incohérent.
 
 </Callout>
 
-## AI-generated fields
+## Champs générés par l'IA
 
-Use AI-generated fields when you want NomadBill to write text for you based on a saved prompt. This is useful for internal summaries, draft descriptions, follow-up notes, or standardized text that should be generated from record data.
+Utilisez les champs générés par l'IA lorsque vous souhaitez que NomadBill écrive du texte pour vous en fonction d'une invite enregistrée. Ceci est utile pour les résumés internes, les brouillons de descriptions, les notes de suivi ou le texte standardisé qui doit être généré à partir des données d'enregistrement.
 
-Before you can use an AI field, create an AI prompt in the custom fields manager. Then connect that prompt to the field when you create the field definition. On records, users can generate or re-generate the text directly from the field input.
+Avant de pouvoir utiliser un champ AI, créez une invite AI dans le gestionnaire de champs personnalisés. Connectez ensuite cette invite au champ lorsque vous créez la définition de champ. Sur les enregistrements, les utilisateurs peuvent générer ou régénérer le texte directement à partir de la saisie du champ.
 
-NomadBill supports these AI models for prompts:
+NomadBill prend en charge ces modèles d'IA pour les invites :
 
 - `google/gemini-3-flash-preview`
 - `google/gemini-2.5-flash`
@@ -204,22 +204,22 @@ NomadBill supports these AI models for prompts:
 
 <Callout kind="info">
 
-AI-generated fields store text output. Review generated content before using it in customer-facing documents.
+Les champs générés par l'IA stockent la sortie de texte. Examinez le contenu généré avant de l’utiliser dans des documents destinés aux clients.
 
 </Callout>
 
-## Custom fields in PDF templates
+## Champs personnalisés dans les modèles PDF
 
-Make a field available in PDF output by enabling `available_in_pdf` on the field definition. After that, you can place the field in your document templates and use the custom value when generating invoices, quotes, or other PDFs.
+Rendre un champ disponible dans la sortie PDF en activant `available_in_pdf` sur la définition du champ. Après cela, vous pouvez placer le champ dans vos modèles de documents et utiliser la valeur personnalisée lors de la génération de factures, de devis ou d'autres fichiers PDF.
 
-If you plan to include custom fields in printed documents, set up the field before finalizing your template. That keeps your template structure stable and avoids rework later.
+Si vous envisagez d'inclure des champs personnalisés dans les documents imprimés, configurez le champ avant de finaliser votre modèle. Cela maintient la structure de votre modèle stable et évite de les retravailler ultérieurement.
 
-Read [PDF Templates](/en/user-guide/pdf-templates) for template setup and document layout options.
+Lisez [Modèles PDF] (/fr/user-guide/pdf-templates) pour connaître les options de configuration des modèles et de mise en page des documents.
 
-## Related guides
+## Guides associés
 
 <Columns cols={3}>
-  <Card title="Manage invoices" href="/en/user-guide/invoicing" icon="folder" cta="Open invoicing guide" />
-  <Card title="Manage products" href="/en/user-guide/products" icon="package" cta="Open products guide" />
-  <Card title="Design PDF templates" href="/en/user-guide/pdf-templates" icon="book-open" cta="Open PDF templates guide" />
+  <Card title="Gérer les factures" href="/fr/user-guide/invoicing" icon="folder" cta="Ouvrir le guide de facturation" />
+  <Card title="Gérer les produits" href="/fr/user-guide/products" icon="package" cta="Ouvrir le guide des produits" />
+  <Card title="Concevoir des modèles PDF" href="/fr/user-guide/pdf-templates" icon="book-open" cta="Ouvrir le guide des modèles PDF" />
 </Columns>
