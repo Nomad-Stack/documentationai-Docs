@@ -31,6 +31,34 @@ The in-app feedback dialog now appears only after you've used NomadBill for at l
 
 </Update>
 
+<Update label="2026-07-30" description="AI Email Inbox, Dashboard rebuild, Incoming invoice detail page" tags={["new", "improvement", "fix"]}>
+
+## AI Email Inbox
+
+NomadBill now automatically processes incoming emails with AI to classify documents, extract key data (amounts, dates, vendor details, IBANs, categories, and line items), and match emails to your existing invoices, quotes, receipts, and bank transactions. Attachments are scanned with OCR, and you can review, accept, or dismiss AI-suggested links directly from any document.
+
+## Email Intelligence enhancements
+
+The [Email Intelligence](/en/user-guide/email-intelligence) card now displays line items, attachments, and a structured data view alongside expanded fields including net, VAT, gross, IBAN, and category.
+
+## Dashboard rebuild
+
+The [Dashboard](/en/user-guide/dashboard) has been completely redesigned with period switching (month, quarter, year), KPI cards for revenue, cost, profit, and outstanding cash — each with sparklines and percentage change vs. the prior period. New panels include a receivables ageing breakdown, revenue-by-client leaderboard, activity feed, and multi-currency breakdown. All figures convert to your base currency automatically, and KPIs can be exported as CSV.
+
+## Incoming invoice detail page
+
+Incoming invoices now have a dedicated detail and edit view with supplier information, invoice numbers, dates, automatic net/VAT/gross calculation, linked bank transactions, and custom fields.
+
+## Receipt number label corrected
+
+The placeholder for receipt numbers on incoming invoices now correctly shows the `BI-` prefix instead of `INV-`.
+
+## Inbox panel expanded
+
+The inbox message list now expands to fill the available screen height, making longer email threads easier to read.
+
+</Update>
+
 <Callout kind="info">
 
 NomadBill is a continuously updated SaaS platform. This changelog will be updated as new features, integrations, and product changes are released.

@@ -1,38 +1,60 @@
 ---
 title: Changelog
-description: Verfolgen Sie Plattform-Updates und neue Funktionen, während sich NomadBill weiterentwickelt.
+description: >-
+  Verfolgen Sie Plattform-Updates und neue Funktionen, während sich NomadBill
+  weiterentwickelt.
 ---
-
 ## Aktuelle Updates
 
 Verfolgen Sie wichtige Plattform-Updates, dokumentierte Funktionen und Änderungen an der Arbeitsweise von NomadBill. Diese Seite beginnt mit dem aktuellen dokumentierten Stand des Produkts und wird erweitert, sobald neue Funktionen veröffentlicht werden.
 
-<Update label="2026-08-18" description="Posteingang & E-Mail-Intelligence mehrsprachig, Feedback-Verbesserungen" tags={["new", "improvement"]}>
+<Update label="2026-08-18" description="Posteingang & E-Mail-Intelligence mehrsprachig, Feedback-Verbesserungen" tags={["new","improvement"]}>
+  ## Posteingang & E-Mail-Intelligence jetzt in 15 Sprachen
 
-## Posteingang & E-Mail-Intelligence jetzt in 15 Sprachen
+  Die Oberfläche von Posteingang und [E-Mail-Intelligence](/de/user-guide/email-intelligence) ist jetzt vollständig in 15 Sprachen verfügbar: Englisch, Deutsch, Spanisch, Französisch, Italienisch, Portugiesisch, Russisch, Türkisch, Arabisch, Hindi, Chinesisch, Japanisch, Koreanisch, Indonesisch und Thailändisch. Die Sprache der Oberfläche folgt deiner Kontospracheinstellung, sodass du deinen Dokument-Posteingang in deiner bevorzugten Sprache verwalten kannst, ohne Tools zu wechseln.
 
-Die Oberfläche von Posteingang und [E-Mail-Intelligence](/de/user-guide/email-intelligence) ist jetzt vollständig in 15 Sprachen verfügbar: Englisch, Deutsch, Spanisch, Französisch, Italienisch, Portugiesisch, Russisch, Türkisch, Arabisch, Hindi, Chinesisch, Japanisch, Koreanisch, Indonesisch und Thailändisch. Die Sprache der Oberfläche folgt deiner Kontospracheinstellung, sodass du deinen Dokument-Posteingang in deiner bevorzugten Sprache verwalten kannst, ohne Tools zu wechseln.
+  ## Intelligenteres Feedback
 
-## Intelligenteres Feedback
-
-Der In-App-Feedback-Dialog erscheint jetzt erst, nachdem du NomadBill mindestens 30 Tage genutzt hast, wird höchstens 3-mal angezeigt und wartet mindestens 14 Tage zwischen den Aufforderungen. Das bedeutet weniger Unterbrechungen, du aber trotzdem die Möglichkeit hast, Feedback zu geben.
-
+  Der In-App-Feedback-Dialog erscheint jetzt erst, nachdem du NomadBill mindestens 30 Tage genutzt hast, wird höchstens 3-mal angezeigt und wartet mindestens 14 Tage zwischen den Aufforderungen. Das bedeutet weniger Unterbrechungen, du aber trotzdem die Möglichkeit hast, Feedback zu geben.
 </Update>
 
 <Update label="2026-08-18" description="Erste Dokumentationsveröffentlichung" tags={["documentation"]}>
+  ## Aktuelle Plattformabdeckung
 
-## Aktuelle Plattformabdeckung
-
-- Dokumentiert: Rechnungsstellung, Angebote, Eingangsrechnungen, Banksynchronisation, E-Mail-Intelligence, PDF-Vorlagen, benutzerdefinierte Felder, Teamverwaltung, Dashboard und Unterstützung mehrerer Unternehmen.
-- Dokumentierte unterstützte Währungen: `EUR`, `USD`, `GBP`, `CHF` und `AED`.
-- Dokumentierte unterstützte Rechnungssprachen: `DE`, `EN`, `FR` und `ES`.
-- Dokumentierte Abonnementpläne: Starter für `$17/month` und Professional für `$27/month`, beide mit 7-tägiger Testphase.
-- Dokumentierte Integrationen: Stripe, Plaid, Nylas, Resend, pdfme und Supabase.
-
+  - Dokumentiert: Rechnungsstellung, Angebote, Eingangsrechnungen, Banksynchronisation, E-Mail-Intelligence, PDF-Vorlagen, benutzerdefinierte Felder, Teamverwaltung, Dashboard und Unterstützung mehrerer Unternehmen.
+  - Dokumentierte unterstützte Währungen: `EUR`, `USD`, `GBP`, `CHF` und `AED`.
+  - Dokumentierte unterstützte Rechnungssprachen: `DE`, `EN`, `FR` und `ES`.
+  - Dokumentierte Abonnementpläne: Starter für `$17/month` und Professional für `$27/month`, beide mit 7-tägiger Testphase.
+  - Dokumentierte Integrationen: Stripe, Plaid, Nylas, Resend, pdfme und Supabase.
 </Update>
 
-<Callout kind="info">
+<Update label="2026-07-30" description="KI-E-Mail-Posteingang, Dashboard-Neuaufbau, Eingangsrechnung-Detailseite" tags={["new","improvement","fix"]}>
+  ## KI-E-Mail-Posteingang
 
-NomadBill ist eine kontinuierlich aktualisierte SaaS-Plattform. Dieses Changelog wird aktualisiert, sobald neue Funktionen, Integrationen und Produktänderungen veröffentlicht werden.
+  NomadBill verarbeitet jetzt eingehende E-Mails automatisch mit KI, um Dokumente zu klassifizieren, wichtige Daten zu extrahieren (Beträge, Daten, Lieferantendetails, IBANs, Kategorien und Positionen) und E-Mails mit deinen vorhandenen Rechnungen, Angeboten, Belegen und Banktransaktionen abzugleichen. Anhänge werden mit OCR gescannt, und du kannst KI-vorgeschlagene Verknüpfungen direkt aus jedem Dokument heraus prüfen, bestätigen oder verwerfen.
 
+  ## E-Mail-Intelligence-Erweiterungen
+
+  Die [E-Mail-Intelligence](/de/user-guide/email-intelligence)-Karte zeigt jetzt Positionen, Anhänge und eine strukturierte Datenansicht neben erweiterten Feldern einschließlich Netto, USt, Brutto, IBAN und Kategorie.
+
+  ## Dashboard-Neuaufbau
+
+  Das [Dashboard](/de/user-guide/dashboard) wurde komplett neu gestaltet mit Zeitraum-Umschaltung (Monat, Quartal, Jahr), KPI-Karten für Umsatz, Kosten, Gewinn und ausstehende Zahlungen — jeweils mit Sparklines und prozentualer Veränderung zum Vorzeitraum. Neue Bereiche umfassen eine Forderungsalteranalyse, eine Umsatz-nach-Kunden-Rangliste, einen Aktivitätsfeed und eine Währungsaufschlüsselung. Alle Beträge werden automatisch in deine Basiswährung umgerechnet, und KPIs können als CSV exportiert werden.
+
+  ## Detailseite für Eingangsrechnungen
+
+  Eingangsrechnungen verfügen jetzt über eine eigene Detail- und Bearbeitungsansicht mit Lieferanteninformationen, Rechnungsnummern, Daten, automatischer Netto-/USt-/Bruttoberechnung, verknüpften Banktransaktionen und benutzerdefinierten Feldern.
+
+  ## Belegnummer-Beschriftung korrigiert
+
+  Der Platzhalter für Belegnummern bei Eingangsrechnungen zeigt jetzt korrekt das `BI-` Präfix statt `INV-`.
+
+  ## Posteingangs-Bereich vergrößert
+
+  Die Posteingangs-Nachrichtenliste füllt jetzt die verfügbare Bildschirmhöhe aus, was längere E-Mail-Threads übersichtlicher macht.
+</Update>
+
+<Callout kind="info" collapsed="false">
+  NomadBill ist eine kontinuierlich aktualisierte SaaS-Plattform. Dieses Changelog wird aktualisiert, sobald neue Funktionen, Integrationen und Produktänderungen veröffentlicht werden.
 </Callout>
+
