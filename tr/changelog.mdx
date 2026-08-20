@@ -7,7 +7,7 @@ description: NomadBill geliştikçe platform güncellemelerini ve yeni yetenekle
 
 Önemli platform güncellemelerini, belgelenmiş yetenekleri ve NomadBill'in çalışma şekline ilişkin değişiklikleri izleyin. Bu sayfa, ürünün belgelenen mevcut durumuyla başlar ve yeni özellikler geldikçe genişleyecektir.
 
-<Update label="2026-08-20" description="Stripe Connect ödemeleri, şirket bazlı para birimi filtresi" tags={["new"]}>
+<Update label="2026-08-20" description="Stripe Connect ödemeleri, Stripe veri içe aktarımı ve senkronizasyonu, e-postalarda ödeme bağlantıları, şirket bazlı para birimi filtresi, AED kuru otomatik" tags={["new", "improvement", "fix"]}>
 
 ## Stripe Connect ödeme entegrasyonu
 
@@ -16,6 +16,30 @@ Artık kendi Stripe hesabınızı OAuth aracılığıyla NomadBill'e bağlayabil
 ## Şirket bazlı para birimi filtresi
 
 Her şirket artık faturalandırma ve teklifler için hangi para birimlerinin kullanılabileceğini seçebilir. EUR ve USD tüm şirketler için varsayılan olarak etkinleştirilmiştir ve **Ayarlar** bölümündeki aranabilir bir seçici aracılığıyla para birimi ekleyebilir veya kaldırabilirsiniz. Önceki seçili para birimi şirketiniz için artık etkinleştirilmediğinde para birimi seçici otomatik olarak ayarlanır.
+
+## Stripe veri içe aktarımı ve canlı senkronizasyon
+
+Mevcut Stripe ürünlerinizi, müşterilerinizi, aboneliklerinizi, faturalarınızı ve ödeme işlemlerinizi doğrudan NomadBill'e içe aktarın. İçe aktarmalar idempotenttir — birden fazla kez çalıştırmak yinelenen kayıtlar oluşturmaz. Bağlantı kurduğunuzda, Stripe hesabınızdaki değişiklikler (yeni ürünler, güncellenmiş müşteri verileri, abonelik değişiklikleri ve fatura güncellemeleri) webhook'lar aracılığıyla NomadBill ile gerçek zamanlı olarak otomatik senkronize edilir. İçe aktarılan kayıtlar, kaynağını tek bakışta tanımlayabilmeniz için bir "Stripe" rozeti görüntüler.
+
+## Fatura e-postalarında ödeme bağlantıları
+
+Bir faturayı e-posta ile gönderirken, artık e-posta gövdesine doğrudan bir Stripe ödeme bağlantısı yerleştirebilirsiniz. Müşterileriniz gelen kutularından çıkmadan anında ödeme yapabilirler. Stripe hesabınız bağlıyken e-posta gönderme iletişim kutusundaki bir onay kutusu, ödeme bağlantısını eklemenize olanak tanır.
+
+## AED döviz kuru otomatik
+
+BAE dirhemi (AED) döviz kuru artık manuel giriş yerine canlı döviz tablosundan otomatik olarak dolduruluyor. Alan, kaynağı açıklayan bir yardım notuyla salt okunurdur.
+
+## Nylas API hata mesajları netleştirildi
+
+Nylas entegrasyonu bir kimlik doğrulama hatasıyla karşılaştığında, mesaj artık genel bir hata göstermek yerine API anahtarının veya bölge ayarının kontrol edilmesi gerektiğini açıkça belirtiyor.
+
+## Kaydet düğmesi zorunlu alanları doğrular
+
+Şirket ayarlarındaki kaydet düğmesi artık kaydetmeden önce zorunlu alanları (şirket adı ve adresi) doğruluyor ve biri eksikse net bir hata mesajı gösteriyor.
+
+## Ödeme durumu rozeti düzeltmesi
+
+Fatura ödeme bağlantılarındaki "Ödendi" rozeti artık yalnızca Stripe hesabınız bağlıysa ve ödeme durumu onaylanmışsa görünüyor, böylece yanlış pozitifler önleniyor.
 
 </Update>
 

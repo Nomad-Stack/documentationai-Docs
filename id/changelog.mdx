@@ -7,7 +7,7 @@ description: Lacak pembaruan platform dan kemampuan baru seiring berkembangnya N
 
 Lacak pembaruan platform penting, kemampuan terdokumentasi, dan perubahan pada cara kerja NomadBill. Halaman ini dimulai dengan status produk yang terdokumentasi saat ini dan akan diperluas seiring dengan dikirimkannya fitur-fitur baru.
 
-<Update label="2026-08-20" description="Pembayaran Stripe Connect, filter mata uang per perusahaan" tags={["new"]}>
+<Update label="2026-08-20" description="Pembayaran Stripe Connect, impor & sinkronisasi data Stripe, tautan pembayaran dalam email, filter mata uang per perusahaan, kurs AED otomatis" tags={["new", "improvement", "fix"]}>
 
 ## Integrasi pembayaran Stripe Connect
 
@@ -16,6 +16,30 @@ Anda sekarang dapat menghubungkan akun Stripe Anda sendiri ke NomadBill melalui 
 ## Filter mata uang per perusahaan
 
 Setiap perusahaan sekarang dapat memilih mata uang mana yang tersedia untuk faktur dan penawaran harga. EUR dan USD diaktifkan secara default untuk semua perusahaan, dan Anda dapat menambah atau menghapus mata uang melalui pemilih yang dapat dicari di **Pengaturan**. Pemilih mata uang menyesuaikan secara otomatis jika mata uang yang sebelumnya dipilih tidak lagi diaktifkan untuk perusahaan Anda.
+
+## Impor dan sinkronisasi data Stripe
+
+Impor produk, pelanggan, langganan, faktur, dan transaksi pembayaran Stripe yang ada langsung ke NomadBill. Impor bersifat idempoten — menjalankannya beberapa kali tidak akan membuat duplikat. Setelah terhubung, perubahan di akun Stripe Anda (produk baru, data pelanggan yang diperbarui, perubahan langganan, dan pembaruan faktur) secara otomatis disinkronkan dengan NomadBill secara real-time melalui webhook. Catatan yang diimpor menampilkan badge "Stripe" sehingga Anda dapat mengidentifikasi asalnya dengan sekali lihat.
+
+## Tautan pembayaran dalam email faktur
+
+Saat mengirim faktur melalui email, Anda kini dapat menyematkan tautan pembayaran Stripe langsung di badan email. Pelanggan Anda dapat membayar secara instan tanpa meninggalkan kotak masuk mereka. Kotak centang dalam dialog kirim email memungkinkan Anda menyertakan tautan pembayaran saat akun Stripe Anda terhubung.
+
+## Kurs AED otomatis
+
+Kurs dirham Uni Emirat Arab (AED) kini otomatis terisi dari tabel mata uang langsung alih-alih memerlukan input manual. Bidang bersifat hanya-baca dengan catatan bantuan yang menjelaskan sumbernya.
+
+## Pesan kesalahan Nylas API diklarifikasi
+
+Saat integrasi Nylas mengalami kesalahan autentikasi, pesan kini dengan jelas menunjukkan bahwa kunci API atau pengaturan wilayah perlu diperiksa, alih-alih menampilkan kesalahan umum.
+
+## Tombol simpan memvalidasi bidang wajib
+
+Tombol simpan di pengaturan perusahaan kini memvalidasi bidang wajib (nama dan alamat perusahaan) sebelum menyimpan, menampilkan pesan kesalahan yang jelas jika ada yang kurang.
+
+## Perbaikan badge status pembayaran
+
+Badge "Lunas" pada tautan pembayaran faktur kini hanya muncul saat akun Stripe Anda terhubung dan status pembayaran dikonfirmasi, mencegah positif palsu.
 
 </Update>
 
