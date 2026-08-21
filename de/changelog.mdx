@@ -8,7 +8,7 @@ description: >-
 
 Verfolgen Sie wichtige Plattform-Updates, dokumentierte Funktionen und Änderungen an der Arbeitsweise von NomadBill. Diese Seite beginnt mit dem aktuellen dokumentierten Stand des Produkts und wird erweitert, sobald neue Funktionen veröffentlicht werden.
 
-<Update label="2026-08-20" description="Stripe Connect Zahlungen, Unternehmens-Währungsfilter" tags={["new"]}>
+<Update label="2026-08-20" description="Stripe Connect Zahlungen, Stripe-Datenimport & Sync, Zahlungslinks in E-Mails, Unternehmens-Währungsfilter, AED-Kurs automatisiert" tags={["new","improvement","fix"]}>
   ## Stripe Connect Zahlungsintegration
 
   Du kannst jetzt dein eigenes Stripe-Konto über OAuth mit NomadBill verbinden und Rechnungszahlungen direkt über Stripe Payment Links empfangen. Wenn ein Kunde zahlt, wird die Rechnung automatisch als bezahlt markiert — keine manuelle Abstimmung mehr nötig. Rückerstattungen werden automatisch erfasst, und du kannst deine Stripe-Verbindung verwalten, den Kontostatus einsehen und zwischen Live- und Testmodus wechseln unter **Einstellungen → Zahlungsmethoden**.
@@ -16,6 +16,30 @@ Verfolgen Sie wichtige Plattform-Updates, dokumentierte Funktionen und Änderung
   ## Währungsfilter pro Unternehmen
 
   Jedes Unternehmen kann jetzt festlegen, welche Währungen für Rechnungsstellung und Angebote verfügbar sind. EUR und USD sind standardmäßig für alle Unternehmen aktiviert, und du kannst Währungen über eine durchsuchbare Auswahl unter **Einstellungen** hinzufügen oder entfernen. Der Währungswechsel passt sich automatisch an, falls eine zuvor ausgewählte Währung nicht mehr für dein Unternehmen aktiviert ist.
+
+  ## Stripe-Datenimport & Live-Sync
+
+  Importiere deine bestehenden Stripe-Produkte, Kunden, Abonnements, Rechnungen und Zahlungstransaktionen direkt in NomadBill. Imports sind idempotent — mehrfaches Ausführen erzeugt keine Duplikate. Sobald dein Stripe-Konto verbunden ist, werden Änderungen, neue Produkte, aktualisierte Kundendaten, Abonnementänderungen und Rechnungsaktualisierungen automatisch über Webhooks in Echtzeit mit NomadBill synchronisiert. Importierte Datensätze zeigen ein „Stripe"-Badge, sodass du deren Herkunft sofort erkennen kannst.
+
+  ## Zahlungslinks in Rechnungs-E-Mails
+
+  Beim Senden einer Rechnung per E-Mail kannst du nun einen Stripe-Zahlungslink direkt in die E-Mail einbetten. Deine Kunden können sofort bezahlen, ohne ihren Posteingang zu verlassen. Ein Kontrollkästchen im E-Mail-Sendendialog ermöglicht das Einfügen des Zahlungslinks, wenn dein Stripe-Konto verbunden ist.
+
+  ## AED-Wechselkurs automatisiert
+
+  Der Wechselkurs für die VAE-Dirham (AED) wird nun automatisch aus der Live-Währungstabelle gefüllt, anstatt manuell eingegeben werden zu müssen. Das Feld ist schreibgeschützt mit einem Hinweis zur Datenquelle.
+
+  ## Nylas-API-Fehlermeldungen verbessert
+
+  Wenn die Nylas-Integration einen Authentifizierungsfehler erkennt, gibt die Meldung nun klar an, dass der API-Schlüssel oder die Regions-Einstellung überprüft werden muss, anstatt einen generischen Fehler anzuzeigen.
+
+  ## Speichern-Button validiert Pflichtfelder
+
+  Der Speichern-Button in den Unternehmenseinstellungen validiert nun Pflichtfelder, Unternehmensname und Adresse, vor dem Speichern und zeigt eine klare Fehlermeldung, falls etwas fehlt.
+
+  ## Zahlungsstatus-Badge korrigiert
+
+  Das „Bezahlt"-Badge bei Rechnungs-Zahlungslinks erscheint nun nur noch, wenn dein Stripe-Konto verbunden ist und der Zahlungsstatus bestätigt ist — keine falschen Anzeigen mehr.
 </Update>
 
 <Update label="2026-08-18" description="Posteingang & E-Mail-Intelligence mehrsprachig, Feedback-Verbesserungen" tags={["new","improvement"]}>

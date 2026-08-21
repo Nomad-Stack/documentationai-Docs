@@ -7,7 +7,7 @@ description: Acompanhe as atualizações da plataforma e as novas funcionalidade
 
 Acompanhe as atualizações relevantes da plataforma, as funcionalidades documentadas e as alterações ao funcionamento do NomadBill. Esta página começa com o estado atualmente documentado do produto e será ampliada à medida que forem lançadas novas funcionalidades.
 
-<Update label="2026-08-20" description="Pagamentos Stripe Connect, filtro de moedas por empresa" tags={["new"]}>
+<Update label="2026-08-20" description="Pagamentos Stripe Connect, importação e sincronização de dados Stripe, links de pagamento em e-mails, filtro de moedas por empresa, taxa AED automática" tags={["new", "improvement", "fix"]}>
 
 ## Integração de pagamentos Stripe Connect
 
@@ -16,6 +16,30 @@ Agora pode ligar a sua própria conta Stripe ao NomadBill através de OAuth e re
 ## Filtro de moedas por empresa
 
 Cada empresa pode agora selecionar as moedas disponíveis para faturação e orçamentos. EUR e USD estão ativadas por predefinição para todas as empresas e pode adicionar ou remover moedas através de um seletor com pesquisa em **Definições**. O seletor de moeda ajusta-se automaticamente se uma moeda anteriormente selecionada já não estiver ativada para a sua empresa.
+
+## Importação e sincronização de dados Stripe
+
+Importe os seus produtos, clientes, subscrições, faturas e transações de pagamento existentes do Stripe diretamente para o NomadBill. As importações são idempotentes — executá-las várias vezes não criará duplicados. Uma vez ligada a sua conta, as alterações na sua conta Stripe (novos produtos, dados de cliente atualizados, alterações de subscrição e atualizações de faturas) são automaticamente sincronizadas com o NomadBill em tempo real através de webhooks. Os registos importados apresentam um badge "Stripe" para que possa identificar a sua origem num relance.
+
+## Links de pagamento em e-mails de fatura
+
+Ao enviar uma fatura por e-mail, pode agora incorporar um link de pagamento Stripe diretamente no corpo do e-mail. Os seus clientes podem pagar instantaneamente sem sair da sua caixa de entrada. Uma caixa de seleção no diálogo de envio de e-mail permite incluir o link de pagamento quando a sua conta Stripe está ligada.
+
+## Taxa de câmbio AED automática
+
+A taxa de câmbio do dirham dos EAU (AED) é agora preenchida automaticamente a partir da tabela de moedas em direto em vez de exigir introdução manual. O campo é só de leitura com uma nota de ajuda que explica a origem.
+
+## Mensagens de erro da API Nylas clarificadas
+
+Quando a integração Nylas encontra um erro de autenticação, a mensagem indica agora claramente que a chave API ou a configuração de região precisa de ser verificada, em vez de mostrar um erro genérico.
+
+## Botão guardar valida campos obrigatórios
+
+O botão guardar nas definições da empresa valida agora os campos obrigatórios (nome e endereço da empresa) antes de guardar, mostrando uma mensagem de erro clara se algum estiver em falta.
+
+## Correção do badge de estado de pagamento
+
+O badge "Pago" nos links de pagamento de faturas agora só aparece quando a sua conta Stripe está ligada e o estado de pagamento está confirmado, evitando falsos positivos.
 
 </Update>
 
