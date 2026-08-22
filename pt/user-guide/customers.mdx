@@ -1,8 +1,11 @@
 ---
+title: Clientes
+description: Gerencie os registros de clientes com detalhes de contato, campos personalizados e reutilize-os em faturas e orçamentos.
+---
 
-**Clientes**
+## Mantenha os dados dos clientes num só lugar
 
-Gerencie os registros de clientes com detalhes de contato, campos personalizados e reutilize-os em faturas e orçamentos.
+Os clientes guardam as informações de contacto que reutiliza no fluxo de faturação. Adicione cada cliente uma vez em `/customers`, mantenha os dados atualizados e volte a usar esses registos ao criar faturas e orçamentos.
 
 Os proprietários das empresas e membros do time podem gerenciar clientes no espaço de trabalho da empresa. A lista de clientes está ordenada alfabeticamente por nome, e a tabela mostra os campos de contato padrão mais quaisquer campos personalizados configurados para aparecerem na tabela.
 
@@ -10,7 +13,7 @@ Os proprietários das empresas e membros do time podem gerenciar clientes no esp
 
 Cada registro de cliente inclui os campos de contato básicos abaixo.
 
-<ParamField body="nome" param-type="string" required="true" show-location="false">
+<ParamField body="name" param-type="string" required="true" show-location="false">
 
 O nome exibido do cliente. O NomadBill requer este campo e o usa como rótulo principal na lista de clientes.
 
@@ -22,13 +25,13 @@ O endereço de email do cliente.
 
 </ParamField>
 
-<ParamField body="telefone" param-type="string" required="false" show-location="false">
+<ParamField body="phone" param-type="string" required="false" show-location="false">
 
 O número de telefone do cliente.
 
 </ParamField>
 
-<ParamField body="endereço" param-type="string" required="false" show-location="false">
+<ParamField body="address" param-type="string" required="false" show-location="false">
 
 O endereço do cliente. No diálogo de criação e edição, este campo usa um área de texto multilinha para que você possa inserir uma endereço de cobrança completo.
 

@@ -9,69 +9,69 @@ description: Crie, personalize e envie faturas no NomadBill com suporte multi-cu
 
 Crie uma nova fatura na página **Faturas**, preencha os detalhes do cliente e da cobrança, revise a pré-visualização em PDF e então envie ou baixe a fatura final. O NomadBill salva as faturas não enviadas como rascunhos, de modo que você possa voltar e terminá-las antes de enviar.
 
-<Passos>
-  <Passo titulo="Navegue para Faturas e crie uma nova fatura" icone="file-text">
+<Steps>
+  <Step title="Navegue para Faturas e crie uma nova fatura" icon="file-text">
 
-  Abra **Faturas** no seu painel e clique em **Novo**. Você também pode ir diretamente para `/faturas/novo` se você já conhecer o caminho.
+  Abra **Faturas** no seu painel e clique em **Novo**. Você também pode ir diretamente para `/invoices/new` se você já conhecer o caminho.
 
   Quando a forma abre, a fatura começa com o status **rascunho**. Você pode continuar editando o rascunho até enviá-la.
 
-  </Passo>
+  </Step>
 
-  <Passo titulo="Selecione moeda e idioma" icone="settings">
+  <Step title="Selecione moeda e idioma" icon="settings">
 
   Escolha a **moeda** e o **idioma** da fatura antes de adicionar os detalhes restantes. O NomadBill suporta essas moedas: **EUR**, **USD**, **GBP**, **CHF** e **AED**.
 
   Para o idioma da fatura, escolha **DE**, **EN**, **FR** ou **ES**. Use o idioma que corresponde ao que seu cliente espera receber.
 
-  </Passo>
+  </Step>
 
-  <Passo titulo="Entre com detalhes do cliente" icone="users">
+  <Step title="Entre com detalhes do cliente" icon="users">
 
   Adicione o nome e o endereço do cliente exatamente como eles devem aparecer no documento da fatura. Esses detalhes são usados no documento de fatura e na pré-visualização em PDF.
 
   Verifique a ortografia e a formatação aqui antes de prosseguir. Corrigir os detalhes do cliente neste estágio é mais rápido que atualizar uma fatura enviada posteriormente.
 
-  </Passo>
+  </Step>
 
-  <Passo titulo="Adicione itens de linha" icone="plus">
+  <Step title="Adicione itens de linha" icon="plus">
 
   Adicione um ou mais itens de linha para os produtos ou serviços que você está cobrando. Cada item de linha inclui um **nome**, **quantidade** e **preço**.
 
   Se precisar mudar a ordem, arraste os itens de linha para a sequência que deseja. O subtotal atualiza conforme você adiciona ou edita itens.
 
-  </Passo>
+  </Step>
 
-  <Passo titulo="Defina IVA e revise totais" icone="bar-chart">
+  <Step title="Defina IVA e revise totais" icon="bar-chart">
 
   Defina o **percentual do IVA** da fatura. O NomadBill padrão o IVA para **19%**, mas você pode mudá-lo quando necessário.
 
   O total é calculado como `subtotal + (subtotal x VAT%)`. Revise o subtotal, o valor do IVA e o total final antes de continuar.
 
-  </Passo>
+  </Step>
 
-  <Passo titulo="Pré-visualize e envie" icone="send">
+  <Step title="Pré-visualize e envie" icon="send">
 
   Pré-visualize a fatura em PDF para confirmar o layout, os detalhes do cliente, os itens de linha e os totais. Se tudo estiver correto, envie a fatura por email ou baixe-a em vez disso.
 
   As faturas enviadas são entregues através do Resend de `noreply@nomadbill.co`. Se você habilitar o pagamento Stripe na fatura, o cliente recebe um link de checkout como parte do fluxo de pagamento.
 
-  </Passo>
-</Passos>
+  </Step>
+</Steps>
 
-<Nota tipo="dica">
+<Callout kind="tip">
 
 O NomadBill gera automaticamente o número da fatura no formato `R-00001`. A numeração é gerenciada por empresa, de modo que cada empresa mantém sua própria sequência de faturas.
 
-</Nota>
+</Callout>
 
-<Nota tipo="informação">
+<Callout kind="info">
 
 O status da fatura move-se através de **rascunho** para **enviado**, e então para **pago** ou **vencido**. O status de pagamento é rastreado separadamente como **não pago**, **pendente**, **pago** ou **falhou**.
 
 Se o cliente iniciar o checkout Stripe, o status do pagamento muda para **pendente**. Quando o Stripe confirma a cobrança, o status muda para **pago**. Se a cobrança não for concluída, o status muda para **falhou**.
 
-</Nota>
+</Callout>
 
 ## O que você deve saber mais?
 
