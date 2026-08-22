@@ -2,101 +2,91 @@
 title: Changelog
 description: Track platform updates and new capabilities as NomadBill evolves.
 ---
-
 ## Recent updates
 
 Track notable platform updates, documented capabilities, and changes to how NomadBill works. This page starts with the current documented state of the product and will expand as new features ship.
 
-<Update label="2026-08-20" description="Stripe Connect payments, Stripe data import & sync, payment links in emails, company currency filter, AED rate auto-populated" tags={["new", "improvement", "fix"]}>
+<Update label="2026-08-20" description="Stripe Connect payments, Stripe data import & sync, payment links in emails, company currency filter, AED rate auto-populated" tags={["new","improvement","fix"]}>
+  ## Stripe Connect payment integration
 
-## Stripe Connect payment integration
+  You can now connect your own Stripe account to NomadBill via OAuth and accept invoice payments directly through Stripe Payment Links. When a customer pays, the invoice is automatically marked as paid — no manual reconciliation needed. Refunds are tracked automatically, and you can manage your Stripe connection, view account status, and switch between live and test mode from **Settings → Payment methods**.
 
-You can now connect your own Stripe account to NomadBill via OAuth and accept invoice payments directly through Stripe Payment Links. When a customer pays, the invoice is automatically marked as paid — no manual reconciliation needed. Refunds are tracked automatically, and you can manage your Stripe connection, view account status, and switch between live and test mode from **Settings → Payment methods**.
+  ## Per-company currency filter
 
-## Per-company currency filter
+  Each company can now choose which currencies are available for invoicing and quoting. EUR and USD are enabled by default for all companies, and you can add or remove currencies through a searchable selector in **Settings**. The currency switcher automatically adjusts if a previously selected currency is no longer enabled for your company.
 
-Each company can now choose which currencies are available for invoicing and quoting. EUR and USD are enabled by default for all companies, and you can add or remove currencies through a searchable selector in **Settings**. The currency switcher automatically adjusts if a previously selected currency is no longer enabled for your company.
+  ## Stripe data import & live sync
 
-## Stripe data import & live sync
+  Import your existing Stripe products, customers, subscriptions, invoices, and payment transactions directly into NomadBill. Imports are idempotent — running them multiple times won't create duplicates. Once connected, changes in your Stripe account (new products, updated customer details, subscription changes, and invoice updates) are automatically synced to NomadBill in real time via webhooks. Imported records display a "Stripe" badge so you can identify their origin at a glance.
 
-Import your existing Stripe products, customers, subscriptions, invoices, and payment transactions directly into NomadBill. Imports are idempotent — running them multiple times won't create duplicates. Once connected, changes in your Stripe account (new products, updated customer details, subscription changes, and invoice updates) are automatically synced to NomadBill in real time via webhooks. Imported records display a "Stripe" badge so you can identify their origin at a glance.
+  ## Payment links in invoice emails
 
-## Payment links in invoice emails
+  When sending an invoice by email, you can now embed a Stripe payment link directly in the email body. Your customers can pay instantly without leaving their inbox. A checkbox in the email send dialog lets you include the payment link when your Stripe account is connected.
 
-When sending an invoice by email, you can now embed a Stripe payment link directly in the email body. Your customers can pay instantly without leaving their inbox. A checkbox in the email send dialog lets you include the payment link when your Stripe account is connected.
+  ## AED exchange rate auto-populated
 
-## AED exchange rate auto-populated
+  The UAE dirham (AED) exchange rate is now automatically filled from the live currency table instead of requiring manual entry. The field is read-only with a helper note explaining the source.
 
-The UAE dirham (AED) exchange rate is now automatically filled from the live currency table instead of requiring manual entry. The field is read-only with a helper note explaining the source.
+  ## Nylas API error messages clarified
 
-## Nylas API error messages clarified
+  When the Nylas integration encounters an authentication error, the message now clearly indicates that the API key or region setting needs to be checked, instead of showing a generic error.
 
-When the Nylas integration encounters an authentication error, the message now clearly indicates that the API key or region setting needs to be checked, instead of showing a generic error.
+  ## Save button validates required fields
 
-## Save button validates required fields
+  The company settings save button now validates required fields (company name and address) before saving, showing a clear error message if any are missing.
 
-The company settings save button now validates required fields (company name and address) before saving, showing a clear error message if any are missing.
+  ## Payment status badge fix
 
-## Payment status badge fix
-
-The "Paid" badge on invoice payment links now only appears when your Stripe account is connected and the payment status is confirmed, preventing false positives.
-
+  The "Paid" badge on invoice payment links now only appears when your Stripe account is connected and the payment status is confirmed, preventing false positives.
 </Update>
 
-<Update label="2026-08-18" description="Inbox & Email Intelligence multilingual, feedback prompt improvements" tags={["new", "improvement"]}>
+<Update label="2026-08-18" description="Inbox & Email Intelligence multilingual, feedback prompt improvements" tags={["new","improvement"]}>
+  ## Inbox & Email Intelligence now in 15 languages
 
-## Inbox & Email Intelligence now in 15 languages
+  The Inbox and [Email Intelligence](/en/user-guide/email-intelligence) interface is now fully available in 15 languages: English, German, Spanish, French, Italian, Portuguese, Russian, Turkish, Arabic, Hindi, Chinese, Japanese, Korean, Indonesian, and Thai. The interface language follows your account language setting, so you can manage your document inbox in your preferred language without switching tools.
 
-The Inbox and [Email Intelligence](/en/user-guide/email-intelligence) interface is now fully available in 15 languages: English, German, Spanish, French, Italian, Portuguese, Russian, Turkish, Arabic, Hindi, Chinese, Japanese, Korean, Indonesian, and Thai. The interface language follows your account language setting, so you can manage your document inbox in your preferred language without switching tools.
+  ## Smarter feedback prompts
 
-## Smarter feedback prompts
-
-The in-app feedback dialog now appears only after you've used NomadBill for at least 30 days, shows at most 3 times, and waits at least 14 days between prompts. This means fewer interruptions while still giving you a chance to share feedback.
-
+  The in-app feedback dialog now appears only after you've used NomadBill for at least 30 days, shows at most 3 times, and waits at least 14 days between prompts. This means fewer interruptions while still giving you a chance to share feedback.
 </Update>
 
 <Update label="2026-08-18" description="Initial Documentation Release" tags={["documentation"]}>
+  ## Current platform coverage
 
-## Current platform coverage
-
-- Documented invoicing, quotes, incoming invoices, bank sync, email intelligence, PDF templates, custom fields, team management, dashboard, and multi-company support.
-- Documented supported currencies: `EUR`, `USD`, `GBP`, `CHF`, and `AED`.
-- Documented supported invoice languages: `DE`, `EN`, `FR`, and `ES`.
-- Documented subscription plans: Starter at `$17/month` and Professional at `$27/month`, both with a 7-day trial.
-- Documented integrations: Stripe, Plaid, Nylas, Resend, pdfme, and Supabase.
-
+  - Documented invoicing, quotes, incoming invoices, bank sync, email intelligence, PDF templates, custom fields, team management, dashboard, and multi-company support.
+  - Documented supported currencies: `EUR`, `USD`, `GBP`, `CHF`, and `AED`.
+  - Documented supported invoice languages: `DE`, `EN`, `FR`, and `ES`.
+  - Documented subscription plans: Starter at `$17/month` and Professional at `$27/month`, both with a 7-day trial.
+  - Documented integrations: Stripe, Plaid, Nylas, Resend, pdfme, and Supabase.
 </Update>
 
-<Update label="2026-07-30" description="AI Email Inbox, Dashboard rebuild, Incoming invoice detail page" tags={["new", "improvement", "fix"]}>
+<Update label="2026-07-30" description="AI Email Inbox, Dashboard rebuild, Incoming invoice detail page" tags={["new","improvement","fix"]}>
+  ## AI Email Inbox
 
-## AI Email Inbox
+  NomadBill now automatically processes incoming emails with AI to classify documents, extract key data (amounts, dates, vendor details, IBANs, categories, and line items), and match emails to your existing invoices, quotes, receipts, and bank transactions. Attachments are scanned with OCR, and you can review, accept, or dismiss AI-suggested links directly from any document.
 
-NomadBill now automatically processes incoming emails with AI to classify documents, extract key data (amounts, dates, vendor details, IBANs, categories, and line items), and match emails to your existing invoices, quotes, receipts, and bank transactions. Attachments are scanned with OCR, and you can review, accept, or dismiss AI-suggested links directly from any document.
+  ## Email Intelligence enhancements
 
-## Email Intelligence enhancements
+  The [Email Intelligence](/en/user-guide/email-intelligence) card now displays line items, attachments, and a structured data view alongside expanded fields including net, VAT, gross, IBAN, and category.
 
-The [Email Intelligence](/en/user-guide/email-intelligence) card now displays line items, attachments, and a structured data view alongside expanded fields including net, VAT, gross, IBAN, and category.
+  ## Dashboard rebuild
 
-## Dashboard rebuild
+  The [Dashboard](/en/user-guide/dashboard) has been completely redesigned with period switching (month, quarter, year), KPI cards for revenue, cost, profit, and outstanding cash — each with sparklines and percentage change vs. the prior period. New panels include a receivables ageing breakdown, revenue-by-client leaderboard, activity feed, and multi-currency breakdown. All figures convert to your base currency automatically, and KPIs can be exported as CSV.
 
-The [Dashboard](/en/user-guide/dashboard) has been completely redesigned with period switching (month, quarter, year), KPI cards for revenue, cost, profit, and outstanding cash — each with sparklines and percentage change vs. the prior period. New panels include a receivables ageing breakdown, revenue-by-client leaderboard, activity feed, and multi-currency breakdown. All figures convert to your base currency automatically, and KPIs can be exported as CSV.
+  ## Incoming invoice detail page
 
-## Incoming invoice detail page
+  Incoming invoices now have a dedicated detail and edit view with supplier information, invoice numbers, dates, automatic net/VAT/gross calculation, linked bank transactions, and custom fields.
 
-Incoming invoices now have a dedicated detail and edit view with supplier information, invoice numbers, dates, automatic net/VAT/gross calculation, linked bank transactions, and custom fields.
+  ## Receipt number label corrected
 
-## Receipt number label corrected
+  The placeholder for receipt numbers on incoming invoices now correctly shows the `BI-` prefix instead of `INV-`.
 
-The placeholder for receipt numbers on incoming invoices now correctly shows the `BI-` prefix instead of `INV-`.
+  ## Inbox panel expanded
 
-## Inbox panel expanded
-
-The inbox message list now expands to fill the available screen height, making longer email threads easier to read.
-
+  The inbox message list now expands to fill the available screen height, making longer email threads easier to read.
 </Update>
 
-<Callout kind="info">
-
-NomadBill is a continuously updated SaaS platform. This changelog will be updated as new features, integrations, and product changes are released.
-
+<Callout kind="info" collapsed="false">
+  NomadBill is a continuously updated SaaS platform. This changelog will be updated as new features, integrations, and product changes are released.
 </Callout>
+
